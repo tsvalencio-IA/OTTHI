@@ -1,0 +1,545 @@
+﻿function,module,description,sourceStartLine,sourceEndLineApprox,callCountApprox,if,else,switch,case,for,while,catch,ternaryApprox,calledByBody
+stableBuildId,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",27,32,0,0,0,0,0,1,0,0,0,
+normalizeBuildRecord,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",33,39,1,2,0,0,0,0,0,0,1,stableBuildId
+normalizeBuildList,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",40,48,1,2,0,0,0,0,0,0,1,normalizeBuildRecord
+normalizeBuildTombstones,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",49,57,0,3,0,0,0,0,0,0,3,
+mergeBuildTombstones,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",58,58,1,0,0,0,0,0,0,0,0,normalizeBuildTombstones
+applyBuildTombstones,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",59,62,2,0,0,0,0,0,0,0,0,normalizeBuildList | normalizeBuildTombstones
+mergeBuildCollections,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",63,65,2,0,0,0,0,0,0,0,0,applyBuildTombstones | normalizeBuildList
+mergeEntityCollections,01-build-persistence.js,"Normalização, merge, tombstones e persistência das construções",66,142,0,2,0,0,0,0,0,0,2,
+normalizeState,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",143,196,2,2,0,0,0,0,0,0,47,applyBuildTombstones | normalizeBuildTombstones
+loadState,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",197,245,6,10,2,0,0,1,0,4,5,ensureDailyChallenges | normalizeState | updateDailyBadge | updateHUD | updateLobbyStats
+commitState,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",246,262,7,0,0,0,0,0,0,2,1,applyBuildTombstones | ensureDailyChallenges | normalizeBuildTombstones | syncCloudProgress | syncGameAccount | updateDailyBadge | updateLobbyStats
+saveState,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",263,270,1,1,0,0,0,0,0,0,0,commitState
+cloudProgressPayload,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",271,279,0,0,0,0,0,0,0,0,15,
+syncCloudProgress,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",280,283,2,1,0,0,0,0,0,0,2,cloudProgressPayload | hasValidPlayerName
+mergeCloudProgress,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",284,304,10,3,0,0,0,0,0,1,34,mergeBuildCollections | mergeBuildTombstones | mergeEntityCollections | normalizeState | reconcileWorldBuilds | syncCloudProgress | toast | updateHUD | updateLobbyStats | updatePlayerNameUI
+accountLinked,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",305,305,0,0,0,0,0,0,0,0,1,
+accountPromptWasHandled,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",306,306,0,0,0,0,0,0,0,0,0,
+accountStatusText,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",307,323,1,4,0,0,0,0,0,0,7,accountLinked
+syncGameAccount,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",324,377,13,16,0,0,0,0,0,2,20,accountLinked | applyPlayerName | commitState | normalizeState | sanitizePlayerName | saveState | updateHUD | updateLobbyStats | updatePlayerNameUI
+openAccountForm,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",378,386,5,4,2,0,0,0,0,1,9,closeModal | escapeHtml | openAccountCenter | openModal | toast
+openAccountCenter,02-state-save-cloud-account.js,"Estado, save local, IndexedDB, nuvem e conta",387,396,12,2,0,0,0,0,0,0,12,accountLinked | closeModal | confirmModal | escapeHtml | openAccountForm | openModal | openPlayerNameModal | saveState | syncGameAccount | toast
+addXP,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",397,407,4,1,0,0,0,0,0,0,0,awardMedal | saveState | toast | updateHUD
+addCoins,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",408,411,2,0,0,0,0,0,0,0,0,saveState | updateHUD
+addReputation,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",412,415,2,0,0,0,0,0,0,0,0,saveState | updateHUD
+awardMedal,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",416,421,2,1,0,0,0,0,0,0,0,saveState | toast
+setFlag,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",422,428,2,1,0,0,0,0,0,0,0,evaluateMissions | saveState
+showScreen,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",429,433,1,0,0,0,0,0,0,0,0,updateInstallUI
+toast,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",434,439,0,0,0,0,0,0,0,0,0,
+vibrate,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",440,442,0,1,0,0,0,0,0,0,0,
+beep,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",443,457,0,2,0,0,0,0,0,1,0,
+openModal,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",458,472,1,3,0,0,0,0,0,0,4,scheduleStableResize
+closeModal,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",473,490,4,4,1,0,0,0,0,0,4,cancelFishingSession | clearExtensionPreview | startEngineSound | stopFishingVisual
+confirmModal,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",491,504,4,1,0,0,0,0,0,0,1,closeModal | openModal
+updateInstallUI,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",505,551,2,5,0,0,0,0,0,0,5,openModal | toast
+isOfficialOtthiGameAddress,03-ui-modal-install-pwa.js,"Economia, flags, telas, modais, feedback, instalação e PWA",552,658,2,13,0,0,0,0,0,7,3,saveState | updateInstallUI
+localDateKey,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",659,659,0,0,0,0,0,0,0,0,0,
+daysBetween,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",660,660,0,1,0,0,0,0,0,0,0,
+ensureDailyChallenges,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",661,661,3,1,0,0,0,0,1,0,3,daysBetween | localDateKey | saveState
+dailyDefinition,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",662,662,0,0,0,0,0,0,0,0,0,
+trackDaily,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",663,668,3,5,0,0,0,1,0,0,0,ensureDailyChallenges | saveState | updateDailyBadge
+updateDailyBadge,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",669,669,1,2,0,0,0,0,0,0,1,ensureDailyChallenges
+claimDailyQuest,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",670,683,9,1,0,0,0,0,0,0,1,addCoins | addReputation | addXP | beep | dailyDefinition | openDailyChallenges | saveState | toast | vibrate
+seeded,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",684,684,0,0,0,0,0,0,0,0,0,
+shuffled,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",685,685,0,0,0,0,0,0,0,0,0,
+choiceSet,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",686,686,2,0,0,0,0,0,0,0,0,shuffled
+mathRound,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",687,695,4,5,0,0,0,0,0,0,8,choiceSet
+portugueseRound,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",696,704,5,5,0,0,0,0,0,0,6,choiceSet | shuffled
+englishRound,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",705,713,5,5,0,0,0,0,0,0,2,choiceSet
+generateEducationRounds,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",714,714,1,0,0,0,0,0,0,0,2,seeded
+subjectLevelRecord,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",715,715,0,0,0,0,0,0,0,0,0,
+subjectUnlocked,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",716,716,1,0,0,0,0,0,0,0,0,subjectLevelRecord
+educationSummary,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",717,717,1,1,0,0,0,2,0,0,0,subjectLevelRecord
+speakKidWord,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",718,718,0,0,0,0,0,0,0,1,0,
+dailyChallengesHtml,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",719,719,2,0,0,0,0,0,0,0,5,dailyDefinition | ensureDailyChallenges
+educationSubjectHtml,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",720,720,2,0,0,0,0,0,0,0,6,subjectLevelRecord | subjectUnlocked
+openEducationHub,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",721,730,10,5,0,0,0,0,0,0,8,claimDailyQuest | dailyChallengesHtml | educationSubjectHtml | educationSummary | ensureDailyChallenges | openModal | openSocialHub | playerDisplayName | startSoloEducationGame
+openChallengeHub,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",731,731,1,0,0,0,0,0,0,0,1,openEducationHub
+openDailyChallenges,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",732,732,1,0,0,0,0,0,0,0,0,openEducationHub
+runEducationGame,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",733,746,12,6,1,0,0,0,0,0,9,addXP | beep | escapeHtml | finishSoloEducationGame | generateEducationRounds | openModal | speakKidWord
+startSoloEducationGame,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",747,747,3,0,0,0,0,0,0,1,0,closeChallengePrompt | runEducationGame | toast
+finishSoloEducationGame,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",748,750,11,2,1,0,0,0,0,0,6,addCoins | addXP | awardMedal | openEducationHub | openModal | saveState | startSoloEducationGame | subjectLevelRecord
+startCinematicEmote,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",751,753,0,1,0,0,0,0,0,0,0,
+triggerEmote,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",754,764,5,4,0,0,0,0,0,0,4,addXP | beep | startCinematicEmote | toast | vibrate
+openQuiz,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",765,767,1,0,0,0,0,0,0,0,0,openEducationHub
+openCollection,04-education-daily-quiz.js,"Desafios diários, educação, quiz e coleção",768,786,1,0,0,0,0,0,0,0,1,openModal
+effectiveAvatarUniform,05-avatar-life-customization.js,"Avatar, roupas, uniformes, vida, moldes e ajuda",787,794,0,1,0,0,0,0,0,0,3,
+avatarChoiceGroup,05-avatar-life-customization.js,"Avatar, roupas, uniformes, vida, moldes e ajuda",795,799,1,0,0,0,0,0,0,0,5,effectiveAvatarUniform
+openAvatarStudio,05-avatar-life-customization.js,"Avatar, roupas, uniformes, vida, moldes e ajuda",800,809,12,0,0,0,0,0,0,0,2,applyAvatarCustomization | avatarChoiceGroup | closeModal | openModal | playerDisplayName | saveState | setFlag | toast
+openLifePanel,05-avatar-life-customization.js,"Avatar, roupas, uniformes, vida, moldes e ajuda",810,825,3,2,0,0,0,1,0,0,1,closeModal | openModal | toast
+openMolds,05-avatar-life-customization.js,"Avatar, roupas, uniformes, vida, moldes e ajuda",826,828,2,0,0,0,0,0,0,0,0,openModal | playerDisplayName
+openHow,05-avatar-life-customization.js,"Avatar, roupas, uniformes, vida, moldes e ajuda",829,927,1,0,0,0,0,0,0,0,0,openModal
+deriveMissionFlags,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",928,939,0,0,0,0,0,0,0,0,1,
+evaluateMissions,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",940,957,5,2,0,0,0,1,0,0,3,addCoins | awardMedal | deriveMissionFlags | toast | updateMissionHUD
+updateMissionHUD,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",958,976,2,2,0,0,0,0,0,0,2,activeJobProgress | playerText
+objectiveStatusLabel,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",977,977,0,0,0,0,0,0,0,0,1,
+skillMasterySummary,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",978,978,0,0,0,0,0,0,0,0,1,
+pinChapter,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",979,979,4,0,0,0,0,0,0,0,1,evaluateMissions | saveState | toast | updateMissionHUD
+openObjectivesPanel,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",980,987,7,0,0,0,0,0,0,0,17,activeJobProgress | deriveMissionFlags | openModal | pinChapter | playerText | skillMasterySummary
+sanitizePlayerName,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",988,988,0,0,0,0,0,0,0,0,0,
+hasValidPlayerName,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",989,989,1,0,0,0,0,0,0,0,0,sanitizePlayerName
+playerDisplayName,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",990,990,2,0,0,0,0,0,0,0,1,hasValidPlayerName | sanitizePlayerName
+playerText,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",991,991,4,0,0,0,0,0,0,0,0,playerDisplayName
+updatePlayerNameUI,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",992,992,7,7,0,0,0,0,0,0,8,accountStatusText | hasValidPlayerName | playerDisplayName
+applyPlayerName,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",993,993,4,2,0,0,0,0,0,0,8,sanitizePlayerName | saveState | toast | updatePlayerNameUI
+openPlayerNameModal,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",994,998,5,3,0,0,0,0,0,0,6,applyPlayerName | closeModal | hasValidPlayerName | openModal | toast
+updateLobbyStats,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",999,1005,1,0,0,0,0,0,0,0,0,updatePlayerNameUI
+updateHUD,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1006,1020,2,1,0,0,0,0,0,0,2,updateMissionHUD | updatePlayerNameUI
+openInventory,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1021,1033,4,1,0,0,0,0,0,0,3,openModal | saveState | toast | updateHUD
+equippedTool,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1034,1034,0,0,0,0,0,0,0,0,1,
+equipTool,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1035,1037,3,2,0,0,0,0,0,0,0,refreshEquippedToolVisual | saveState | toast
+openToolbelt,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1038,1040,3,0,0,0,0,0,0,0,2,closeModal | equipTool | openModal
+refreshEquippedToolVisual,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1041,1054,7,4,2,0,0,0,0,0,4,box | renderMat
+playToolAnimation,06-missions-profile-hud-inventory-tools.js,"Missões, objetivos, perfil, HUD, inventário e ferramentas",1055,1063,2,0,0,0,0,0,0,0,1,beep | vibrate
+routeLength,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1064,1064,0,0,0,0,0,1,0,0,0,
+compactRoute,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1065,1065,0,2,0,0,0,1,0,0,0,
+projectPointToSegment,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1066,1066,0,0,0,0,0,0,0,0,0,
+navBlocked,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1067,1067,0,3,0,0,0,2,0,0,0,
+segmentClear,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1068,1068,1,1,0,0,0,1,0,0,0,navBlocked
+nearestRoadProjection,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1069,1069,2,1,0,0,0,1,0,0,1,projectPointToSegment | segmentClear
+pointOnRoad,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1070,1070,0,0,0,0,0,0,0,0,0,
+projectPointToPolyline,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1071,1075,1,3,0,0,0,1,0,0,1,projectPointToSegment
+snapTrafficToRoad,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1076,1081,4,3,0,0,0,0,0,0,4,nearestRoadProjection | pointOnRoad | projectPointToPolyline
+trafficActorList,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1082,1093,0,6,0,0,0,5,0,0,6,
+trafficSpeedFactor,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1094,1101,1,4,0,0,0,1,0,0,1,trafficActorList
+captureTrafficPositions,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1102,1102,1,0,0,0,0,1,0,0,0,trafficActorList
+resolveTrafficOverlaps,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1103,1115,5,8,2,0,0,3,0,0,13,pointOnRoad | snapTrafficToRoad | trafficActorList
+graphAdd,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1116,1116,0,2,0,0,0,0,0,0,0,
+graphShortest,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1117,1117,0,6,0,0,0,2,2,0,4,
+buildRoutePoints,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1118,1129,10,4,0,0,0,2,0,0,4,compactRoute | graphAdd | graphShortest | nearestRoadProjection
+routeProgressInfo,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1130,1130,2,2,0,0,0,1,0,0,5,projectPointToSegment | routeLength
+remainingRoute,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1131,1131,2,0,0,0,0,0,0,0,0,compactRoute | routeProgressInfo
+sampleRoute,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1132,1132,0,0,0,0,0,2,0,0,0,
+createRouteGuide,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1133,1133,1,1,0,0,0,1,0,0,0,mat
+updateRouteGuide,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1134,1134,6,3,0,0,0,0,0,0,1,buildRoutePoints | createRouteGuide | groundHeightAt | remainingRoute | routeProgressInfo | sampleRoute
+miniPoint,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1135,1135,0,0,0,0,0,0,0,0,0,
+drawMiniMap,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1136,1136,7,3,0,0,0,1,0,0,9,miniPoint | remainingRoute
+updateNavigation,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1137,1137,6,4,1,0,0,0,0,0,5,beep | drawMiniMap | routeProgressInfo | saveState | toast | updateRouteGuide
+routeSvgMarkup,07-navigation-traffic-routes.js,"Rotas, trânsito, grafo, GPS e minimapa",1138,1200,2,0,0,0,0,0,0,0,0,playerDisplayName | worldToMap
+mapLocationDetails,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1201,1201,0,0,0,0,0,0,0,0,0,
+worldToMap,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1202,1202,0,0,0,0,0,0,0,0,0,
+mapDistance,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1203,1204,0,0,0,0,0,0,0,0,4,
+mapMarkerPlacements,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1205,1240,1,5,2,0,0,4,0,0,13,worldToMap
+applyMapMarkerPlacements,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1241,1248,0,1,0,0,0,0,0,0,3,
+mapSelectionMarkup,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1249,1252,2,1,0,0,0,0,0,0,0,mapDistance | mapLocationDetails
+setWaypoint,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1253,1257,6,1,0,0,0,0,0,0,4,buildRoutePoints | closeModal | saveState | toast | updateNavigation | updateWaypointMarker
+clearWaypoint,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1258,1258,5,0,0,0,0,0,0,0,0,closeModal | saveState | toast | updateNavigation | updateWaypointMarker
+openMap,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1259,1277,14,2,0,0,0,0,0,0,13,applyMapMarkerPlacements | buildRoutePoints | mapDistance | mapMarkerPlacements | mapSelectionMarkup | openModal | routeProgressInfo | routeSvgMarkup | setWaypoint | worldToMap
+refreshOpenMapAfterResize,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1278,1280,1,2,0,0,0,0,0,0,0,openMap
+performLocalReset,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1281,1283,0,0,0,0,0,0,0,0,4,
+openFinalResetConfirmation,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1284,1289,5,3,0,0,0,0,0,0,1,commitState | confirmModal | openModal | openParentTools | performLocalReset
+openParentTools,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1290,1297,6,2,0,0,0,0,0,1,3,confirmModal | normalizeState | openFinalResetConfirmation | openModal | openSettings | toast
+openParentGate,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1298,1308,7,5,0,0,0,0,0,0,5,accountLinked | openModal | openParentTools | openSettings
+openSettings,08-map-parent-settings.js,"Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",1309,1359,28,11,6,0,0,0,0,0,12,accountStatusText | applyQuality | closeChallengePrompt | closeModal | commitState | hasValidPlayerName | multiplayerStatusText | openAccountCenter | openEducationHub | openModal | openParentGate | openPlayerNameModal | qualityLabel | qualityTier | requestedQuality | returnHome | savePlayerPosition | saveState | stopGame | toast
+syncMobilePanels,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1360,1408,4,16,0,0,0,0,0,1,5,openObjectivesPanel | saveState
+otthiGameModelUrl,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1409,1412,0,0,0,0,0,0,0,0,0,
+androidSceneViewerUrl,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1413,1422,1,0,0,0,0,0,0,0,0,otthiGameModelUrl
+isAndroidDevice,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1423,1426,0,0,0,0,0,0,0,0,0,
+openAndroidSceneViewer,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1427,1467,5,5,0,0,0,0,0,2,3,androidSceneViewerUrl | isAndroidDevice | openModal | toast
+detectStableAutoTier,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1468,1487,0,2,0,0,0,0,0,0,1,
+vehiclePlayerMode,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1488,1494,0,3,0,0,0,0,0,0,3,
+derivePlayerMode,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1495,1505,1,8,0,0,0,0,0,0,4,vehiclePlayerMode
+auditPlayerMode,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1506,1521,1,7,0,0,0,0,0,0,2,derivePlayerMode
+isOnFootMode,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1522,1522,1,0,0,0,0,0,0,0,0,derivePlayerMode
+canEnterMobility,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1523,1527,2,1,0,0,0,0,0,0,0,auditPlayerMode | isOnFootMode
+cameraRelativeVector,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1528,1532,0,0,0,0,0,0,0,0,2,
+normalizeControlIntent,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1533,1540,2,2,0,0,0,0,0,0,3,cameraRelativeVector | derivePlayerMode
+requestedQuality,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1541,1541,0,0,0,0,0,0,0,0,1,
+qualityLabel,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1542,1542,4,0,0,0,0,0,0,0,4,qualityTier | requestedQuality
+qualityTier,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1543,1543,1,0,0,0,0,0,0,0,2,requestedQuality
+targetDpr,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1544,1549,1,2,0,0,0,0,0,0,3,qualityTier
+applyAdaptiveRenderSettings,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1550,1558,3,4,0,0,0,0,0,0,5,qualityTier | scheduleStableResize | targetDpr
+samplePerformance,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1559,1578,7,6,2,0,0,0,0,0,7,applyAdaptiveRenderSettings | lockStableSceneVisibility | requestedQuality | saveState | toast
+lockStableSceneVisibility,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1579,1585,3,4,0,0,0,3,0,0,4,qualityTier
+freezeWorldFrustumCulling,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1586,1600,0,4,1,0,0,0,0,1,3,
+updateVisualLOD,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1601,1608,0,2,0,0,0,1,0,0,0,
+pwaInstalled,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1609,1609,0,0,0,0,0,0,0,0,0,
+activeVehicleCount,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1610,1610,0,0,0,0,0,0,0,0,10,
+runtimeDiagnostics,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1611,1614,3,0,0,0,0,0,0,0,8,activeVehicleCount | auditPlayerMode | pwaInstalled
+ensureTechnicalPanel,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1615,1617,1,1,0,0,0,0,0,0,0,toggleTechnicalPanel
+refreshTechnicalPanel,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1618,1618,3,1,0,0,0,0,0,0,8,ensureTechnicalPanel | qualityTier | runtimeDiagnostics
+toggleTechnicalPanel,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1619,1619,2,1,0,0,0,0,0,0,1,ensureTechnicalPanel | refreshTechnicalPanel
+initTechnicalPanel,09-responsive-ar-quality-diagnostics.js,"Responsividade, AR, modos, qualidade, LOD e diagnóstico",1620,1624,2,2,0,0,0,0,0,0,1,toggleTechnicalPanel
+playerScaleValue,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1625,1627,0,0,0,0,0,0,0,0,2,
+skillReady,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1628,1628,1,1,0,0,0,0,0,0,0,toast
+recordAdvancedSkill,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1629,1634,4,0,0,0,0,1,0,0,0,advanceAdventure | saveState | trackDaily | updateAbilityUI
+collectCrystal,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1635,1637,9,1,0,0,0,0,0,0,0,addCoins | addXP | beep | checkActiveJob | evaluateMissions | saveState | toast | trackDaily | vibrate
+syncPlayerRootScale,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1638,1647,1,2,0,0,0,0,0,0,1,playerScaleValue
+setScaleMode,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1648,1667,21,10,2,0,0,2,0,0,2,beep | damageEnemy | recordAdvancedSkill | saveState | skillReady | spawnDust | toast | trackDaily | updateAbilityUI | vibrate
+toggleCrouch,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1668,1677,11,3,0,0,0,0,0,0,2,beep | playerDisplayName | recordAdvancedSkill | saveState | skillReady | toast | updateAbilityUI
+spinPlayer,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1678,1684,7,3,0,0,0,2,0,0,1,addXP | beep | collectCrystal | damageEnemy | recordAdvancedSkill | skillReady | toast
+updateAbilityUI,10-player-skills.js,"Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills",1685,1691,0,2,0,0,0,2,0,0,11,
+canvasTexture,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1692,1728,0,11,9,0,0,24,0,0,8,
+professionalTexture,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1729,1734,1,1,1,0,0,0,0,0,6,canvasTexture
+initMaterials,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1735,1780,23,0,0,0,0,0,0,0,0,canvasTexture | professionalTexture
+mat,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1781,1786,0,0,0,0,0,0,0,0,12,
+geometryKey,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1787,1787,0,0,0,0,0,0,0,0,0,
+sharedBoxGeometry,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1788,1792,1,1,0,0,0,0,0,0,0,geometryKey
+sharedCylinderGeometry,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1793,1797,1,1,0,0,0,0,0,0,0,geometryKey
+renderMat,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1798,1803,1,1,0,0,0,0,0,0,13,mat
+tintedBrickMaterial,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1804,1806,0,0,0,0,0,0,0,0,0,
+texturedRoofMaterial,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1807,1809,0,1,0,0,0,0,0,0,0,
+addSoftHighlight,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1810,1814,1,0,0,0,0,0,0,0,0,sharedBoxGeometry
+box,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1815,1819,2,0,0,0,0,0,0,0,1,mat | sharedBoxGeometry
+stabilizeSurface,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1820,1820,0,1,0,0,0,0,0,0,0,
+stableBox,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1821,1821,2,0,0,0,0,0,0,0,0,box | stabilizeSurface
+cylinder,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1822,1826,2,0,0,0,0,0,0,0,1,mat | sharedCylinderGeometry
+addGlow,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1827,1830,0,0,0,0,0,0,0,0,0,
+addVoxelOutline,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1831,1835,0,1,0,0,0,0,0,0,2,
+premiumBox,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1836,1838,2,0,0,0,0,0,0,0,0,addVoxelOutline | box
+premiumCylinder,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1839,1841,2,0,0,0,0,0,0,0,0,addVoxelOutline | cylinder
+makeWindow,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1842,1845,5,0,0,0,0,0,0,0,0,mat | premiumBox
+makePlanter,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1846,1849,3,0,0,0,0,1,0,0,0,premiumBox
+createPlayerModel,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1850,1911,62,3,0,0,0,2,0,0,0,addSoftHighlight | addVoxelOutline | box | mat | multiplayerNameTexture | playerDisplayName | refreshEquippedToolVisual | renderMat | sharedCylinderGeometry
+loadFaithfulAthosModel,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1912,1917,0,0,0,0,0,0,0,0,0,
+clearAvatarLayer,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1918,1923,0,1,0,0,0,0,0,0,1,
+applyAvatarCustomization,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1924,1955,34,18,11,0,0,0,0,0,4,box | clearAvatarLayer | effectiveAvatarUniform | mat
+registerCollider,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1956,1956,0,0,0,0,0,0,0,0,0,
+registerPlatform,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1957,1957,0,0,0,0,0,0,0,0,0,
+registerInteractable,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1958,1958,0,0,0,0,0,0,0,0,0,
+worldPos,11-render-materials-player-model.js,"Texturas, materiais, geometria, personagem e avatar 3D",1959,1962,0,1,0,0,0,0,0,0,0,
+isInteractionAvailable,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",1963,1969,0,2,0,0,0,0,0,0,0,
+ensureFlowerBatch,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",1970,1983,4,2,0,0,0,0,0,0,0,renderMat | sharedBoxGeometry
+createTree,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",1984,2002,14,2,0,0,0,0,0,0,4,box | collectResource | registerInteractable | renderMat
+createRock,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2003,2006,2,1,0,0,0,0,0,0,0,collectResource | registerInteractable
+createGoldFoundry,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2007,2014,13,0,0,0,0,0,0,0,0,premiumBox | registerCollider | registerInteractable | renderMat | signTexture | texturedRoofMaterial
+createGoldMine,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2015,2028,13,0,0,0,0,2,0,0,0,collectResource | createLamp | createSignpost | premiumBox | registerInteractable | renderMat
+createVillageWell,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2029,2037,10,0,0,0,0,1,0,0,0,createSignpost | premiumBox | premiumCylinder | registerInteractable
+drawWaterFromWell,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2038,2042,8,3,0,0,0,0,0,0,0,addXP | advanceAdventure | playToolAnimation | saveState | toast | updateHUD
+createFlower,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2043,2052,1,2,0,0,0,0,0,0,0,ensureFlowerBatch
+createLamp,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2053,2060,7,0,0,0,0,0,0,0,0,addGlow | box | renderMat
+createSignpost,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2061,2066,2,0,0,0,0,0,0,0,0,box | signTexture
+createFenceLine,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2067,2070,2,0,0,0,0,1,0,0,0,box
+createRoad,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2071,2088,22,1,1,0,0,2,0,0,0,renderMat | stableBox
+createWater,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2089,2089,3,0,0,0,0,1,0,0,0,stableBox
+createLava,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2090,2091,2,0,0,0,0,0,0,0,0,mat | stableBox
+createFurniture,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2092,2153,84,16,0,0,0,15,0,0,0,box | cylinder | premiumBox | premiumCylinder | renderMat | shadeColor
+signTexture,12-world-resources-nature.js,"Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis",2154,2184,0,3,2,0,0,1,1,0,1,
+shadeColor,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2185,2190,0,0,0,0,0,0,0,0,0,
+decorateHouseCommercial,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2191,2207,17,3,1,0,0,1,0,0,6,addVoxelOutline | box | makePlanter | premiumBox | shadeColor
+createHouse,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2208,2234,42,1,0,0,0,1,0,0,10,box | createFlower | createLamp | decorateHouseCommercial | makeWindow | registerCollider | registerInteractable | renderMat | shadeColor | signTexture | texturedRoofMaterial | tintedBrickMaterial
+addHouseInterior,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2235,2282,92,7,6,0,0,11,0,0,1,addGlow | createFurniture | exitHouse | premiumBox | premiumCylinder | registerActivity | registerInteractable
+registerActivity,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2283,2286,3,0,0,0,0,0,0,0,0,activityIcon | registerInteractable | useActivity
+activityIcon,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2287,2288,0,0,0,0,0,0,0,0,0,
+createNPC,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2289,2307,24,4,1,0,0,2,0,0,2,addVoxelOutline | box | iconTexture | registerInteractable | renderMat | shadeColor | talkToNPC
+createNpcMobility,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2308,2321,16,5,3,0,0,4,0,0,4,addVoxelOutline | nearestRoadProjection | premiumBox | premiumCylinder
+createEnemy,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2322,2328,12,2,2,0,0,0,0,0,1,box
+createCrystal,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2329,2332,2,0,0,0,0,0,0,0,3,addGlow | mat
+createChest,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2333,2335,4,1,0,0,0,0,0,0,2,box | openChest | registerInteractable
+createPlatform,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2336,2336,2,0,0,0,0,0,0,0,0,box | registerPlatform
+vehicleById,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2337,2337,0,0,0,0,0,0,0,0,0,
+currentVehicleRef,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2338,2338,1,3,0,0,0,0,0,0,1,vehicleById
+applyVehicleAppearance,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2339,2342,0,1,0,0,0,0,0,0,15,
+persistParkedVehicle,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2343,2345,0,1,0,0,0,0,0,0,0,
+createToyCar,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2346,2358,20,2,0,0,0,1,0,0,22,addVoxelOutline | box | cylinder | enterVehicle | registerInteractable | renderMat
+createWaypointMarker,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2359,2364,3,0,0,0,0,0,0,0,0,box | mat | updateWaypointMarker
+updateWaypointMarker,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2365,2369,0,2,0,0,0,0,0,0,0,
+createAthleticsGym,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2370,2377,13,0,0,0,0,1,0,0,0,box | createLamp | openRaceCenter | registerInteractable
+createSizeChallenges,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2378,2395,24,3,0,0,0,0,0,0,0,addXP | box | registerInteractable | setFlag | toast
+createSkyDome,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2396,2411,2,0,0,0,0,1,0,0,0,renderMat | sharedBoxGeometry
+updateClouds,13-houses-npcs-vehicles-base.js,"Casas, interiores, NPCs, inimigos, cristais, veículos e academia",2412,2417,0,3,0,0,0,1,0,0,0,
+createVoxelMushroom,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2418,2426,14,1,0,0,0,0,0,0,0,addVoxelOutline | box | renderMat | shadeColor
+iconTexture,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2427,2429,0,0,0,0,0,0,0,0,0,
+createChallengeCube,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2430,2430,2,0,0,0,0,0,0,0,0,box | iconTexture
+createPortalArch,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2431,2436,6,0,0,0,0,1,0,0,0,addGlow | box | mat
+createPlayground,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2437,2440,7,0,0,0,0,1,0,0,0,box
+createFountain,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2441,2441,5,0,0,0,0,0,0,0,0,addGlow | cylinder | mat
+createAwning,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2442,2442,1,0,0,0,0,1,0,0,1,box
+createStreetTree,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2443,2448,5,0,0,0,0,0,0,0,0,makePlanter | premiumBox
+createBackdropBuilding,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2449,2457,11,0,0,0,0,2,0,0,2,addVoxelOutline | box | renderMat | shadeColor
+createFloatingIsland,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2458,2461,4,0,0,0,0,1,0,0,0,addVoxelOutline | mat | premiumBox
+createCoinTrail,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2462,2464,1,0,0,0,0,0,0,0,0,mat
+createCommercialDistrict,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2465,2473,7,0,0,0,0,0,0,0,0,createBackdropBuilding | createCoinTrail | createFloatingIsland | createStreetTree
+createDistrictVisuals,14-world-district-decoration.js,"Cogumelos, portais, praça, distrito e decoração urbana",2474,2505,10,0,0,0,0,0,0,0,0,createAwning | createChallengeCube | createCommercialDistrict | createFountain | createPlayground | createPortalArch | createVoxelMushroom
+compactBusPath,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2506,2508,0,3,0,0,0,1,0,0,0,
+projectedBusPoint,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2509,2509,1,0,0,0,0,0,0,0,2,nearestRoadProjection
+offsetBusPath,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2510,2517,2,2,0,0,0,1,0,0,0,compactBusPath | pointOnRoad
+buildBusRoadPath,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2518,2531,8,4,0,0,0,2,0,0,4,buildRoutePoints | compactBusPath | nearestRoadProjection | offsetBusPath | projectedBusPoint
+busRoutePoints,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2532,2532,0,0,0,0,0,0,0,0,5,
+busNextStop,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2533,2533,1,1,0,0,0,1,0,0,1,busRoutePoints
+nearestForwardBusSegment,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2534,2538,1,2,0,0,0,1,0,0,1,projectPointToSegment
+recoverBusRoute,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2539,2542,3,1,0,0,0,0,0,0,0,busRoutePoints | nearestForwardBusSegment | setBusState
+setBusState,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2543,2545,0,1,0,0,0,0,0,0,0,
+setBusWaiting,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2546,2548,1,0,0,0,0,0,0,0,0,saveState
+clearBusWaiting,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2549,2549,1,1,0,0,0,0,0,0,0,saveState
+restoreBusWaiting,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2550,2550,0,2,0,0,0,0,0,0,2,
+busStopRecord,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2551,2551,0,0,0,0,0,0,0,0,2,
+safeBusExitPoint,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2552,2557,4,1,0,0,0,0,0,0,3,busStopRecord | groundHeightAt | positionBlockedForPlayer | safePointNear
+createMetroEntrance,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2558,2566,11,0,0,0,0,2,0,0,0,iconTexture | openMetroStation | premiumBox | registerInteractable
+ensureMetroOverlay,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2567,2569,0,1,0,0,0,0,0,0,0,
+openMetroStation,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2570,2574,3,2,0,0,0,0,0,0,4,openModal | rideMetroTo | toast
+rideMetroTo,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2575,2588,15,9,0,0,0,0,0,0,6,advanceAdventure | auditPlayerMode | canEnterMobility | clearMovementInputs | closeModal | ensureMetroOverlay | rememberSafePlayerPosition | safePointNear | saveState | setFlag | toast | trackDaily | updateContext | updateNavigation
+ensureBusStop,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2589,2592,6,2,0,0,0,0,0,0,2,iconTexture | openBusStop | premiumBox | registerInteractable
+createBusModel,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2593,2615,36,4,0,0,0,10,0,0,5,buildBusRoadPath | ensureBusStop | enterBus | premiumBox | premiumCylinder | registerInteractable | renderMat | signTexture
+createTransitWorld,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2616,2616,3,0,0,0,0,1,0,0,0,createBusModel | restoreBusWaiting | validateBusCoverage
+busAtStop,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2617,2617,0,0,0,0,0,0,0,0,0,
+busEtaSeconds,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2618,2618,2,3,0,0,0,1,0,0,0,busAtStop | busRoutePoints
+validateBusCoverage,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2619,2619,0,1,0,0,0,1,0,0,0,
+busDestinationsAfter,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2620,2622,0,1,0,0,0,1,0,0,3,
+openBusArrivalOffer,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2623,2632,13,2,0,0,0,0,0,0,1,busAtStop | busDestinationsAfter | clearBusWaiting | closeModal | enterBus | openModal | setBusState | setBusWaiting | toast
+offerBusAtStop,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2633,2639,2,6,1,0,0,0,0,0,0,busAtStop | openBusArrivalOffer
+openBusStop,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2640,2651,19,0,0,0,0,0,0,0,13,busAtStop | busEtaSeconds | clearBusWaiting | closeModal | openBusArrivalOffer | openModal | setBusWaiting | toast
+ensureTransitPanel,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2652,2654,2,2,0,0,0,0,0,0,0,toast | updateTransitPanel
+updateTransitPanel,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2655,2657,2,1,0,0,0,0,0,0,2,busNextStop | ensureTransitPanel
+enterBus,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2658,2668,15,8,0,0,0,0,0,0,0,auditPlayerMode | busAtStop | canEnterMobility | clearBusWaiting | clearMovementInputs | closeModal | saveState | setBusState | toast | updateTransitPanel
+exitBusAtStop,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2669,2677,14,7,0,0,0,0,0,0,4,advanceAdventure | auditPlayerMode | busAtStop | busStopRecord | rememberSafePlayerPosition | safeBusExitPoint | saveState | setBusState | setFlag | toast | trackDaily | updateContext | updateTransitPanel
+updateTransitWorld,15-transit-bus-metro.js,"Ônibus, rotas viárias, paradas, metrô e painel de transporte",2678,2722,23,29,10,0,0,2,0,0,5,busRoutePoints | exitBusAtStop | offerBusAtStop | pointOnRoad | recoverBusRoute | setBusState | trafficSpeedFactor | updateTransitPanel
+decorateCityServices,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2723,2736,14,1,0,0,0,5,0,0,1,iconTexture | premiumBox | premiumCylinder
+createFireIncidentSite,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2737,2740,4,0,0,0,0,2,0,0,4,helpExtinguishFire | registerInteractable | renderMat
+createFireTruck,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2741,2746,17,0,0,0,0,3,0,0,0,premiumBox | premiumCylinder | renderMat
+createFireServiceWorld,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2747,2747,2,0,0,0,0,0,0,0,0,createFireTruck
+activateFireIncident,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2748,2748,2,2,0,0,0,0,0,0,1,saveState | toast
+ensureActiveFire,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2749,2749,1,0,0,0,0,0,0,0,1,activateFireIncident
+helpExtinguishFire,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2750,2750,5,3,0,0,0,1,0,0,1,extinguishFireIncident | spawnDust | toast
+extinguishFireIncident,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2751,2751,6,5,0,0,0,1,0,0,5,addXP | completeActiveJob | saveState | toast | updateNavigation | updateWaypointMarker
+serviceVehicleRoute,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2752,2752,1,1,0,0,0,0,0,0,0,buildRoutePoints
+moveServiceVehicle,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2753,2753,3,4,0,0,0,1,0,0,0,serviceVehicleRoute | snapTrafficToRoad | trafficSpeedFactor
+updateFireService,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2754,2759,5,12,1,0,0,2,0,0,1,activateFireIncident | extinguishFireIncident | moveServiceVehicle | spawnDust
+createPoliceCar,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2760,2768,18,1,0,0,0,1,0,0,0,addVoxelOutline | iconTexture | premiumBox | premiumCylinder | renderMat
+createAmbulance,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2769,2775,15,0,0,0,0,1,0,0,0,premiumBox | premiumCylinder | renderMat
+createPoliceSystem,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2776,2780,3,0,0,0,0,0,0,0,0,createAmbulance | createPoliceCar
+movePoliceToward,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2781,2783,2,2,0,0,0,1,0,0,0,snapTrafficToRoad | trafficSpeedFactor
+updatePolicePatrol,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2784,2786,1,1,0,0,0,0,0,0,0,movePoliceToward
+updateSafetyPanel,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2787,2789,0,2,0,0,0,0,0,0,0,
+startPoliceAlert,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2790,2794,3,2,0,0,0,0,0,0,0,saveState | toast | updateSafetyPanel
+finishSafetyStop,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2795,2798,6,2,0,0,0,0,0,0,2,clearMovementInputs | exitVehicle | groundHeightAt | openSafetyLesson | saveState | updateSafetyPanel
+openSafetyLesson,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2799,2808,7,1,0,0,0,0,0,0,8,addReputation | addXP | awardMedal | closeModal | openModal | saveState | toast
+updatePoliceSystem,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2809,2830,8,12,3,0,0,2,0,0,4,finishSafetyStop | movePoliceToward | npcSpeech | startPoliceAlert | updatePolicePatrol | updateSafetyPanel
+moveIncidentResponder,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2831,2836,3,5,0,0,0,1,0,0,1,buildRoutePoints | snapTrafficToRoad | trafficSpeedFactor
+createTrafficIncident,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2837,2844,7,7,0,0,0,3,0,0,8,nearestRoadProjection | premiumBox | premiumCylinder | renderMat | saveState | toast
+resolveTrafficIncident,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2845,2847,2,5,0,0,0,4,0,0,0,saveState | toast
+updateTrafficIncidents,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2848,2860,6,8,0,0,0,6,0,0,2,createTrafficIncident | moveIncidentResponder | resolveTrafficIncident | trafficActorList
+openTransitGuide,16-emergency-services.js,"Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",2861,2864,2,0,0,0,0,0,0,0,0,openModal | setWaypoint
+createRoyalCastle,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2865,2890,55,0,0,0,0,10,0,0,4,addGlow | createCastleChallengeTokens | createSignpost | exitHouse | mat | premiumBox | premiumCylinder | registerInteractable | renderMat | toast
+createCastleChallengeTokens,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2891,2893,1,0,0,0,0,0,0,0,0,mat
+openAdventureHub,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2894,2896,2,0,0,0,0,0,0,0,6,openModal | startAdventure
+startAdventure,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2897,2899,5,3,0,0,0,1,0,0,2,closeModal | saveState | setWaypoint | toast
+restoreActiveAdventure,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2900,2905,0,2,0,0,0,1,0,0,5,
+advanceAdventure,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2906,2908,3,3,1,0,0,0,0,0,0,beep | finishAdventure | saveState
+finishAdventure,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2909,2911,8,4,1,0,0,1,0,0,0,addCoins | addReputation | addXP | awardMedal | saveState | setFlag | toast
+updateAdventure,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2912,2914,2,6,0,0,0,1,0,0,0,advanceAdventure | finishAdventure
+createLearningStation,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2915,2917,6,0,0,0,0,0,0,0,0,iconTexture | mat | openEducationHub | premiumBox | registerInteractable
+createLearningPlaza,17-adventures-learning-world.js,"Castelo, aventuras, desafios e praça educacional",2918,2924,4,0,0,0,0,0,0,0,0,createLearningStation | createSignpost
+rectOverlap,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2925,2925,0,0,0,0,0,0,0,0,0,
+insideWater,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2926,2926,0,0,0,0,0,0,0,0,0,
+waterAt,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2927,2927,1,0,0,0,0,0,0,0,0,insideWater
+isInsideLakeNavigable,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2928,2928,0,0,0,0,0,0,0,0,0,
+isNearFishingArea,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2929,2929,0,0,0,0,0,0,0,0,0,
+resolveWaterWalking,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2930,2932,3,3,0,0,0,0,0,0,0,groundHeightAt | toast | waterAt
+distanceToBoatDock,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2933,2933,0,0,0,0,0,0,0,0,0,
+validBoatExit,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2934,2934,1,0,0,0,0,0,0,0,0,distanceToBoatDock
+safeBoatExitPoint,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2935,2936,0,0,0,0,0,0,0,0,0,
+ensureFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2937,2950,8,1,0,0,0,0,0,0,0,renderMat
+setFishingLine,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2951,2951,0,1,0,0,0,0,0,0,0,
+fishingCastTarget,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2952,2958,1,2,1,0,0,0,0,0,1,isInsideLakeNavigable
+beginFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2959,2972,3,2,0,0,0,0,0,0,0,ensureFishingVisual | fishingCastTarget | setFishingLine
+castFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2973,2973,3,1,0,0,0,0,0,0,1,beep | ensureFishingVisual | fishingCastTarget
+hookFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2974,2974,0,1,0,0,0,0,0,0,1,
+pullFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2975,2975,0,1,0,0,0,0,0,0,3,
+restoreFishingCamera,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2976,2979,0,1,0,0,0,0,0,0,0,
+stopFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2980,2986,3,4,1,0,0,0,0,0,0,restoreFishingCamera | setFishingUiActive
+clearFishingTimers,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2987,2987,0,1,0,0,0,0,0,0,0,
+setFishingUiActive,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2988,2992,2,1,0,0,0,0,0,0,2,scheduleStableResize | syncMobilePanels
+cancelFishingSession,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2993,2993,2,0,0,0,0,0,0,0,0,clearFishingTimers | stopFishingVisual
+ensureFishingModalStyle,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",2994,3004,0,1,0,0,0,0,0,0,0,
+updateFishingVisual,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3005,3015,2,11,6,0,0,0,0,0,1,setFishingLine | stopFishingVisual
+createBoatModel,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3016,3020,12,0,0,0,0,0,0,0,2,premiumBox | registerInteractable | renderMat
+ensureBoatPanel,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3021,3023,2,1,0,0,0,0,0,0,0,exitBoat | startFishing
+updateBoatPanel,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3024,3033,10,8,0,0,0,0,0,0,3,auditPlayerMode | boardNpcPassenger | canEnterMobility | ensureBoatPanel | exitVehicle | nearestRideCompanion | saveState | toast
+enterBoatAsPassenger,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3034,3041,8,4,0,0,0,0,0,0,3,auditPlayerMode | canEnterMobility | exitVehicle | saveState | toast | updateBoatPanel
+exitBoat,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3042,3049,10,7,1,0,0,0,0,0,6,auditPlayerMode | groundHeightAt | releaseNpcPassenger | rememberSafePlayerPosition | safeBoatExitPoint | saveState | toast | updateBoatPanel | validBoatExit
+updateBoatPhysics,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3050,3053,2,4,0,0,0,0,0,0,6,exitBoat | toast
+constrainBoat,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3054,3054,1,3,0,0,0,0,0,0,0,isInsideLakeNavigable
+weightedFish,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3055,3055,0,1,0,0,0,1,0,0,0,
+startFishing,18-water-fishing-boats.js,"Água, câmera e animação da pesca, barco e física náutica",3056,3064,31,14,0,0,0,0,0,0,3,addCoins | addXP | beep | beginFishingVisual | cancelFishingSession | castFishingVisual | clearFishingTimers | ensureFishingModalStyle | hookFishingVisual | isNearFishingArea | openModal | pullFishingVisual | saveState | setFishingUiActive | stopFishingVisual | toast | vibrate | weightedFish
+campfireAllowed,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3065,3065,2,4,0,0,0,0,0,0,0,rectOverlap | waterAt
+spawnCampfire,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3066,3068,4,1,0,0,0,1,0,0,2,mat | openCampfire | premiumCylinder | registerInteractable
+nearestActiveCampfire,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3069,3070,7,3,0,0,0,0,0,0,3,campfireAllowed | confirmModal | saveState | spawnCampfire | toast
+finishCampfireCooking,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3071,3071,3,1,0,0,0,0,0,0,3,beep | saveState | toast
+openCampfire,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3072,3074,10,4,0,0,0,0,0,0,7,closeModal | confirmModal | finishCampfireCooking | openModal | saveState | toast | updateHUD
+openNearestCampfire,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3075,3075,3,1,1,0,0,0,0,0,0,nearestActiveCampfire | openCampfire | toast
+openCampfireZone,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3076,3076,4,1,1,0,0,0,0,0,0,closeModal | nearestActiveCampfire | openCampfire | openModal
+createCampfireZone,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3077,3077,3,0,0,0,0,1,0,0,0,createSignpost | premiumBox | registerInteractable
+createForestAnimal,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3078,3078,5,1,0,0,0,2,0,0,0,premiumBox
+startHunting,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3079,3079,8,5,1,0,0,0,0,0,2,addXP | closeModal | openModal | saveState | toast
+createHuntingArea,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3080,3080,6,0,0,0,0,1,0,0,0,createForestAnimal | createSignpost | premiumBox | registerInteractable | startHunting
+nearestOwnedHouseForExtension,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3081,3081,0,0,0,0,0,0,0,0,1,
+extensionPlacement,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3082,3082,0,0,0,0,0,0,0,0,3,
+extensionValid,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3083,3083,4,6,0,0,0,1,0,0,0,rectOverlap
+clearExtensionPreview,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3084,3084,0,2,0,0,0,0,0,0,4,
+renderExtensionPreview,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3085,3085,1,3,0,0,0,1,0,0,5,extensionValid
+spawnHouseExtension,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3086,3086,11,1,0,0,0,0,0,0,1,playerDisplayName | premiumBox | registerInteractable | registerPlatform | shadeColor | toast
+resourcesEnough,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3087,3087,0,0,0,0,0,0,0,0,0,
+costText,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3088,3088,0,0,0,0,0,0,0,0,2,
+openHouseExtensionPlanner,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3089,3089,22,3,0,0,0,1,0,0,4,clearExtensionPreview | closeModal | costText | extensionPlacement | extensionValid | nearestOwnedHouseForExtension | openModal | playerDisplayName | renderExtensionPreview | resourcesEnough | saveState | spawnHouseExtension | toast
+openHouseExtensionMenu,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3090,3090,4,0,0,0,0,0,0,0,0,closeModal | costText | openHouseExtensionPlanner | openModal
+createLakeExpansion,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3091,3091,7,0,0,0,0,1,0,0,0,createBoatModel | createSignpost | premiumBox | registerInteractable | registerPlatform | startFishing
+restoreLifeExpansion,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3092,3092,3,2,0,0,0,2,0,0,0,finishCampfireCooking | spawnCampfire | spawnHouseExtension
+updateLifeActivities,19-campfire-hunting-house-extensions.js,"Fogueira, caça, animais e ampliações de casas",3093,3096,2,8,0,0,0,2,0,0,2,finishCampfireCooking | saveState
+createLifeExpansionWorld,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3097,3097,5,0,0,0,0,0,0,0,0,applyCloudWorldObjects | createCampfireZone | createHuntingArea | createLakeExpansion | restoreLifeExpansion
+buildWorld,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3098,3158,110,3,0,0,0,9,0,0,2,addHouseInterior | box | createAthleticsGym | createChest | createCrystal | createDistrictVisuals | createEnemy | createFenceLine | createFireServiceWorld | createFlower | createGoldFoundry | createGoldMine | createHouse | createLamp | createLava | createLearningPlaza | createLifeExpansionWorld | createNPC | createNpcMobility | createPlatform | createPoliceSystem | createRoad | createRock | createRoyalCastle | createSignpost | createSizeChallenges | createSkyDome | createToyCar | createTransitWorld | createTree | createVillageWell | createWater | createWaypointMarker | decorateCityServices | playerDisplayName | reconcileWorldBuilds | registerInteractable | registerPlatform | restoreActiveAdventure | stableBox | updateBridgeVisual
+collectResource,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3159,3168,12,3,0,0,0,0,0,0,11,addXP | advanceAdventure | beep | checkActiveJob | evaluateMissions | playToolAnimation | saveState | toast | trackDaily | vibrate
+openChest,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3169,3175,7,2,0,0,0,0,0,0,4,addCoins | addXP | evaluateMissions | saveState | setFlag | toast
+cloudHouseRecord,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3176,3176,0,0,0,0,0,0,0,0,0,
+isMyCloudHouse,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3177,3177,0,0,0,0,0,0,0,0,1,
+reconcileCloudHouses,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3178,3207,28,15,1,0,0,1,0,0,14,addCoins | awardMedal | closeModal | cloudHouseRecord | confirmModal | enterHouse | isMyCloudHouse | openModal | saveState | setFlag | startRace | toast
+enterHouse,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3208,3219,11,5,1,0,0,6,0,0,3,auditPlayerMode | canEnterMobility | clearMovementInputs | rememberSafePlayerPosition | safePointNear | savePlayerPosition | setFlag | toast | updateCamera | updateContext
+exitHouse,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3220,3231,6,4,1,0,0,6,0,0,6,auditPlayerMode | clearMovementInputs | rememberSafePlayerPosition | safePointNear | savePlayerPosition | toast
+openHomeChest,20-world-build-cloud-houses.js,"Construção do mundo, recursos, baús, casas em nuvem e interiores",3232,3240,6,2,0,0,0,0,0,0,0,openModal | playerDisplayName | saveState | toast
+useActivity,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3241,3268,39,19,15,0,0,0,0,0,2,addXP | closeModal | openAvatarStudio | openEducationHub | openFireStationDesk | openHomeChest | openModal | openSafetyLesson | openShop | openTeacherJobLesson | openWorkshop | playerDisplayName | saveState | setFlag | toast | trackDaily | updateHUD
+openShop,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3269,3274,7,1,0,0,0,0,0,0,0,addCoins | addXP | closeModal | openModal | saveState | toast
+openWorkshop,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3275,3283,16,3,0,0,0,0,0,0,0,addCoins | addXP | closeModal | openModal | saveState | toast
+friendshipTier,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3284,3284,0,0,0,0,0,0,0,0,3,
+changeFriendship,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3285,3289,6,2,0,0,0,0,0,0,0,addReputation | addXP | evaluateMissions | saveState | setFlag | toast
+talkToNPC,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3290,3337,49,25,18,0,0,0,0,0,8,addCoins | addReputation | changeFriendship | closeModal | completeActiveJob | friendshipTier | openHouseChallenge | openJobCenter | openModal | saveState | setFlag | startRace | toast | trackDaily | triggerEmote | updateHUD
+openHouseChallenge,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3338,3344,4,1,0,0,0,0,0,0,1,closeModal | openModal | startRace | toast
+openRaceCenter,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3345,3350,3,0,0,0,0,0,0,0,1,closeModal | openModal | startRace
+createRaceOpponent,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3351,3353,4,0,0,0,0,0,0,0,1,box
+clearRaceObjects,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3354,3358,0,1,0,0,0,1,0,0,1,
+spawnRaceCoins,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3359,3364,1,0,0,0,0,1,0,0,1,cylinder
+startRace,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3365,3375,8,4,0,0,0,0,0,0,5,createRaceOpponent | exitHouse | saveState | spawnRaceCoins | toast | updateWaypointMarker
+finishRace,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3376,3385,14,4,1,0,0,0,0,0,3,addCoins | addReputation | addXP | awardMedal | clearRaceObjects | evaluateMissions | saveState | setFlag | toast | trackDaily | updateWaypointMarker
+updateRace,21-interactions-shop-social-races.js,"Atividades, mercado, oficina, amizades, NPCs e corridas",3386,3415,7,12,4,0,0,1,0,0,0,beep | finishRace
+setMissionState,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3416,3416,0,2,0,0,0,0,0,0,0,
+equipJobUniform,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3417,3421,2,1,0,0,0,0,0,0,1,applyAvatarCustomization | saveState
+focusActiveJob,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3422,3441,23,13,6,0,0,0,0,0,1,applyAvatarCustomization | buildRoutePoints | closeModal | confirmModal | ensureActiveFire | exitHouse | saveState | setMissionState | setWaypoint | toast | updateMissionHUD | updateNavigation | updateWaypointMarker
+activeJobProgress,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3442,3453,0,8,0,0,0,0,0,0,17,
+openJobCenter,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3454,3462,5,0,0,0,0,0,0,0,6,activeJobProgress | equipJobUniform | openModal | startJob | toast
+startJob,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3463,3473,9,6,2,0,0,0,0,0,1,ensureActiveFire | equipJobUniform | exitHouse | focusActiveJob | saveState | setMissionState | toast | updateMissionHUD
+completeActiveJob,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3474,3487,10,8,0,0,0,0,0,0,2,applyAvatarCustomization | evaluateMissions | saveState | setFlag | setMissionState | toast | updateHUD | updateMissionHUD | updateWaypointMarker
+checkActiveJob,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3488,3495,3,4,2,0,0,0,0,0,0,completeActiveJob
+restoreActiveJobRuntime,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3496,3498,3,3,0,0,0,0,0,0,1,applyAvatarCustomization | ensureActiveFire | updateMissionHUD
+updateCareerMissions,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3499,3509,14,11,5,0,0,0,0,0,16,activeJobProgress | beep | checkActiveJob | completeActiveJob | saveState | setMissionState | setWaypoint | toast | updateMissionHUD | updateWaypointMarker
+openTeacherJobLesson,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3510,3513,6,1,0,0,0,0,0,0,3,addXP | closeModal | completeActiveJob | openModal | toast
+openFireStationDesk,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3514,3525,15,6,0,0,0,0,0,0,6,buildRoutePoints | closeModal | ensureActiveFire | equipJobUniform | exitHouse | focusActiveJob | openModal | startJob | toast | updateWaypointMarker
+startDeliveryJob,22-careers-jobs-uniforms.js,"Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",3526,3530,3,1,0,0,0,0,0,0,0,saveState | toast
+spawnDust,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3531,3536,0,1,0,0,0,0,0,0,0,
+updateFX,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3537,3546,0,1,0,0,0,1,0,0,0,
+startEngineSound,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3547,3557,0,2,0,0,0,0,0,1,0,
+stopEngineSound,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3558,3562,0,1,0,0,0,0,0,1,0,
+updateVehicleFX,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3563,3587,7,12,2,0,0,0,0,1,3,beep | spawnDust | sprintRequested | startEngineSound | stopEngineSound
+updateVehicleControlsUI,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3588,3597,1,3,0,0,0,0,0,0,6,playerDisplayName
+vehicleHorn,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3598,3603,3,3,0,0,0,0,0,0,2,beep | vibrate
+enterVehicle,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3604,3611,17,5,0,0,0,0,0,0,1,applyVehicleAppearance | boardNpcPassenger | buildRoutePoints | canEnterMobility | clearMovementInputs | groundHeightAt | nearestRideCompanion | saveState | setFlag | setMissionState | startEngineSound | syncPlayerRootScale | toast | updateAbilityUI | updateRunUI | updateVehicleControlsUI | updateWaypointMarker
+enterVehicleAsPassenger,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3612,3620,11,6,0,0,0,0,0,0,3,auditPlayerMode | canEnterMobility | clearMovementInputs | exitBoat | saveState | toast | updateAbilityUI | updateRunUI | updateVehicleControlsUI
+exitVehicle,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3621,3629,15,7,1,0,0,0,0,0,5,auditPlayerMode | clearMovementInputs | currentVehicleRef | groundHeightAt | persistParkedVehicle | releaseNpcPassenger | rememberSafePlayerPosition | safeVehicleExitPoint | saveState | stopEngineSound | syncPlayerRootScale | toast | updateAbilityUI | updateRunUI | updateVehicleControlsUI
+repairBridge,23-vehicle-effects-driving.js,"Poeira, som, efeitos, controles, direção, passageiros e ponte",3630,3644,7,2,0,0,0,0,0,0,0,addReputation | addXP | saveState | setFlag | toast
+buildCostText,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3645,3645,0,0,0,0,0,0,0,0,1,
+currentBuildOwnerIds,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3646,3646,0,0,0,0,0,0,0,0,3,
+buildOwnedByPlayer,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3647,3647,1,0,0,0,0,0,0,0,1,currentBuildOwnerIds
+buildFootprint,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3648,3651,0,0,0,0,0,0,0,0,1,
+buildPlacementCandidate,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3652,3657,2,1,0,0,0,0,0,0,1,canBuildAt | groundHeightAt
+canBuildAt,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3658,3668,7,7,0,0,0,0,0,0,1,buildFootprint | groundHeightAt | rectOverlap | waterAt
+createBuildPreviewMesh,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3669,3680,1,7,6,0,0,3,0,0,0,sharedBoxGeometry
+disposeBuildPreview,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3681,3683,0,1,0,0,0,0,0,0,4,
+ensureBuildPanel,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3684,3688,1,1,0,0,0,0,0,0,0,endBuildMode
+updateBuildPanel,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3689,3693,3,1,0,0,0,0,0,0,4,buildCostText | ensureBuildPanel | resourcesEnough
+updateBuildPreview,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3694,3699,4,5,0,0,0,0,0,0,3,buildPlacementCandidate | createBuildPreviewMesh | disposeBuildPreview | updateBuildPanel
+beginBuildMode,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3700,3703,7,2,0,0,0,0,0,0,0,disposeBuildPreview | ensureBuildPanel | toast | updateBuildPreview | updateContext | updateVehicleControlsUI
+endBuildMode,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3704,3706,4,3,0,0,0,0,0,0,0,disposeBuildPreview | toast | updateContext | updateVehicleControlsUI
+rotateBuildPreview,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3707,3707,2,1,0,0,0,0,0,0,0,updateBuildPreview | vibrate
+openBuildMenu,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3708,3714,7,3,0,0,0,0,0,0,0,beginBuildMode | buildCostText | closeModal | openHouseExtensionMenu | openModal | toast
+placeBuild,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3715,3725,20,5,0,0,0,2,0,1,6,addXP | buildCostText | checkActiveJob | evaluateMissions | mergeBuildCollections | normalizeBuildRecord | normalizeBuildTombstones | resourcesEnough | saveState | spawnBuild | syncCloudProgress | toast | updateBuildPanel | updateBuildPreview
+spawnBuild,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3726,3738,25,9,7,0,0,2,0,0,1,addGlow | box | buildRecordSignature | groundHeightAt | normalizeBuildRecord | premiumBox | registerCollider | registerPlatform
+buildRecordSignature,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3739,3739,0,0,0,0,0,0,0,0,0,
+removeWorldBuildRecord,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3740,3742,0,1,0,0,0,1,0,0,2,
+reconcileWorldBuilds,24-construction-system.js,"Custos, propriedade, preview, validação, colocação, remoção e reconciliação",3743,3754,14,5,0,0,0,2,0,0,3,applyBuildTombstones | buildOwnedByPlayer | buildRecordSignature | confirmModal | mergeBuildTombstones | normalizeBuildTombstones | removeWorldBuildRecord | saveState | spawnBuild | syncCloudProgress | toast
+initThree,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3755,3763,23,1,0,0,0,1,0,0,2,applyAdaptiveRenderSettings | applyAvatarCustomization | applyQuality | buildWorld | createPlayerModel | freezeWorldFrustumCulling | initLocalMultiplayer | initMaterials | lockStableSceneVisibility | openModal | qualityTier | reconcileCloudHouses | remotePlayerEvent | resize | restoreActiveJobRuntime | restorePosition | targetDpr | toast
+applyQuality,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3764,3764,1,1,0,0,0,0,0,0,0,applyAdaptiveRenderSettings
+viewportMetrics,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3765,3772,0,0,0,0,0,0,0,0,8,
+resize,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3773,3786,4,2,0,0,0,0,0,0,15,clearMovementInputs | syncMobilePanels | targetDpr | viewportMetrics
+scheduleStableResize,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3787,3787,1,0,0,0,0,0,0,0,0,resize
+refreshOrientationLayout,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3788,3792,8,3,0,0,0,0,0,0,2,resize | scheduleStableResize
+restorePosition,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3793,3798,3,1,0,0,0,0,0,0,3,isInsideLakeNavigable | rememberSafePlayerPosition | safePointNear
+returnHome,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3799,3805,10,10,1,0,0,0,0,0,0,auditPlayerMode | busAtStop | exitBoat | exitBusAtStop | exitHouse | exitVehicle | rememberSafePlayerPosition | safePointNear | savePlayerPosition | toast
+savePlayerPosition,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3806,3817,5,7,3,0,0,0,0,0,6,commitState | isInsideLakeNavigable | saveState
+groundHeightAt,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3818,3820,0,2,0,0,0,1,0,0,0,
+positionBlockedForPlayer,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3821,3837,3,11,0,0,0,3,0,0,1,groundHeightAt | trafficActorList | waterAt
+safePointNear,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3838,3842,3,1,0,0,0,2,0,0,0,groundHeightAt | positionBlockedForPlayer
+rememberSafePlayerPosition,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3843,3847,1,2,0,0,0,0,0,0,0,positionBlockedForPlayer
+recoverPlayerIfInvalid,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3848,3854,3,2,0,0,0,0,0,0,0,positionBlockedForPlayer | rememberSafePlayerPosition | safePointNear
+safeVehicleExitPoint,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3855,3858,1,0,0,0,0,0,0,0,0,safePointNear
+vehicleHitsCollider,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3859,3867,2,5,0,0,0,2,0,0,1,currentVehicleRef | trafficActorList
+registerVehicleImpact,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3868,3871,3,1,0,0,0,0,0,0,0,beep | toast | vibrate
+resolveCollisions,25-render-init-resize-position-collision.js,"Three.js, qualidade, viewport, resize, posição segura e colisões",3872,3885,3,9,4,0,0,1,0,0,1,playerScaleValue | registerVehicleImpact | vehicleHitsCollider
+resolveMovementInput,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3886,3902,2,4,3,0,0,0,0,0,5,derivePlayerMode | normalizeControlIntent
+sprintRequested,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3903,3903,0,0,0,0,0,0,0,0,0,
+updateRunUI,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3904,3907,1,3,0,0,0,0,0,0,2,sprintRequested
+clearMovementInputs,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3908,3915,1,1,0,0,0,0,0,0,0,updateRunUI
+canJump,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3916,3916,0,0,0,0,0,0,0,0,0,
+requestJump,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3917,3917,2,2,0,0,0,0,0,0,0,canJump | doJump
+doJump,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3918,3918,4,1,0,0,0,0,0,0,0,beep | canJump | trackDaily | vibrate
+updatePlayer,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3919,3953,26,20,6,0,0,0,0,0,13,animatePlayer | beep | cameraRelativeVector | canJump | checkHazards | collectNearbyCrystals | constrainBoat | doJump | groundHeightAt | recoverPlayerIfInvalid | rememberSafePlayerPosition | resolveCollisions | resolveMovementInput | resolveWaterWalking | sprintRequested | syncPlayerRootScale | trackDaily | updateBoatPanel | updateBoatPhysics | updateContext | updateVehiclePhysics | vibrate
+updateVehiclePhysics,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3954,3967,3,5,0,0,0,0,0,0,16,exitVehicle | sprintRequested | toast
+animatePlayer,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3968,3992,0,13,8,0,0,0,0,0,22,
+checkHazards,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3993,3995,2,4,1,0,0,1,0,0,0,returnHome | toast
+collectNearbyCrystals,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",3996,3999,1,2,0,0,0,1,0,0,0,collectCrystal
+npcSpeech,26-input-player-physics.js,"Entrada, corrida, pulo, física do jogador/veículo e animação",4000,4000,1,1,0,0,0,0,0,0,1,toast
+nearestRideCompanion,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4001,4003,0,0,0,0,0,0,0,0,0,
+nearestBoardableNpc,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4004,4006,0,0,0,0,0,0,0,0,0,
+boardNpcPassenger,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4007,4009,2,3,0,0,0,0,0,0,3,saveState | toast
+releaseNpcPassenger,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4010,4012,1,3,0,0,0,0,0,0,4,groundHeightAt
+updateNpcSociety,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4013,4022,10,9,5,0,0,0,0,0,3,cloudHouseRecord | npcSpeech | saveState | updateHUD
+updateNPCs,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4023,4055,2,8,5,0,0,2,0,0,15,snapTrafficToRoad | trafficSpeedFactor
+updateEnemies,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4056,4064,5,5,0,0,0,1,0,0,4,beep | saveState | toast | vibrate
+meleeAttack,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4065,4069,3,1,0,0,0,0,0,0,0,beep | damageEnemy | toast
+damageEnemy,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4070,4073,5,2,0,0,0,0,0,0,2,addCoins | addXP | evaluateMissions | saveState | toast
+firePower,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4074,4079,5,3,0,0,0,0,0,0,0,beep | mat | toast | vehicleHorn | vibrate
+updateFireballs,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4080,4083,1,2,0,0,0,2,0,0,0,damageEnemy
+updateCamera,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4084,4115,1,6,1,0,0,0,0,0,27,playerScaleValue
+nearestInteractable,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4116,4133,14,14,0,0,0,1,0,0,6,boardNpcPassenger | isInteractionAvailable | nearestBoardableNpc | nearestRemotePlayer | openRemotePlayerActions | toast | updateTransitPanel | worldPos
+updateContext,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4134,4137,1,4,0,0,0,0,0,0,6,nearestInteractable
+doAction,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4138,4149,6,6,0,0,0,0,0,0,1,isInteractionAvailable | meleeAttack | nearestInteractable | syncMobilePanels | updateContext | worldPos
+updateNeeds,27-npc-enemies-combat-camera-action.js,"Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",4150,4157,5,3,0,0,0,0,0,0,3,playerDisplayName | saveState | sprintRequested | toast | updateHUD
+multiplayerGameLabel,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4158,4158,0,0,0,0,0,0,0,0,2,
+pendingChallenges,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4159,4159,0,0,0,0,0,0,0,0,0,
+readyGameSessions,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4160,4160,0,0,0,0,0,0,0,0,1,
+closeChallengePrompt,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4161,4161,0,1,0,0,0,0,0,0,0,
+showIncomingChallengePrompt,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4162,4162,1,1,0,0,0,0,0,0,0,multiplayerGameLabel
+showReadySessionPrompt,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4163,4164,2,2,0,0,0,0,0,0,3,multiplayerGameLabel | sessionOpponentName
+socialActionLabel,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4165,4165,0,0,0,0,0,0,0,0,0,
+socialRequestPending,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4166,4166,0,0,0,0,0,0,0,0,0,
+showIncomingSocialRequest,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4167,4177,8,6,0,0,0,0,0,0,4,saveState | socialActionLabel | toast
+applyAcceptedSocialAction,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4178,4195,23,15,9,0,0,0,0,0,14,closeChallengePrompt | closeModal | enterBoatAsPassenger | enterVehicleAsPassenger | escapeHtml | multiplayerGameLabel | openModal | openNearestCampfire | saveState | sessionOpponentName | startFishing | startHunting | startMultiplayerEducationGame | toast | triggerEmote
+updateOnlineAttention,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4196,4196,3,2,0,0,0,0,0,0,5,pendingChallenges | readyGameSessions | socialRequestPending
+challengeInboxHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4197,4197,3,0,0,0,0,0,0,0,1,escapeHtml | multiplayerGameLabel | pendingChallenges
+socialRequestInboxHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4198,4198,4,0,0,0,0,0,0,0,1,escapeHtml | socialActionLabel | socialRequestPending
+completedGameSessions,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4199,4199,0,0,0,0,0,0,0,0,3,
+rememberMatchResult,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4200,4200,1,2,0,0,0,0,0,0,4,sessionOpponentName
+duelHistoryHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4201,4201,5,0,0,0,0,0,0,0,9,completedGameSessions | escapeHtml | multiplayerGameLabel | sessionOpponentName
+activeSessionsHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4202,4202,3,0,0,0,0,0,0,0,9,escapeHtml | multiplayerGameLabel | readyGameSessions
+bindChallengeCards,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4203,4205,11,5,1,0,0,0,0,0,11,closeChallengePrompt | multiplayerGameLabel | refreshOpenSocialHub | toast | updateOnlineAttention
+highestUnlockedLevel,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4206,4206,1,1,0,0,0,1,0,0,0,subjectUnlocked
+openChallengePicker,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4207,4207,5,1,1,0,0,0,0,0,4,closeModal | highestUnlockedLevel | openModal | toast
+sessionOpponentName,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4208,4208,0,0,0,0,0,0,0,0,3,
+startMultiplayerEducationGame,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4209,4209,9,2,0,0,0,0,0,0,5,closeChallengePrompt | escapeHtml | openModal | runEducationGame | saveState | sessionOpponentName | toast
+maybeShowMultiplayerResult,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4210,4210,6,4,0,0,0,0,0,0,13,addCoins | addXP | escapeHtml | openModal | rememberMatchResult | saveState
+multiplayerStatusText,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4211,4211,0,2,0,0,0,0,0,0,2,
+updateMultiplayerBadge,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4212,4212,0,2,0,0,0,0,0,0,1,
+onlinePlayers,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4213,4213,0,0,0,0,0,0,0,0,3,
+onlinePlayerListHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4214,4214,2,0,0,0,0,0,0,0,1,escapeHtml | onlinePlayers
+bindOnlinePlayerCards,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4215,4215,1,1,0,0,0,0,0,0,0,openRemotePlayerActions
+refreshOpenSocialHub,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4216,4216,13,9,0,0,0,0,0,0,0,activeSessionsHtml | bindChallengeCards | bindOnlinePlayerCards | challengeInboxHtml | chatMessageHtml | duelHistoryHtml | multiplayerStatusText | onlinePlayerListHtml | onlinePlayers | socialRequestInboxHtml | updateOnlineAttention
+openSocialHub,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4217,4224,16,2,0,0,0,0,0,0,4,activeSessionsHtml | bindChallengeCards | bindOnlinePlayerCards | challengeInboxHtml | chatMessageHtml | duelHistoryHtml | multiplayerStatusText | onlinePlayerListHtml | onlinePlayers | openModal | pendingChallenges | refreshOpenSocialHub | saveState | socialRequestInboxHtml | socialRequestPending | toast
+escapeHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4225,4225,0,0,0,0,0,0,0,0,0,
+chatMessageHtml,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4226,4226,2,0,0,0,0,0,0,0,0,escapeHtml
+openRemotePlayerActions,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4227,4239,15,11,4,0,0,0,0,0,13,addCoins | closeModal | isNearFishingArea | nearestActiveCampfire | openChallengePicker | openModal | openSocialHub | saveState | toast | triggerEmote
+nearestRemotePlayer,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4240,4240,0,1,0,0,0,1,0,0,0,
+openMultiplayerConfig,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4241,4241,1,0,0,0,0,0,0,0,0,openSocialHub
+applyCloudWorldObjects,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4242,4248,2,8,0,0,0,6,0,0,1,spawnCampfire | spawnHouseExtension
+remotePlayerEvent,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4249,4279,54,41,12,0,0,1,1,0,26,applyAcceptedSocialAction | applyCloudWorldObjects | closeChallengePrompt | createGhost | exitBoat | exitVehicle | hasValidPlayerName | maybeShowMultiplayerResult | mergeCloudProgress | multiplayerGameLabel | reconcileCloudHouses | refreshOpenSocialHub | saveState | showIncomingChallengePrompt | showIncomingSocialRequest | showReadySessionPrompt | socialActionLabel | toast | triggerEmote | updateGhostName | updateMultiplayerBadge | updateOnlineAttention
+initLocalMultiplayer,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4280,4283,3,5,0,0,0,0,0,0,11,hasValidPlayerName | remotePlayerEvent | updateMultiplayerBadge
+multiplayerNameTexture,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4284,4284,1,1,1,0,0,0,0,0,0,sanitizePlayerName
+updateLocalPlayerNameLabel,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4285,4285,2,2,0,0,0,0,0,0,4,multiplayerNameTexture | playerDisplayName
+updateGhostName,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4286,4286,2,2,0,0,0,0,0,0,2,multiplayerNameTexture | sanitizePlayerName
+createGhost,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4287,4292,19,0,0,0,0,1,0,0,0,box | cylinder | multiplayerNameTexture | sanitizePlayerName
+updateMultiplayer,28-multiplayer-social-online.js,"Desafios online, social, chat, presença, fantasmas e sincronização",4293,4304,0,4,0,0,0,1,0,0,27,
+gameLoop,29-game-loop-controls-gamepad.js,"Loop principal, controles, gamepad e início do jogo",4305,4335,30,15,0,0,0,0,0,0,12,auditPlayerMode | captureTrafficPositions | pollGamepad | qualityTier | refreshTechnicalPanel | resolveTrafficOverlaps | samplePerformance | updateAdventure | updateBuildPreview | updateCamera | updateCareerMissions | updateClouds | updateEnemies | updateFX | updateFireService | updateFireballs | updateFishingVisual | updateLifeActivities | updateMultiplayer | updateNPCs | updateNavigation | updateNeeds | updateNpcSociety | updatePlayer | updatePoliceSystem | updateRace | updateTrafficIncidents | updateTransitWorld | updateVehicleFX | updateVisualLOD
+setupControls,29-game-loop-controls-gamepad.js,"Loop principal, controles, gamepad e início do jogo",4336,4357,23,21,2,0,0,0,0,0,8,closeModal | doAction | endBuildMode | firePower | openPauseMenu | requestJump | rotateBuildPreview | saveState | setScaleMode | spinPlayer | toast | toggleCrouch | updateRunUI
+pollGamepad,29-game-loop-controls-gamepad.js,"Loop principal, controles, gamepad e início do jogo",4358,4377,32,14,2,0,0,0,0,0,14,accountLinked | accountPromptWasHandled | applyAvatarCustomization | closeModal | doAction | equippedTool | evaluateMissions | firePower | gameLoop | hasValidPlayerName | initThree | openAccountCenter | openPlayerNameModal | requestJump | resize | restorePosition | saveState | setScaleMode | setupControls | showScreen | syncMobilePanels | toast | toggleCrouch | updateAbilityUI | updateContext | updateHUD | updateNavigation | updateRunUI
+stopGame,30-pause-tests-public-api-bootstrap.js,"Pausa, testes de veículo, API pública de auditoria e bootstrap final",4378,4383,9,10,0,0,0,0,0,0,0,endBuildMode | exitBoat | exitBusAtStop | exitVehicle | savePlayerPosition | showScreen | stopEngineSound | updateLobbyStats | updateSafetyPanel
+openPauseMenu,30-pause-tests-public-api-bootstrap.js,"Pausa, testes de veículo, API pública de auditoria e bootstrap final",4384,4395,11,4,0,0,0,0,0,0,0,closeModal | endBuildMode | openLifePanel | openModal | returnHome | startEngineSound | stopEngineSound | stopGame
+updateBridgeVisual,30-pause-tests-public-api-bootstrap.js,"Pausa, testes de veículo, API pública de auditoria e bootstrap final",4396,4398,0,0,0,0,0,0,0,0,0,
+prepareVehicleTestArea,30-pause-tests-public-api-bootstrap.js,"Pausa, testes de veículo, API pública de auditoria e bootstrap final",4399,4411,4,2,0,0,0,0,0,0,0,clearMovementInputs | enterVehicle | exitVehicle | groundHeightAt
+stepVehicleSimulation,30-pause-tests-public-api-bootstrap.js,"Pausa, testes de veículo, API pública de auditoria e bootstrap final",4412,4557,85,9,0,0,0,5,0,0,130,activateFireIncident | applyAdaptiveRenderSettings | auditPlayerMode | beginBuildMode | buildRoutePoints | busAtStop | cameraRelativeVector | closeModal | completeActiveJob | constrainBoat | currentVehicleRef | detectStableAutoTier | distanceToBoatDock | doAction | educationSummary | endBuildMode | enterBoatAsPassenger | enterBus | enterHouse | enterVehicle | enterVehicleAsPassenger | evaluateMissions | exitBoat | exitBusAtStop | exitVehicle | firePower | generateEducationRounds | groundHeightAt | initTechnicalPanel | lockStableSceneVisibility | openPauseMenu | pendingChallenges | placeBuild | prepareVehicleTestArea | qualityTier | reconcileWorldBuilds | remotePlayerEvent | requestJump | requestedQuality | resolveCollisions | resolveMovementInput | rideMetroTo | rotateBuildPreview | routeProgressInfo | savePlayerPosition | saveState | setWaypoint | socialRequestPending | sprintRequested | startFishing | startHunting | startJob | startPoliceAlert | startRace | toggleCrouch | updateAdventure | updateBoatPanel | updateBoatPhysics | updateContext | updateFireService | updateInstallUI | updateLobbyStats | updateMultiplayer | updateNavigation | updatePlayer | updateRunUI | updateTransitWorld | updateVehiclePhysics | updateWaypointMarker | validBoatExit

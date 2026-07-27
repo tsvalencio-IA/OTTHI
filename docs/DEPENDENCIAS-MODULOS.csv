@@ -1,0 +1,272 @@
+﻿sourceModule,targetModule,edgeOccurrences,callerFunctions,calledFunctions
+02-state-save-cloud-account.js,01-build-persistence.js,7,commitState | mergeCloudProgress | normalizeState,applyBuildTombstones | mergeBuildCollections | mergeBuildTombstones | mergeEntityCollections | normalizeBuildTombstones
+02-state-save-cloud-account.js,03-ui-modal-install-pwa.js,9,mergeCloudProgress | openAccountCenter | openAccountForm,closeModal | confirmModal | openModal | toast
+02-state-save-cloud-account.js,04-education-daily-quiz.js,4,commitState | loadState,ensureDailyChallenges | updateDailyBadge
+02-state-save-cloud-account.js,06-missions-profile-hud-inventory-tools.js,16,commitState | loadState | mergeCloudProgress | openAccountCenter | syncCloudProgress | syncGameAccount,applyPlayerName | hasValidPlayerName | openPlayerNameModal | sanitizePlayerName | updateHUD | updateLobbyStats | updatePlayerNameUI
+02-state-save-cloud-account.js,24-construction-system.js,1,mergeCloudProgress,reconcileWorldBuilds
+02-state-save-cloud-account.js,28-multiplayer-social-online.js,2,openAccountCenter | openAccountForm,escapeHtml
+03-ui-modal-install-pwa.js,02-state-save-cloud-account.js,6,addCoins | addReputation | addXP | awardMedal | isOfficialOtthiGameAddress | setFlag,saveState
+03-ui-modal-install-pwa.js,06-missions-profile-hud-inventory-tools.js,4,addCoins | addReputation | addXP | setFlag,evaluateMissions | updateHUD
+03-ui-modal-install-pwa.js,18-water-fishing-boats.js,2,closeModal,cancelFishingSession | stopFishingVisual
+03-ui-modal-install-pwa.js,19-campfire-hunting-house-extensions.js,1,closeModal,clearExtensionPreview
+03-ui-modal-install-pwa.js,23-vehicle-effects-driving.js,1,closeModal,startEngineSound
+03-ui-modal-install-pwa.js,25-render-init-resize-position-collision.js,1,openModal,scheduleStableResize
+04-education-daily-quiz.js,02-state-save-cloud-account.js,5,claimDailyQuest | ensureDailyChallenges | finishSoloEducationGame | trackDaily,saveState
+04-education-daily-quiz.js,03-ui-modal-install-pwa.js,22,claimDailyQuest | finishSoloEducationGame | openCollection | openEducationHub | runEducationGame | startSoloEducationGame | triggerEmote,addCoins | addReputation | addXP | awardMedal | beep | openModal | toast | vibrate
+04-education-daily-quiz.js,06-missions-profile-hud-inventory-tools.js,1,openEducationHub,playerDisplayName
+04-education-daily-quiz.js,28-multiplayer-social-online.js,6,openEducationHub | runEducationGame | startSoloEducationGame,closeChallengePrompt | escapeHtml | openSocialHub
+05-avatar-life-customization.js,02-state-save-cloud-account.js,1,openAvatarStudio,saveState
+05-avatar-life-customization.js,03-ui-modal-install-pwa.js,9,openAvatarStudio | openHow | openLifePanel | openMolds,closeModal | openModal | setFlag | toast
+05-avatar-life-customization.js,06-missions-profile-hud-inventory-tools.js,3,openAvatarStudio | openMolds,playerDisplayName
+05-avatar-life-customization.js,11-render-materials-player-model.js,1,openAvatarStudio,applyAvatarCustomization
+06-missions-profile-hud-inventory-tools.js,02-state-save-cloud-account.js,5,applyPlayerName | equipTool | openInventory | pinChapter | updatePlayerNameUI,accountStatusText | saveState
+06-missions-profile-hud-inventory-tools.js,03-ui-modal-install-pwa.js,16,applyPlayerName | equipTool | evaluateMissions | openInventory | openObjectivesPanel | openPlayerNameModal | openToolbelt | pinChapter | playToolAnimation,addCoins | awardMedal | beep | closeModal | openModal | toast | vibrate
+06-missions-profile-hud-inventory-tools.js,11-render-materials-player-model.js,7,refreshEquippedToolVisual,box | renderMat
+06-missions-profile-hud-inventory-tools.js,22-careers-jobs-uniforms.js,2,openObjectivesPanel | updateMissionHUD,activeJobProgress
+07-navigation-traffic-routes.js,02-state-save-cloud-account.js,1,updateNavigation,saveState
+07-navigation-traffic-routes.js,03-ui-modal-install-pwa.js,2,updateNavigation,beep | toast
+07-navigation-traffic-routes.js,06-missions-profile-hud-inventory-tools.js,1,routeSvgMarkup,playerDisplayName
+07-navigation-traffic-routes.js,08-map-parent-settings.js,1,routeSvgMarkup,worldToMap
+07-navigation-traffic-routes.js,11-render-materials-player-model.js,1,createRouteGuide,mat
+07-navigation-traffic-routes.js,25-render-init-resize-position-collision.js,1,updateRouteGuide,groundHeightAt
+08-map-parent-settings.js,02-state-save-cloud-account.js,10,clearWaypoint | openFinalResetConfirmation | openParentGate | openParentTools | openSettings | setWaypoint,accountLinked | accountStatusText | commitState | normalizeState | openAccountCenter | saveState
+08-map-parent-settings.js,03-ui-modal-install-pwa.js,18,clearWaypoint | openFinalResetConfirmation | openMap | openParentGate | openParentTools | openSettings | setWaypoint,closeModal | confirmModal | openModal | toast
+08-map-parent-settings.js,04-education-daily-quiz.js,2,openSettings,openEducationHub
+08-map-parent-settings.js,06-missions-profile-hud-inventory-tools.js,3,openSettings,hasValidPlayerName | openPlayerNameModal
+08-map-parent-settings.js,07-navigation-traffic-routes.js,6,clearWaypoint | openMap | setWaypoint,buildRoutePoints | routeProgressInfo | routeSvgMarkup | updateNavigation
+08-map-parent-settings.js,09-responsive-ar-quality-diagnostics.js,5,openSettings,qualityLabel | qualityTier | requestedQuality
+08-map-parent-settings.js,13-houses-npcs-vehicles-base.js,2,clearWaypoint | setWaypoint,updateWaypointMarker
+08-map-parent-settings.js,25-render-init-resize-position-collision.js,3,openSettings,applyQuality | returnHome | savePlayerPosition
+08-map-parent-settings.js,28-multiplayer-social-online.js,2,openSettings,closeChallengePrompt | multiplayerStatusText
+08-map-parent-settings.js,30-pause-tests-public-api-bootstrap.js,1,openSettings,stopGame
+09-responsive-ar-quality-diagnostics.js,02-state-save-cloud-account.js,4,samplePerformance | syncMobilePanels,saveState
+09-responsive-ar-quality-diagnostics.js,03-ui-modal-install-pwa.js,3,openAndroidSceneViewer | samplePerformance,openModal | toast
+09-responsive-ar-quality-diagnostics.js,06-missions-profile-hud-inventory-tools.js,1,syncMobilePanels,openObjectivesPanel
+09-responsive-ar-quality-diagnostics.js,25-render-init-resize-position-collision.js,1,applyAdaptiveRenderSettings,scheduleStableResize
+10-player-skills.js,02-state-save-cloud-account.js,5,collectCrystal | recordAdvancedSkill | setScaleMode | toggleCrouch,saveState
+10-player-skills.js,03-ui-modal-install-pwa.js,22,collectCrystal | setScaleMode | skillReady | spinPlayer | toggleCrouch,addCoins | addXP | beep | toast | vibrate
+10-player-skills.js,04-education-daily-quiz.js,3,collectCrystal | recordAdvancedSkill | setScaleMode,trackDaily
+10-player-skills.js,06-missions-profile-hud-inventory-tools.js,3,collectCrystal | toggleCrouch,evaluateMissions | playerDisplayName
+10-player-skills.js,17-adventures-learning-world.js,1,recordAdvancedSkill,advanceAdventure
+10-player-skills.js,22-careers-jobs-uniforms.js,1,collectCrystal,checkActiveJob
+10-player-skills.js,23-vehicle-effects-driving.js,1,setScaleMode,spawnDust
+10-player-skills.js,27-npc-enemies-combat-camera-action.js,2,setScaleMode | spinPlayer,damageEnemy
+11-render-materials-player-model.js,05-avatar-life-customization.js,1,applyAvatarCustomization,effectiveAvatarUniform
+11-render-materials-player-model.js,06-missions-profile-hud-inventory-tools.js,3,createPlayerModel,playerDisplayName | refreshEquippedToolVisual
+11-render-materials-player-model.js,28-multiplayer-social-online.js,1,createPlayerModel,multiplayerNameTexture
+12-world-resources-nature.js,02-state-save-cloud-account.js,1,drawWaterFromWell,saveState
+12-world-resources-nature.js,03-ui-modal-install-pwa.js,4,drawWaterFromWell,addXP | toast
+12-world-resources-nature.js,06-missions-profile-hud-inventory-tools.js,2,drawWaterFromWell,playToolAnimation | updateHUD
+12-world-resources-nature.js,11-render-materials-player-model.js,164,createFenceLine | createFurniture | createGoldFoundry | createGoldMine | createLamp | createLava | createRoad | createRock | createSignpost | createTree | createVillageWell | createWater | ensureFlowerBatch,addGlow | box | cylinder | mat | premiumBox | premiumCylinder | registerCollider | registerInteractable | renderMat | sharedBoxGeometry | stableBox | texturedRoofMaterial
+12-world-resources-nature.js,13-houses-npcs-vehicles-base.js,5,createFurniture,shadeColor
+12-world-resources-nature.js,17-adventures-learning-world.js,1,drawWaterFromWell,advanceAdventure
+12-world-resources-nature.js,20-world-build-cloud-houses.js,3,createGoldMine | createRock | createTree,collectResource
+13-houses-npcs-vehicles-base.js,03-ui-modal-install-pwa.js,12,createSizeChallenges,addXP | setFlag | toast
+13-houses-npcs-vehicles-base.js,07-navigation-traffic-routes.js,1,createNpcMobility,nearestRoadProjection
+13-houses-npcs-vehicles-base.js,11-render-materials-player-model.js,180,addHouseInterior | createAthleticsGym | createChest | createCrystal | createEnemy | createHouse | createNPC | createNpcMobility | createPlatform | createSizeChallenges | createSkyDome | createToyCar | createWaypointMarker | decorateHouseCommercial | registerActivity,addGlow | addVoxelOutline | box | cylinder | makePlanter | makeWindow | mat | premiumBox | premiumCylinder | registerCollider | registerInteractable | registerPlatform | renderMat | sharedBoxGeometry | texturedRoofMaterial | tintedBrickMaterial
+13-houses-npcs-vehicles-base.js,12-world-resources-nature.js,46,addHouseInterior | createAthleticsGym | createHouse,createFlower | createFurniture | createLamp | signTexture
+13-houses-npcs-vehicles-base.js,14-world-district-decoration.js,1,createNPC,iconTexture
+13-houses-npcs-vehicles-base.js,20-world-build-cloud-houses.js,2,addHouseInterior | createChest,exitHouse | openChest
+13-houses-npcs-vehicles-base.js,21-interactions-shop-social-races.js,3,createAthleticsGym | createNPC | registerActivity,openRaceCenter | talkToNPC | useActivity
+13-houses-npcs-vehicles-base.js,23-vehicle-effects-driving.js,1,createToyCar,enterVehicle
+14-world-district-decoration.js,11-render-materials-player-model.js,53,createAwning | createBackdropBuilding | createChallengeCube | createCoinTrail | createFloatingIsland | createFountain | createPlayground | createPortalArch | createStreetTree | createVoxelMushroom,addGlow | addVoxelOutline | box | cylinder | makePlanter | mat | premiumBox | renderMat
+14-world-district-decoration.js,13-houses-npcs-vehicles-base.js,2,createBackdropBuilding | createVoxelMushroom,shadeColor
+15-transit-bus-metro.js,02-state-save-cloud-account.js,5,clearBusWaiting | enterBus | exitBusAtStop | rideMetroTo | setBusWaiting,saveState
+15-transit-bus-metro.js,03-ui-modal-install-pwa.js,29,ensureTransitPanel | enterBus | exitBusAtStop | openBusArrivalOffer | openBusStop | openMetroStation | rideMetroTo,closeModal | openModal | setFlag | toast
+15-transit-bus-metro.js,04-education-daily-quiz.js,2,exitBusAtStop | rideMetroTo,trackDaily
+15-transit-bus-metro.js,07-navigation-traffic-routes.js,8,buildBusRoadPath | nearestForwardBusSegment | offsetBusPath | projectedBusPoint | rideMetroTo | updateTransitWorld,buildRoutePoints | nearestRoadProjection | pointOnRoad | projectPointToSegment | trafficSpeedFactor | updateNavigation
+15-transit-bus-metro.js,09-responsive-ar-quality-diagnostics.js,6,enterBus | exitBusAtStop | rideMetroTo,auditPlayerMode | canEnterMobility
+15-transit-bus-metro.js,11-render-materials-player-model.js,44,createBusModel | createMetroEntrance | ensureBusStop,premiumBox | premiumCylinder | registerInteractable | renderMat
+15-transit-bus-metro.js,12-world-resources-nature.js,2,createBusModel,signTexture
+15-transit-bus-metro.js,14-world-district-decoration.js,2,createMetroEntrance | ensureBusStop,iconTexture
+15-transit-bus-metro.js,17-adventures-learning-world.js,2,exitBusAtStop | rideMetroTo,advanceAdventure
+15-transit-bus-metro.js,25-render-init-resize-position-collision.js,6,exitBusAtStop | rideMetroTo | safeBusExitPoint,groundHeightAt | positionBlockedForPlayer | rememberSafePlayerPosition | safePointNear
+15-transit-bus-metro.js,26-input-player-physics.js,2,enterBus | rideMetroTo,clearMovementInputs
+15-transit-bus-metro.js,27-npc-enemies-combat-camera-action.js,2,exitBusAtStop | rideMetroTo,updateContext
+16-emergency-services.js,02-state-save-cloud-account.js,7,activateFireIncident | createTrafficIncident | extinguishFireIncident | finishSafetyStop | openSafetyLesson | resolveTrafficIncident | startPoliceAlert,saveState
+16-emergency-services.js,03-ui-modal-install-pwa.js,16,activateFireIncident | createTrafficIncident | extinguishFireIncident | helpExtinguishFire | openSafetyLesson | openTransitGuide | resolveTrafficIncident | startPoliceAlert,addReputation | addXP | awardMedal | closeModal | openModal | toast
+16-emergency-services.js,07-navigation-traffic-routes.js,12,createTrafficIncident | extinguishFireIncident | moveIncidentResponder | movePoliceToward | moveServiceVehicle | serviceVehicleRoute | updateTrafficIncidents,buildRoutePoints | nearestRoadProjection | snapTrafficToRoad | trafficActorList | trafficSpeedFactor | updateNavigation
+16-emergency-services.js,08-map-parent-settings.js,1,openTransitGuide,setWaypoint
+16-emergency-services.js,11-render-materials-player-model.js,67,createAmbulance | createFireIncidentSite | createFireTruck | createPoliceCar | createTrafficIncident | decorateCityServices,addVoxelOutline | premiumBox | premiumCylinder | registerInteractable | renderMat
+16-emergency-services.js,13-houses-npcs-vehicles-base.js,1,extinguishFireIncident,updateWaypointMarker
+16-emergency-services.js,14-world-district-decoration.js,3,createPoliceCar | decorateCityServices,iconTexture
+16-emergency-services.js,22-careers-jobs-uniforms.js,1,extinguishFireIncident,completeActiveJob
+16-emergency-services.js,23-vehicle-effects-driving.js,3,finishSafetyStop | helpExtinguishFire | updateFireService,exitVehicle | spawnDust
+16-emergency-services.js,25-render-init-resize-position-collision.js,1,finishSafetyStop,groundHeightAt
+16-emergency-services.js,26-input-player-physics.js,3,finishSafetyStop | updatePoliceSystem,clearMovementInputs | npcSpeech
+17-adventures-learning-world.js,02-state-save-cloud-account.js,3,advanceAdventure | finishAdventure | startAdventure,saveState
+17-adventures-learning-world.js,03-ui-modal-install-pwa.js,13,advanceAdventure | createRoyalCastle | finishAdventure | openAdventureHub | startAdventure,addCoins | addReputation | addXP | awardMedal | beep | closeModal | openModal | setFlag | toast
+17-adventures-learning-world.js,04-education-daily-quiz.js,1,createLearningStation,openEducationHub
+17-adventures-learning-world.js,08-map-parent-settings.js,1,startAdventure,setWaypoint
+17-adventures-learning-world.js,11-render-materials-player-model.js,56,createCastleChallengeTokens | createLearningStation | createRoyalCastle,addGlow | mat | premiumBox | premiumCylinder | registerInteractable | renderMat
+17-adventures-learning-world.js,12-world-resources-nature.js,2,createLearningPlaza | createRoyalCastle,createSignpost
+17-adventures-learning-world.js,14-world-district-decoration.js,1,createLearningStation,iconTexture
+17-adventures-learning-world.js,20-world-build-cloud-houses.js,1,createRoyalCastle,exitHouse
+18-water-fishing-boats.js,02-state-save-cloud-account.js,6,enterBoatAsPassenger | exitBoat | startFishing | updateBoatPanel,saveState
+18-water-fishing-boats.js,03-ui-modal-install-pwa.js,24,castFishingVisual | enterBoatAsPassenger | exitBoat | resolveWaterWalking | startFishing | updateBoatPanel | updateBoatPhysics,addCoins | addXP | beep | openModal | toast | vibrate
+18-water-fishing-boats.js,09-responsive-ar-quality-diagnostics.js,6,enterBoatAsPassenger | exitBoat | setFishingUiActive | updateBoatPanel,auditPlayerMode | canEnterMobility | syncMobilePanels
+18-water-fishing-boats.js,11-render-materials-player-model.js,20,createBoatModel | ensureFishingVisual,premiumBox | registerInteractable | renderMat
+18-water-fishing-boats.js,23-vehicle-effects-driving.js,2,enterBoatAsPassenger | updateBoatPanel,exitVehicle
+18-water-fishing-boats.js,25-render-init-resize-position-collision.js,4,exitBoat | resolveWaterWalking | setFishingUiActive,groundHeightAt | rememberSafePlayerPosition | scheduleStableResize
+18-water-fishing-boats.js,27-npc-enemies-combat-camera-action.js,3,exitBoat | updateBoatPanel,boardNpcPassenger | nearestRideCompanion | releaseNpcPassenger
+19-campfire-hunting-house-extensions.js,02-state-save-cloud-account.js,7,finishCampfireCooking | nearestActiveCampfire | openCampfire | openHouseExtensionPlanner | startHunting | updateLifeActivities,saveState
+19-campfire-hunting-house-extensions.js,03-ui-modal-install-pwa.js,31,finishCampfireCooking | nearestActiveCampfire | openCampfire | openCampfireZone | openHouseExtensionMenu | openHouseExtensionPlanner | openNearestCampfire | spawnHouseExtension | startHunting,addXP | beep | closeModal | confirmModal | openModal | toast
+19-campfire-hunting-house-extensions.js,06-missions-profile-hud-inventory-tools.js,3,openCampfire | openHouseExtensionPlanner | spawnHouseExtension,playerDisplayName | updateHUD
+19-campfire-hunting-house-extensions.js,11-render-materials-player-model.js,24,createCampfireZone | createForestAnimal | createHuntingArea | createLakeExpansion | spawnCampfire | spawnHouseExtension,mat | premiumBox | premiumCylinder | registerInteractable | registerPlatform
+19-campfire-hunting-house-extensions.js,12-world-resources-nature.js,3,createCampfireZone | createHuntingArea | createLakeExpansion,createSignpost
+19-campfire-hunting-house-extensions.js,13-houses-npcs-vehicles-base.js,1,spawnHouseExtension,shadeColor
+19-campfire-hunting-house-extensions.js,18-water-fishing-boats.js,8,campfireAllowed | createLakeExpansion | extensionValid,createBoatModel | rectOverlap | startFishing | waterAt
+20-world-build-cloud-houses.js,02-state-save-cloud-account.js,7,collectResource | openChest | openHomeChest | reconcileCloudHouses,saveState
+20-world-build-cloud-houses.js,03-ui-modal-install-pwa.js,36,collectResource | enterHouse | exitHouse | openChest | openHomeChest | reconcileCloudHouses,addCoins | addXP | awardMedal | beep | closeModal | confirmModal | openModal | setFlag | toast | vibrate
+20-world-build-cloud-houses.js,04-education-daily-quiz.js,1,collectResource,trackDaily
+20-world-build-cloud-houses.js,06-missions-profile-hud-inventory-tools.js,5,buildWorld | collectResource | openChest | openHomeChest,evaluateMissions | playToolAnimation | playerDisplayName
+20-world-build-cloud-houses.js,09-responsive-ar-quality-diagnostics.js,3,enterHouse | exitHouse,auditPlayerMode | canEnterMobility
+20-world-build-cloud-houses.js,11-render-materials-player-model.js,8,buildWorld,box | registerInteractable | registerPlatform | stableBox
+20-world-build-cloud-houses.js,12-world-resources-nature.js,28,buildWorld,createFenceLine | createFlower | createGoldFoundry | createGoldMine | createLamp | createLava | createRoad | createRock | createSignpost | createTree | createVillageWell | createWater
+20-world-build-cloud-houses.js,13-houses-npcs-vehicles-base.js,62,buildWorld,addHouseInterior | createAthleticsGym | createChest | createCrystal | createEnemy | createHouse | createNPC | createNpcMobility | createPlatform | createSizeChallenges | createSkyDome | createToyCar | createWaypointMarker
+20-world-build-cloud-houses.js,14-world-district-decoration.js,1,buildWorld,createDistrictVisuals
+20-world-build-cloud-houses.js,15-transit-bus-metro.js,1,buildWorld,createTransitWorld
+20-world-build-cloud-houses.js,16-emergency-services.js,3,buildWorld,createFireServiceWorld | createPoliceSystem | decorateCityServices
+20-world-build-cloud-houses.js,17-adventures-learning-world.js,4,buildWorld | collectResource,advanceAdventure | createLearningPlaza | createRoyalCastle | restoreActiveAdventure
+20-world-build-cloud-houses.js,19-campfire-hunting-house-extensions.js,4,createLifeExpansionWorld,createCampfireZone | createHuntingArea | createLakeExpansion | restoreLifeExpansion
+20-world-build-cloud-houses.js,21-interactions-shop-social-races.js,1,reconcileCloudHouses,startRace
+20-world-build-cloud-houses.js,22-careers-jobs-uniforms.js,1,collectResource,checkActiveJob
+20-world-build-cloud-houses.js,24-construction-system.js,1,buildWorld,reconcileWorldBuilds
+20-world-build-cloud-houses.js,25-render-init-resize-position-collision.js,6,enterHouse | exitHouse,rememberSafePlayerPosition | safePointNear | savePlayerPosition
+20-world-build-cloud-houses.js,26-input-player-physics.js,2,enterHouse | exitHouse,clearMovementInputs
+20-world-build-cloud-houses.js,27-npc-enemies-combat-camera-action.js,2,enterHouse,updateCamera | updateContext
+20-world-build-cloud-houses.js,28-multiplayer-social-online.js,1,createLifeExpansionWorld,applyCloudWorldObjects
+20-world-build-cloud-houses.js,30-pause-tests-public-api-bootstrap.js,1,buildWorld,updateBridgeVisual
+21-interactions-shop-social-races.js,02-state-save-cloud-account.js,13,changeFriendship | finishRace | openShop | openWorkshop | startRace | talkToNPC | useActivity,saveState
+21-interactions-shop-social-races.js,03-ui-modal-install-pwa.js,92,changeFriendship | finishRace | openHouseChallenge | openRaceCenter | openShop | openWorkshop | startRace | talkToNPC | updateRace | useActivity,addCoins | addReputation | addXP | awardMedal | beep | closeModal | openModal | setFlag | toast
+21-interactions-shop-social-races.js,04-education-daily-quiz.js,8,finishRace | talkToNPC | useActivity,openEducationHub | trackDaily | triggerEmote
+21-interactions-shop-social-races.js,05-avatar-life-customization.js,1,useActivity,openAvatarStudio
+21-interactions-shop-social-races.js,06-missions-profile-hud-inventory-tools.js,5,changeFriendship | finishRace | talkToNPC | useActivity,evaluateMissions | playerDisplayName | updateHUD
+21-interactions-shop-social-races.js,11-render-materials-player-model.js,5,createRaceOpponent | spawnRaceCoins,box | cylinder
+21-interactions-shop-social-races.js,13-houses-npcs-vehicles-base.js,2,finishRace | startRace,updateWaypointMarker
+21-interactions-shop-social-races.js,16-emergency-services.js,1,useActivity,openSafetyLesson
+21-interactions-shop-social-races.js,20-world-build-cloud-houses.js,2,startRace | useActivity,exitHouse | openHomeChest
+21-interactions-shop-social-races.js,22-careers-jobs-uniforms.js,4,talkToNPC | useActivity,completeActiveJob | openFireStationDesk | openJobCenter | openTeacherJobLesson
+22-careers-jobs-uniforms.js,02-state-save-cloud-account.js,6,completeActiveJob | equipJobUniform | focusActiveJob | startDeliveryJob | startJob | updateCareerMissions,saveState
+22-careers-jobs-uniforms.js,03-ui-modal-install-pwa.js,28,completeActiveJob | focusActiveJob | openFireStationDesk | openJobCenter | openTeacherJobLesson | startDeliveryJob | startJob | updateCareerMissions,addXP | beep | closeModal | confirmModal | openModal | setFlag | toast
+22-careers-jobs-uniforms.js,06-missions-profile-hud-inventory-tools.js,8,completeActiveJob | focusActiveJob | restoreActiveJobRuntime | startJob | updateCareerMissions,evaluateMissions | updateHUD | updateMissionHUD
+22-careers-jobs-uniforms.js,07-navigation-traffic-routes.js,3,focusActiveJob | openFireStationDesk,buildRoutePoints | updateNavigation
+22-careers-jobs-uniforms.js,08-map-parent-settings.js,7,focusActiveJob | updateCareerMissions,setWaypoint
+22-careers-jobs-uniforms.js,11-render-materials-player-model.js,4,completeActiveJob | equipJobUniform | focusActiveJob | restoreActiveJobRuntime,applyAvatarCustomization
+22-careers-jobs-uniforms.js,13-houses-npcs-vehicles-base.js,5,completeActiveJob | focusActiveJob | openFireStationDesk | updateCareerMissions,updateWaypointMarker
+22-careers-jobs-uniforms.js,16-emergency-services.js,4,focusActiveJob | openFireStationDesk | restoreActiveJobRuntime | startJob,ensureActiveFire
+22-careers-jobs-uniforms.js,20-world-build-cloud-houses.js,3,focusActiveJob | openFireStationDesk | startJob,exitHouse
+23-vehicle-effects-driving.js,02-state-save-cloud-account.js,4,enterVehicle | enterVehicleAsPassenger | exitVehicle | repairBridge,saveState
+23-vehicle-effects-driving.js,03-ui-modal-install-pwa.js,16,enterVehicle | enterVehicleAsPassenger | exitVehicle | repairBridge | updateVehicleFX | vehicleHorn,addReputation | addXP | beep | setFlag | toast | vibrate
+23-vehicle-effects-driving.js,06-missions-profile-hud-inventory-tools.js,1,updateVehicleControlsUI,playerDisplayName
+23-vehicle-effects-driving.js,07-navigation-traffic-routes.js,1,enterVehicle,buildRoutePoints
+23-vehicle-effects-driving.js,09-responsive-ar-quality-diagnostics.js,4,enterVehicle | enterVehicleAsPassenger | exitVehicle,auditPlayerMode | canEnterMobility
+23-vehicle-effects-driving.js,10-player-skills.js,5,enterVehicle | enterVehicleAsPassenger | exitVehicle,syncPlayerRootScale | updateAbilityUI
+23-vehicle-effects-driving.js,13-houses-npcs-vehicles-base.js,4,enterVehicle | exitVehicle,applyVehicleAppearance | currentVehicleRef | persistParkedVehicle | updateWaypointMarker
+23-vehicle-effects-driving.js,18-water-fishing-boats.js,1,enterVehicleAsPassenger,exitBoat
+23-vehicle-effects-driving.js,22-careers-jobs-uniforms.js,1,enterVehicle,setMissionState
+23-vehicle-effects-driving.js,25-render-init-resize-position-collision.js,4,enterVehicle | exitVehicle,groundHeightAt | rememberSafePlayerPosition | safeVehicleExitPoint
+23-vehicle-effects-driving.js,26-input-player-physics.js,7,enterVehicle | enterVehicleAsPassenger | exitVehicle | updateVehicleFX,clearMovementInputs | sprintRequested | updateRunUI
+23-vehicle-effects-driving.js,27-npc-enemies-combat-camera-action.js,3,enterVehicle | exitVehicle,boardNpcPassenger | nearestRideCompanion | releaseNpcPassenger
+24-construction-system.js,01-build-persistence.js,8,placeBuild | reconcileWorldBuilds | spawnBuild,applyBuildTombstones | mergeBuildCollections | mergeBuildTombstones | normalizeBuildRecord | normalizeBuildTombstones
+24-construction-system.js,02-state-save-cloud-account.js,4,placeBuild | reconcileWorldBuilds,saveState | syncCloudProgress
+24-construction-system.js,03-ui-modal-install-pwa.js,17,beginBuildMode | endBuildMode | openBuildMenu | placeBuild | reconcileWorldBuilds | rotateBuildPreview,addXP | closeModal | confirmModal | openModal | toast | vibrate
+24-construction-system.js,06-missions-profile-hud-inventory-tools.js,1,placeBuild,evaluateMissions
+24-construction-system.js,11-render-materials-player-model.js,23,createBuildPreviewMesh | spawnBuild,addGlow | box | premiumBox | registerCollider | registerPlatform | sharedBoxGeometry
+24-construction-system.js,18-water-fishing-boats.js,4,canBuildAt,rectOverlap | waterAt
+24-construction-system.js,19-campfire-hunting-house-extensions.js,3,openBuildMenu | placeBuild | updateBuildPanel,openHouseExtensionMenu | resourcesEnough
+24-construction-system.js,22-careers-jobs-uniforms.js,1,placeBuild,checkActiveJob
+24-construction-system.js,23-vehicle-effects-driving.js,2,beginBuildMode | endBuildMode,updateVehicleControlsUI
+24-construction-system.js,25-render-init-resize-position-collision.js,3,buildPlacementCandidate | canBuildAt | spawnBuild,groundHeightAt
+24-construction-system.js,27-npc-enemies-combat-camera-action.js,2,beginBuildMode | endBuildMode,updateContext
+25-render-init-resize-position-collision.js,02-state-save-cloud-account.js,4,savePlayerPosition,commitState | saveState
+25-render-init-resize-position-collision.js,03-ui-modal-install-pwa.js,7,initThree | registerVehicleImpact | returnHome,beep | openModal | toast | vibrate
+25-render-init-resize-position-collision.js,07-navigation-traffic-routes.js,2,positionBlockedForPlayer | vehicleHitsCollider,trafficActorList
+25-render-init-resize-position-collision.js,09-responsive-ar-quality-diagnostics.js,13,applyQuality | initThree | resize | returnHome,applyAdaptiveRenderSettings | auditPlayerMode | freezeWorldFrustumCulling | lockStableSceneVisibility | qualityTier | syncMobilePanels | targetDpr
+25-render-init-resize-position-collision.js,10-player-skills.js,1,resolveCollisions,playerScaleValue
+25-render-init-resize-position-collision.js,11-render-materials-player-model.js,3,initThree,applyAvatarCustomization | createPlayerModel | initMaterials
+25-render-init-resize-position-collision.js,13-houses-npcs-vehicles-base.js,1,vehicleHitsCollider,currentVehicleRef
+25-render-init-resize-position-collision.js,15-transit-bus-metro.js,2,returnHome,busAtStop | exitBusAtStop
+25-render-init-resize-position-collision.js,18-water-fishing-boats.js,4,positionBlockedForPlayer | restorePosition | returnHome | savePlayerPosition,exitBoat | isInsideLakeNavigable | waterAt
+25-render-init-resize-position-collision.js,20-world-build-cloud-houses.js,3,initThree | returnHome,buildWorld | exitHouse | reconcileCloudHouses
+25-render-init-resize-position-collision.js,22-careers-jobs-uniforms.js,1,initThree,restoreActiveJobRuntime
+25-render-init-resize-position-collision.js,23-vehicle-effects-driving.js,1,returnHome,exitVehicle
+25-render-init-resize-position-collision.js,26-input-player-physics.js,1,resize,clearMovementInputs
+25-render-init-resize-position-collision.js,28-multiplayer-social-online.js,2,initThree,initLocalMultiplayer | remotePlayerEvent
+26-input-player-physics.js,03-ui-modal-install-pwa.js,7,checkHazards | doJump | npcSpeech | updatePlayer | updateVehiclePhysics,beep | toast | vibrate
+26-input-player-physics.js,04-education-daily-quiz.js,3,doJump | updatePlayer,trackDaily
+26-input-player-physics.js,09-responsive-ar-quality-diagnostics.js,3,resolveMovementInput | updatePlayer,cameraRelativeVector | derivePlayerMode | normalizeControlIntent
+26-input-player-physics.js,10-player-skills.js,2,collectNearbyCrystals | updatePlayer,collectCrystal | syncPlayerRootScale
+26-input-player-physics.js,18-water-fishing-boats.js,4,updatePlayer,constrainBoat | resolveWaterWalking | updateBoatPanel | updateBoatPhysics
+26-input-player-physics.js,23-vehicle-effects-driving.js,1,updateVehiclePhysics,exitVehicle
+26-input-player-physics.js,25-render-init-resize-position-collision.js,6,checkHazards | updatePlayer,groundHeightAt | recoverPlayerIfInvalid | rememberSafePlayerPosition | resolveCollisions | returnHome
+26-input-player-physics.js,27-npc-enemies-combat-camera-action.js,2,updatePlayer,updateContext
+27-npc-enemies-combat-camera-action.js,02-state-save-cloud-account.js,6,boardNpcPassenger | damageEnemy | updateEnemies | updateNeeds | updateNpcSociety,saveState
+27-npc-enemies-combat-camera-action.js,03-ui-modal-install-pwa.js,15,boardNpcPassenger | damageEnemy | firePower | meleeAttack | nearestInteractable | updateEnemies | updateNeeds,addCoins | addXP | beep | toast | vibrate
+27-npc-enemies-combat-camera-action.js,06-missions-profile-hud-inventory-tools.js,4,damageEnemy | updateNeeds | updateNpcSociety,evaluateMissions | playerDisplayName | updateHUD
+27-npc-enemies-combat-camera-action.js,07-navigation-traffic-routes.js,2,updateNPCs,snapTrafficToRoad | trafficSpeedFactor
+27-npc-enemies-combat-camera-action.js,09-responsive-ar-quality-diagnostics.js,1,doAction,syncMobilePanels
+27-npc-enemies-combat-camera-action.js,10-player-skills.js,1,updateCamera,playerScaleValue
+27-npc-enemies-combat-camera-action.js,11-render-materials-player-model.js,3,doAction | firePower | nearestInteractable,mat | worldPos
+27-npc-enemies-combat-camera-action.js,12-world-resources-nature.js,2,doAction | nearestInteractable,isInteractionAvailable
+27-npc-enemies-combat-camera-action.js,15-transit-bus-metro.js,1,nearestInteractable,updateTransitPanel
+27-npc-enemies-combat-camera-action.js,20-world-build-cloud-houses.js,1,updateNpcSociety,cloudHouseRecord
+27-npc-enemies-combat-camera-action.js,23-vehicle-effects-driving.js,1,firePower,vehicleHorn
+27-npc-enemies-combat-camera-action.js,25-render-init-resize-position-collision.js,1,releaseNpcPassenger,groundHeightAt
+27-npc-enemies-combat-camera-action.js,26-input-player-physics.js,7,updateNeeds | updateNpcSociety,npcSpeech | sprintRequested
+27-npc-enemies-combat-camera-action.js,28-multiplayer-social-online.js,6,nearestInteractable,nearestRemotePlayer | openRemotePlayerActions
+28-multiplayer-social-online.js,02-state-save-cloud-account.js,8,applyAcceptedSocialAction | maybeShowMultiplayerResult | openRemotePlayerActions | openSocialHub | remotePlayerEvent | showIncomingSocialRequest | startMultiplayerEducationGame,mergeCloudProgress | saveState
+28-multiplayer-social-online.js,03-ui-modal-install-pwa.js,53,applyAcceptedSocialAction | bindChallengeCards | maybeShowMultiplayerResult | openChallengePicker | openRemotePlayerActions | openSocialHub | remotePlayerEvent | showIncomingSocialRequest | startMultiplayerEducationGame,addCoins | addXP | closeModal | openModal | toast
+28-multiplayer-social-online.js,04-education-daily-quiz.js,5,applyAcceptedSocialAction | highestUnlockedLevel | openRemotePlayerActions | remotePlayerEvent | startMultiplayerEducationGame,runEducationGame | subjectUnlocked | triggerEmote
+28-multiplayer-social-online.js,06-missions-profile-hud-inventory-tools.js,6,createGhost | initLocalMultiplayer | multiplayerNameTexture | remotePlayerEvent | updateGhostName | updateLocalPlayerNameLabel,hasValidPlayerName | playerDisplayName | sanitizePlayerName
+28-multiplayer-social-online.js,11-render-materials-player-model.js,17,createGhost,box | cylinder
+28-multiplayer-social-online.js,18-water-fishing-boats.js,4,applyAcceptedSocialAction | openRemotePlayerActions | remotePlayerEvent,enterBoatAsPassenger | exitBoat | isNearFishingArea | startFishing
+28-multiplayer-social-online.js,19-campfire-hunting-house-extensions.js,5,applyAcceptedSocialAction | applyCloudWorldObjects | openRemotePlayerActions,nearestActiveCampfire | openNearestCampfire | spawnCampfire | spawnHouseExtension | startHunting
+28-multiplayer-social-online.js,20-world-build-cloud-houses.js,1,remotePlayerEvent,reconcileCloudHouses
+28-multiplayer-social-online.js,23-vehicle-effects-driving.js,2,applyAcceptedSocialAction | remotePlayerEvent,enterVehicleAsPassenger | exitVehicle
+29-game-loop-controls-gamepad.js,02-state-save-cloud-account.js,6,pollGamepad | setupControls,accountLinked | accountPromptWasHandled | openAccountCenter | saveState
+29-game-loop-controls-gamepad.js,03-ui-modal-install-pwa.js,7,pollGamepad | setupControls,closeModal | showScreen | toast
+29-game-loop-controls-gamepad.js,06-missions-profile-hud-inventory-tools.js,7,pollGamepad,equippedTool | evaluateMissions | hasValidPlayerName | openPlayerNameModal | updateHUD
+29-game-loop-controls-gamepad.js,07-navigation-traffic-routes.js,4,gameLoop | pollGamepad,captureTrafficPositions | resolveTrafficOverlaps | updateNavigation
+29-game-loop-controls-gamepad.js,09-responsive-ar-quality-diagnostics.js,6,gameLoop | pollGamepad,auditPlayerMode | qualityTier | refreshTechnicalPanel | samplePerformance | syncMobilePanels | updateVisualLOD
+29-game-loop-controls-gamepad.js,10-player-skills.js,12,pollGamepad | setupControls,setScaleMode | spinPlayer | toggleCrouch | updateAbilityUI
+29-game-loop-controls-gamepad.js,11-render-materials-player-model.js,1,pollGamepad,applyAvatarCustomization
+29-game-loop-controls-gamepad.js,13-houses-npcs-vehicles-base.js,1,gameLoop,updateClouds
+29-game-loop-controls-gamepad.js,15-transit-bus-metro.js,1,gameLoop,updateTransitWorld
+29-game-loop-controls-gamepad.js,16-emergency-services.js,3,gameLoop,updateFireService | updatePoliceSystem | updateTrafficIncidents
+29-game-loop-controls-gamepad.js,17-adventures-learning-world.js,1,gameLoop,updateAdventure
+29-game-loop-controls-gamepad.js,18-water-fishing-boats.js,1,gameLoop,updateFishingVisual
+29-game-loop-controls-gamepad.js,19-campfire-hunting-house-extensions.js,1,gameLoop,updateLifeActivities
+29-game-loop-controls-gamepad.js,21-interactions-shop-social-races.js,1,gameLoop,updateRace
+29-game-loop-controls-gamepad.js,22-careers-jobs-uniforms.js,1,gameLoop,updateCareerMissions
+29-game-loop-controls-gamepad.js,23-vehicle-effects-driving.js,2,gameLoop,updateFX | updateVehicleFX
+29-game-loop-controls-gamepad.js,24-construction-system.js,3,gameLoop | setupControls,endBuildMode | rotateBuildPreview | updateBuildPreview
+29-game-loop-controls-gamepad.js,25-render-init-resize-position-collision.js,3,pollGamepad,initThree | resize | restorePosition
+29-game-loop-controls-gamepad.js,26-input-player-physics.js,8,gameLoop | pollGamepad | setupControls,requestJump | updatePlayer | updateRunUI
+29-game-loop-controls-gamepad.js,27-npc-enemies-combat-camera-action.js,11,gameLoop | pollGamepad | setupControls,doAction | firePower | updateCamera | updateContext | updateEnemies | updateFireballs | updateNPCs | updateNeeds | updateNpcSociety
+29-game-loop-controls-gamepad.js,28-multiplayer-social-online.js,1,gameLoop,updateMultiplayer
+29-game-loop-controls-gamepad.js,30-pause-tests-public-api-bootstrap.js,1,setupControls,openPauseMenu
+30-pause-tests-public-api-bootstrap.js,02-state-save-cloud-account.js,2,stepVehicleSimulation,saveState
+30-pause-tests-public-api-bootstrap.js,03-ui-modal-install-pwa.js,8,openPauseMenu | stepVehicleSimulation | stopGame,closeModal | openModal | showScreen | updateInstallUI
+30-pause-tests-public-api-bootstrap.js,04-education-daily-quiz.js,2,stepVehicleSimulation,educationSummary | generateEducationRounds
+30-pause-tests-public-api-bootstrap.js,05-avatar-life-customization.js,1,openPauseMenu,openLifePanel
+30-pause-tests-public-api-bootstrap.js,06-missions-profile-hud-inventory-tools.js,3,stepVehicleSimulation | stopGame,evaluateMissions | updateLobbyStats
+30-pause-tests-public-api-bootstrap.js,07-navigation-traffic-routes.js,3,stepVehicleSimulation,buildRoutePoints | routeProgressInfo | updateNavigation
+30-pause-tests-public-api-bootstrap.js,08-map-parent-settings.js,1,stepVehicleSimulation,setWaypoint
+30-pause-tests-public-api-bootstrap.js,09-responsive-ar-quality-diagnostics.js,10,stepVehicleSimulation,applyAdaptiveRenderSettings | auditPlayerMode | cameraRelativeVector | detectStableAutoTier | initTechnicalPanel | lockStableSceneVisibility | qualityTier | requestedQuality
+30-pause-tests-public-api-bootstrap.js,10-player-skills.js,1,stepVehicleSimulation,toggleCrouch
+30-pause-tests-public-api-bootstrap.js,13-houses-npcs-vehicles-base.js,3,stepVehicleSimulation,currentVehicleRef | updateWaypointMarker
+30-pause-tests-public-api-bootstrap.js,15-transit-bus-metro.js,7,stepVehicleSimulation | stopGame,busAtStop | enterBus | exitBusAtStop | rideMetroTo | updateTransitWorld
+30-pause-tests-public-api-bootstrap.js,16-emergency-services.js,4,stepVehicleSimulation | stopGame,activateFireIncident | startPoliceAlert | updateFireService | updateSafetyPanel
+30-pause-tests-public-api-bootstrap.js,17-adventures-learning-world.js,1,stepVehicleSimulation,updateAdventure
+30-pause-tests-public-api-bootstrap.js,18-water-fishing-boats.js,13,stepVehicleSimulation | stopGame,constrainBoat | distanceToBoatDock | enterBoatAsPassenger | exitBoat | startFishing | updateBoatPanel | updateBoatPhysics | validBoatExit
+30-pause-tests-public-api-bootstrap.js,19-campfire-hunting-house-extensions.js,1,stepVehicleSimulation,startHunting
+30-pause-tests-public-api-bootstrap.js,20-world-build-cloud-houses.js,1,stepVehicleSimulation,enterHouse
+30-pause-tests-public-api-bootstrap.js,21-interactions-shop-social-races.js,1,stepVehicleSimulation,startRace
+30-pause-tests-public-api-bootstrap.js,22-careers-jobs-uniforms.js,2,stepVehicleSimulation,completeActiveJob | startJob
+30-pause-tests-public-api-bootstrap.js,23-vehicle-effects-driving.js,9,openPauseMenu | prepareVehicleTestArea | stepVehicleSimulation | stopGame,enterVehicle | enterVehicleAsPassenger | exitVehicle | startEngineSound | stopEngineSound
+30-pause-tests-public-api-bootstrap.js,24-construction-system.js,7,openPauseMenu | stepVehicleSimulation | stopGame,beginBuildMode | endBuildMode | placeBuild | reconcileWorldBuilds | rotateBuildPreview
+30-pause-tests-public-api-bootstrap.js,25-render-init-resize-position-collision.js,8,openPauseMenu | prepareVehicleTestArea | stepVehicleSimulation | stopGame,groundHeightAt | resolveCollisions | returnHome | savePlayerPosition
+30-pause-tests-public-api-bootstrap.js,26-input-player-physics.js,11,prepareVehicleTestArea | stepVehicleSimulation,clearMovementInputs | requestJump | resolveMovementInput | sprintRequested | updatePlayer | updateRunUI | updateVehiclePhysics
+30-pause-tests-public-api-bootstrap.js,27-npc-enemies-combat-camera-action.js,3,stepVehicleSimulation,doAction | firePower | updateContext
+30-pause-tests-public-api-bootstrap.js,28-multiplayer-social-online.js,4,stepVehicleSimulation,pendingChallenges | remotePlayerEvent | socialRequestPending | updateMultiplayer

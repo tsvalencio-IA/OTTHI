@@ -1,0 +1,94 @@
+﻿kind,module,sourceLine,declaration
+const,00-runtime-foundation.js,4,"OTTHI_GAME_LIVE_BASE = new URL('./', window.location.href).href;"
+const,00-runtime-foundation.js,5,OTTHI_GAME_WEB_BUILD = '642.0-complete-modular-source-equivalence';
+const,00-runtime-foundation.js,9,"$ = (s, root = document) => root.querySelector(s);"
+const,00-runtime-foundation.js,10,"$$ = (s, root = document) => [...root.querySelectorAll(s)];"
+const,00-runtime-foundation.js,11,"clamp = (v, a, b) => Math.max(a, Math.min(b, v));"
+const,00-runtime-foundation.js,12,"lerp = (a, b, t) => a + (b - a) * t;"
+const,00-runtime-foundation.js,13,"lerpAngle = (a, b, t) => { let d=((b-a+Math.PI)%(Math.PI*2))-Math.PI; if(d<-Math.PI)d+=Math.PI*2; return a+d*t; };"
+const,00-runtime-foundation.js,14,"distance2D = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);"
+const,00-runtime-foundation.js,15,uid = () => (crypto.randomUUID ? crypto.randomUUID() : `p-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+const,00-runtime-foundation.js,16,"safePointerCapture=(element,pointerId)=>{try{if(element?.setPointerCapture&&Number.isInteger(pointerId))element.setPointerCapture(pointerId);return true;}catch{return false;}};"
+const,00-runtime-foundation.js,17,"safePointerRelease=(element,pointerId)=>{try{if(element?.hasPointerCapture?.(pointerId))element.releasePointerCapture(pointerId);return true;}catch{return false;}};"
+const,00-runtime-foundation.js,18,APP_VERSION = 642;
+const,00-runtime-foundation.js,19,STORAGE_KEY = 'otthos_life_world_roleplay_v642';
+const,00-runtime-foundation.js,20,"LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v624','otthos_life_world_roleplay_v623','otthos_life_world_roleplay_v62"
+const,00-runtime-foundation.js,21,safeLocalGet = key => { try { return window.localStorage?.getItem(key) ?? null; } catch { return null; } };
+const,00-runtime-foundation.js,22,"safeLocalSet = (key, value) => { try { window.localStorage?.setItem(key, value); return true; } catch { return false; } };"
+const,00-runtime-foundation.js,23,safeLocalRemove = key => { try { window.localStorage?.removeItem(key); return true; } catch { return false; } };
+const,01-build-persistence.js,75,els = {
+const,01-build-persistence.js,93,defaultState = () => ({
+let,02-state-save-cloud-account.js,216,state = loadState();
+let,02-state-save-cloud-account.js,218,accountSession = window.OTTHOS_ACCOUNT?.getSession?.() || null;
+let,02-state-save-cloud-account.js,228,dbReady = Promise.resolve();
+let,02-state-save-cloud-account.js,244,saveTimer = 0;
+let,02-state-save-cloud-account.js,245,lastSavePromise = Promise.resolve(true);
+let,02-state-save-cloud-account.js,304,"accountSaveTimer=0,accountSyncing=false;"
+let,03-ui-modal-install-pwa.js,503,deferredInstallPrompt = null;
+const,03-ui-modal-install-pwa.js,504,isStandalone = () => window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone === true || safeLocalGet('otthos_installed') === '1';
+const,03-ui-modal-install-pwa.js,548,OTTHI_UPDATE_INTERVAL_MS = 5 * 60 * 1000;
+let,03-ui-modal-install-pwa.js,549,otthiUpdateReloading = false;
+let,03-ui-modal-install-pwa.js,550,otthiLastUpdateCheck = 0;
+const,03-ui-modal-install-pwa.js,647,DAILY_QUEST_POOL=[
+const,04-education-daily-quiz.js,671,EDUCATION_SUBJECTS={
+const,04-education-daily-quiz.js,676,WORD_BANK=[
+const,04-education-daily-quiz.js,679,SUBJECT_LEVELS={
+let,04-education-daily-quiz.js,750,cinematicEmoteTimer=0;
+const,04-education-daily-quiz.js,773,avatarCatalog = {
+const,05-avatar-life-customization.js,822,moldFiles = [
+const,05-avatar-life-customization.js,849,missionChapters = [
+let,05-avatar-life-customization.js,927,activeMission = null;
+const,06-missions-profile-hud-inventory-tools.js,1029,TOOL_DEFS={
+const,06-missions-profile-hud-inventory-tools.js,1057,"WORLD_MAP_ROADS=[{x:0,z:0,w:18,d:210},{x:0,z:0,w:210,d:18},{x:-55,z:-55,w:9,d:105},{x:55,z:48,w:9,d:92},{x:55,z:-55,w:9,d:105},{x:-55,z:22,w:9,d:44},{x:27.5,z:78,w:55,d:9}];"
+const,06-missions-profile-hud-inventory-tools.js,1058,NAV_BASE_NODES={
+const,06-missions-profile-hud-inventory-tools.js,1063,"NAV_BASE_EDGES=[['VS','V55S'],['V55S','V18S'],['V18S','C'],['C','V18N'],['V18N','V50N'],['V50N','V78N'],['V78N','VN'],['HW','H88W'],['H88W','H55W'],['H55W','H25W'],['H25W','C'],['C','H25E'],['H25E','H55E'],['H55E','H88E'],['H88E','HE'],['W105S','W55S'],['W55S','H55W'],['H55W','W22N'],['W22N','W40N'],['E105S','E55S'],['E55S','E18S'],['E18S','H55E'],['H55E','E48N'],['E48N','E78N'],['E78N','E94N'],['V78N','E78N']];"
+const,07-navigation-traffic-routes.js,1140,METRO_STATIONS = [
+const,07-navigation-traffic-routes.js,1148,MAP_LOCATIONS = [
+const,07-navigation-traffic-routes.js,1182,MAP_LOCATION_DETAILS={
+let,08-map-parent-settings.js,1204,mapSelectedId='';
+let,08-map-parent-settings.js,1277,mapResizeTimer=0;
+let,08-map-parent-settings.js,1308,deferredSettingsRefresh = null;
+const,09-responsive-ar-quality-diagnostics.js,1370,toggleMission = () => openObjectivesPanel();
+let,09-responsive-ar-quality-diagnostics.js,1447,"scene, camera, renderer, clock, worldGroup, playerGroup, playerModel, playerMixer, avatarLayer, contactShadow, vehicleVisual, toolVisual, sunLight;"
+let,09-responsive-ar-quality-diagnostics.js,1448,activeVehicleRef = null;
+let,09-responsive-ar-quality-diagnostics.js,1449,"running = false, paused = false, pauseMenuOpen = false, raf = 0, cameraYaw = 0, cameraPitch = .38, cameraZoom = Number(state.settings?.cameraZoom || 0), cameraMode = 'openworld';"
+let,09-responsive-ar-quality-diagnostics.js,1450,"currentHouse = null, buildMode = null, buildPreview = null, buildPanel = null, buildRotation = 0, buildPlacement = null, currentContext = null, lastContextId = '', lastActionSource = 'none', actionLockedUntil = 0, activeRace = null, lastContextScanAt = 0, lastContextScanX = Infinity, lastContextScanZ = Infinity;"
+const,09-responsive-ar-quality-diagnostics.js,1451,"player = { x: 0, y: 0, z: 8, vx: 0, vy: 0, vz: 0, facing: Math.PI, grounded: true, vehicle: false, sitUntil: 0, lastGrounded: 0, lastSafeX: 0, lastSafeY: 0, lastSafeZ: 8, lastSafeAt: 0, invalidSince: 0, jumpBuffer: 0, attackUntil: 0, damageUntil: 0, shieldUntil:0, skillDashUntil:0, scaleMode: state.abilities?.scaleMode || 'normal', crouched: !!state.abilities?.crouched, spinUntil: 0, preVehicleAbilities: null, hornUntil: 0, emoteUntil:0, emoteType:'', emoteSeq:0, boating:false, transit:{mode:'',busId:'',requestStop:false,metroUntil:0}, boat:{heading:0,speed:0,steerVisual:0,passengerOf:'',passengerUid:'',passengerBotId:'',hostMissingAt:0}, car: { id:'', kind:'car', label:'Carro', heading: Mat"
+const,09-responsive-ar-quality-diagnostics.js,1452,input = {
+const,09-responsive-ar-quality-diagnostics.js,1460,world = {
+const,09-responsive-ar-quality-diagnostics.js,1464,textures = {};
+const,09-responsive-ar-quality-diagnostics.js,1465,materials = {};
+const,09-responsive-ar-quality-diagnostics.js,1474,initialAutoTier=state.settings?.autoTier||detectStableAutoTier();
+const,09-responsive-ar-quality-diagnostics.js,1475,perf = {
+const,09-responsive-ar-quality-diagnostics.js,1480,PLAYER_MODES=Object.freeze({
+const,09-responsive-ar-quality-diagnostics.js,1487,"playerModeMachine={state:PLAYER_MODES.WALKING,enteredAt:performance.now(),lastReason:'boot',conflicts:[],history:[],transitionCount:0};"
+let,09-responsive-ar-quality-diagnostics.js,1608,"technicalPanel=null,technicalPanelVisible=false,technicalPanelTapCount=0,technicalPanelTapTimer=0;"
+const,10-player-skills.js,1626,"skillCooldowns={miniDash:0,superJump:0,giantSlam:0,stealth:0,magnetSpin:0};"
+const,10-player-skills.js,1627,"skillButtons={miniDash:()=>els.miniBtn,superJump:()=>els.normalBtn,giantSlam:()=>els.giantBtn,stealth:()=>els.crouchBtn,magnetSpin:()=>els.spinBtn};"
+const,11-render-materials-player-model.js,1785,"sharedGeometryCache={box:new Map(),cylinder:new Map()};"
+const,11-render-materials-player-model.js,1786,immutableVisualMaterials=new Map();
+const,11-render-materials-player-model.js,1803,roofMaterialCache=new Map();
+const,14-world-district-decoration.js,2479,BUS_ROUTES=[
+const,14-world-district-decoration.js,2496,ADVENTURE_DEFS={
+let,14-world-district-decoration.js,2503,"transitPanel=null,metroOverlay=null;"
+const,14-world-district-decoration.js,2504,"BUS_STATES=Object.freeze({SPAWNING:'SPAWNING',MOVING:'MOVING',WAITING_TRAFFIC:'WAITING_TRAFFIC',APPROACHING_STOP:'APPROACHING_STOP',ALIGNING_TO_STOP:'ALIGNING_TO_STOP',BRAKING:'BRAKING',STOPPED:'STOPPED',OPENING_DOORS:'OPENING_DOORS',DOORS_OPEN:'DOORS_OPEN',OFFERING_BOARDING:'OFFERING_BOARDING',BOARDING:'BOARDING',CLOSING_DOORS:'CLOSING_DOORS',LEAVING_STOP:'LEAVING_STOP',TURNING_AROUND:'TURNING_AROUND',REROUTING:'REROUTING',ACCIDENT:'ACCIDENT',RECOVERING:'RECOVERING'});"
+const,14-world-district-decoration.js,2505,BUS_LANE_OFFSET=1.55;
+const,16-emergency-services.js,2730,FIRE_SITES=[
+const,17-adventures-learning-world.js,2920,FISH_SPECIES=[
+let,17-adventures-learning-world.js,2923,"fishingSession=null,fishingVisual=null,fishingCameraState=null,waterWarningAt=0,boatPanel=null,extensionPreview=null,extensionDraft=null;"
+const,17-adventures-learning-world.js,2924,"ROOM_SPECS={bedroom:{name:'Quarto',icon:'🛏️',color:0x4f8ed7,cost:{wood:8,stone:4,blocks:4}},living:{name:'Sala',icon:'🛋️',color:0xe4a044,cost:{wood:7,stone:4,blocks:5}},kitchen:{name:'Cozinha',icon:'🍳',color:0xe8d7bd,cost:{wood:7,stone:6,blocks:4}},bathroom:{name:'Banheiro',icon:'🚿',color:0x65c7df,cost:{wood:5,stone:8,blocks:4}},workroom:{name:'Oficina',icon:'🛠️',color:0x7f8c98,cost:{wood:8,stone:8,blocks:6}},porch:{name:'Varanda',icon:'🌤️',color:0xb77942,cost:{wood:10,stone:2,blocks:2}},storage:{name:'Depósito',icon:'📦',color:0x94633b,cost:{wood:9,stone:5,blocks:4}}};"
+const,18-water-fishing-boats.js,2932,"BOAT_DOCK={minX:-36,maxX:-24,minZ:50.5,maxZ:53.5,exitX:-23.25,touchDistance:4.4};"
+const,21-interactions-shop-social-races.js,3405,JOBS = [
+const,21-interactions-shop-social-races.js,3414,"MISSION_STATES=Object.freeze({LOCKED:'LOCKED',AVAILABLE:'AVAILABLE',ACCEPTED:'ACCEPTED',PREPARING:'PREPARING',TRAVELLING:'TRAVELLING',AT_LOCATION:'AT_LOCATION',ACTION_REQUIRED:'ACTION_REQUIRED',RETURNING:'RETURNING',COMPLETING:'COMPLETING',COMPLETED:'COMPLETED',CANCELLED:'CANCELLED',FAILED_SAFE:'FAILED_SAFE'});"
+const,21-interactions-shop-social-races.js,3415,"JOB_UNIFORMS={delivery:'delivery',police:'police',firefighter:'firefighter',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};"
+let,22-careers-jobs-uniforms.js,3529,fxParticles=[];
+const,22-careers-jobs-uniforms.js,3530,FX_MAX_PARTICLES=40;
+let,23-vehicle-effects-driving.js,3546,"engineAudio=null,driftSoundCooldown=0,vehicleImpactCount=0;"
+const,23-vehicle-effects-driving.js,3636,BUILD_RECIPES={
+const,25-render-init-resize-position-collision.js,3813,"autoSaveInterval=setInterval(()=>{if(running){savePlayerPosition(true);}},8000);"
+let,26-input-player-physics.js,3967,animTime=0;
+let,27-npc-enemies-combat-camera-action.js,4154,"localChannel=null,lastPublish=0,lastPublishSnapshot=null,lastPublishHeartbeat=0;"
+let,27-npc-enemies-combat-camera-action.js,4156,"multiplayerState={mode:'solo',connected:false,count:0,room:'mundo-publico',error:'',players:[]};const remotePresence=new Map();let pendingCloudCampfires={},pendingCloudExtensions={};"
+const,27-npc-enemies-combat-camera-action.js,4157,"cloudHouses=new Map(),cloudChat=[],incomingChallenges=new Map(),incomingSocialRequests=new Map(),gameSessions=new Map(),shownChallengeToasts=new Set(),shownSocialToasts=new Set(),shownGameResults=new Set();let activeMultiplayerGameId='',promptChallengeId='',promptSessionId='',promptSocialRequestId='';"
+const,28-multiplayer-social-online.js,4164,"SOCIAL_ACTION_LABELS={dance:'dançar',play:'brincar',highfive:'fazer toca aqui',hug:'dar um abraço',selfie:'tirar uma selfie',vehiclePassenger:'entrar no carro como passageiro',boatPassenger:'entrar no barco como passageiro',fishTogether:'pescar junto',campfireJoin:'participar da fogueira',huntTogether:'rastrear animais junto'};"
+let,29-game-loop-controls-gamepad.js,4357,"gamepadJump=false,gamepadAction=false,gamepadPower=false,gamepadCrouch=false,gamepadSize=false;"

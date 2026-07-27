@@ -1,0 +1,265 @@
+# Checklist dos nós HTML — OTTHI World Edu V642
+
+- [x] linha 2 — `<html>` `html`
+- [x] linha 3 — `<head>` `head` — pai `html`
+- [x] linha 4 — `<meta>` `meta` — pai `head`
+- [x] linha 5 — `<meta>` `meta` — pai `head`
+- [x] linha 6 — `<meta>` `meta` — pai `head`
+- [x] linha 7 — `<meta>` `meta` — pai `head`
+- [x] linha 8 — `<meta>` `meta` — pai `head`
+- [x] linha 9 — `<meta>` `meta` — pai `head`
+- [x] linha 10 — `<meta>` `meta` — pai `head`
+- [x] linha 11 — `<title>` `title` — pai `head`
+- [x] linha 12 — `<link>` `link` — pai `head`
+- [x] linha 13 — `<link>` `link` — pai `head`
+- [x] linha 14 — `<link>` `link` — pai `head`
+- [x] linha 15 — `<link>` `link` — pai `head`
+- [x] linha 16 — `<script>` `script` — pai `head`
+- [x] linha 17 — `<script>` `script` — pai `head`
+- [x] linha 40 — `<body>` `body` — pai `html`
+- [x] linha 41 — `<div>` `#app` class="app" — pai `body`
+- [x] linha 42 — `<section>` `#lobby` class="screen lobby active" — pai `app`
+- [x] linha 43 — `<div>` `div` class="lobby-backdrop" — pai `lobby`
+- [x] linha 44 — `<header>` `header` class="brand-card" — pai `lobby`
+- [x] linha 45 — `<div>` `div` class="brand-avatar" — pai `header`
+- [x] linha 45 — `<span>` `span` — pai `div`
+- [x] linha 45 — `<span>` `span` — pai `div`
+- [x] linha 46 — `<div>` `div` — pai `header`
+- [x] linha 47 — `<p>` `p` class="eyebrow" — pai `div`
+- [x] linha 48 — `<h1>` `h1` — pai `div`
+- [x] linha 49 — `<p>` `p` — pai `div`
+- [x] linha 53 — `<main>` `main` class="lobby-layout" — pai `lobby`
+- [x] linha 54 — `<section>` `section` class="panel hero-panel" — pai `main`
+- [x] linha 55 — `<div>` `#viewerShell` class="viewer-shell" — pai `section`
+- [x] linha 56 — `<div>` `#viewerPlaceholder` class="viewer-placeholder" — pai `viewerShell`
+- [x] linha 57 — `<div>` `div` class="viewer-placeholder-mark" — pai `viewerPlaceholder`
+- [x] linha 58 — `<strong>` `strong` — pai `viewerPlaceholder`
+- [x] linha 59 — `<span>` `#viewerStatus` — pai `viewerPlaceholder`
+- [x] linha 60 — `<button>` `#viewerLoadBtn` class="btn primary" — pai `viewerPlaceholder`
+- [x] linha 62 — `<model-viewer>` `#nativeViewer` — pai `viewerShell`
+- [x] linha 63 — `<button>` `#insideArBtn` class="floating-ar-btn" — pai `nativeViewer`
+- [x] linha 66 — `<div>` `div` class="hero-copy" — pai `section`
+- [x] linha 67 — `<span>` `span` class="badge" — pai `div`
+- [x] linha 68 — `<h2>` `h2` — pai `div`
+- [x] linha 69 — `<p>` `p` — pai `div`
+- [x] linha 70 — `<div>` `div` class="hero-actions" — pai `div`
+- [x] linha 71 — `<button>` `#playBtn` class="btn primary xl" — pai `div`
+- [x] linha 72 — `<button>` `#continueBtn` class="btn xl" — pai `div`
+- [x] linha 77 — `<aside>` `aside` class="panel menu-panel" — pai `main`
+- [x] linha 78 — `<button>` `#profileNameBtn` class="profile-name-card" — pai `aside`
+- [x] linha 79 — `<b>` `b` — pai `profileNameBtn`
+- [x] linha 79 — `<span>` `span` — pai `profileNameBtn`
+- [x] linha 79 — `<small>` `small` — pai `span`
+- [x] linha 79 — `<strong>` `#lobbyPlayerName` — pai `span`
+- [x] linha 79 — `<i>` `#accountStatusLabel` — pai `profileNameBtn`
+- [x] linha 81 — `<div>` `div` class="profile-strip" — pai `aside`
+- [x] linha 82 — `<div>` `div` class="profile-level" — pai `div`
+- [x] linha 82 — `<small>` `small` — pai `div`
+- [x] linha 82 — `<strong>` `#lobbyLevel` — pai `div`
+- [x] linha 83 — `<div>` `div` — pai `div`
+- [x] linha 83 — `<small>` `small` — pai `div`
+- [x] linha 83 — `<strong>` `#lobbyCoins` — pai `div`
+- [x] linha 84 — `<div>` `div` — pai `div`
+- [x] linha 84 — `<small>` `small` — pai `div`
+- [x] linha 84 — `<strong>` `#lobbyRep` — pai `div`
+- [x] linha 85 — `<div>` `div` — pai `div`
+- [x] linha 85 — `<small>` `small` — pai `div`
+- [x] linha 85 — `<strong>` `#lobbyMedals` — pai `div`
+- [x] linha 87 — `<div>` `div` class="menu-grid" — pai `aside`
+- [x] linha 88 — `<button>` `#installBtn` class="menu-tile install app-install-tile" — pai `div`
+- [x] linha 88 — `<img>` `img` — pai `installBtn`
+- [x] linha 88 — `<span>` `span` — pai `installBtn`
+- [x] linha 88 — `<strong>` `strong` — pai `span`
+- [x] linha 88 — `<small>` `small` — pai `span`
+- [x] linha 89 — `<button>` `#arBtn` class="menu-tile" — pai `div`
+- [x] linha 89 — `<b>` `b` — pai `arBtn`
+- [x] linha 89 — `<span>` `span` — pai `arBtn`
+- [x] linha 90 — `<button>` `#quizBtn` class="menu-tile academy-tile" — pai `div`
+- [x] linha 90 — `<b>` `b` — pai `quizBtn`
+- [x] linha 90 — `<span>` `span` — pai `quizBtn`
+- [x] linha 90 — `<small>` `small` — pai `quizBtn`
+- [x] linha 91 — `<button>` `#learningPathBtn` class="menu-tile learning-path-tile" — pai `div`
+- [x] linha 91 — `<b>` `b` — pai `learningPathBtn`
+- [x] linha 91 — `<span>` `span` — pai `learningPathBtn`
+- [x] linha 91 — `<small>` `small` — pai `learningPathBtn`
+- [x] linha 92 — `<button>` `#neighborhoodBtn` class="menu-tile neighborhood-tile" — pai `div`
+- [x] linha 92 — `<b>` `b` — pai `neighborhoodBtn`
+- [x] linha 92 — `<span>` `span` — pai `neighborhoodBtn`
+- [x] linha 92 — `<small>` `small` — pai `neighborhoodBtn`
+- [x] linha 93 — `<button>` `#collectionBtn` class="menu-tile" — pai `div`
+- [x] linha 93 — `<b>` `b` — pai `collectionBtn`
+- [x] linha 93 — `<span>` `span` — pai `collectionBtn`
+- [x] linha 94 — `<button>` `#avatarBtn` class="menu-tile" — pai `div`
+- [x] linha 94 — `<b>` `b` — pai `avatarBtn`
+- [x] linha 94 — `<span>` `span` — pai `avatarBtn`
+- [x] linha 95 — `<button>` `#accountBtn` class="menu-tile account-tile" — pai `div`
+- [x] linha 95 — `<b>` `b` — pai `accountBtn`
+- [x] linha 95 — `<span>` `span` — pai `accountBtn`
+- [x] linha 95 — `<small>` `small` — pai `accountBtn`
+- [x] linha 96 — `<button>` `#moldsBtn` class="menu-tile" — pai `div`
+- [x] linha 96 — `<b>` `b` — pai `moldsBtn`
+- [x] linha 96 — `<span>` `span` — pai `moldsBtn`
+- [x] linha 97 — `<button>` `#howBtn` class="menu-tile" — pai `div`
+- [x] linha 97 — `<b>` `b` — pai `howBtn`
+- [x] linha 97 — `<span>` `span` — pai `howBtn`
+- [x] linha 98 — `<button>` `#settingsBtn` class="menu-tile" — pai `div`
+- [x] linha 98 — `<b>` `b` — pai `settingsBtn`
+- [x] linha 98 — `<span>` `span` — pai `settingsBtn`
+- [x] linha 100 — `<p>` `#installHint` class="install-hint" — pai `aside`
+- [x] linha 103 — `<footer>` `footer` — pai `lobby`
+- [x] linha 106 — `<section>` `#game` class="screen game" — pai `app`
+- [x] linha 107 — `<div>` `#stage` class="stage" — pai `game`
+- [x] linha 108 — `<div>` `#screenTint` class="screen-tint" — pai `game`
+- [x] linha 110 — `<header>` `header` class="game-hud" — pai `game`
+- [x] linha 111 — `<div>` `div` class="identity-box" — pai `header`
+- [x] linha 112 — `<div>` `div` class="mini-avatar" — pai `div`
+- [x] linha 112 — `<i>` `i` — pai `div`
+- [x] linha 112 — `<i>` `i` — pai `div`
+- [x] linha 112 — `<span>` `#hudLevel` — pai `div`
+- [x] linha 113 — `<div>` `div` class="xp-block" — pai `div`
+- [x] linha 113 — `<small>` `#hudPlayerName` class="hud-player-name" — pai `div`
+- [x] linha 113 — `<b>` `b` — pai `div`
+- [x] linha 113 — `<div>` `div` — pai `div`
+- [x] linha 113 — `<span>` `#xpFill` — pai `div`
+- [x] linha 113 — `<small>` `#xpText` — pai `div`
+- [x] linha 115 — `<button>` `#needsToggleBtn` class="needs-summary" — pai `header`
+- [x] linha 116 — `<div>` `div` class="needs-box" — pai `header`
+- [x] linha 117 — `<div>` `div` — pai `div`
+- [x] linha 117 — `<span>` `span` — pai `div`
+- [x] linha 117 — `<i>` `#needHunger` — pai `span`
+- [x] linha 118 — `<div>` `div` — pai `div`
+- [x] linha 118 — `<span>` `span` — pai `div`
+- [x] linha 118 — `<i>` `#needEnergy` — pai `span`
+- [x] linha 119 — `<div>` `div` — pai `div`
+- [x] linha 119 — `<span>` `span` — pai `div`
+- [x] linha 119 — `<i>` `#needFun` — pai `span`
+- [x] linha 120 — `<div>` `div` — pai `div`
+- [x] linha 120 — `<span>` `span` — pai `div`
+- [x] linha 120 — `<i>` `#needHygiene` — pai `span`
+- [x] linha 122 — `<div>` `div` class="currency-box" — pai `header`
+- [x] linha 122 — `<span>` `span` — pai `div`
+- [x] linha 122 — `<strong>` `#hudCoins` — pai `div`
+- [x] linha 123 — `<button>` `#multiplayerBadge` class="multiplayer-badge offline" — pai `header`
+- [x] linha 123 — `<i>` `i` — pai `multiplayerBadge`
+- [x] linha 123 — `<span>` `span` — pai `multiplayerBadge`
+- [x] linha 126 — `<section>` `#missionCard` class="mission-card" — pai `game`
+- [x] linha 127 — `<div>` `div` class="mission-icon" — pai `missionCard`
+- [x] linha 128 — `<div>` `div` — pai `missionCard`
+- [x] linha 128 — `<small>` `#missionChapter` — pai `div`
+- [x] linha 128 — `<strong>` `#missionTitle` — pai `div`
+- [x] linha 128 — `<p>` `#missionStep` — pai `div`
+- [x] linha 128 — `<div>` `div` class="mission-progress" — pai `div`
+- [x] linha 128 — `<i>` `#missionFill` — pai `div`
+- [x] linha 131 — `<button>` `#quickToggleBtn` class="quick-toggle" — pai `game`
+- [x] linha 131 — `<span>` `span` — pai `quickToggleBtn`
+- [x] linha 132 — `<nav>` `#quickBar` class="quick-bar" — pai `game`
+- [x] linha 133 — `<button>` `#avatarGameBtn` — pai `quickBar`
+- [x] linha 133 — `<span>` `span` — pai `avatarGameBtn`
+- [x] linha 134 — `<button>` `#inventoryBtn` — pai `quickBar`
+- [x] linha 134 — `<span>` `span` — pai `inventoryBtn`
+- [x] linha 135 — `<button>` `#buildBtn` — pai `quickBar`
+- [x] linha 135 — `<span>` `span` — pai `buildBtn`
+- [x] linha 136 — `<button>` `#toolsBtn` — pai `quickBar`
+- [x] linha 136 — `<span>` `span` — pai `toolsBtn`
+- [x] linha 137 — `<button>` `#mapBtn` — pai `quickBar`
+- [x] linha 137 — `<span>` `span` — pai `mapBtn`
+- [x] linha 138 — `<button>` `#dailyBtn` class="academy-quick" — pai `quickBar`
+- [x] linha 138 — `<span>` `span` — pai `dailyBtn`
+- [x] linha 139 — `<button>` `#onlineBtn` — pai `quickBar`
+- [x] linha 139 — `<span>` `span` — pai `onlineBtn`
+- [x] linha 140 — `<button>` `#learningPathQuickBtn` — pai `quickBar`
+- [x] linha 140 — `<span>` `span` — pai `learningPathQuickBtn`
+- [x] linha 141 — `<button>` `#neighborhoodQuickBtn` — pai `quickBar`
+- [x] linha 141 — `<span>` `span` — pai `neighborhoodQuickBtn`
+- [x] linha 142 — `<button>` `#gameSettingsBtn` — pai `quickBar`
+- [x] linha 142 — `<span>` `span` — pai `gameSettingsBtn`
+- [x] linha 145 — `<button>` `#miniNav` class="mini-nav" — pai `game`
+- [x] linha 146 — `<canvas>` `#miniMapCanvas` — pai `miniNav`
+- [x] linha 147 — `<span>` `span` class="mini-nav-copy" — pai `miniNav`
+- [x] linha 147 — `<b>` `#miniNavName` — pai `span`
+- [x] linha 147 — `<small>` `#miniNavDistance` — pai `span`
+- [x] linha 148 — `<i>` `#miniNavArrow` — pai `miniNav`
+- [x] linha 151 — `<div>` `#cameraControls` class="camera-controls" — pai `game`
+- [x] linha 152 — `<button>` `#cameraNearBtn` — pai `cameraControls`
+- [x] linha 153 — `<button>` `#cameraResetBtn` — pai `cameraControls`
+- [x] linha 154 — `<button>` `#cameraFarBtn` — pai `cameraControls`
+- [x] linha 157 — `<div>` `#contextPrompt` class="context-prompt" — pai `game`
+- [x] linha 157 — `<span>` `#contextIcon` — pai `contextPrompt`
+- [x] linha 157 — `<div>` `div` — pai `contextPrompt`
+- [x] linha 157 — `<b>` `#contextLabel` — pai `div`
+- [x] linha 157 — `<small>` `#contextHint` — pai `div`
+- [x] linha 159 — `<div>` `#joystick` class="joystick" — pai `game`
+- [x] linha 159 — `<div>` `div` class="joystick-ring" — pai `joystick`
+- [x] linha 159 — `<i>` `#joystickKnob` — pai `div`
+- [x] linha 161 — `<button>` `#skillsToggleBtn` class="skills-toggle" — pai `game`
+- [x] linha 161 — `<b>` `b` — pai `skillsToggleBtn`
+- [x] linha 161 — `<span>` `span` — pai `skillsToggleBtn`
+- [x] linha 162 — `<div>` `div` class="secondary-actions" — pai `game`
+- [x] linha 163 — `<button>` `#crouchBtn` class="skill-btn crouch" — pai `div`
+- [x] linha 163 — `<b>` `b` — pai `crouchBtn`
+- [x] linha 163 — `<span>` `span` — pai `crouchBtn`
+- [x] linha 164 — `<button>` `#miniBtn` class="skill-btn mini" — pai `div`
+- [x] linha 164 — `<b>` `b` — pai `miniBtn`
+- [x] linha 164 — `<span>` `span` — pai `miniBtn`
+- [x] linha 165 — `<button>` `#normalBtn` class="skill-btn normal" — pai `div`
+- [x] linha 165 — `<b>` `b` — pai `normalBtn`
+- [x] linha 165 — `<span>` `span` — pai `normalBtn`
+- [x] linha 166 — `<button>` `#giantBtn` class="skill-btn giant" — pai `div`
+- [x] linha 166 — `<b>` `b` — pai `giantBtn`
+- [x] linha 166 — `<span>` `span` — pai `giantBtn`
+- [x] linha 167 — `<button>` `#spinBtn` class="skill-btn spin" — pai `div`
+- [x] linha 167 — `<b>` `b` — pai `spinBtn`
+- [x] linha 167 — `<span>` `span` — pai `spinBtn`
+- [x] linha 170 — `<div>` `div` class="primary-actions" — pai `game`
+- [x] linha 171 — `<button>` `#runBtn` class="round run" — pai `div`
+- [x] linha 171 — `<b>` `b` — pai `runBtn`
+- [x] linha 171 — `<span>` `span` — pai `runBtn`
+- [x] linha 172 — `<button>` `#specialBtn` class="round special" — pai `div`
+- [x] linha 172 — `<b>` `b` — pai `specialBtn`
+- [x] linha 172 — `<span>` `span` — pai `specialBtn`
+- [x] linha 173 — `<button>` `#actionBtn` class="round action" — pai `div`
+- [x] linha 173 — `<b>` `b` — pai `actionBtn`
+- [x] linha 173 — `<span>` `span` — pai `actionBtn`
+- [x] linha 174 — `<button>` `#jumpBtn` class="round jump" — pai `div`
+- [x] linha 174 — `<b>` `b` — pai `jumpBtn`
+- [x] linha 174 — `<span>` `span` — pai `jumpBtn`
+- [x] linha 177 — `<div>` `#raceBadge` class="race-badge" — pai `game`
+- [x] linha 177 — `<b>` `#raceTitle` — pai `raceBadge`
+- [x] linha 177 — `<span>` `#raceStatus` — pai `raceBadge`
+- [x] linha 178 — `<div>` `#buildBadge` class="build-badge" — pai `game`
+- [x] linha 178 — `<b>` `#buildTypeLabel` — pai `buildBadge`
+- [x] linha 179 — `<div>` `#vehicleBadge` class="vehicle-badge" — pai `game`
+- [x] linha 180 — `<div>` `#safetyPanel` class="safety-panel" — pai `game`
+- [x] linha 181 — `<span>` `span` — pai `safetyPanel`
+- [x] linha 181 — `<div>` `div` — pai `safetyPanel`
+- [x] linha 181 — `<b>` `b` — pai `div`
+- [x] linha 181 — `<small>` `#safetyStatus` — pai `div`
+- [x] linha 183 — `<div>` `#toast` class="toast" — pai `game`
+- [x] linha 186 — `<aside>` `#challengePrompt` class="challenge-prompt" — pai `app`
+- [x] linha 187 — `<div>` `div` class="challenge-prompt-icon" — pai `challengePrompt`
+- [x] linha 188 — `<div>` `div` class="challenge-prompt-copy" — pai `challengePrompt`
+- [x] linha 188 — `<small>` `#challengePromptKicker` — pai `div`
+- [x] linha 188 — `<b>` `#challengePromptTitle` — pai `div`
+- [x] linha 188 — `<span>` `#challengePromptText` — pai `div`
+- [x] linha 189 — `<div>` `div` class="challenge-prompt-actions" — pai `challengePrompt`
+- [x] linha 190 — `<button>` `#challengePromptDecline` — pai `div`
+- [x] linha 191 — `<button>` `#challengePromptAccept` class="accept" — pai `div`
+- [x] linha 195 — `<div>` `#modal` class="modal" — pai `app`
+- [x] linha 196 — `<div>` `div` class="modal-card" — pai `modal`
+- [x] linha 197 — `<header>` `header` — pai `div`
+- [x] linha 197 — `<h2>` `#modalTitle` — pai `header`
+- [x] linha 197 — `<button>` `#modalClose` — pai `header`
+- [x] linha 198 — `<div>` `#modalBody` class="modal-body" — pai `div`
+- [x] linha 204 — `<script>` `script` — pai `body`
+- [x] linha 205 — `<script>` `script` — pai `body`
+- [x] linha 206 — `<script>` `script` — pai `body`
+- [x] linha 207 — `<script>` `script` — pai `body`
+- [x] linha 208 — `<script>` `script` — pai `body`
+- [x] linha 209 — `<script>` `script` — pai `body`
+- [x] linha 210 — `<script>` `script` — pai `body`
+- [x] linha 211 — `<script>` `script` — pai `body`
+- [x] linha 212 — `<script>` `script` — pai `body`
+- [x] linha 213 — `<script>` `script` — pai `body`
+- [x] linha 214 — `<script>` `script` — pai `body`
+- [x] linha 215 — `<script>` `script` — pai `body`
+- [x] linha 216 — `<script>` `script` — pai `body`
