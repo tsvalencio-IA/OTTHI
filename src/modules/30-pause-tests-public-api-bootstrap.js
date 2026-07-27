@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 30-pause-tests-public-api-bootstrap.js
  * Escopo: Pausa, testes de veículo, API pública de auditoria e bootstrap final
  * Linhas de origem V642: 4378-4557
@@ -63,11 +63,11 @@
 
   // Public test/audit API
   window.OTTHOS_TEST_API={
-    version:'V642_COMPLETE_MODULAR_SOURCE_EQUIVALENCE_1',
+    version:'V643_PRECISION_MOBILITY_TRAFFIC_FISHING_1',
     diagnostics:runtimeDiagnostics,
     playerMode:()=>({state:playerModeMachine.state,enteredAt:playerModeMachine.enteredAt,lastReason:playerModeMachine.lastReason,conflicts:[...playerModeMachine.conflicts],history:playerModeMachine.history.map(x=>({...x}))}),
     toggleTechnicalPanel,
-    controlMath:(x=0,z=0,yaw=0,mode='WALKING')=>{const key=String(mode).toUpperCase(),resolved=PLAYER_MODES[key]||String(mode).toLowerCase();if([PLAYER_MODES.CAR_DRIVER,PLAYER_MODES.MOTORCYCLE_DRIVER,PLAYER_MODES.BICYCLE,PLAYER_MODES.SKATE,PLAYER_MODES.BOAT_DRIVER].includes(resolved))return{x:clamp(Number(x)||0,-1,1),z:clamp(Number(z)||0,-1,1),steer:clamp(Number(x)||0,-1,1),throttle:clamp(Number(z)||0,-1,1),mode:resolved};const vector=cameraRelativeVector(Number(x)||0,Number(z)||0,Number(yaw)||0);return{x:vector.x,z:vector.z,steer:0,throttle:0,mode:resolved};},
+    controlMath:(x=0,z=0,yaw=0,mode='WALKING')=>{const key=String(mode).toUpperCase(),resolved=PLAYER_MODES[key]||String(mode).toLowerCase();if([PLAYER_MODES.CAR_DRIVER,PLAYER_MODES.MOTORCYCLE_DRIVER,PLAYER_MODES.BICYCLE,PLAYER_MODES.SKATE,PLAYER_MODES.BOAT_DRIVER].includes(resolved))return{x:clamp(Number(x)||0,-1,1),z:clamp(Number(z)||0,-1,1),steer:-clamp(Number(x)||0,-1,1),throttle:clamp(Number(z)||0,-1,1),mode:resolved};const vector=cameraRelativeVector(Number(x)||0,Number(z)||0,Number(yaw)||0);return{x:vector.x,z:vector.z,steer:0,throttle:0,mode:resolved};},
     missionStates:()=>({...MISSION_STATES}),
     startJobById:(id='gather',focus=false)=>startJob(JOBS.find(j=>j.id===id),{focus}),
     forceCompleteJob:()=>completeActiveJob(),
@@ -95,6 +95,8 @@
     exitVehicle:()=>{exitVehicle();return !player.vehicle;},
     setDriveInput:(steer=0,throttle=0)=>{input.virtualX=clamp(Number(steer)||0,-1,1);input.virtualZ=clamp(Number(throttle)||0,-1,1);input.virtualActive=Math.abs(input.virtualX)+Math.abs(input.virtualZ)>.001;resolveMovementInput();return {active:input.virtualActive,x:input.targetX,z:input.targetZ};},
     clearDriveInput:()=>{input.virtualX=0;input.virtualZ=0;input.virtualActive=false;resolveMovementInput();return {x:input.targetX,z:input.targetZ};},
+    setMobilityButtons:(accelerate=false,brake=false)=>{input.mobilityAccelerate=!!accelerate;input.mobilityBrake=!!brake;if(input.mobilityAccelerate)input.mobilityBrake=false;updateMobilityControlLabels();return{accelerate:input.mobilityAccelerate,brake:input.mobilityBrake};},
+    mobilityControls:()=>({driver:mobilityDriverActive(),vehicle:!!player.vehicle,boat:!!player.boating,accelerate:!!input.mobilityAccelerate,brake:!!input.mobilityBrake,speed:player.boating?player.boat.speed:player.car.speed,steeringConvention:'joystick-right => negative internal steer => visual right turn',acceleratorLabel:$('span',els.runBtn)?.textContent||'',brakeLabel:$('span',els.jumpBtn)?.textContent||''}),
     refreshInput:()=>resolveMovementInput(),
     stepVehicleSimulation,
     vehicle:()=>({active:player.vehicle,activeVehicleId:currentVehicleRef()?.id||'',parkedVehicles:world.vehicles.map(v=>({id:v.id,visible:v.group.visible,occupied:v.occupied,x:v.group.position.x,z:v.group.position.z})),speed:player.car.speed,heading:player.car.heading,drift:player.car.drift,sitUntilRemaining:Math.max(0,player.sitUntil-performance.now()),driveInput:{x:input.x,z:input.z,targetX:input.targetX,targetZ:input.targetZ,virtualActive:input.virtualActive,joyX:input.joyX,joyZ:input.joyZ,gamepadActive:input.gamepadActive},playerVisible:playerModel?.visible!==false,accessoriesVisible:avatarLayer?.visible!==false,vehicleVisible:!!vehicleVisual?.visible,parkedVisible:currentVehicleRef()?.group?.visible!==false,preVehicleAbilities:player.preVehicleAbilities?{...player.preVehicleAbilities}:null,specialLabel:$('span',els.specialBtn)?.textContent||'',fireballs:world.fireballs.length,engineActive:!!engineAudio,wheelCount:vehicleVisual?.userData?.wheels?.length||0,frontWheelCount:vehicleVisual?.userData?.frontWheels?.length||0,impactCount:vehicleImpactCount,rootScale:{x:playerGroup?.scale?.x||0,y:playerGroup?.scale?.y||0,z:playerGroup?.scale?.z||0}}),
@@ -175,7 +177,7 @@
     startFishing:(source='shore')=>startFishing(source),
     enterBoat:()=>enterBoat(),
     boatDock:()=>({distance:distanceToBoatDock(),canExit:validBoatExit(),dock:{...BOAT_DOCK}}),
-    forceBoatState:(x=-38,z=52,heading=0)=>{player.boating=true;player.boat.passengerOf='';player.boat.heading=Number(heading)||0;player.boat.speed=0;player.boat.steerVisual=0;player.x=Number(x);player.z=Number(z);player.y=.78;state.boats.activeBoatId='lake-boat';if(world.boat){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}updateBoatPanel();return{canExit:validBoatExit(),distance:distanceToBoatDock()};},
+    forceBoatState:(x=-38,z=52,heading=0)=>{if(player.vehicle)exitVehicle(true);player.boating=true;player.boat.passengerOf='';player.boat.heading=Number(heading)||0;player.boat.speed=0;player.boat.steerVisual=0;input.mobilityAccelerate=false;input.mobilityBrake=false;player.x=Number(x);player.z=Number(z);player.y=.78;state.boats.activeBoatId='lake-boat';if(world.boat){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}updateBoatPanel();updateVehicleControlsUI();return{canExit:validBoatExit(),distance:distanceToBoatDock()};},
     exitBoat:(silent=false)=>exitBoat(!!silent),
     stepBoat:(steer=0,throttle=0,frames=60)=>{const n=clamp(Math.round(Number(frames)||60),1,600),dt=1/60,start={x:player.x,z:player.z,heading:player.boat.heading};for(let i=0;i<n;i++){updateBoatPhysics(dt,clamp(Number(steer)||0,-1,1),clamp(Number(throttle)||0,-1,1));const px=player.x,pz=player.z;player.x+=player.vx*dt;player.z+=player.vz*dt;constrainBoat(px,pz);}return{x:player.x,z:player.z,heading:player.boat.heading,speed:player.boat.speed,deltaHeading:player.boat.heading-start.heading,distance:Math.hypot(player.x-start.x,player.z-start.z)};},
     buildCampfire,

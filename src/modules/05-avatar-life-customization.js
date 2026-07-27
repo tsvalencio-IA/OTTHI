@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 05-avatar-life-customization.js
  * Escopo: Avatar, roupas, uniformes, vida, moldes e ajuda
  * Linhas de origem V642: 787-927

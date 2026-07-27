@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 22-careers-jobs-uniforms.js
  * Escopo: Carreiras, estados de missão, uniformes, professor, bombeiro e entrega
  * Linhas de origem V642: 3416-3530

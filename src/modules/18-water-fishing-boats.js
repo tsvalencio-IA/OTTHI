@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 18-water-fishing-boats.js
  * Escopo: Água, câmera e animação da pesca, barco e física náutica
  * Linhas de origem V642: 2925-3064
@@ -99,6 +99,21 @@
     else if(v.phase==='escaping'){const t=clamp((now-v.phaseAt)/760,0,1);v.bobber.position.set(v.target.x,.12-t*.5,v.target.z);v.bobber.scale.setScalar(1-t*.65);if(t>=1)stopFishingVisual();}
     setFishingLine(tip,lineEnd);
   }
+  function createShoreFisher(id,name,x,z,heading,color){
+    const npc=createNPC(id,name,x,z,color,0);npc.fishingActivity={heading,phase:Math.random()*Math.PI*2};npc.group.rotation.y=heading;npc.baseX=x;npc.baseZ=z;
+    const rod=new THREE.Group();rod.rotation.x=-.58;rod.position.set(.46,1.45,.12);npc.group.add(rod);premiumCylinder(.035,2.25,0x8b5a2b,0,0,0,rod,7);rod.children[rod.children.length-1].rotation.x=Math.PI/2;
+    const lineGeo=new THREE.BufferGeometry(),lineArr=new Float32Array(6);lineGeo.setAttribute('position',new THREE.BufferAttribute(lineArr,3));const line=new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0xe8f7ff,transparent:true,opacity:.75,depthWrite:false}));worldGroup.add(line);
+    const bobber=new THREE.Mesh(new THREE.SphereGeometry(.09,8,6),renderMat(0xff5647,{emissive:0x8c160f,emissiveIntensity:.32,roughness:.5}));worldGroup.add(bobber);const reach=3.8+Math.random()*1.4,dx=Math.sin(heading),dz=Math.cos(heading);bobber.position.set(x+dx*reach,.16,z+dz*reach);npc.fishingActivity.rod=rod;npc.fishingActivity.line=line;npc.fishingActivity.bobber=bobber;npc.fishingActivity.reach=reach;world.shoreFishers.push(npc);return npc;
+  }
+  function createShoreFishingLife(){
+    if(world.shoreFishers.length)return;[
+      ['shore-fisher-otto','Otto',-24.8,44.1,-2.72,0x2f78d1],['shore-fisher-luna','Luna',-27.7,43.3,-2.95,0xe35d9c],['shore-fisher-pedro','Pedro',-31.0,43.9,2.95,0x2faa68],['shore-fisher-maya','Maya',-25.3,59.7,.22,0xf09a31],['shore-fisher-caio','Caio',-29.2,60.2,-.12,0x805ad5]
+    ].forEach(args=>createShoreFisher(...args));
+  }
+  function updateShoreFishers(dt){
+    if(textures.water){textures.water.offset.x=(textures.water.offset.x+dt*.012)%1;textures.water.offset.y=(textures.water.offset.y+dt*.006)%1;}
+    const now=performance.now();for(const npc of world.shoreFishers){const act=npc.fishingActivity;if(!act)continue;npc.group.position.set(npc.baseX,0,npc.baseZ);npc.group.rotation.y=act.heading;const pulse=Math.sin(now*.0021+act.phase),bite=Math.sin(now*.006+act.phase)> .92;act.rod.rotation.x=-.58+pulse*.035-(bite?.1:0);if(npc.limbs){npc.limbs.leftArm.rotation.x=lerp(npc.limbs.leftArm.rotation.x,-1.55+(bite?-.18:0),.18);npc.limbs.rightArm.rotation.x=lerp(npc.limbs.rightArm.rotation.x,-1.72+(bite?-.25:0),.18);npc.limbs.leftLeg.rotation.x=lerp(npc.limbs.leftLeg.rotation.x,.16,.18);npc.limbs.rightLeg.rotation.x=lerp(npc.limbs.rightLeg.rotation.x,-.16,.18);}act.bobber.position.y=.15+Math.sin(now*.004+act.phase)*.035-(bite?.055:0);const tip=new THREE.Vector3();act.rod.localToWorld(tip.set(0,1.08,0));const arr=act.line.geometry.attributes.position.array;arr[0]=tip.x;arr[1]=tip.y;arr[2]=tip.z;arr[3]=act.bobber.position.x;arr[4]=act.bobber.position.y;arr[5]=act.bobber.position.z;act.line.geometry.attributes.position.needsUpdate=true;}
+  }
   function createBoatModel(){
     const g=new THREE.Group();const hull=renderMat(0x7b3f20,{roughness:.72}),edge=renderMat(0xe3ad55,{roughness:.62}),seat=renderMat(0x374151,{roughness:.72});
     premiumBox(2.4,.42,4.4,hull,0,.38,0,g);premiumBox(2.75,.25,3.85,edge,0,.67,0,g);premiumBox(1.85,.23,3.15,renderMat(0x2d6f8d,{roughness:.48}),0,.83,0,g);premiumBox(1.75,.25,.55,seat,0,1.02,-.65,g);premiumBox(1.75,.25,.55,seat,0,1.02,.72,g);premiumBox(.12,1.8,.12,0xd8c28d,.95,1.35,.1,g);premiumBox(1.45,.05,.72,0xf5f1df,.25,2.05,.1,g);g.position.set(-38,.1,52);worldGroup.add(g);world.boat={id:'lake-boat',group:g,x:-38,z:52,heading:0,driverUid:'',passengerUid:''};
@@ -115,7 +130,7 @@
     if(player.transit.mode||!world.boat)return false;
     const p=world.boat.group.position;if(Math.hypot(player.x-p.x,player.z-p.z)>3.6){toast('Chegue perto do barco pelo píer.','warn');return false;}
     const lock=await window.OTTHOS_RTDB?.claimBoat?.(world.boat.id);if(lock&&lock.ok===false){toast(lock.error||'O barco já está sendo usado por outro jogador.','warn',2800);return false;}
-    player.boating=true;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.passengerBotId='';player.boat.heading=world.boat.heading||0;player.boat.speed=0;player.boat.steerVisual=0;player.x=p.x;player.z=p.z;player.y=.18;player.vx=player.vz=0;state.boats.activeBoatId=world.boat.id;state.boats.passengerOf='';const companion=nearestRideCompanion(9);if(companion)boardNpcPassenger(companion,'boat');updateBoatPanel();auditPlayerMode('board-boat-driver');toast('Barco pronto. Use o manche para navegar.','good',2300);saveState(true);return true;
+    input.mobilityAccelerate=false;input.mobilityBrake=false;player.boating=true;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.passengerBotId='';player.boat.heading=world.boat.heading||0;player.boat.speed=0;player.boat.steerVisual=0;player.x=p.x;player.z=p.z;player.y=.18;player.vx=player.vz=0;state.boats.activeBoatId=world.boat.id;state.boats.passengerOf='';const companion=nearestRideCompanion(9);if(companion)boardNpcPassenger(companion,'boat');updateBoatPanel();updateVehicleControlsUI();auditPlayerMode('board-boat-driver');toast('Barco pronto. Use o manche para navegar.','good',2300);saveState(true);return true;
   }
   function enterBoatAsPassenger(hostUid){
     const ghost=world.ghosts.get(hostUid),target=ghost?.userData?.target;
@@ -123,19 +138,22 @@
     if(player.boating){toast('Você já está em um barco.','warn');return false;}
     if(player.vehicle)exitVehicle(true);
     if(player.transit.mode||!canEnterMobility(PLAYER_MODES.BOAT_PASSENGER))return false;
-    player.boating=true;player.boat.passengerOf=hostUid;player.boat.passengerBotId='';player.boat.speed=0;player.x=ghost.position.x;player.z=ghost.position.z;state.boats.activeBoatId=target.boatId||'lake-boat';state.boats.passengerOf=hostUid;updateBoatPanel();auditPlayerMode('board-remote-boat');toast('Você entrou como passageiro. O motorista controla o barco.','good',2600);saveState(true);return true;
+    player.boating=true;player.boat.passengerOf=hostUid;player.boat.passengerBotId='';player.boat.speed=0;player.x=ghost.position.x;player.z=ghost.position.z;state.boats.activeBoatId=target.boatId||'lake-boat';state.boats.passengerOf=hostUid;updateBoatPanel();updateVehicleControlsUI();auditPlayerMode('board-remote-boat');toast('Você entrou como passageiro. O motorista controla o barco.','good',2600);saveState(true);return true;
   }
   function exitBoat(silent=false){
     if(!player.boating)return false;
     if(!silent&&!validBoatExit()){toast('Encoste a lateral do barco no píer para sair com segurança.','warn',2500);return false;}
     const passengerHost=player.boat.passengerOf,hostedPassenger=player.boat.passengerUid,wasPassenger=!!passengerHost;
     if(passengerHost)window.OTTHOS_RTDB?.sendInteraction?.(passengerHost,{type:'boatPassengerLeft'});else if(hostedPassenger)window.OTTHOS_RTDB?.sendInteraction?.(hostedPassenger,{type:'boatEnded'});
-    releaseNpcPassenger('boat');player.boating=false;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.speed=0;player.boat.steerVisual=0;state.boats.passengerOf='';state.boats.activeBoatId='';if(!wasPassenger&&world.boat)window.OTTHOS_RTDB?.releaseBoat?.(world.boat.id);if(world.boat&&!wasPassenger){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}
-    const safe=safeBoatExitPoint();player.x=safe.x;player.z=safe.z;player.y=groundHeightAt(safe.x,safe.z);player.vx=player.vy=player.vz=0;player.grounded=true;rememberSafePlayerPosition(true);updateBoatPanel();auditPlayerMode('exit-boat');if(!silent)toast('Você desembarcou no píer.','good');saveState(true);return true;
+    releaseNpcPassenger('boat');input.mobilityAccelerate=false;input.mobilityBrake=false;player.boating=false;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.speed=0;player.boat.steerVisual=0;state.boats.passengerOf='';state.boats.activeBoatId='';if(!wasPassenger&&world.boat)window.OTTHOS_RTDB?.releaseBoat?.(world.boat.id);if(world.boat&&!wasPassenger){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}
+    const safe=safeBoatExitPoint();player.x=safe.x;player.z=safe.z;player.y=groundHeightAt(safe.x,safe.z);player.vx=player.vy=player.vz=0;player.grounded=true;rememberSafePlayerPosition(true);updateBoatPanel();updateVehicleControlsUI();auditPlayerMode('exit-boat');if(!silent)toast('Você desembarcou no píer.','good');saveState(true);return true;
   }
   function updateBoatPhysics(dt,ix,iz){
     const boat=player.boat;if(boat.passengerOf){const ghost=world.ghosts.get(boat.passengerOf),target=ghost?.userData?.target;if(!ghost||!target){boat.hostMissingAt=boat.hostMissingAt||performance.now();if(performance.now()-boat.hostMissingAt>3500){toast('O motorista saiu. Você voltou ao píer.','warn');player.x=-24.7;player.z=52;exitBoat(true);}player.vx=player.vz=0;return;}boat.hostMissingAt=0;const tx=Number(target.x||ghost.position.x),tz=Number(target.z||ghost.position.z);player.vx=clamp((tx-player.x)*8,-18,18);player.vz=clamp((tz-player.z)*8,-18,18);boat.heading=Number(target.r||boat.heading);player.facing=boat.heading;return;}
-    const throttle=Math.abs(iz)<.06?0:iz,steer=Math.abs(ix)<.07?0:ix;const braking=boat.speed*throttle<-.08?1.7:1;boat.speed+=throttle*8.2*braking*dt;if(!throttle)boat.speed*=Math.pow(.12,dt);boat.speed=clamp(boat.speed,-3.2,8.4);boat.steerVisual=lerp(boat.steerVisual||0,steer,Math.min(1,dt*6.5));const authority=clamp(Math.abs(boat.speed)/2.8,0,1);const turnRate=1.45/(1+Math.abs(boat.speed)*.075);boat.heading+=boat.steerVisual*turnRate*authority*dt*(boat.speed<-.08?-1:1);player.vx=Math.sin(boat.heading)*boat.speed;player.vz=Math.cos(boat.heading)*boat.speed;player.facing=boat.heading;
+    // V643: mesma convenção do carro — manche para a direita vira para a direita.
+    const steer=Math.abs(ix)<.07?0:-ix,command=mobilityThrottleIntent(iz,boat.speed),throttle=command.throttle;
+    if(command.brake)boat.speed=approachNumber(boat.speed,0,(7.2+Math.abs(boat.speed)*.8)*dt);else{const crossing=boat.speed*throttle<-.08;boat.speed+=throttle*8.5*(crossing?1.8:1)*dt;}
+    if(!throttle&&!command.brake)boat.speed*=Math.pow(.12,dt);if(Math.abs(boat.speed)<.02&&!throttle)boat.speed=0;boat.speed=clamp(boat.speed,-3.4,8.8);boat.steerVisual=lerp(boat.steerVisual||0,steer,Math.min(1,dt*6.5));const authority=Math.max(clamp(Math.abs(boat.speed)/2.8,0,1),Math.abs(throttle)>.1?.12:0);const turnRate=1.5/(1+Math.abs(boat.speed)*.075);boat.heading+=boat.steerVisual*turnRate*authority*dt*(boat.speed<-.08?-1:1);player.vx=Math.sin(boat.heading)*boat.speed;player.vz=Math.cos(boat.heading)*boat.speed;player.facing=boat.heading;updateMobilityControlLabels();
   }
   function constrainBoat(prevX,prevZ){if(!player.boating)return;if(!isInsideLakeNavigable(player.x,player.z)){player.x=prevX;player.z=prevZ;player.boat.speed*=-.18;player.vx=player.vz=0;}if(world.boat){world.boat.group.position.set(player.x,.1,player.z);world.boat.group.rotation.y=player.boat.heading;world.boat.heading=player.boat.heading;}state.boats.lastPosition={x:+player.x.toFixed(2),z:+player.z.toFixed(2),heading:+player.boat.heading.toFixed(3)};}
   function weightedFish(){let r=Math.random()*100;for(const fish of FISH_SPECIES){r-=fish.weight;if(r<=0)return fish;}return FISH_SPECIES[0];}

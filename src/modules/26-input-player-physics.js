@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 26-input-player-physics.js
  * Escopo: Entrada, corrida, pulo, física do jogador/veículo e animação
  * Linhas de origem V642: 3886-4000
@@ -27,14 +27,13 @@
   }
   function sprintRequested(){return !!(input.touchSprint||input.gamepadSprint||input.keys.has('ShiftLeft')||input.keys.has('ShiftRight'));}
   function updateRunUI(){
-    if(!els.runBtn)return;const active=sprintRequested();els.runBtn.classList.toggle('active',active);
-    const icon=$('b',els.runBtn),label=$('span',els.runBtn);if(icon)icon.textContent=player.vehicle?'⚡':'🏃';if(label)label.textContent=player.vehicle?'Turbo':'Correr';
+    if(!els.runBtn)return;if(typeof mobilityDriverActive==='function'&&mobilityDriverActive()){updateMobilityControlLabels();return;}const active=sprintRequested();els.runBtn.classList.toggle('active',active);const icon=$('b',els.runBtn),label=$('span',els.runBtn);if(icon)icon.textContent='🏃';if(label)label.textContent='Correr';
   }
   function clearMovementInputs(){
     input.keys.clear();input.joyId=null;input.joyX=0;input.joyZ=0;
     input.gamepadX=0;input.gamepadZ=0;input.gamepadActive=false;
     input.virtualX=0;input.virtualZ=0;input.virtualActive=false;
-    input.touchSprint=false;input.gamepadSprint=false;input.isSprinting=false;
+    input.touchSprint=false;input.gamepadSprint=false;input.isSprinting=false;input.mobilityAccelerate=false;input.mobilityBrake=false;input.mobilityControlSource='';
     input.x=0;input.z=0;input.targetX=0;input.targetZ=0;updateRunUI();
     if(els.joystickKnob)els.joystickKnob.style.transform='translate(-50%,-50%)';
   }
@@ -76,18 +75,32 @@
     if(!recoverPlayerIfInvalid())rememberSafePlayerPosition();
     animatePlayer(dt);checkHazards();collectNearbyCrystals();updateContext();
   }
+  function mobilityThrottleIntent(analogThrottle,currentSpeed){
+    let throttle=Math.abs(analogThrottle)<.05?0:clamp(analogThrottle,-1,1);
+    if(input.mobilityAccelerate)throttle=1;
+    if(input.mobilityBrake){
+      if(currentSpeed>.04)return{throttle:0,brake:true,reverse:false};
+      if(currentSpeed<-.04)return{throttle:-1,brake:false,reverse:true};
+      return{throttle:-1,brake:false,reverse:true};
+    }
+    if(input.mobilityAccelerate&&currentSpeed<-.04)return{throttle:0,brake:true,reverse:false};
+    if(throttle<-.05&&currentSpeed>.04)return{throttle:0,brake:true,reverse:false};
+    if(throttle>.05&&currentSpeed<-.04)return{throttle:0,brake:true,reverse:false};
+    return{throttle,brake:false,reverse:throttle<0};
+  }
   function updateVehiclePhysics(dt,ix,iz){
-    const car=player.car;if(performance.now()<Number(car.incidentUntil||0)){car.speed=lerp(car.speed,0,Math.min(1,dt*8));player.vx=lerp(player.vx,0,Math.min(1,dt*10));player.vz=lerp(player.vz,0,Math.min(1,dt*10));return;}const steer=Math.abs(ix)<.06?0:ix,throttle=Math.abs(iz)<.05?0:iz;
+    const car=player.car;if(performance.now()<Number(car.incidentUntil||0)){car.speed=lerp(car.speed,0,Math.min(1,dt*8));player.vx=lerp(player.vx,0,Math.min(1,dt*10));player.vz=lerp(player.vz,0,Math.min(1,dt*10));updateMobilityControlLabels();return;}
+    // V643: o eixo lateral foi invertido para que direita no manche vire fisicamente para a direita.
+    const steer=Math.abs(ix)<.06?0:-ix;
     if(car.passengerOf){const ghost=world.ghosts.get(car.passengerOf),target=ghost?.userData?.target;if(!ghost||!target?.vehicle){car.hostMissingAt=car.hostMissingAt||performance.now();if(performance.now()-car.hostMissingAt>3500){toast('O motorista saiu. Você deixou o carro.','warn');exitVehicle(true);}player.vx=player.vz=0;return;}car.hostMissingAt=0;const heading=Number(target.r||ghost.rotation.y||car.heading),tx=Number(target.x??ghost.position.x)+Math.cos(heading)*.62-Math.sin(heading)*.12,tz=Number(target.z??ghost.position.z)-Math.sin(heading)*.62-Math.cos(heading)*.12;player.vx=clamp((tx-player.x)*10,-26,26);player.vz=clamp((tz-player.z)*10,-26,26);car.heading=heading;player.facing=heading;return;}
-    const turbo=sprintRequested();const maxSpeed=turbo?29:23.5,maxReverse=-8.5;
-    const accelFactor=car.speed>=0?Math.max(.22,1-car.speed/maxSpeed):1;
-    const braking=(car.speed>0.2&&throttle<0)||(car.speed<-.2&&throttle>0)?2.75:1;
-    const throttleAccel=throttle>=0?throttle*(turbo?23:16.5)*accelFactor:throttle*10.5*braking;
-    car.speed+=throttleAccel*dt;if(!throttle)car.speed*=Math.pow(.05,dt);car.speed=clamp(car.speed,maxReverse,maxSpeed);
+    const command=mobilityThrottleIntent(iz,car.speed),throttle=command.throttle;const turbo=sprintRequested()&&!input.mobilityAccelerate;const maxSpeed=turbo?29:23.5,maxReverse=-8.5;
+    if(command.brake){car.speed=approachNumber(car.speed,0,(18+Math.abs(car.speed)*1.25)*dt);}
+    else{const accelFactor=car.speed>=0?Math.max(.22,1-car.speed/maxSpeed):1;const crossing=(car.speed>0.2&&throttle<0)||(car.speed<-.2&&throttle>0);const throttleAccel=throttle>=0?throttle*(turbo?23:17.8)*accelFactor:throttle*10.8*(crossing?2.9:1);car.speed+=throttleAccel*dt;}
+    if(!throttle&&!command.brake)car.speed*=Math.pow(.05,dt);if(Math.abs(car.speed)<.025&&!throttle)car.speed=0;car.speed=clamp(car.speed,maxReverse,maxSpeed);
     const speedRatio=clamp(Math.abs(car.speed)/7,0,1),highSpeedDamp=1/(1+Math.abs(car.speed)/20);car.steerVisual=lerp(car.steerVisual,steer,Math.min(1,dt*9));
     const steeringAuthority=Math.max(clamp(Math.abs(car.speed)/1.5,0,1),Math.abs(throttle)>.1?.2:0);const lowSpeedAssist=.72+speedRatio*.48,turnRate=3.05*lowSpeedAssist*highSpeedDamp*(car.speed<-.08?-1:1);car.heading+=car.steerVisual*turnRate*steeringAuthority*dt;
     const fx=Math.sin(car.heading),fz=Math.cos(car.heading),desiredVx=fx*car.speed,desiredVz=fz*car.speed;const turnHarshness=Math.abs(car.steerVisual)*speedRatio,grip=clamp(1-turnHarshness*.56,.38,1);
-    player.vx=lerp(player.vx,desiredVx,Math.min(1,dt*13.5*grip));player.vz=lerp(player.vz,desiredVz,Math.min(1,dt*13.5*grip));car.drift=clamp((1-grip)*clamp(Math.abs(car.speed)/8,0,1),0,1);player.facing=car.heading;
+    player.vx=lerp(player.vx,desiredVx,Math.min(1,dt*13.5*grip));player.vz=lerp(player.vz,desiredVz,Math.min(1,dt*13.5*grip));car.drift=clamp((1-grip)*clamp(Math.abs(car.speed)/8,0,1),0,1);player.facing=car.heading;updateMobilityControlLabels();
   }
   let animTime=0;
   function animatePlayer(dt){

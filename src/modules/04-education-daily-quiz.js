@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 04-education-daily-quiz.js
  * Escopo: Desafios diários, educação, quiz e coleção
  * Linhas de origem V642: 659-786

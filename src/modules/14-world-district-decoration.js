@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 14-world-district-decoration.js
  * Escopo: Cogumelos, portais, praça, distrito e decoração urbana
  * Linhas de origem V642: 2418-2505
@@ -70,19 +70,19 @@
   }
 
   const BUS_ROUTES=[
-    {id:'solar',name:'Linha Solar',number:'101',color:0x168de2,speed:7.0,copies:2,dwell:3600,points:[
+    {id:'solar',name:'Linha Solar',number:'101',color:0x168de2,speed:6.6,copies:2,dwell:3600,laneOffset:1.72,points:[
       {x:0,z:10,stopId:'central-norte',stopName:'Central Norte'},{x:7,z:11},{x:7,z:27},{x:0,z:34},{x:0,z:55},{x:0,z:94,stopId:'bairro-norte',stopName:'Bairro Norte'},{x:0,z:55},{x:0,z:34},{x:7,z:27},{x:7,z:11},{x:7,z:0},{x:0,z:0},{x:55,z:0,stopId:'fazenda',stopName:'Fazenda'},{x:55,z:48,stopId:'castelo',stopName:'Castelo'},{x:55,z:88,stopId:'ginasio',stopName:'Ginásio'},{x:55,z:48},{x:55,z:0},{x:0,z:0}
     ]},
-    {id:'verde',name:'Linha Verde',number:'202',color:0x27b36a,speed:6.7,copies:2,dwell:3600,points:[
+    {id:'verde',name:'Linha Verde',number:'202',color:0x27b36a,speed:6.4,copies:2,dwell:3600,laneOffset:1.38,points:[
       {x:0,z:-10,stopId:'central-sul',stopName:'Central Sul'},{x:0,z:-55,stopId:'academia',stopName:'Academia'},{x:0,z:-94,stopId:'vale',stopName:'Vale dos Cristais'},{x:0,z:-55},{x:-55,z:-55,stopId:'floresta',stopName:'Floresta'},{x:-55,z:-10,stopId:'mercado',stopName:'Mercadinho'},{x:-55,z:0},{x:-70,z:0,stopId:'escola-sol',stopName:'Escola Vila do Sol'},{x:-55,z:0},{x:0,z:0}
     ]},
-    {id:'escolar',name:'Circular Escolar',number:'E10',color:0xf0b62d,speed:6.2,copies:1,dwell:4200,schoolBus:true,points:[
+    {id:'escolar',name:'Circular Escolar',number:'E10',color:0xf0b62d,speed:5.9,copies:1,dwell:4200,schoolBus:true,laneOffset:1.18,points:[
       {x:-70,z:0,stopId:'escola-sol',stopName:'Escola Vila do Sol'},{x:-55,z:0},{x:0,z:0,stopId:'central-escolar',stopName:'Praça Central'},{x:55,z:0},{x:55,z:18,stopId:'escola-horizonte',stopName:'Escola Horizonte'},{x:55,z:0},{x:0,z:0},{x:-55,z:0}
     ]},
-    {id:'circular',name:'Circular da Cidade',number:'303',color:0x8b5cf6,speed:6.9,copies:2,dwell:3500,points:[
+    {id:'circular',name:'Circular da Cidade',number:'303',color:0x8b5cf6,speed:6.3,copies:1,dwell:3500,laneOffset:1.62,points:[
       {x:0,z:0,stopId:'praca-central',stopName:'Praça Central'},{x:55,z:0,stopId:'delegacia-central',stopName:'Delegacia Central'},{x:55,z:-18},{x:55,z:-68,stopId:'bombeiros',stopName:'Corpo de Bombeiros'},{x:55,z:-18},{x:0,z:-18,stopId:'comercio',stopName:'Mercado e Oficina'},{x:-55,z:-18},{x:-55,z:0},{x:-55,z:22,stopId:'posto-bairro',stopName:'Posto Policial do Bairro'},{x:-55,z:0},{x:0,z:0}
     ]},
-    {id:'turismo',name:'Linha Turismo Kids',number:'404',color:0xe05c42,speed:6.5,copies:1,dwell:3900,points:[
+    {id:'turismo',name:'Linha Turismo Kids',number:'404',color:0xe05c42,speed:6.1,copies:1,dwell:3900,laneOffset:1.28,points:[
       {x:0,z:10,stopId:'central-norte',stopName:'Central Norte'},{x:0,z:50,stopId:'lago-acesso',stopName:'Acesso ao Lago'},{x:0,z:78},{x:55,z:78},{x:55,z:88,stopId:'ginasio',stopName:'Ginásio'},{x:55,z:48,stopId:'castelo',stopName:'Castelo'},{x:55,z:18,stopId:'escola-horizonte',stopName:'Escola Horizonte'},{x:55,z:0},{x:0,z:0}
     ]}
   ];

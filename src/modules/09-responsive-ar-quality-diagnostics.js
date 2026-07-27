@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 09-responsive-ar-quality-diagnostics.js
  * Escopo: Responsividade, AR, modos, qualidade, LOD e diagnóstico
  * Linhas de origem V642: 1360-1624
@@ -106,11 +106,12 @@
     gamepadX:0,gamepadZ:0,gamepadActive:false,
     virtualX:0,virtualZ:0,virtualActive:false,
     touchSprint:false,gamepadSprint:false,isSprinting:false,
+    mobilityAccelerate:false,mobilityBrake:false,mobilityControlSource:'',
     keys:new Set(),cameraDrag:null,cameraPointers:new Map(),pinchDistance:0
   };
   const world = {
     houses: [], npcs: [], interactables: [], enemies: [], fireballs: [], resources: [], crystals: [], platforms: [], colliders: [], hazards: [], builds: [], ghosts: new Map(),
-    bridgeParts: [], secretChest: null, vehicle: null, activeVehicle:null, vehicles:[], buses:[], busStops:[], metroStations:[], policeCars:[], policeAlert:null, policeStations:[], school:null, schools:[], policeStation:null, fireStation:null, fireTrucks:[], ambulances:[], fires:[], trafficIncidents:[], activeIncident:null, nextFireAt:0, emergencySeq:0, mine:null, well:null, deliveryPoint: null, raceCoins: [], waypointMarker: null, gym: null, routeGuide: null, routeArrows: [], routeLastBuild: 0, routeLastX: Infinity, routeLastZ: Infinity, routePath: [], navCache: new Map(), landmarks: [], outlines: [], glows: [], criticalSurfaces: [], boat:null, campfires:[], animals:[], houseExtensions:[], remoteCampfires:new Map(), remoteExtensions:new Map(), challengeTokens:[], activeChallenge:null, activityAcc:0
+    bridgeParts: [], secretChest: null, vehicle: null, activeVehicle:null, vehicles:[], buses:[], busStops:[], metroStations:[], policeCars:[], policeAlert:null, policeStations:[], school:null, schools:[], policeStation:null, fireStation:null, fireTrucks:[], ambulances:[], fires:[], trafficIncidents:[], activeIncident:null, nextFireAt:0, emergencySeq:0, mine:null, well:null, deliveryPoint: null, raceCoins: [], waypointMarker: null, gym: null, routeGuide: null, routeArrows: [], routeLastBuild: 0, routeLastX: Infinity, routeLastZ: Infinity, routePath: [], navCache: new Map(), landmarks: [], outlines: [], glows: [], criticalSurfaces: [], boat:null, campfires:[], animals:[], houseExtensions:[], remoteCampfires:new Map(), remoteExtensions:new Map(), challengeTokens:[], activeChallenge:null, activityAcc:0, shoreFishers:[], waterSurfaces:[]
   };
   const textures = {};
   const materials = {};

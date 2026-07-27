@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 15-transit-bus-metro.js
  * Escopo: Ônibus, rotas viárias, paradas, metrô e painel de transporte
  * Linhas de origem V642: 2506-2722
@@ -32,7 +32,7 @@
         center.push(final?{...leg[j],...targetSource,x:to.x,z:to.z}:leg[j]);
       }
     }
-    const lane=offsetBusPath(compactBusPath(center));if(lane.length>1&&Math.hypot(lane[0].x-lane[lane.length-1].x,lane[0].z-lane[lane.length-1].z)<.12)lane.pop();return lane;
+    const lane=offsetBusPath(compactBusPath(center),Number(route.laneOffset||BUS_LANE_OFFSET));if(lane.length>1&&Math.hypot(lane[0].x-lane[lane.length-1].x,lane[0].z-lane[lane.length-1].z)<.12)lane.pop();return lane;
   }
   function busRoutePoints(bus){return bus?.runtimePoints?.length?bus.runtimePoints:(bus?.route?.points||[]);}
   function busNextStop(bus){const points=busRoutePoints(bus);for(let step=0;step<points.length;step++){const point=points[(bus.pointIndex+step)%points.length];if(point?.stopId)return point;}return null;}
@@ -42,8 +42,8 @@
     return best;
   }
   function recoverBusRoute(bus,reason='route-recovery'){
-    const points=busRoutePoints(bus),projection=nearestForwardBusSegment(bus,points);if(!projection)return false;
-    bus.group.position.x=projection.point.x;bus.group.position.z=projection.point.z;bus.pointIndex=projection.nextIndex;bus.currentSpeed=0;bus.targetSpeed=0;bus.lastProgressAt=performance.now();bus.lastProgressX=bus.group.position.x;bus.lastProgressZ=bus.group.position.z;bus.lastRecoveryAt=bus.lastProgressAt;setBusState(bus,BUS_STATES.RECOVERING,reason);return true;
+    const points=busRoutePoints(bus);let projection=nearestForwardBusSegment(bus,points);const global=projectPointToPolyline(bus.group.position,points);if(global&&(!projection||global.distance+1.2<projection.distance))projection=global;if(!projection)return false;
+    bus.group.position.x=projection.point.x;bus.group.position.z=projection.point.z;bus.pointIndex=projection.nextIndex;bus.currentSpeed=0;bus.targetSpeed=0;bus.trafficHoldUntil=performance.now()+650;bus.lastProgressAt=performance.now();bus.lastProgressX=bus.group.position.x;bus.lastProgressZ=bus.group.position.z;bus.lastRecoveryAt=bus.lastProgressAt;setBusState(bus,BUS_STATES.RECOVERING,reason);return true;
   }
   function setBusState(bus,next,reason=''){
     if(!bus||bus.state===next)return false;bus.stateHistory=bus.stateHistory||[];bus.stateHistory.push({from:bus.state||'',to:next,at:Date.now(),reason});bus.stateHistory=bus.stateHistory.slice(-24);bus.state=next;bus.stateSince=performance.now();bus.lastStateReason=reason;return true;
@@ -95,6 +95,9 @@
     let stop=world.busStops.find(s=>s.id===point.stopId);if(stop){if(!stop.routes.includes(route.id))stop.routes.push(route.id);return stop;}
     stop={id:point.stopId,name:point.stopName,x:point.x,z:point.z,roadX:point.x,roadZ:point.z,routes:[route.id]};world.busStops.push(stop);const g=new THREE.Group();const sideX=Math.abs(point.x)<9?4.8:point.x<0?4.8:-4.8;g.position.set(point.x+sideX,0,point.z);worldGroup.add(g);premiumBox(.18,2.7,.18,0x23364b,0,1.35,0,g);premiumBox(1.5,.92,.16,route.color,0,2.35,0,g);const sign=new THREE.Mesh(new THREE.PlaneGeometry(.72,.72),new THREE.MeshStandardMaterial({map:iconTexture('🚌','#ffffff','#17324d'),transparent:true,side:THREE.DoubleSide}));sign.position.set(0,2.38,.1);g.add(sign);premiumBox(2.8,.18,.82,0xd3dce3,0,.1,0,g);stop.sign=g;stop.x=point.x+sideX;registerInteractable({id:`bus-stop-${stop.id}`,type:'bus-stop',icon:'🚌',label:`Parada: ${stop.name}`,x:stop.x,z:stop.z,radius:3.3,priority:190,action:()=>openBusStop(stop)});return stop;
   }
+  function busSpawnIndex(runtimePoints,preferredOffset){
+    if(!runtimePoints.length)return 0;let best=preferredOffset,bestScore=-Infinity;for(let i=0;i<runtimePoints.length;i++){const point=runtimePoints[i],roadOk=pointOnRoad(point.x,point.z,.03),distanceToTraffic=trafficActorList().reduce((min,actor)=>Math.min(min,Math.hypot(actor.group.position.x-point.x,actor.group.position.z-point.z)-(actor.radius||1.5)),999),distanceToBus=(world.buses||[]).reduce((min,bus)=>Math.min(min,Math.hypot(bus.group.position.x-point.x,bus.group.position.z-point.z)-5.5),999),cycle=Math.min(Math.abs(i-preferredOffset),runtimePoints.length-Math.abs(i-preferredOffset)),score=(roadOk?0:-500)+Math.min(distanceToTraffic,distanceToBus)-cycle*.045+(point.stopId?-1.2:0);if(score>bestScore){bestScore=score;best=i;}}return best;
+  }
   function createBusModel(route,copy=0,routeOrder=0){
     const g=new THREE.Group(),body=renderMat(route.color,{roughness:.4,metalness:.14}),dark=renderMat(0x11263a,{roughness:.08,metalness:.28,transparent:true,opacity:.42}),light=renderMat(0xf5f7fa,{roughness:.46}),rail=renderMat(0xf6c934,{roughness:.34,metalness:.32}),seat=materials.fabric;
     premiumBox(3.08,.48,7.0,0x26384b,0,.4,0,g);premiumBox(2.92,.2,6.65,materials.tile,0,.72,0,g);
@@ -114,7 +117,7 @@
     premiumBox(.68,1.9,.08,renderMat(0x98e7ff,{transparent:true,opacity:.22,roughness:.08}),1.54,1.7,2.52,g);premiumBox(.12,2.08,.12,rail,1.5,1.78,1.84,g);
     const wheels=[];for(const p of [[-1.48,.47,-2.3],[1.48,.47,-2.3],[-1.48,.47,2.25],[1.48,.47,2.25]]){const wheel=premiumCylinder(.48,.28,0x111720,p[0],p[1],p[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}
     const passengerColors=[0xffd84d,0xff72b6,0x54c7ff];for(let i=0;i<3;i++){const pg=new THREE.Group();pg.position.set(i%2?-.72:.72,1.2,-1.6+i*1.35);g.add(pg);premiumBox(.42,.52,.38,passengerColors[i],0,.25,0,pg);premiumBox(.36,.36,.36,0xffc997,0,.68,0,pg);}
-    const runtimePoints=buildBusRoadPath(route),copies=Math.max(1,Number(route.copies||1)),preferredOffset=Math.floor(((copy/copies)+(routeOrder/Math.max(1,BUS_ROUTES.length)))*runtimePoints.length)%runtimePoints.length;let routeOffset=preferredOffset;if(world.buses.length){let bestScore=-Infinity;for(let i=0;i<runtimePoints.length;i++){const p=runtimePoints[i],minDistance=Math.min(...world.buses.map(existing=>Math.hypot(existing.group.position.x-p.x,existing.group.position.z-p.z))),cycleDistance=Math.min(Math.abs(i-preferredOffset),runtimePoints.length-Math.abs(i-preferredOffset)),score=minDistance-cycleDistance*.08;if(score>bestScore){bestScore=score;routeOffset=i;}}}const start=runtimePoints[routeOffset],now=performance.now(),bus={id:`bus-${route.id}-${copy+1}`,route,runtimePoints,group:g,pointIndex:(routeOffset+1)%runtimePoints.length,stopUntil:start.stopId?now+1200:0,lastStopId:start.stopId||'',lastStopName:start.stopName||'',wheels,speed:route.speed,currentSpeed:0,targetSpeed:0,seatOffset:new THREE.Vector3(-.72,.94,.55),interiorSeats:8,doorsOpen:!!start.stopId,state:start.stopId?BUS_STATES.DOORS_OPEN:BUS_STATES.SPAWNING,stateSince:now,stateHistory:[],lastProgressAt:now,lastProgressX:start.x,lastProgressZ:start.z,lastRecoveryAt:0,offerStopId:'',openAt:0,closeUntil:0};g.position.set(start.x,.02,start.z);g.userData.roadPath=runtimePoints;g.userData.busId=bus.id;worldGroup.add(g);world.buses.push(bus);
+    const runtimePoints=buildBusRoadPath(route),copies=Math.max(1,Number(route.copies||1)),preferredOffset=Math.floor(((copy/copies)+(routeOrder/Math.max(1,BUS_ROUTES.length)))*runtimePoints.length)%runtimePoints.length;let routeOffset=busSpawnIndex(runtimePoints,preferredOffset);const start=runtimePoints[routeOffset],now=performance.now(),bus={id:`bus-${route.id}-${copy+1}`,route,runtimePoints,group:g,pointIndex:(routeOffset+1)%runtimePoints.length,stopUntil:start.stopId?now+1200:0,lastStopId:start.stopId||'',lastStopName:start.stopName||'',wheels,speed:route.speed,currentSpeed:0,targetSpeed:0,seatOffset:new THREE.Vector3(-.72,.94,.55),interiorSeats:8,doorsOpen:!!start.stopId,state:start.stopId?BUS_STATES.DOORS_OPEN:BUS_STATES.SPAWNING,stateSince:now,stateHistory:[],lastProgressAt:now,lastProgressX:start.x,lastProgressZ:start.z,lastRecoveryAt:0,offerStopId:'',openAt:0,closeUntil:0};g.position.set(start.x,.02,start.z);g.userData.roadPath=runtimePoints;g.userData.busId=bus.id;worldGroup.add(g);world.buses.push(bus);
     registerInteractable({id:`board-${bus.id}`,type:'bus',icon:'🚌',label:`Embarcar • ${route.number} ${route.name}`,radius:4.6,priority:210,getPos:()=>({x:bus.group.position.x,z:bus.group.position.z}),action:()=>enterBus(bus)});
     for(const point of runtimePoints)if(point.stopId)ensureBusStop(route,point);return bus;
   }
@@ -185,6 +188,7 @@
     for(const bus of world.buses){
       const points=busRoutePoints(bus);if(!points.length)continue;
       if(bus.state===BUS_STATES.SPAWNING)setBusState(bus,BUS_STATES.MOVING,'spawn-complete');
+      if(now<Number(bus.trafficHoldUntil||0)){bus.currentSpeed=lerp(Number(bus.currentSpeed||0),0,Math.min(1,dt*10));continue;}
       if(bus.state===BUS_STATES.ACCIDENT){bus.currentSpeed=lerp(Number(bus.currentSpeed||0),0,Math.min(1,dt*8));continue;}
       if(bus.state===BUS_STATES.TURNING_AROUND){
         bus.currentSpeed=0;const targetHeading=Number(bus.turnTargetHeading||0),delta=((targetHeading-bus.group.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI;bus.group.rotation.y=lerpAngle(bus.group.rotation.y,targetHeading,Math.min(1,dt*4.8));if(Math.abs(delta)<.045||now>=Number(bus.turnUntil||0)){bus.group.rotation.y=targetHeading;bus.turnTargetHeading=0;bus.turnUntil=0;setBusState(bus,BUS_STATES.MOVING,'turn-complete');}

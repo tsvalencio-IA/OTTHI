@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 01-build-persistence.js
  * Escopo: Normalização, merge, tombstones e persistência das construções
  * Linhas de origem V642: 27-142

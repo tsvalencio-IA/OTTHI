@@ -127,7 +127,7 @@ for f in functions:callable_rows.append({'type':'function-declaration','name':f[
 with (DOCS/'INVENTARIO-CALLABLES.csv').open('w',newline='',encoding='utf-8-sig') as fh:
     fields6=['type','name','module','line','snippet'];w=csv.DictWriter(fh,fieldnames=fields6);w.writeheader();w.writerows(sorted(callable_rows,key=lambda x:(x['line'],x['name'])))
 
-summary={'version':642,'namedFunctionDeclarations':len(functions),'topLevelArrowFunctions':sum(1 for x in callable_rows if x['type']=='top-level-arrow'),'arrowTokensIncludingCallbacks':len(arrow_rows),'controlFlowOccurrences':len(condition_rows),'eventBindings':len(event_rows),'moduleDependencyPairs':len(dep_rows),'conditionsByType':{}}
+summary={'version':643,'namedFunctionDeclarations':len(functions),'topLevelArrowFunctions':sum(1 for x in callable_rows if x['type']=='top-level-arrow'),'arrowTokensIncludingCallbacks':len(arrow_rows),'controlFlowOccurrences':len(condition_rows),'eventBindings':len(event_rows),'moduleDependencyPairs':len(dep_rows),'conditionsByType':{}}
 for r in condition_rows:summary['conditionsByType'][r['type']]=summary['conditionsByType'].get(r['type'],0)+1
 (DOCS/'AUDITORIA-PROFUNDA-RESUMO.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n','utf-8')
 
@@ -160,12 +160,12 @@ if checklist.exists():
         '- `INVENTARIO-CALLABLES.csv`',
         '- `DEPENDENCIAS-MODULOS.csv`',
         '- `AUDITORIA-PROFUNDA-RESUMO.json`',
-        '- `RELATORIO-EQUIVALENCIA-V641-V642.md`',
-        '- `RELATORIO-EQUIVALENCIA-V641-V642.json`',
-        '- `CHECKLIST-544-FUNCOES.md`',
+        '- `RELATORIO-PRESERVACAO-V642-V643.md`',
+        '- `RELATORIO-PRESERVACAO-V642-V643.json`',
+        f"- `CHECKLIST-{summary['namedFunctionDeclarations']}-FUNCOES.md`",
         '- `CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md`',
-        '- `CHECKLIST-236-EVENTOS.md`',
-        '- `CHECKLIST-262-NOS-HTML.md`',
+        f"- `CHECKLIST-{summary['eventBindings']}-EVENTOS.md`",
+        '- `CHECKLIST-263-NOS-HTML.md`',
         '- `MATRIZ-COMPLETA-JOGABILIDADES-E-TESTES.md`',
     ]
     checklist.write_text(text+'\n'.join(lines)+'\n','utf-8')
@@ -173,7 +173,7 @@ if checklist.exists():
 print(json.dumps(summary,ensure_ascii=False,indent=2))
 
 # Checklists literais completos para inspeção humana.
-function_md=['# Checklist das 544 funções — OTTHI World Edu V642','',
+function_md=[f"# Checklist das {summary['namedFunctionDeclarations']} funções — OTTHI World Edu V643",'',
              'Cada item confirma presença na fonte modular. `endBoundaryLine` termina na próxima declaração de função de topo; não é uma afirmação de parsing semântico do corpo JavaScript.','']
 current_module=None
 for f in functions:
@@ -183,9 +183,9 @@ for f in functions:
     calls=', '.join(f['calls'][:12]) if f['calls'] else 'nenhuma função nomeada detectada'
     if len(f['calls'])>12:calls+=f" (+{len(f['calls'])-12})"
     function_md.append(f"- [x] `{f['function']}()` — linhas {f['startLine']}–{f['endBoundaryLine']} — {logic} — chama: {calls}")
-(DOCS/'CHECKLIST-544-FUNCOES.md').write_text('\n'.join(function_md)+'\n','utf-8')
+(DOCS/f"CHECKLIST-{summary['namedFunctionDeclarations']}-FUNCOES.md").write_text('\n'.join(function_md)+'\n','utf-8')
 
-flow_md=['# Checklist das ocorrências de fluxo — OTTHI World Edu V642','',
+flow_md=['# Checklist das ocorrências de fluxo — OTTHI World Edu V643','',
          'Inventário lexical de todas as ocorrências encontradas de `if`, `else`, `switch`, `case`, `for`, `while`, `catch`, `return` e `throw`. Um trecho pode conter mais de uma ocorrência.','']
 current_module=None
 for row in condition_rows:
@@ -196,7 +196,7 @@ for row in condition_rows:
     flow_md.append(f"- [x] `{row['type']}` — linha {row['line']}, coluna {row['column']}{owner} — `{snippet}`")
 (DOCS/'CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md').write_text('\n'.join(flow_md)+'\n','utf-8')
 
-event_md=['# Checklist dos bindings de evento — OTTHI World Edu V642','']
+event_md=[f"# Checklist dos {summary['eventBindings']} bindings de evento — OTTHI World Edu V643",'']
 current_module=None
 for row in event_rows:
     if row['module']!=current_module:
@@ -204,11 +204,11 @@ for row in event_rows:
     owner=f" em `{row['functionBoundaryOwner']}()`" if row['functionBoundaryOwner'] else ''
     snippet=row['snippet'].replace('`','\\`')
     event_md.append(f"- [x] `{row['type']}` — linha {row['line']}{owner} — `{snippet}`")
-(DOCS/'CHECKLIST-236-EVENTOS.md').write_text('\n'.join(event_md)+'\n','utf-8')
+(DOCS/f"CHECKLIST-{summary['eventBindings']}-EVENTOS.md").write_text('\n'.join(event_md)+'\n','utf-8')
 
 # Reaproveita o inventário de nós HTML gerado pelo auditor estático.
 html_csv=DOCS/'INVENTARIO-NOS-HTML.csv'
-node_md=['# Checklist dos nós HTML — OTTHI World Edu V642','']
+node_md=['# Checklist dos nós HTML — OTTHI World Edu V643','']
 if html_csv.exists():
     with html_csv.open('r',encoding='utf-8-sig',newline='') as fh:
         html_rows=list(csv.DictReader(fh))
@@ -217,4 +217,4 @@ if html_csv.exists():
         classes=f" class=\"{row['classes']}\"" if row['classes'] else ''
         parent=f" — pai `{row['parent']}`" if row['parent'] else ''
         node_md.append(f"- [x] linha {row['line']} — `<{row['tag']}>` `{identity}`{classes}{parent}")
-(DOCS/'CHECKLIST-262-NOS-HTML.md').write_text('\n'.join(node_md)+'\n','utf-8')
+(DOCS/f"CHECKLIST-{len(html_rows)}-NOS-HTML.md").write_text('\n'.join(node_md)+'\n','utf-8')

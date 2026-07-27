@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 06-missions-profile-hud-inventory-tools.js
  * Escopo: Missões, objetivos, perfil, HUD, inventário e ferramentas
  * Linhas de origem V642: 928-1063

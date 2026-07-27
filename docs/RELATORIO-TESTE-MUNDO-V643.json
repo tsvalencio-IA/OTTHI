@@ -1,0 +1,181 @@
+{
+  "version": 643,
+  "passed": true,
+  "counts": {
+    "passed": 34,
+    "failed": 0,
+    "total": 34
+  },
+  "checks": [
+    {
+      "name": "Cinco pescadores de margem",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "Pesca viva: createShoreFisher",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesca viva: createShoreFishingLife",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesca viva: updateShoreFishers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesca viva: fishingActivity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesca viva: bobber",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesca viva: line.geometry.attributes.position.needsUpdate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesca viva criada na expansão do lago",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Textura de água PNG válida",
+      "passed": true,
+      "detail": "(512, 512)"
+    },
+    {
+      "name": "Textura de água usada no material",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Frota inicial limitada",
+      "passed": true,
+      "detail": "{'solar': 2, 'verde': 2, 'escolar': 1, 'circular': 1, 'turismo': 1}"
+    },
+    {
+      "name": "Circular da Cidade com uma unidade",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "Trânsito: trafficPriority",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Trânsito: trafficSpeedFactor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Trânsito: captureTrafficPositions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Trânsito: resolveTrafficOverlaps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Trânsito: trafficHoldUntil",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ônibus: busSpawnIndex",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ônibus: buildBusRoadPath",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ônibus: recoverBusRoute",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ônibus: validateBusCoverage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ônibus: laneOffset",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Serviços de emergência respeitam retenção",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "NPCs/veículos respeitam retenção",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS mobilidade: mode-mobility-driver #runBtn",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS mobilidade: mode-mobility-driver #jumpBtn",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS mobilidade: orientation:portrait",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS mobilidade: orientation:landscape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS mobilidade: mode-passenger",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Preservação: bombeiros",
+      "passed": true,
+      "detail": "createFireTruck,activateFireIncident"
+    },
+    {
+      "name": "Preservação: policia",
+      "passed": true,
+      "detail": "createPoliceCar,startPoliceAlert"
+    },
+    {
+      "name": "Preservação: ambulancia",
+      "passed": true,
+      "detail": "createAmbulance,resolveTrafficIncident"
+    },
+    {
+      "name": "Preservação: roupas",
+      "passed": true,
+      "detail": "applyAvatarCustomization,JOB_UNIFORMS"
+    },
+    {
+      "name": "Preservação: skills",
+      "passed": true,
+      "detail": "setScaleMode,toggleCrouch,spinPlayer"
+    }
+  ]
+}

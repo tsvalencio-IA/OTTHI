@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 03-ui-modal-install-pwa.js
  * Escopo: Economia, flags, telas, modais, feedback, instalação e PWA
  * Linhas de origem V642: 397-658
@@ -207,7 +207,7 @@
         return true;
       }
     } catch (error) {
-      console.warn('[OTTHI-GAME UPDATE] Verificação adiada:', error?.message || error);
+      console.warn('[OTTHI UPDATE] Verificação adiada:', error?.message || error);
     }
     return false;
   }
@@ -243,7 +243,7 @@
         probeOtthiGameUpdate(false);
       }, OTTHI_UPDATE_INTERVAL_MS);
     } catch (error) {
-      console.warn('[OTTHI-GAME UPDATE] Service Worker indisponível:', error?.message || error);
+      console.warn('[OTTHI UPDATE] Service Worker indisponível:', error?.message || error);
     }
   }
 

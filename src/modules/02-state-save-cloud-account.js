@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 02-state-save-cloud-account.js
  * Escopo: Estado, save local, IndexedDB, nuvem e conta
  * Linhas de origem V642: 143-396

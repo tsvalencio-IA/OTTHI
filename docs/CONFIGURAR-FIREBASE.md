@@ -1,6 +1,6 @@
 # Configurar o Firebase existente
 
-1. Abra o Firebase Console do projeto já usado pelo OTTHI-GAME.
+1. Abra o Firebase Console do projeto já usado pelo OTTHI.
 2. Confirme que **Authentication** possui os métodos:
    - Anônimo;
    - E-mail/senha.
@@ -9,7 +9,7 @@
 5. Substitua as regras atuais e publique.
 6. Não altere `firebase-config.js` enquanto continuar usando o mesmo projeto Firebase.
 
-## Estrutura V642
+## Estrutura V643
 
 - `otthosWorld/users/{uid}`: perfil, progresso, aprendizado e conta;
 - `otthosWorld/rooms/{roomId}/presence`: jogadores conectados naquele bairro;

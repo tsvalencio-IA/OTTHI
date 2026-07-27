@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 12-world-resources-nature.js
  * Escopo: Interações do mundo, árvores, rochas, mina, poço, ruas, água e móveis
  * Linhas de origem V642: 1963-2184

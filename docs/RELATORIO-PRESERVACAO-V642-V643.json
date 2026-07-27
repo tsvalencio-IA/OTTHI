@@ -1,0 +1,187 @@
+{
+  "baseline": "OTTHI World Edu V641 / fonte modular V642",
+  "candidate": "OTTHI World Edu V643 precision mobility traffic fishing",
+  "functionCountBaseline": 544,
+  "functionCountActual": 552,
+  "baselineFunctionsPreserved": true,
+  "baselineFunctionOrderPreserved": true,
+  "missingFunctions": [],
+  "addedFunctions": [
+    "trafficPriority",
+    "busSpawnIndex",
+    "createShoreFisher",
+    "createShoreFishingLife",
+    "updateShoreFishers",
+    "mobilityDriverActive",
+    "updateMobilityControlLabels",
+    "mobilityThrottleIntent"
+  ],
+  "requiredV643FunctionsPresent": true,
+  "requiredV643Functions": [
+    "trafficPriority",
+    "busSpawnIndex",
+    "createShoreFisher",
+    "createShoreFishingLife",
+    "updateShoreFishers",
+    "mobilityDriverActive",
+    "updateMobilityControlLabels",
+    "mobilityThrottleIntent"
+  ],
+  "preservedAssetsChecked": 83,
+  "preservedAssetsUnchanged": 83,
+  "preservedAssetFailures": [],
+  "requiredSystemTokens": {
+    "roupas_e_avatar": {
+      "required": [
+        "applyAvatarCustomization",
+        "openAvatarStudio",
+        "uniform"
+      ],
+      "present": [
+        "applyAvatarCustomization",
+        "openAvatarStudio",
+        "uniform"
+      ],
+      "complete": true
+    },
+    "skills": {
+      "required": [
+        "setScaleMode",
+        "toggleCrouch",
+        "spinPlayer"
+      ],
+      "present": [
+        "setScaleMode",
+        "toggleCrouch",
+        "spinPlayer"
+      ],
+      "complete": true
+    },
+    "bombeiros": {
+      "required": [
+        "createFireTruck",
+        "openFireStationDesk",
+        "activateFireIncident"
+      ],
+      "present": [
+        "createFireTruck",
+        "openFireStationDesk",
+        "activateFireIncident"
+      ],
+      "complete": true
+    },
+    "policia": {
+      "required": [
+        "createPoliceCar",
+        "startPoliceAlert",
+        "updatePoliceSystem"
+      ],
+      "present": [
+        "createPoliceCar",
+        "startPoliceAlert",
+        "updatePoliceSystem"
+      ],
+      "complete": true
+    },
+    "ambulancias": {
+      "required": [
+        "createAmbulance",
+        "createTrafficIncident",
+        "resolveTrafficIncident"
+      ],
+      "present": [
+        "createAmbulance",
+        "createTrafficIncident",
+        "resolveTrafficIncident"
+      ],
+      "complete": true
+    },
+    "construcao": {
+      "required": [
+        "beginBuildMode",
+        "placeBuild",
+        "reconcileWorldBuilds"
+      ],
+      "present": [
+        "beginBuildMode",
+        "placeBuild",
+        "reconcileWorldBuilds"
+      ],
+      "complete": true
+    },
+    "pescaria": {
+      "required": [
+        "startFishing",
+        "updateFishingVisual",
+        "restoreFishingCamera",
+        "createShoreFishingLife"
+      ],
+      "present": [
+        "startFishing",
+        "updateFishingVisual",
+        "restoreFishingCamera",
+        "createShoreFishingLife"
+      ],
+      "complete": true
+    },
+    "transporte": {
+      "required": [
+        "createBusModel",
+        "enterBus",
+        "openMetroStation",
+        "trafficPriority",
+        "busSpawnIndex"
+      ],
+      "present": [
+        "createBusModel",
+        "enterBus",
+        "openMetroStation",
+        "trafficPriority",
+        "busSpawnIndex"
+      ],
+      "complete": true
+    },
+    "mobilidade_v643": {
+      "required": [
+        "mobilityThrottleIntent",
+        "updateMobilityControlLabels",
+        "mobilityAccelerate",
+        "mobilityBrake"
+      ],
+      "present": [
+        "mobilityThrottleIntent",
+        "updateMobilityControlLabels",
+        "mobilityAccelerate",
+        "mobilityBrake"
+      ],
+      "complete": true
+    },
+    "multiplayer": {
+      "required": [
+        "remotePlayerEvent",
+        "openSocialHub",
+        "updateMultiplayer"
+      ],
+      "present": [
+        "remotePlayerEvent",
+        "openSocialHub",
+        "updateMultiplayer"
+      ],
+      "complete": true
+    },
+    "educacao": {
+      "required": [
+        "openEducationHub",
+        "runEducationGame",
+        "OTTHI_LEARNING"
+      ],
+      "present": [
+        "openEducationHub",
+        "runEducationGame",
+        "OTTHI_LEARNING"
+      ],
+      "complete": true
+    }
+  },
+  "passed": true
+}

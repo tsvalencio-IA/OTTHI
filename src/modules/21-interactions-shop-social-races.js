@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 21-interactions-shop-social-races.js
  * Escopo: Atividades, mercado, oficina, amizades, NPCs e corridas
  * Linhas de origem V642: 3241-3415

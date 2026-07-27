@@ -742,7 +742,7 @@ body.ui-orientation-changing *,body.ui-orientation-changing *::before,body.ui-or
 
 /* ===== MODULE: 07-display-fishing-v637.css ===== */
 /* ==================================================================
-   OTTHI-GAME V637 — ESCALA VISUAL, CAMADAS E PAINEL DE PESCA
+   OTTHI V637 — ESCALA VISUAL, CAMADAS E PAINEL DE PESCA
    ================================================================== */
 :root{
   --hud-scale:1;
@@ -841,7 +841,7 @@ body.ui-landscape .mission-card:not(.expanded){transform:none!important}
 
 /* ===== MODULE: 08-construction-v638.css ===== */
 /* ==================================================================
-   OTTHI-GAME V638 — CONSTRUÇÃO PERSISTENTE E JOGABILIDADE REAL
+   OTTHI V638 — CONSTRUÇÃO PERSISTENTE E JOGABILIDADE REAL
    ================================================================== */
 .build-control-panel{
   position:fixed;
@@ -929,7 +929,7 @@ body.mode-building .primary-actions .action{opacity:1!important;pointer-events:a
 
 /* ===== MODULE: 09-gameplay-layout-camera-v640.css ===== */
 /* ==================================================================
-   OTTHI-GAME V640 — LAYOUT ESTÁVEL E CÂMERA CONTEXTUAL
+   OTTHI V640 — LAYOUT ESTÁVEL E CÂMERA CONTEXTUAL
    Camada final: neutraliza regras conflitantes das versões anteriores.
    ================================================================== */
 html,body,.app,.screen,.game{width:100%!important;height:100%!important;min-width:0!important;min-height:100dvh!important;max-width:100%!important;max-height:none!important}
@@ -1053,3 +1053,20 @@ body.ui-portrait .mini-nav,body.otthi-portrait .mini-nav{top:calc(64px + var(--s
 .learning-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.learning-summary>div{padding:10px;border-radius:14px;background:rgba(255,255,255,.08);text-align:center}.learning-summary small,.room-current small{display:block;color:#8ee8ff;font-size:9px;font-weight:900}.learning-summary b{display:block;font-size:22px}.learning-subjects,.room-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}.learning-subjects button,.room-grid button{min-width:0;padding:12px;border-radius:15px;background:#173b5a;border:1px solid rgba(255,255,255,.14);text-align:left}.learning-subjects button>span,.room-grid button>span{font-size:25px}.learning-subjects button b,.learning-subjects button small,.room-grid button b,.room-grid button small{display:block}.learning-subjects button small,.room-grid button small{color:#c8d9e8;font-size:10px;margin-top:3px}.learning-subjects button i{display:block;height:8px;margin-top:8px;border-radius:99px;background:#082033;overflow:hidden}.learning-subjects button em{display:block;height:100%;background:#63e978}.room-grid button.selected{outline:2px solid #66e7ff;background:#245c7d}.room-current{display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;background:rgba(255,255,255,.08)}.room-current>span{font-size:36px}.room-current b{display:block;font-size:18px}.room-current p{margin:3px 0 0;color:#c9d8e6}.house-directory{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.house-directory>div{padding:10px;border-radius:14px;background:rgba(255,255,255,.07)}.house-directory span,.house-directory b,.house-directory small{display:block}.house-directory span{font-size:24px}.house-directory small{color:#bdd0df}.adaptive-question{text-align:center}.adaptive-question h3{font-size:clamp(28px,8vw,54px);margin:22px 0}.adaptive-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adaptive-options button{min-height:56px;border-radius:15px;background:#214d70;font-size:22px;font-weight:900}.adaptive-options button.correct{background:#238a36}.adaptive-options button.wrong{background:#9f2734}.learning-result{text-align:center}.learning-result>div{font-size:58px}.learning-result h3{font-size:42px;margin:4px}
 #otthiPerformanceBadge{position:fixed;z-index:9998;left:8px;top:50%;transform:translateY(-50%);padding:6px 9px;border-radius:10px;background:rgba(6,20,34,.88);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:900}#otthiPerformanceBadge[data-level="bad"]{border-color:#ff6470}#otthiPerformanceBadge[data-level="warn"]{border-color:#ffc857}#otthiPerformanceBadge[data-level="good"]{border-color:#57d36b}
 @media(max-width:420px){.learning-summary{grid-template-columns:1fr 1fr}.learning-summary>div:last-child{grid-column:1/-1}.learning-subjects,.room-grid,.house-directory{grid-template-columns:1fr}.adaptive-options{grid-template-columns:1fr 1fr}}
+
+/* ===== MODULE: 11-mobility-traffic-fishing-v643.css ===== */
+body.mode-mobility-driver #runBtn,body.mode-mobility-driver #jumpBtn{opacity:1!important;visibility:visible!important;pointer-events:auto!important;filter:none!important}
+body.mode-mobility-driver #runBtn{background:linear-gradient(180deg,rgba(38,196,99,.98),rgba(12,112,60,.98))!important;border-color:rgba(185,255,210,.96)!important}
+body.mode-mobility-driver #jumpBtn{background:linear-gradient(180deg,rgba(246,156,50,.98),rgba(170,72,24,.98))!important;border-color:rgba(255,225,177,.96)!important}
+body.mode-mobility-driver #runBtn.active,body.mode-mobility-driver #jumpBtn.active{transform:scale(.94)!important;box-shadow:0 0 0 4px rgba(255,255,255,.2),0 7px 18px rgba(0,0,0,.38)!important}
+body.mode-mobility-driver #runBtn b,body.mode-mobility-driver #jumpBtn b{font-size:clamp(20px,5vw,30px)!important}
+body.mode-mobility-driver #runBtn span,body.mode-mobility-driver #jumpBtn span{font-size:clamp(7px,1.8vw,10px)!important;display:block!important}body.mode-mobility-driver #runBtn span::after{content:none!important;display:none!important}
+body.mode-mobility-driver .secondary-actions,body.mode-mobility-driver .skills-toggle{opacity:.1!important;pointer-events:none!important;filter:grayscale(1)!important}
+body.mode-boat #specialBtn,body.mode-vehicle #specialBtn{opacity:1!important;pointer-events:auto!important}
+@media (orientation:portrait){body.mode-mobility-driver .primary-actions{grid-template-columns:repeat(2,var(--action))!important;grid-template-rows:repeat(2,var(--action))!important}body.mode-mobility-driver #runBtn{grid-column:1;grid-row:1}body.mode-mobility-driver #jumpBtn{grid-column:2;grid-row:1}body.mode-mobility-driver #specialBtn{grid-column:1;grid-row:2}body.mode-mobility-driver #actionBtn{grid-column:2;grid-row:2}}
+@media (orientation:landscape) and (max-height:460px){body.mode-mobility-driver .primary-actions{grid-template-columns:repeat(4,var(--action))!important;grid-template-rows:var(--action)!important;right:calc(7px + var(--safe-right))!important;bottom:calc(7px + var(--safe-bottom))!important}body.mode-mobility-driver .round{width:var(--action)!important;height:var(--action)!important}body.mode-mobility-driver .joystick{width:var(--joy)!important;height:var(--joy)!important}}
+.boat-activity-panel{z-index:32}
+body.mode-mobility-driver .vehicle-badge{max-width:min(58vw,390px);font-size:clamp(10px,2.4vw,14px)}
+
+body.mode-mobility-driver #actionBtn,body.mode-mobility-driver #specialBtn{opacity:1!important;pointer-events:auto!important;filter:none!important}
+body.mode-passenger #runBtn,body.mode-passenger #jumpBtn{opacity:.15!important;pointer-events:none!important}

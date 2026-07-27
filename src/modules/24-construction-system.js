@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 24-construction-system.js
  * Escopo: Custos, propriedade, preview, validação, colocação, remoção e reconciliação
  * Linhas de origem V642: 3645-3754

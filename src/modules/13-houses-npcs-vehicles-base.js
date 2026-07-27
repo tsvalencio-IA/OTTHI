@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 13-houses-npcs-vehicles-base.js
  * Escopo: Casas, interiores, NPCs, inimigos, cristais, veículos e academia
  * Linhas de origem V642: 2185-2417

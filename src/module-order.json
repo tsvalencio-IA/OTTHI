@@ -1,13 +1,13 @@
 {
-  "version": 642,
-  "build": "642.0-complete-modular-source-equivalence",
+  "version": 643,
+  "build": "643.0-precision-mobility-traffic-fishing",
   "javascript": [
     {
       "file": "src/modules/00-runtime-foundation.js",
       "startLine": 2,
       "endLine": 26,
       "description": "Runtime, utilitários, versão, storage e chaves de migração",
-      "sha256Body": "93721d15b39a0f65f079eda890a72c77561df8d787ea0df0240eb356bb0504b3"
+      "sha256Body": "10ed96616e977682228f58f50853bd122db2d84920f7e4d5b1c9b14c98b378ce"
     },
     {
       "file": "src/modules/01-build-persistence.js",
@@ -28,7 +28,7 @@
       "startLine": 397,
       "endLine": 658,
       "description": "Economia, flags, telas, modais, feedback, instalação e PWA",
-      "sha256Body": "779fb98d2873464e67a4fa09d78b43707dda0b9b2495fbbff875cfecc146f072"
+      "sha256Body": "09d8d7ae4da8643bfbad26c4b67dca190dbe9346e2f8d8365b663a8c61e8fa98"
     },
     {
       "file": "src/modules/04-education-daily-quiz.js",
@@ -56,7 +56,7 @@
       "startLine": 1064,
       "endLine": 1200,
       "description": "Rotas, trânsito, grafo, GPS e minimapa",
-      "sha256Body": "97a064fdc2796335b3f200011712ed86bd444c18aeab298acfaf409ca7179f24"
+      "sha256Body": "5e0847e96681c8cc9bc8290922d19f77c20dfc97944fb9ec5586bf3f12a7cd17"
     },
     {
       "file": "src/modules/08-map-parent-settings.js",
@@ -70,7 +70,7 @@
       "startLine": 1360,
       "endLine": 1624,
       "description": "Responsividade, AR, modos, qualidade, LOD e diagnóstico",
-      "sha256Body": "7c8651c96279ee054254f6774ec46df3764a1894ee517971eaff38c05f9cfc29"
+      "sha256Body": "4bc190ba043fa4a07a38b3efaf8aee1e0b9cd6eb820dd171aae083a2bfa57bae"
     },
     {
       "file": "src/modules/10-player-skills.js",
@@ -84,7 +84,7 @@
       "startLine": 1692,
       "endLine": 1962,
       "description": "Texturas, materiais, geometria, personagem e avatar 3D",
-      "sha256Body": "2d2d23161a9f3b9f0d944123f62649a52b5f3de50b14c1e85f505404caa957e2"
+      "sha256Body": "1a0fc2dbb2b04d575b9cd2f6c6c074d0ad2c1ebe44f8271bfff9d18ed66e9ae0"
     },
     {
       "file": "src/modules/12-world-resources-nature.js",
@@ -105,21 +105,21 @@
       "startLine": 2418,
       "endLine": 2505,
       "description": "Cogumelos, portais, praça, distrito e decoração urbana",
-      "sha256Body": "0c1b778d31008705ad7f67a19d6710f94e11f1676c4bd0f0dbde51ed278f2c96"
+      "sha256Body": "9c7b09925c8c83725bd0a8623dab7e9308b44c2157dbe9fd4eaa1bbb01907e19"
     },
     {
       "file": "src/modules/15-transit-bus-metro.js",
       "startLine": 2506,
       "endLine": 2722,
       "description": "Ônibus, rotas viárias, paradas, metrô e painel de transporte",
-      "sha256Body": "e33f906d8171cc531d808e08b4906b141e56d5e21cb785c10721df81458c5a9b"
+      "sha256Body": "f6dc9c996a8890ecb69dfd1f9a0fffff77f0c104705d0938d01f9d8c0f0d7a24"
     },
     {
       "file": "src/modules/16-emergency-services.js",
       "startLine": 2723,
       "endLine": 2864,
       "description": "Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",
-      "sha256Body": "e096aa9af1dfd601e0d1bb32b9e87f2f9b457df763feb6aaf83fb1706aa9ca8f"
+      "sha256Body": "a63672fa39f90f92ab0bac4c52f45299070d25703a17ad63e3016a9f85281131"
     },
     {
       "file": "src/modules/17-adventures-learning-world.js",
@@ -133,14 +133,14 @@
       "startLine": 2925,
       "endLine": 3064,
       "description": "Água, câmera e animação da pesca, barco e física náutica",
-      "sha256Body": "fe475ed2d35038a6e5959ab9105482d005494215e2910ce11e879b25adf697b0"
+      "sha256Body": "4c9c1581d29146594327bfbc15acb7643bd715f85c1a35f32dc1032a86e19afb"
     },
     {
       "file": "src/modules/19-campfire-hunting-house-extensions.js",
       "startLine": 3065,
       "endLine": 3096,
       "description": "Fogueira, caça, animais e ampliações de casas",
-      "sha256Body": "4d62b1ef3b10dd2c77f0e7a9f6f6fc264066a27a56d520da327cac955ed13d6a"
+      "sha256Body": "a2f015bf78ecd2faa3d96c22f9d915987f76673e63369fc2309202088480c99e"
     },
     {
       "file": "src/modules/20-world-build-cloud-houses.js",
@@ -168,7 +168,7 @@
       "startLine": 3531,
       "endLine": 3644,
       "description": "Poeira, som, efeitos, controles, direção, passageiros e ponte",
-      "sha256Body": "facaccc1ba716ecf904d9a358ced1916dd2cc66d2d6ccfe8955783fd6fc9ae22"
+      "sha256Body": "726d74d554be3cf4023e3558bb0b569a238895131bd41c5987571740b57574da"
     },
     {
       "file": "src/modules/24-construction-system.js",
@@ -189,14 +189,14 @@
       "startLine": 3886,
       "endLine": 4000,
       "description": "Entrada, corrida, pulo, física do jogador/veículo e animação",
-      "sha256Body": "fd3a0cba50cd02c7708751de2a6cf9f90e117e49489b4b46d7fc9b8fe5dc14e4"
+      "sha256Body": "9ac178393a9f2f438bc629e0b980681ee21e4c98adbd6ba476ffc3e9649bc5f7"
     },
     {
       "file": "src/modules/27-npc-enemies-combat-camera-action.js",
       "startLine": 4001,
       "endLine": 4157,
       "description": "Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",
-      "sha256Body": "8cfd95f8fea5c0243bdf5a0b0b5444fe67636a24e17754dc1943055d804ccf32"
+      "sha256Body": "f63005db9c6e4ab513050b258bca88a8470b1941eb888961682f2199ff42659c"
     },
     {
       "file": "src/modules/28-multiplayer-social-online.js",
@@ -210,14 +210,14 @@
       "startLine": 4305,
       "endLine": 4377,
       "description": "Loop principal, controles, gamepad e início do jogo",
-      "sha256Body": "0636ab7b1cda3bd110faea16c1c416cf17be4486191f67b15d87080b519d9a3c"
+      "sha256Body": "917ea1551571740141c43856d8574506939a329da093d61c9e1ee7ace224b23c"
     },
     {
       "file": "src/modules/30-pause-tests-public-api-bootstrap.js",
       "startLine": 4378,
       "endLine": 4557,
       "description": "Pausa, testes de veículo, API pública de auditoria e bootstrap final",
-      "sha256Body": "5855220a9bb2cfdc8ad4f163be23651eea3cda6729d7d330d16f0ac08af69c11"
+      "sha256Body": "8539dc76be417801be7672f65d3fe20108b13c402059ad777197920e5c604802"
     }
   ],
   "styles": [
@@ -275,21 +275,21 @@
       "startLine": 729,
       "endLine": 825,
       "description": "Exibição, HUD e pesca",
-      "sha256Body": "2e02c2a62457a35f620b960d72abe272707a64bb035360503140f80dc04e98d0"
+      "sha256Body": "bbbdccf84a35f2dc43606dfdf2e8921433c646c88ee4ca081d6f5941709b7a4f"
     },
     {
       "file": "src/styles/08-construction-v638.css",
       "startLine": 826,
       "endLine": 911,
       "description": "Construção persistente e controles contextuais",
-      "sha256Body": "74fede2f484099face3e4fbc2bb6e0b777d4a37b5ef70497f72c3de7a4c1aa95"
+      "sha256Body": "862e2964d6181b5f75f1e49d64216ff335a2ebcba1e0596ead6400061431fd30"
     },
     {
       "file": "src/styles/09-gameplay-layout-camera-v640.css",
       "startLine": 912,
       "endLine": 995,
       "description": "Modais, câmera de pesca e painéis contextuais",
-      "sha256Body": "a1cdbba442bdb97a58ee274e0e6346e880dd74d9e45469d711c1cdc9ca6d1cd2"
+      "sha256Body": "d16c924b27e60a067d022437b46154f635e678de6052662e22f28a5ec77c1b5c"
     },
     {
       "file": "src/styles/10-foundation-rooms-learning-v641-v642.css",
@@ -297,6 +297,13 @@
       "endLine": 1034,
       "description": "Fundação final, bairros, educação e desempenho",
       "sha256Body": "f71f620f0e2e25835cc7f196627e8f2bdc35680fe16356e32dde598b6484f0f7"
+    },
+    {
+      "file": "src/styles/11-mobility-traffic-fishing-v643.css",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Controles Acelerar/Freio-Ré, mobilidade responsiva e precisão V643",
+      "sha256Body": "387201cfc25ccbc5df444932ac206d7c3e285c321da48f72007cbc09db40051e"
     }
   ]
 }

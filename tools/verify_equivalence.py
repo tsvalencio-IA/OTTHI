@@ -1,153 +1,59 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-
 from pathlib import Path
-import hashlib
-import json
-import re
-import sys
+import hashlib,json,re,sys
+ROOT=Path(__file__).resolve().parents[1]; DOCS=ROOT/'docs'; DOCS.mkdir(exist_ok=True)
+BASELINE_PATH=DOCS/'BASELINE-V641-FUNCOES-E-ASSETS.json'
 
-ROOT = Path(__file__).resolve().parents[1]
-DOCS = ROOT / 'docs'
-DOCS.mkdir(exist_ok=True)
-BASELINE_PATH = DOCS / 'BASELINE-V641-FUNCOES-E-ASSETS.json'
+def sha(path:Path): return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+def function_order(text:str): return re.findall(r'^  function\s+([A-Za-z_$][\w$]*)\s*\(',text,re.M)
 
-
-def sha256_bytes(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
-
-
-def normalized_js(text: str) -> str:
-    rows: list[str] = []
-    for line in text.splitlines():
-        if re.match(r'^\s*// ===== MODULE:', line) or not line.strip():
-            continue
-        line = re.sub(r"const OTTHI_GAME_WEB_BUILD = '[^']+';", "const OTTHI_GAME_WEB_BUILD = '<BUILD>';", line)
-        line = re.sub(r'window\.OTTHI_GAME_VERSION = \d+;', 'window.OTTHI_GAME_VERSION = <VERSION>;', line)
-        line = re.sub(r'const APP_VERSION = \d+;', 'const APP_VERSION = <VERSION>;', line)
-        line = re.sub(r"const STORAGE_KEY = 'otthos_life_world_roleplay_v\d+';", "const STORAGE_KEY = '<STORAGE>';", line)
-        line = re.sub(r"const LEGACY_STORAGE_KEYS = \[.*?\];", "const LEGACY_STORAGE_KEYS = <LEGACY>;", line)
-        line = re.sub(r"version:'V\d+_[^']+'", "version:'<TEST_API>'", line)
-        rows.append(line.rstrip())
-    return '\n'.join(rows) + '\n'
-
-
-def normalized_css(text: str) -> str:
-    rows: list[str] = []
-    for line in text.splitlines():
-        if re.match(r'^/\* ===== MODULE:', line) or not line.strip():
-            continue
-        line = re.sub(r'OTTHI WORLD EDU V\d+', 'OTTHI WORLD EDU V<VERSION>', line)
-        rows.append(line.rstrip())
-    return '\n'.join(rows) + '\n'
-
-
-def function_order(text: str) -> list[str]:
-    return re.findall(r'^  function\s+([A-Za-z_$][\w$]*)\s*\(', text, re.M)
-
-
-def main() -> int:
-    if not BASELINE_PATH.exists():
-        raise SystemExit(f'Baseline ausente: {BASELINE_PATH}')
-    baseline = json.loads(BASELINE_PATH.read_text('utf-8'))
-    app = (ROOT / 'app.js').read_text('utf-8')
-    style = (ROOT / 'style.css').read_text('utf-8')
-    all_javascript = '\n'.join(path.read_text('utf-8', errors='ignore') for path in ROOT.rglob('*.js'))
-    current_functions = function_order(app)
-
-    expected_functions = baseline['functionOrder']
-    missing = [name for name in expected_functions if name not in current_functions]
-    added = [name for name in current_functions if name not in expected_functions]
-    function_order_equal = current_functions == expected_functions
-    js_normalized_sha = sha256_bytes(normalized_js(app).encode())
-    css_normalized_sha = sha256_bytes(normalized_css(style).encode())
-
-    asset_results = []
-    for relative, expected_sha in baseline['preservedAssetHashes'].items():
-        path = ROOT / relative
-        actual = sha256_bytes(path.read_bytes()) if path.exists() else None
-        asset_results.append({
-            'file': relative,
-            'exists': path.exists(),
-            'expectedSha256': expected_sha,
-            'actualSha256': actual,
-            'unchanged': actual == expected_sha,
-        })
-
-    required_tokens = {
-        'roupas_e_avatar': ['applyAvatarCustomization', 'openAvatarStudio', 'uniform'],
-        'skills': ['setScaleMode', 'toggleCrouch', 'spinPlayer'],
-        'bombeiros': ['createFireTruck', 'openFireStationDesk', 'activateFireIncident'],
-        'policia': ['createPoliceCar', 'startPoliceAlert', 'updatePoliceSystem'],
-        'ambulancias': ['createAmbulance', 'createTrafficIncident', 'resolveTrafficIncident'],
-        'construcao': ['beginBuildMode', 'placeBuild', 'reconcileWorldBuilds'],
-        'pescaria': ['startFishing', 'updateFishingVisual', 'restoreFishingCamera'],
-        'transporte': ['createBusModel', 'enterBus', 'openMetroStation'],
-        'multiplayer': ['remotePlayerEvent', 'openSocialHub', 'updateMultiplayer'],
-        'educacao': ['openEducationHub', 'runEducationGame', 'OTTHI_LEARNING'],
+def main():
+    baseline=json.loads(BASELINE_PATH.read_text('utf-8'))
+    app=(ROOT/'app.js').read_text('utf-8'); all_js='\n'.join(p.read_text('utf-8',errors='ignore') for p in ROOT.rglob('*.js'))
+    expected=baseline['functionOrder']; current=function_order(app)
+    missing=[x for x in expected if x not in current]
+    positions=[current.index(x) for x in expected if x in current]
+    order_preserved=not missing and positions==sorted(positions)
+    added=[x for x in current if x not in expected]
+    required_added=['trafficPriority','busSpawnIndex','createShoreFisher','createShoreFishingLife','updateShoreFishers','mobilityDriverActive','updateMobilityControlLabels','mobilityThrottleIntent']
+    asset_results=[]
+    for rel,expected_sha in baseline['preservedAssetHashes'].items():
+        path=ROOT/rel; actual=sha(path)
+        asset_results.append({'file':rel,'exists':path.exists(),'unchanged':actual==expected_sha,'expectedSha256':expected_sha,'actualSha256':actual})
+    required_tokens={
+      'roupas_e_avatar':['applyAvatarCustomization','openAvatarStudio','uniform'],
+      'skills':['setScaleMode','toggleCrouch','spinPlayer'],
+      'bombeiros':['createFireTruck','openFireStationDesk','activateFireIncident'],
+      'policia':['createPoliceCar','startPoliceAlert','updatePoliceSystem'],
+      'ambulancias':['createAmbulance','createTrafficIncident','resolveTrafficIncident'],
+      'construcao':['beginBuildMode','placeBuild','reconcileWorldBuilds'],
+      'pescaria':['startFishing','updateFishingVisual','restoreFishingCamera','createShoreFishingLife'],
+      'transporte':['createBusModel','enterBus','openMetroStation','trafficPriority','busSpawnIndex'],
+      'mobilidade_v643':['mobilityThrottleIntent','updateMobilityControlLabels','mobilityAccelerate','mobilityBrake'],
+      'multiplayer':['remotePlayerEvent','openSocialHub','updateMultiplayer'],
+      'educacao':['openEducationHub','runEducationGame','OTTHI_LEARNING'],
     }
-    token_results = {
-        system: {
-            'required': tokens,
-            'present': [token for token in tokens if token in all_javascript],
-            'complete': all(token in all_javascript for token in tokens),
-        }
-        for system, tokens in required_tokens.items()
+    systems={k:{'required':v,'present':[t for t in v if t in all_js],'complete':all(t in all_js for t in v)} for k,v in required_tokens.items()}
+    result={
+      'baseline':'OTTHI World Edu V641 / fonte modular V642',
+      'candidate':'OTTHI World Edu V643 precision mobility traffic fishing',
+      'functionCountBaseline':len(expected),'functionCountActual':len(current),
+      'baselineFunctionsPreserved':not missing,'baselineFunctionOrderPreserved':order_preserved,
+      'missingFunctions':missing,'addedFunctions':added,
+      'requiredV643FunctionsPresent':all(x in current for x in required_added),
+      'requiredV643Functions':required_added,
+      'preservedAssetsChecked':len(asset_results),
+      'preservedAssetsUnchanged':sum(x['unchanged'] for x in asset_results),
+      'preservedAssetFailures':[x for x in asset_results if not x['unchanged']],
+      'requiredSystemTokens':systems,
     }
-
-    result = {
-        'baseline': 'OTTHI World Edu V641',
-        'candidate': 'OTTHI World Edu V642 modular',
-        'functionCountExpected': len(expected_functions),
-        'functionCountActual': len(current_functions),
-        'functionOrderEqual': function_order_equal,
-        'missingFunctions': missing,
-        'addedFunctions': added,
-        'normalizedJavascriptShaExpected': baseline['normalizedJavascriptSha256'],
-        'normalizedJavascriptShaActual': js_normalized_sha,
-        'normalizedJavascriptEquivalent': js_normalized_sha == baseline['normalizedJavascriptSha256'],
-        'normalizedStylesheetShaExpected': baseline['normalizedStylesheetSha256'],
-        'normalizedStylesheetShaActual': css_normalized_sha,
-        'normalizedStylesheetEquivalent': css_normalized_sha == baseline['normalizedStylesheetSha256'],
-        'preservedAssetsChecked': len(asset_results),
-        'preservedAssetsUnchanged': sum(item['unchanged'] for item in asset_results),
-        'preservedAssetFailures': [item for item in asset_results if not item['unchanged']],
-        'requiredSystemTokens': token_results,
-    }
-    result['passed'] = all([
-        result['functionOrderEqual'],
-        result['normalizedJavascriptEquivalent'],
-        result['normalizedStylesheetEquivalent'],
-        not result['preservedAssetFailures'],
-        all(item['complete'] for item in token_results.values()),
-    ])
-
-    (DOCS / 'RELATORIO-EQUIVALENCIA-V641-V642.json').write_text(
-        json.dumps(result, ensure_ascii=False, indent=2) + '\n', 'utf-8'
-    )
-    md = [
-        '# Relatório de equivalência — V641 → V642 modular', '',
-        f"- Resultado: **{'APROVADO' if result['passed'] else 'REPROVADO'}**",
-        f"- Funções esperadas/atuais: **{len(expected_functions)} / {len(current_functions)}**",
-        f"- Mesma ordem de funções: **{'sim' if function_order_equal else 'não'}**",
-        f"- SHA normalizado do JavaScript equivalente: **{'sim' if result['normalizedJavascriptEquivalent'] else 'não'}**",
-        f"- SHA normalizado do CSS equivalente: **{'sim' if result['normalizedStylesheetEquivalent'] else 'não'}**",
-        f"- Assets preservados sem alteração: **{result['preservedAssetsUnchanged']} / {result['preservedAssetsChecked']}**",
-        '',
-        'A normalização ignora somente comentários de separação de módulos, número/build da versão, chave nova de save, lista de migração e rótulo da API de testes. Não ignora funções, condições ou lógica executável.',
-        '', '## Sistemas obrigatórios', ''
-    ]
-    for system, details in token_results.items():
-        md.append(f"- [{'x' if details['complete'] else ' '}] `{system}` — {', '.join(details['present'])}")
-    if missing:
-        md += ['', '## Funções ausentes', '', *[f'- `{name}`' for name in missing]]
-    if added:
-        md += ['', '## Funções adicionadas', '', *[f'- `{name}`' for name in added]]
-    (DOCS / 'RELATORIO-EQUIVALENCIA-V641-V642.md').write_text('\n'.join(md) + '\n', 'utf-8')
-
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-    return 0 if result['passed'] else 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())
+    result['passed']=all([result['baselineFunctionsPreserved'],result['baselineFunctionOrderPreserved'],result['requiredV643FunctionsPresent'],not result['preservedAssetFailures'],all(x['complete'] for x in systems.values())])
+    (DOCS/'RELATORIO-PRESERVACAO-V642-V643.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n','utf-8')
+    md=['# Relatório de preservação — V642 → V643','',f"- Resultado: **{'APROVADO' if result['passed'] else 'REPROVADO'}**",f"- Funções-base preservadas: **{len(expected)-len(missing)} / {len(expected)}**",f"- Funções atuais: **{len(current)}**",f"- Ordem das funções-base preservada: **{'sim' if order_preserved else 'não'}**",f"- Novas funções V643 esperadas: **{sum(x in current for x in required_added)} / {len(required_added)}**",f"- Assets imutáveis preservados: **{result['preservedAssetsUnchanged']} / {result['preservedAssetsChecked']}**",'', '## Sistemas obrigatórios','']
+    for k,v in systems.items(): md.append(f"- [{'x' if v['complete'] else ' '}] `{k}` — {', '.join(v['present'])}")
+    md += ['', '## Funções novas da V643','']+[f'- `{x}()`' for x in added]
+    if missing: md += ['', '## Funções-base ausentes','']+[f'- `{x}()`' for x in missing]
+    (DOCS/'RELATORIO-PRESERVACAO-V642-V643.md').write_text('\n'.join(md)+'\n','utf-8')
+    print(json.dumps(result,ensure_ascii=False,indent=2)); return 0 if result['passed'] else 1
+if __name__=='__main__': sys.exit(main())

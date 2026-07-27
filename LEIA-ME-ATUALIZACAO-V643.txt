@@ -1,0 +1,17 @@
+OTTHI V643 — SOMENTE ATUALIZAÇÃO
+
+Base esperada: OTTHI V642 modular no repositório tsvalencio-IA/OTTHI.
+Extraia e substitua os arquivos mantendo exatamente as pastas.
+Não envie o ZIP fechado ao GitHub Pages.
+
+Principais correções:
+- direção correta em carro e barco;
+- botão Acelerar;
+- botão Freio/Ré;
+- toque, teclado e gamepad;
+- prioridade e anticolisão do trânsito;
+- spawn/recuperação de ônibus;
+- NPCs pescando na margem;
+- textura leve de água.
+
+Nenhuma publicação, commit, regra Firebase ou chave foi alterada remotamente.

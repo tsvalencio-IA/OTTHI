@@ -1,13 +1,13 @@
 {
-  "version": 642,
-  "functions": 544,
-  "conditions": 1533,
-  "events": 186,
-  "topLevelDeclarations": 93,
+  "version": 643,
+  "functions": 552,
+  "conditions": 1562,
+  "events": 188,
+  "topLevelDeclarations": 94,
   "htmlNodes": 263,
   "htmlIds": 104,
   "javascriptModules": 31,
-  "styleModules": 11,
+  "styleModules": 12,
   "moduleStats": [
     {
       "file": "00-runtime-foundation.js",
@@ -75,8 +75,8 @@
     {
       "file": "07-navigation-traffic-routes.js",
       "description": "Rotas, trânsito, grafo, GPS e minimapa",
-      "functions": 25,
-      "conditions": 59,
+      "functions": 26,
+      "conditions": 62,
       "events": 0,
       "startLine": 1064,
       "endLine": 1200
@@ -147,8 +147,8 @@
     {
       "file": "15-transit-bus-metro.js",
       "description": "Ônibus, rotas viárias, paradas, metrô e painel de transporte",
-      "functions": 33,
-      "conditions": 107,
+      "functions": 34,
+      "conditions": 108,
       "events": 10,
       "startLine": 2506,
       "endLine": 2722
@@ -157,7 +157,7 @@
       "file": "16-emergency-services.js",
       "description": "Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",
       "functions": 26,
-      "conditions": 73,
+      "conditions": 75,
       "events": 2,
       "startLine": 2723,
       "endLine": 2864
@@ -174,8 +174,8 @@
     {
       "file": "18-water-fishing-boats.js",
       "description": "Água, câmera e animação da pesca, barco e física náutica",
-      "functions": 32,
-      "conditions": 60,
+      "functions": 35,
+      "conditions": 66,
       "events": 3,
       "startLine": 2925,
       "endLine": 3064
@@ -184,7 +184,7 @@
       "file": "19-campfire-hunting-house-extensions.js",
       "description": "Fogueira, caça, animais e ampliações de casas",
       "functions": 24,
-      "conditions": 33,
+      "conditions": 34,
       "events": 5,
       "startLine": 3065,
       "endLine": 3096
@@ -219,7 +219,7 @@
     {
       "file": "23-vehicle-effects-driving.js",
       "description": "Poeira, som, efeitos, controles, direção, passageiros e ponte",
-      "functions": 11,
+      "functions": 13,
       "conditions": 43,
       "events": 0,
       "startLine": 3531,
@@ -246,8 +246,8 @@
     {
       "file": "26-input-player-physics.js",
       "description": "Entrada, corrida, pulo, física do jogador/veículo e animação",
-      "functions": 13,
-      "conditions": 50,
+      "functions": 14,
+      "conditions": 58,
       "events": 0,
       "startLine": 3886,
       "endLine": 4000
@@ -256,7 +256,7 @@
       "file": "27-npc-enemies-combat-camera-action.js",
       "description": "Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",
       "functions": 16,
-      "conditions": 65,
+      "conditions": 67,
       "events": 0,
       "startLine": 4001,
       "endLine": 4157
@@ -274,8 +274,8 @@
       "file": "29-game-loop-controls-gamepad.js",
       "description": "Loop principal, controles, gamepad e início do jogo",
       "functions": 3,
-      "conditions": 33,
-      "events": 13,
+      "conditions": 38,
+      "events": 15,
       "startLine": 4305,
       "endLine": 4377
     },
@@ -283,7 +283,7 @@
       "file": "30-pause-tests-public-api-bootstrap.js",
       "description": "Pausa, testes de veículo, API pública de auditoria e bootstrap final",
       "functions": 5,
-      "conditions": 22,
+      "conditions": 23,
       "events": 6,
       "startLine": 4378,
       "endLine": 4557

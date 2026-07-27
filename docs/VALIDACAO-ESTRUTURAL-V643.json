@@ -1,0 +1,341 @@
+{
+  "version": 643,
+  "passed": true,
+  "checks": [
+    {
+      "name": "Arquivo obrigatório index.html",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório style.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório sw.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório firebase-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório firebase-database.rules.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório athos.glb",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório VERSION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório src/module-order.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/build_project.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/verify_equivalence.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/validate_project.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v643_mobility.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v643_world_systems.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório .github/workflows/build-modular-app.yml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório .github/workflows/gerar-apk.yml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório android-app/app/build.gradle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório assets/textures/water-ripples-v643.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório docs/CHECKLIST-ATUALIZACAO-V643.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "31 módulos JavaScript",
+      "passed": true,
+      "detail": "31"
+    },
+    {
+      "name": "12 módulos CSS",
+      "passed": true,
+      "detail": "12"
+    },
+    {
+      "name": "Manifesto JS completo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Manifesto CSS completo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ordem JS corresponde aos arquivos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ordem CSS corresponde aos arquivos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe sw.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "12 testes determinísticos de mobilidade V643",
+      "passed": true,
+      "detail": "┌─────────┬──────────────────────────────────────────────────────────┬────────────┐\n│ (index) │ teste                                                    │ resultado  │\n├─────────┼──────────────────────────────────────────────────────────┼────────────┤\n│ 0       │ 'Carro acelera apenas pelo botão'                        │ 'APROVADO' │\n│ 1       │ 'Carro: comando direita produz curva visual à direita'   │ 'APROVADO' │\n│ 2       │ 'Carro: comando esquerda produz curva visual à esquerda' │ 'APROVADO' │\n│ 3       │ 'Carro: curvas laterais são simétricas e opostas'        │ 'APROVADO' │\n│ 4       │ 'Carro: Freio reduz a velocidade antes da ré'            │ 'APROVADO' │\n│ 5       │ 'Carro: botão Freio/Ré engata ré depois de parar'        │ 'APROVADO' │\n│ 6       │ 'Carro: Acelerar freia a ré e volta ao avanço'           │ 'APROVADO' │\n│ 7       │ 'Barco acelera apenas pelo botão'                        │ 'APROVADO' │\n│ 8       │ 'Barco: comando direita produz curva visual à direita'   │ 'APROVADO' │\n│ 9       │ 'Barco: comando esquerda produz curva visual à esquerda' │ 'APROVADO' │\n│ 10      │ 'Barco: Freio reduz antes da ré'                         │ 'APROVADO' │\n│ 11      │ 'Barco: Freio/Ré engata ré após parar'                   │ 'APROVADO' │\n└─────────┴──────────────────────────────────────────────────────────┴────────────┘\n{\"passed\":12,\"failed\":0}"
+    },
+    {
+      "name": "Sintaxe assets/js/core/performance-guardian.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/runtime-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/safe-pointer.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/viewport-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/education/adaptive-learning.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/game-account.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/multiplayer/room-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/multiplayer-rtdb.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/safety/child-safety.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/save-db.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/ui/shared-modal.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON firebase-database.rules.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON VERSION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON src/module-order.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "IDs HTML únicos",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Referências locais existem",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Versão 643 no index",
+      "passed": true,
+      "detail": "15"
+    },
+    {
+      "name": "GitHub Pages OTTHI",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Chaves CSS balanceadas",
+      "passed": true,
+      "detail": "1786/1786"
+    },
+    {
+      "name": "552 funções nomeadas",
+      "passed": true,
+      "detail": "552"
+    },
+    {
+      "name": "Runtime V643",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Save V643 e migração V642",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 mobilityThrottleIntent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 const steer=Math.abs(ix)<.06?0:-ix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 const steer=Math.abs(ix)<.07?0:-ix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 Acelerar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 Freio",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 createShoreFishingLife",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 trafficPriority",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 busSpawnIndex",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V643 water-ripples-v643.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Service Worker V643",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Android V643",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Preservação V642/V643 aprovada",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "errors": [],
+  "counts": {
+    "checks": 64,
+    "passed": 64,
+    "failed": 0,
+    "functions": 552,
+    "javascriptModules": 31,
+    "styleModules": 12,
+    "htmlIds": 104
+  },
+  "hashes": {
+    "app.js": "76a95f6ed6bccc6c90247c03a948e37b5b519f5325ce58aa63f561f0c41f3f56",
+    "style.css": "f439631f337940b1f67d8ec4bf9acdaeedcf474c1a8eb410243fce91027b8287",
+    "src/module-order.json": "55d82ec6dbb1e8a7c116fbdb8f0b4cf9aa3dafedfb12a0f3665afad1549e4513"
+  }
+}

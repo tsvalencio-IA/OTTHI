@@ -1,0 +1,970 @@
+{
+  "version": 643,
+  "build": "643.0-precision-mobility-traffic-fishing",
+  "repository": "tsvalencio-IA/OTTHI",
+  "listedFileCount": 192,
+  "listedTotalBytes": 32408920,
+  "note": "O inventário não lista a si próprio nem SHA256SUMS.txt para evitar hashes circulares.",
+  "files": [
+    {
+      "file": ".github/workflows/build-modular-app.yml",
+      "size": 1581,
+      "sha256": "91835b09e5055f12d56c4b63b974e7668029360a23b6b6c5121f3770326ed4db"
+    },
+    {
+      "file": ".github/workflows/gerar-apk.yml",
+      "size": 2793,
+      "sha256": "2af0f291615b8ae363cf88b8906b0ad88ed76a0a60c648b1ab403b0f4d30e0ee"
+    },
+    {
+      "file": ".nojekyll",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "404.html",
+      "size": 261,
+      "sha256": "e7bad1665cc30df0a75613f9caf89948c2b72f21fa4642351f7b0ffef05b3c00"
+    },
+    {
+      "file": "COMO-SUBIR-NOVO-REPOSITORIO.txt",
+      "size": 1095,
+      "sha256": "60e91ae2ee9d186e18ec972112e16a90280f213c6aa01cba69c461f56265cbd5"
+    },
+    {
+      "file": "README.md",
+      "size": 2681,
+      "sha256": "ecc77c45d313fadc951f6c72f6f9b3be700d2268ee2b0967a2eb19d134b35cdc"
+    },
+    {
+      "file": "VERSION.json",
+      "size": 893,
+      "sha256": "cbd684b931d2b180e00a047d99986c5073163f14b86edd8b1dd02b0260777103"
+    },
+    {
+      "file": "android-app/app/build.gradle",
+      "size": 617,
+      "sha256": "beb50c37a1042bf48a9944e0c51a0d8c70709a547674d127f5909bd505a84ffe"
+    },
+    {
+      "file": "android-app/app/proguard-rules.pro",
+      "size": 95,
+      "sha256": "ce8c8830e00def381e3b1f9ffa3d0418d8bac962959f1daa056a935c15b4fbb6"
+    },
+    {
+      "file": "android-app/app/src/main/AndroidManifest.xml",
+      "size": 1278,
+      "sha256": "8e4ba01c8df4332b5efc1a5f019f7fd515b0ac8db015a3b97f972c6563b9a979"
+    },
+    {
+      "file": "android-app/app/src/main/java/br/com/thiaguinhosolucoes/otthos/MainActivity.java",
+      "size": 5334,
+      "sha256": "d36cc340d01abff23a218b8eca0f7c66edc37cddec562008aeb02a7389eb6d41"
+    },
+    {
+      "file": "android-app/app/src/main/res/drawable/icon_otthos.png",
+      "size": 3456,
+      "sha256": "3758f7a9efb14d1d0c51f142920014165a3469364194cdc5352e9bfefee6230f"
+    },
+    {
+      "file": "android-app/app/src/main/res/layout/activity_main.xml",
+      "size": 690,
+      "sha256": "f2d5741ae124e9adf0919ebfdbe02a5c8cd1b583839f573f87338fcaffcd4949"
+    },
+    {
+      "file": "android-app/app/src/main/res/values/strings.xml",
+      "size": 351,
+      "sha256": "b32cdea47308505d020516db32c2bfad61b16920387cd8c1f532e5ed1ff353d9"
+    },
+    {
+      "file": "android-app/app/src/main/res/values/styles.xml",
+      "size": 636,
+      "sha256": "96ab3c013744f01cfc1c572bd302907c535fa7a7b65332f315e60ce0dec33d31"
+    },
+    {
+      "file": "android-app/app/src/main/res/xml/network_security_config.xml",
+      "size": 146,
+      "sha256": "dea35ebed76536c24c13f74036f02dc874f944147cb3a49c2ad0550f71e3e0c7"
+    },
+    {
+      "file": "android-app/build.gradle",
+      "size": 73,
+      "sha256": "36d655a9067d39892bba80896925f12e70f6b0d7481fe914ec6a61bbbde967cb"
+    },
+    {
+      "file": "android-app/gradle.properties",
+      "size": 109,
+      "sha256": "e6b436ff6a08da8b8c05e0e2fc1a7f40f41701bb506cd80fc2ddfd7b6e3b3b2b"
+    },
+    {
+      "file": "android-app/settings.gradle",
+      "size": 334,
+      "sha256": "a1a6ef41393a30d1c119639a992d813b855199cc4ebb324ba745fd947501c71f"
+    },
+    {
+      "file": "app.js",
+      "size": 576992,
+      "sha256": "76a95f6ed6bccc6c90247c03a948e37b5b519f5325ce58aa63f561f0c41f3f56"
+    },
+    {
+      "file": "assets/athos_v442_visual_alvo.png",
+      "size": 2232425,
+      "sha256": "6be1d6797273e62723d9625aacaa3429786739379a1d89eadb2e55af62411ec6"
+    },
+    {
+      "file": "assets/js/core/performance-guardian.js",
+      "size": 2245,
+      "sha256": "68ec11c953fa49cb4d7022316b9399ac53e9b02472cd9c898ddc3a0a83ffc412"
+    },
+    {
+      "file": "assets/js/core/runtime-config.js",
+      "size": 1358,
+      "sha256": "fce724a83d06081157cc49d4d0efbe113a8ea4ad08695274d9f6da37552f0aaf"
+    },
+    {
+      "file": "assets/js/core/safe-pointer.js",
+      "size": 641,
+      "sha256": "4f11579e213b1d6704e9b03f3a15dcb4b0738900cc8eadb46a415224045aedb4"
+    },
+    {
+      "file": "assets/js/core/viewport-manager.js",
+      "size": 1669,
+      "sha256": "b098277b9df4ad0c3f4265d35dcf44a4c9d8d5742a0212fbd5dec1ec21f949f1"
+    },
+    {
+      "file": "assets/js/education/adaptive-learning.js",
+      "size": 7627,
+      "sha256": "e50e8610d9dfeaf38cda5930708c1f369175a50e0f9e7a934dc98f5aba384701"
+    },
+    {
+      "file": "assets/js/game-account.js",
+      "size": 5430,
+      "sha256": "1a67a8c4d209e2bec1f91512d655d05698d369ab14ed602385b51f6ae8db9be5"
+    },
+    {
+      "file": "assets/js/multiplayer/room-manager.js",
+      "size": 2635,
+      "sha256": "b5fbfcac67f9490aeda47ea544f027432ae3de2c0aa2325fd58f8704028210b3"
+    },
+    {
+      "file": "assets/js/multiplayer-rtdb.js",
+      "size": 37611,
+      "sha256": "eff53c4b627cb0e66a715faecd73c45a8d99c0c8f23d308e3bf7508740f685dd"
+    },
+    {
+      "file": "assets/js/safety/child-safety.js",
+      "size": 1535,
+      "sha256": "01a849055065ac38f80e9eac5170511f6f147c56c0f65ccc7831d54df974d742"
+    },
+    {
+      "file": "assets/js/save-db.js",
+      "size": 4917,
+      "sha256": "a8d20a89451eb15571754118814d286b1b00de664e14639b1ee4d5264eb6ff0d"
+    },
+    {
+      "file": "assets/js/ui/shared-modal.js",
+      "size": 973,
+      "sha256": "39b82cae4ae7346b0540ca990e71c874e8d1b8e09d42ab1be6d3fa15031b2b5a"
+    },
+    {
+      "file": "assets/moldes/athos_moldes_caneta_3d.png",
+      "size": 1125551,
+      "sha256": "82198dddb1cf9924b0dd4e60855b53dbb5fb0c14906c85edf302364ed3fe09e0"
+    },
+    {
+      "file": "assets/moldes/athos_moldes_para_caneta_3d.png",
+      "size": 1125551,
+      "sha256": "82198dddb1cf9924b0dd4e60855b53dbb5fb0c14906c85edf302364ed3fe09e0"
+    },
+    {
+      "file": "assets/moldes/modelo-referencia-athos.png",
+      "size": 1132256,
+      "sha256": "470ddcd7d9234df915db762b3abe60a9010ab076f97e27f2d5c573f7e2f803b3"
+    },
+    {
+      "file": "assets/moldes/modelo_referencia.png",
+      "size": 1132256,
+      "sha256": "470ddcd7d9234df915db762b3abe60a9010ab076f97e27f2d5c573f7e2f803b3"
+    },
+    {
+      "file": "assets/moldes/modelo_referencia_athos.png",
+      "size": 1132256,
+      "sha256": "470ddcd7d9234df915db762b3abe60a9010ab076f97e27f2d5c573f7e2f803b3"
+    },
+    {
+      "file": "assets/moldes/moldes-athos-caneta-3d.png",
+      "size": 1125551,
+      "sha256": "82198dddb1cf9924b0dd4e60855b53dbb5fb0c14906c85edf302364ed3fe09e0"
+    },
+    {
+      "file": "assets/render-targets/render-exigido-campo.jpg",
+      "size": 319607,
+      "sha256": "2595f787260a590bf009721133e46a3f1f11675e166de7720c10fb4c0e76ac3e"
+    },
+    {
+      "file": "assets/render-targets/render-exigido-referencia.jpg",
+      "size": 319607,
+      "sha256": "2595f787260a590bf009721133e46a3f1f11675e166de7720c10fb4c0e76ac3e"
+    },
+    {
+      "file": "assets/render-v48/v48-render-config.json",
+      "size": 300,
+      "sha256": "b2e53f7e47b7bd1063d49a0ba9dbd84ac95ac4410c16c9d6126bebf0ae949bd8"
+    },
+    {
+      "file": "assets/render-v48/v48-render-target.css",
+      "size": 43879,
+      "sha256": "b245cc3746b28211f8d6b1b9eec927454b05d11a564e08419566bd2cdb10791b"
+    },
+    {
+      "file": "assets/render-v48/v48-render-target.js",
+      "size": 15307,
+      "sha256": "b09fc4fa184a9f365003e5d34d1b1c8cf98507ae2088e299d719685c3dd4d12a"
+    },
+    {
+      "file": "assets/render-v52/referencia-render-absoluto.jpg",
+      "size": 303498,
+      "sha256": "8d497486a9c54334efa6baace00b24655604cd9c902b4766da7438df0b89162f"
+    },
+    {
+      "file": "assets/render-v54/v54-render-config.json",
+      "size": 310,
+      "sha256": "0fdc8c9146ce01f18d1bc83c60fc8725bc5d3dbb802f808ac7f7aaee6c1abacf"
+    },
+    {
+      "file": "assets/render-v54/v54-render-premium.css",
+      "size": 18980,
+      "sha256": "d9a8e5be06ac37f233edf2c05b8d6675edd3d3cae908c6651cc20279ea19ee33"
+    },
+    {
+      "file": "assets/render-v54/v54-render-premium.js",
+      "size": 23334,
+      "sha256": "07dd037530835d5b6b7998feab785c9fffc04f4eba0afc3521b4a6dc9bc5b874"
+    },
+    {
+      "file": "assets/textures/asphalt-v628.png",
+      "size": 98408,
+      "sha256": "928e21761dc74c4175bd0b53422d66ee6744785568c8dacf5a655b39c6bbf96e"
+    },
+    {
+      "file": "assets/textures/brick-v628.png",
+      "size": 1142,
+      "sha256": "54349d3b6654506d9dfa6ade3bd87414df6b33baa035ed8e90a6d2735630b157"
+    },
+    {
+      "file": "assets/textures/bus-seat-v628.png",
+      "size": 94201,
+      "sha256": "2842955679946d1f14b9643642561fbeeefcf204dbfdbd60532fd6caf9fd57b6"
+    },
+    {
+      "file": "assets/textures/city-glass-v631.png",
+      "size": 152003,
+      "sha256": "656a3a17fd5fca5e8618256558da07239f4bc563bf31cca5e44dfdc8a9a5284f"
+    },
+    {
+      "file": "assets/textures/city-glass-v632.png",
+      "size": 152003,
+      "sha256": "656a3a17fd5fca5e8618256558da07239f4bc563bf31cca5e44dfdc8a9a5284f"
+    },
+    {
+      "file": "assets/textures/concrete-v631.png",
+      "size": 168201,
+      "sha256": "36bd71f33d5f764e33bbcdb4d9ad0c1391c634b372df34b47b5b15035cc40a6d"
+    },
+    {
+      "file": "assets/textures/concrete-v632.png",
+      "size": 168201,
+      "sha256": "36bd71f33d5f764e33bbcdb4d9ad0c1391c634b372df34b47b5b15035cc40a6d"
+    },
+    {
+      "file": "assets/textures/emergency-metal-v631.png",
+      "size": 152063,
+      "sha256": "eaeecae2615405cca1f216aaacd98b119a501a32ff94b5291b47d679b594df4e"
+    },
+    {
+      "file": "assets/textures/emergency-metal-v632.png",
+      "size": 152063,
+      "sha256": "eaeecae2615405cca1f216aaacd98b119a501a32ff94b5291b47d679b594df4e"
+    },
+    {
+      "file": "assets/textures/fire-station-wall-v631.png",
+      "size": 42156,
+      "sha256": "b04874fedd99470de6467b1c75fb5bdf976d270dc75f45d732734d1bf1ca2a9a"
+    },
+    {
+      "file": "assets/textures/fire-station-wall-v632.png",
+      "size": 42156,
+      "sha256": "b04874fedd99470de6467b1c75fb5bdf976d270dc75f45d732734d1bf1ca2a9a"
+    },
+    {
+      "file": "assets/textures/gold-ore-v628.png",
+      "size": 262735,
+      "sha256": "e186eb492223a06fa5b1f243b92f2a8136e6ce4717551df8ae5e2cc79a9560dd"
+    },
+    {
+      "file": "assets/textures/grass-v628.png",
+      "size": 105680,
+      "sha256": "a89c91d029e1fdbcc06a30226cd46a5d3929392c9eff3fbf6a4e0a23a25e580f"
+    },
+    {
+      "file": "assets/textures/home-floor-v631.png",
+      "size": 43215,
+      "sha256": "3097a3ae1b6e776aab3ce0685bff767ff280f434dda73e463f2135ec3054f6b8"
+    },
+    {
+      "file": "assets/textures/home-floor-v632.png",
+      "size": 43215,
+      "sha256": "3097a3ae1b6e776aab3ce0685bff767ff280f434dda73e463f2135ec3054f6b8"
+    },
+    {
+      "file": "assets/textures/interior-floor-v628.png",
+      "size": 209303,
+      "sha256": "5cd06b1b86f0b1bf5796880774c4cc6aa15924012bad39fdc6d4694dd490825d"
+    },
+    {
+      "file": "assets/textures/interior-wall-v631.png",
+      "size": 209185,
+      "sha256": "41fc0061ce33a04477da40644278fd32b6bccb0c747597228d388b7296a95933"
+    },
+    {
+      "file": "assets/textures/interior-wall-v632.png",
+      "size": 209185,
+      "sha256": "41fc0061ce33a04477da40644278fd32b6bccb0c747597228d388b7296a95933"
+    },
+    {
+      "file": "assets/textures/market-floor-v631.png",
+      "size": 46207,
+      "sha256": "2b5dac6d902c8f8c72565584baaae07a67dc56571f33b075a44169778b56f5c7"
+    },
+    {
+      "file": "assets/textures/market-floor-v632.png",
+      "size": 46207,
+      "sha256": "2b5dac6d902c8f8c72565584baaae07a67dc56571f33b075a44169778b56f5c7"
+    },
+    {
+      "file": "assets/textures/market-wall-v631.png",
+      "size": 42463,
+      "sha256": "ece5c1d415c27234ae82bfa6bf7fd14b0d4d675b9e21ca4815513ee68b99423a"
+    },
+    {
+      "file": "assets/textures/market-wall-v632.png",
+      "size": 42463,
+      "sha256": "ece5c1d415c27234ae82bfa6bf7fd14b0d4d675b9e21ca4815513ee68b99423a"
+    },
+    {
+      "file": "assets/textures/police-wall-v628.png",
+      "size": 38306,
+      "sha256": "3479bc5b5d5a2534e643d871de56bf325806fe2431a2ab324ba3128e3304af4a"
+    },
+    {
+      "file": "assets/textures/roof-v628.png",
+      "size": 2350,
+      "sha256": "d1e874892a76536a9cd7f0b49a73b615b4aebdca8340e19e8bb02f1f06cda47b"
+    },
+    {
+      "file": "assets/textures/school-floor-v631.png",
+      "size": 40817,
+      "sha256": "f1b17023e3cc015638e54e6100db830a2563918f85c6faea28c9f95007a16fe1"
+    },
+    {
+      "file": "assets/textures/school-floor-v632.png",
+      "size": 40817,
+      "sha256": "f1b17023e3cc015638e54e6100db830a2563918f85c6faea28c9f95007a16fe1"
+    },
+    {
+      "file": "assets/textures/school-wall-v628.png",
+      "size": 185435,
+      "sha256": "98f30457a563b08a647aaa0f194831907e51654e3e8aceb1eae7b2ab1349f483"
+    },
+    {
+      "file": "assets/textures/sidewalk-v631.png",
+      "size": 214823,
+      "sha256": "a5cf91ffc8d269c95555c2bf53f5921c1ea5fdac3853061e1808ab39bece864a"
+    },
+    {
+      "file": "assets/textures/sidewalk-v632.png",
+      "size": 214823,
+      "sha256": "a5cf91ffc8d269c95555c2bf53f5921c1ea5fdac3853061e1808ab39bece864a"
+    },
+    {
+      "file": "assets/textures/stone-v628.png",
+      "size": 108303,
+      "sha256": "0741cb49209c16d7ceb15fb4626544c31c4c43bc32b3ef6128d41e50f0857e76"
+    },
+    {
+      "file": "assets/textures/water-ripples-v643.png",
+      "size": 11181,
+      "sha256": "ec69e129331c23ca5a5ca6eb9c432bf7380ad6e6f7a65e5743af2da018d55ea3"
+    },
+    {
+      "file": "assets/textures/wood-v628.png",
+      "size": 2596,
+      "sha256": "1e142e360285f4f272b3bf9001be7fe5a75e7e055336d31501baae1507c69299"
+    },
+    {
+      "file": "assets/v45_gameplay_target.png",
+      "size": 2336080,
+      "sha256": "3698b5073f786e58faa7c56380ccaf38cf684abaa0e94416b993da13f5721577"
+    },
+    {
+      "file": "assets/v45_menu_target.png",
+      "size": 1998773,
+      "sha256": "5d1f959a6664fbd38f207d5104e08011f0f29bb3db66ba3561c0a599902e5b27"
+    },
+    {
+      "file": "assets/v45_reference_original.png",
+      "size": 2232425,
+      "sha256": "6be1d6797273e62723d9625aacaa3429786739379a1d89eadb2e55af62411ec6"
+    },
+    {
+      "file": "athos.glb",
+      "size": 4304412,
+      "sha256": "98c8acdbd7e4160eeb34347a3706041b50fa12d2875a03d852e3b218b7959cdb"
+    },
+    {
+      "file": "docs/ARQUITETURA-MODULAR-V642.md",
+      "size": 1503,
+      "sha256": "c3f70ed10b184555826cdfd25072edb8b12a0880c2bbc73b888e7379935e9077"
+    },
+    {
+      "file": "docs/ARQUITETURA-MODULAR-V643.md",
+      "size": 1851,
+      "sha256": "1e8cbc3ca7d07327552cde55431b89e26e93d4ec2db7d9f410097e5a15b9ff9b"
+    },
+    {
+      "file": "docs/ARQUITETURA.md",
+      "size": 932,
+      "sha256": "9a35e5b190a31becadfd3174443133fb6b99d1509ee75de9e178c2bfa3162083"
+    },
+    {
+      "file": "docs/AUDITORIA-ESTATICA-RESUMO.json",
+      "size": 8274,
+      "sha256": "ea139c77002ee68237215095149050cdf5c8192d7f38c886948d119966caf175"
+    },
+    {
+      "file": "docs/AUDITORIA-PROFUNDA-RESUMO.json",
+      "size": 365,
+      "sha256": "4a1056c88d81ee8248238daee17b26dca0d77f89d000ff6f35be9621f7e01112"
+    },
+    {
+      "file": "docs/BASELINE-V641-FUNCOES-E-ASSETS.json",
+      "size": 22396,
+      "sha256": "ba302f7f12613f58774d1ebdfac25d19238ae58c794125a8a13fa0e3835a4fb3"
+    },
+    {
+      "file": "docs/CHECKLIST-238-EVENTOS.md",
+      "size": 94595,
+      "sha256": "56a1cbcd18bf80327d49cc916e14a214e9770ac54770dcda38b9bb9eadfe1f44"
+    },
+    {
+      "file": "docs/CHECKLIST-263-NOS-HTML.md",
+      "size": 16555,
+      "sha256": "ffd12eb20852e664ef635369aedb6b71d350ec70d94547a96fd8be6c46c83802"
+    },
+    {
+      "file": "docs/CHECKLIST-552-FUNCOES.md",
+      "size": 74593,
+      "sha256": "ca8b475741888d657e55a68d459610aa0bf78b5058f14c3d41c180789cc03714"
+    },
+    {
+      "file": "docs/CHECKLIST-ATUALIZACAO-V643.md",
+      "size": 1611,
+      "sha256": "abc8faf2da1158b2ab3a3e11264ce2c115f7ee57b8920c284e19dacf99dd9da3"
+    },
+    {
+      "file": "docs/CHECKLIST-COMPLETO-FUNCOES-JOGABILIDADES.md",
+      "size": 9264,
+      "sha256": "fd5ff654cff7af8a541877a23b06a5b34d252c90a08547380d3d320987166097"
+    },
+    {
+      "file": "docs/CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md",
+      "size": 1006031,
+      "sha256": "903b764a55e4d1e6f747fdb4cef4da89c2df6fcf7f8e81e723444379144d5272"
+    },
+    {
+      "file": "docs/COMO-SUBIR.md",
+      "size": 590,
+      "sha256": "ac44de0e782f5502c0a283f4cdb73e92cf0fbc2cebeb60db601b033ead18e139"
+    },
+    {
+      "file": "docs/CONFIGURAR-FIREBASE.md",
+      "size": 1152,
+      "sha256": "d3cec52b2d333fcd17a4af46269568a898f38b5550a3755ad635b8825c3348d8"
+    },
+    {
+      "file": "docs/DEPENDENCIAS-MODULOS.csv",
+      "size": 44945,
+      "sha256": "9bb5b9f25d3c75390f20ff7e238b991b28a1f085bf2c47dcce6188491bc33d8f"
+    },
+    {
+      "file": "docs/INDICE-TECNICO-V642.md",
+      "size": 1695,
+      "sha256": "ae2bcc5a3ac8339d29292ec8381d54ddb6e49c712c7603b50e30b031dcdae12a"
+    },
+    {
+      "file": "docs/INDICE-TECNICO-V643.md",
+      "size": 1099,
+      "sha256": "ff615fe9ef2da4ebd61decb8c92880d40aec1084c88b46c8365f301eaf9fd97b"
+    },
+    {
+      "file": "docs/INVENTARIO-ARROW-CALLBACKS.csv",
+      "size": 347569,
+      "sha256": "fbedbb5e548f22e09420d39efcbb0c1ea502cee61493e8cdb230529555c73ed9"
+    },
+    {
+      "file": "docs/INVENTARIO-CALLABLES.csv",
+      "size": 44975,
+      "sha256": "dfe8922626f5d05bccaf7f08002989bf4f43cbcb66cd10aa761dd6533ea989ed"
+    },
+    {
+      "file": "docs/INVENTARIO-CONDICOES-DETALHADO.csv",
+      "size": 998783,
+      "sha256": "df384d02425491c5fd3df6408e19bf5e7dbc1bdc9b3ec9f5a98d10c055046bee"
+    },
+    {
+      "file": "docs/INVENTARIO-CONDICOES.csv",
+      "size": 354295,
+      "sha256": "1d7b0b7bd690d96433ecd296640ce777881e73beab36cc0d1a64fd045b4c588a"
+    },
+    {
+      "file": "docs/INVENTARIO-DO-PACOTE-V642.json",
+      "size": 1100,
+      "sha256": "c94d5caccc46ea37125b571549c8c446c6505be238577be00dfb8c2fb21ad334"
+    },
+    {
+      "file": "docs/INVENTARIO-EVENTOS-DETALHADO.csv",
+      "size": 95456,
+      "sha256": "12b66b2b39683aae121ab70f128440545d8eba16b78317b67ab00903b4e8b0be"
+    },
+    {
+      "file": "docs/INVENTARIO-EVENTOS.csv",
+      "size": 52158,
+      "sha256": "b9c4cb97bf9e368d12621fe8101e0807a93d8c882365d04b8236d35003adc5ae"
+    },
+    {
+      "file": "docs/INVENTARIO-FUNCOES-DETALHADO.csv",
+      "size": 145054,
+      "sha256": "e1ce0ec77385bbef68ea534a5aa397769ccf6d8feb8d795573f1631491d31c7a"
+    },
+    {
+      "file": "docs/INVENTARIO-FUNCOES-DETALHADO.json",
+      "size": 338585,
+      "sha256": "8e7a5b0978d166ee5ceed889b740f93c70e6b1bc4084fb72c6a70ec1652d21f2"
+    },
+    {
+      "file": "docs/INVENTARIO-FUNCOES.csv",
+      "size": 107366,
+      "sha256": "1e98e9c8c1408a2a8d12bbcfc19b749c08d61afe2740ce585db94c3caa2d47a4"
+    },
+    {
+      "file": "docs/INVENTARIO-FUNCOES.json",
+      "size": 275219,
+      "sha256": "47174b6f86a2a76c2c1b6e6f05d02a71d0c41bb8a487a09294248efabf63c55a"
+    },
+    {
+      "file": "docs/INVENTARIO-NOS-HTML.csv",
+      "size": 7228,
+      "sha256": "ab502d5aed01aba9886b1aea93b6268889ef24e69625ff27b0fc2765a42648d7"
+    },
+    {
+      "file": "docs/INVENTARIO-VARIAVEIS-TOPO.csv",
+      "size": 12960,
+      "sha256": "f9e30f0623b113c777f6751dbe78c5c387d041e4732da0400f4948619a24b48c"
+    },
+    {
+      "file": "docs/MAPA-DE-MODULOS.md",
+      "size": 4422,
+      "sha256": "86286be3ea01cec51f1818786937e1a52ef7bb3e2fdbf8a3493402cf1adf107b"
+    },
+    {
+      "file": "docs/MATRIZ-COMPLETA-JOGABILIDADES-E-TESTES.md",
+      "size": 22558,
+      "sha256": "56d4c1dd8e2d99a65e5fc86bd6eb2c11567ec2cccf7d1599f1a41d55c84b5433"
+    },
+    {
+      "file": "docs/RELATORIO-EQUIVALENCIA-V641-V642.json",
+      "size": 3579,
+      "sha256": "aab3cd44a86469fbeb9fd21bd33c3ff95ee9032760565f22ca72bcfd5c78e4fe"
+    },
+    {
+      "file": "docs/RELATORIO-EQUIVALENCIA-V641-V642.md",
+      "size": 1310,
+      "sha256": "3aed9a6131a80f4ff691846e696b96a927edf419b807eee65428d521c8a83743"
+    },
+    {
+      "file": "docs/RELATORIO-PRESERVACAO-V642-V643.json",
+      "size": 4226,
+      "sha256": "55111ec313eae7c711b82cf7e0c0241eec4c7bbc21be16fbd1ae118eb54fd4a5"
+    },
+    {
+      "file": "docs/RELATORIO-PRESERVACAO-V642-V643.md",
+      "size": 1464,
+      "sha256": "f0899597ff5356b574aff609ffdf02821bc31c58669b03cd94392712a920673d"
+    },
+    {
+      "file": "docs/RELATORIO-TESTE-MOBILIDADE-V643.json",
+      "size": 3815,
+      "sha256": "87870bc1693d5c1e166d573797d5d7a299e990bc1ab78959c3ad32fe82c8ebef"
+    },
+    {
+      "file": "docs/RELATORIO-TESTE-MUNDO-V643.json",
+      "size": 3863,
+      "sha256": "284540ac8527622ae74bf63773ebc256c082a42fa0776ea072848916972a93ea"
+    },
+    {
+      "file": "docs/RELATORIO-TESTE-NAVEGADOR-V642.json",
+      "size": 5107,
+      "sha256": "55a615cfd6a2d707193109443e27f95d9e78e9babaa9bf9dbb2703666fcd2331"
+    },
+    {
+      "file": "docs/RELATORIO-TESTE-NAVEGADOR-V642.md",
+      "size": 1473,
+      "sha256": "8da352fa66e1356c5c40fa6a599890631fd01248b68f9e017ab18b0503ad628f"
+    },
+    {
+      "file": "docs/TESTES-OBRIGATORIOS.md",
+      "size": 1284,
+      "sha256": "0c6df1a27e9e92591a98ca37f5dfdadc979dfc8183f62c458755ab3f5caf90cf"
+    },
+    {
+      "file": "docs/VALIDACAO-ESTRUTURAL-V642.json",
+      "size": 11313,
+      "sha256": "1af2a8bf0ed6014de18d6ca52f638b9257ce4e0cd641d0d226826bf2799e4e89"
+    },
+    {
+      "file": "docs/VALIDACAO-ESTRUTURAL-V642.md",
+      "size": 5000,
+      "sha256": "139f2de071a1ce76d598a856c1380827d0a041abc664dd664c023a13ca98b48a"
+    },
+    {
+      "file": "docs/VALIDACAO-ESTRUTURAL-V643.json",
+      "size": 9274,
+      "sha256": "3b6fbaf4163e7d62dc2755b070129c03cd3d9ce72d68cf22c0d85f77fe358b6c"
+    },
+    {
+      "file": "docs/VALIDACAO-ESTRUTURAL-V643.md",
+      "size": 4987,
+      "sha256": "44642766e719226b4201718beece5d87d69a10c95e4f0212ac1694ddb8537b54"
+    },
+    {
+      "file": "firebase-config.js",
+      "size": 544,
+      "sha256": "9e29e9562bacaae8dc97c55cd91b51408447e0914d06ab67390d45a237fa2724"
+    },
+    {
+      "file": "firebase-database.rules.json",
+      "size": 12020,
+      "sha256": "7a97a4ba0475107d7a02c0c64246040f1ae51a7bf9258b9ec861385279e7a62b"
+    },
+    {
+      "file": "icons/favicon.png",
+      "size": 465,
+      "sha256": "67229c0554c9876873652fc62b06d7168ea14158b22a2202d23aa89f98861602"
+    },
+    {
+      "file": "icons/icon-192.png",
+      "size": 1211,
+      "sha256": "8a54f0c6e983fb2d73009e40acf408ac722a08f3190f00a654eadce0fc8a8081"
+    },
+    {
+      "file": "icons/icon-512.png",
+      "size": 3456,
+      "sha256": "3758f7a9efb14d1d0c51f142920014165a3469364194cdc5352e9bfefee6230f"
+    },
+    {
+      "file": "index.html",
+      "size": 14196,
+      "sha256": "8cc50f55b82f62e377714691dcd83c02981639a2381165e4bb6a93f304c070ab"
+    },
+    {
+      "file": "manifest.webmanifest",
+      "size": 768,
+      "sha256": "75670ec21a271c8b71542f94fa6ce82df8b35987874d68f7cfa3fc13a4950351"
+    },
+    {
+      "file": "moldes/athos_moldes_caneta_3d.png",
+      "size": 1125551,
+      "sha256": "82198dddb1cf9924b0dd4e60855b53dbb5fb0c14906c85edf302364ed3fe09e0"
+    },
+    {
+      "file": "moldes/modelo_referencia.png",
+      "size": 1132256,
+      "sha256": "470ddcd7d9234df915db762b3abe60a9010ab076f97e27f2d5c573f7e2f803b3"
+    },
+    {
+      "file": "src/module-order.json",
+      "size": 12484,
+      "sha256": "55d82ec6dbb1e8a7c116fbdb8f0b4cf9aa3dafedfb12a0f3665afad1549e4513"
+    },
+    {
+      "file": "src/modules/00-runtime-foundation.js",
+      "size": 3679,
+      "sha256": "6b4d39dea04dc264bbbe9a421364fee3f151a09f2648496451355a5f769a12a2"
+    },
+    {
+      "file": "src/modules/01-build-persistence.js",
+      "size": 10240,
+      "sha256": "fe0714304c96b9691bdef1e30c27efc2610bec23131f4a25dbbac79b91bf5809"
+    },
+    {
+      "file": "src/modules/02-state-save-cloud-account.js",
+      "size": 26448,
+      "sha256": "750a364b7d18cad62dcadd58f3f85c1cc85b12aac52a9a50e12032614006dd86"
+    },
+    {
+      "file": "src/modules/03-ui-modal-install-pwa.js",
+      "size": 12063,
+      "sha256": "30cbb883701cd98fec05c47c2e2b0d5eccd138e21b8f43fae4197a9554fd5659"
+    },
+    {
+      "file": "src/modules/04-education-daily-quiz.js",
+      "size": 22646,
+      "sha256": "d110c8473e6f42333b306ae94d37c40e44cf88a66fbd863c00a3ba8308d0b747"
+    },
+    {
+      "file": "src/modules/05-avatar-life-customization.js",
+      "size": 10622,
+      "sha256": "fa320984f11d2435c27390423cb91bacc863695c72c6af8562fa022b805c0bcd"
+    },
+    {
+      "file": "src/modules/06-missions-profile-hud-inventory-tools.js",
+      "size": 17001,
+      "sha256": "c33f8ff052d2095691296e4824ef5c67b7bc25509b3469e93231381eb1b3c4a1"
+    },
+    {
+      "file": "src/modules/07-navigation-traffic-routes.js",
+      "size": 22887,
+      "sha256": "792f57a3df7667dc9fa8c47dbfc42e7cdc623a71b98f4ca965caf154b0118a60"
+    },
+    {
+      "file": "src/modules/08-map-parent-settings.js",
+      "size": 19953,
+      "sha256": "ec911273564204cdc4ac431c591daacea1867cd154d887c7876599fe25871d80"
+    },
+    {
+      "file": "src/modules/09-responsive-ar-quality-diagnostics.js",
+      "size": 23652,
+      "sha256": "8ad51a009b8c5f6d275da5d56cbb11702098b44bd912f02f2d3b4a8687e819ca"
+    },
+    {
+      "file": "src/modules/10-player-skills.js",
+      "size": 6222,
+      "sha256": "f7dbf0bf9908165436d0e55f411006bc8ee8151fe9822206d099e48253408929"
+    },
+    {
+      "file": "src/modules/11-render-materials-player-model.js",
+      "size": 26616,
+      "sha256": "45f8d33b831b524b2c20cdaed4967f653517eff1228c04f6a00be6c788d81b44"
+    },
+    {
+      "file": "src/modules/12-world-resources-nature.js",
+      "size": 17883,
+      "sha256": "c13c0b14823009404b599d4adfda4dd22023834294040cb4b053d64c6442c712"
+    },
+    {
+      "file": "src/modules/13-houses-npcs-vehicles-base.js",
+      "size": 27461,
+      "sha256": "28d0355bc58daca88489fc2f95af96bf6d92b08ad49a88b93aa85cf766baedb8"
+    },
+    {
+      "file": "src/modules/14-world-district-decoration.js",
+      "size": 11511,
+      "sha256": "d6bd43563f059c7dbdfedb7aca96d72611926eff8ae4c8ff14d5e6eae45ea7ed"
+    },
+    {
+      "file": "src/modules/15-transit-bus-metro.js",
+      "size": 32719,
+      "sha256": "718b64e42fd03e3ff9e1e5f9a75734f9068f995f1e23ed13504c31b684043dce"
+    },
+    {
+      "file": "src/modules/16-emergency-services.js",
+      "size": 27055,
+      "sha256": "426dcc716a4cabeee132c30b58e1ffec275a6380ecbae37f6454845349c61f40"
+    },
+    {
+      "file": "src/modules/17-adventures-learning-world.js",
+      "size": 12895,
+      "sha256": "48398d7ad28ccc7f9056fc77b5f3b197b4cb5d8409a29f9fa3ca2e9cafb6d2ea"
+    },
+    {
+      "file": "src/modules/18-water-fishing-boats.js",
+      "size": 27809,
+      "sha256": "5008550b8f419ed29d80b4dc3c0a4457312717a17cc918e215f3ef1dea623a13"
+    },
+    {
+      "file": "src/modules/19-campfire-hunting-house-extensions.js",
+      "size": 16727,
+      "sha256": "b53fa76ddbd27d26e4aa6c90ce3e078d55114bb91d45f23de6574c2902a7bca0"
+    },
+    {
+      "file": "src/modules/20-world-build-cloud-houses.js",
+      "size": 17984,
+      "sha256": "5be4891d5f8e3fb6e317bd556d97c72ea57c4bc6341dd8dd53906581d968ceee"
+    },
+    {
+      "file": "src/modules/21-interactions-shop-social-races.js",
+      "size": 19881,
+      "sha256": "3da3be5067cf39fc094499072b970bb7d358ea4344447ae095286bd58aab8812"
+    },
+    {
+      "file": "src/modules/22-careers-jobs-uniforms.js",
+      "size": 15872,
+      "sha256": "bf976dd1e644e310201b9d6b8f94389eb70e0e52048f8f72096dc7836a896043"
+    },
+    {
+      "file": "src/modules/23-vehicle-effects-driving.js",
+      "size": 13538,
+      "sha256": "ea033a0f5e3a252d029b0997b4ff49d2e555182a84eed756e62815fd2e07797e"
+    },
+    {
+      "file": "src/modules/24-construction-system.js",
+      "size": 16030,
+      "sha256": "6d18a95326a6a2b17d7b285869587e749b846163d5ca5419e5dffa90cd45e362"
+    },
+    {
+      "file": "src/modules/25-render-init-resize-position-collision.js",
+      "size": 16851,
+      "sha256": "934149dd8bfbd4dffeee530434b3b4c83cfe57ecdd691a33a14d471b8ac481bc"
+    },
+    {
+      "file": "src/modules/26-input-player-physics.js",
+      "size": 15094,
+      "sha256": "fd187c2e6548ff783cbb6cd0c74334b82afd5728dbcf6791f25a4dbedafb4070"
+    },
+    {
+      "file": "src/modules/27-npc-enemies-combat-camera-action.js",
+      "size": 18185,
+      "sha256": "4ac7448da35572f4fea240de27cedba9df204eda782fe054a4648cb2a4327c7e"
+    },
+    {
+      "file": "src/modules/28-multiplayer-social-online.js",
+      "size": 43263,
+      "sha256": "53cb1ccc65bb252b7febdb583b2a8244d00b6d6b46fc62f8cc515f64aa6fc61a"
+    },
+    {
+      "file": "src/modules/29-game-loop-controls-gamepad.js",
+      "size": 10542,
+      "sha256": "d3fc815db82478e6234ea7677989a2ed8ec6cc557e90fbd6dfb69d380ce17344"
+    },
+    {
+      "file": "src/modules/30-pause-tests-public-api-bootstrap.js",
+      "size": 22686,
+      "sha256": "88f4237798a4743bd3f0245ad86867ceca913a42499ee0cfe829b323cc016d64"
+    },
+    {
+      "file": "src/styles/00-foundation-lobby-game-modal.css",
+      "size": 18514,
+      "sha256": "283d2aae418d10fc90f2a200a4ed12ad443587c787aaf395daa15e34e3a72b9a"
+    },
+    {
+      "file": "src/styles/01-legacy-v607-v613.css",
+      "size": 18093,
+      "sha256": "7ccf50bf3d13f22ea986a07078ae9b046613db45299a956509265e1e94ebf2c0"
+    },
+    {
+      "file": "src/styles/02-art-direction-v614-v617.css",
+      "size": 13590,
+      "sha256": "c3d88bf7f467ff45638f6c90fad9dadb1147f53dd9cc47f1588f50c32d6e3af9"
+    },
+    {
+      "file": "src/styles/03-responsive-social-v618-v623.css",
+      "size": 26301,
+      "sha256": "2cee19372ca070d44722c1421a4747de29cb61b7738ba41d798fee83660bffa5"
+    },
+    {
+      "file": "src/styles/04-map-v624-v627.css",
+      "size": 36293,
+      "sha256": "e4abe5c703b8cfe96f25ab9fe9a40412ffd2ec3e2d51550e02f419cd032b911a"
+    },
+    {
+      "file": "src/styles/05-world-ui-v628-v631.css",
+      "size": 13032,
+      "sha256": "ccf41901bacc74e0401d3fd3ab32f5bf11fd25d6589e2888681e0ee83d846c69"
+    },
+    {
+      "file": "src/styles/06-install-build-v633-v636.css",
+      "size": 12385,
+      "sha256": "1bf86fb098d88cf63094d05a62cf4bc532c383f62679cc277d1a02b37ccecec9"
+    },
+    {
+      "file": "src/styles/07-display-fishing-v637.css",
+      "size": 11306,
+      "sha256": "fa81971215ce9c97c2c7740b39ef643163a6fe46526d98f740f2d5fda4d85cf6"
+    },
+    {
+      "file": "src/styles/08-construction-v638.css",
+      "size": 4556,
+      "sha256": "bb373f5064976ff6d05b97cf187fd2e8ee4afcfc2935d3331210fe1cf43d97b7"
+    },
+    {
+      "file": "src/styles/09-gameplay-layout-camera-v640.css",
+      "size": 6506,
+      "sha256": "dab235f2c53abeb261a1a49e949992bb22d1aef464cc1d85741a2aa80f056a7b"
+    },
+    {
+      "file": "src/styles/10-foundation-rooms-learning-v641-v642.css",
+      "size": 8130,
+      "sha256": "73bbb936e587fd11e6fabcd0c1475c881c0e40ff4af415cf2fb5e1251a2f9ed2"
+    },
+    {
+      "file": "src/styles/11-mobility-traffic-fishing-v643.css",
+      "size": 2726,
+      "sha256": "8f395804727085763db794ba708f5e29d4705bc22f10c605131f61a3872e5516"
+    },
+    {
+      "file": "style.css",
+      "size": 169824,
+      "sha256": "f439631f337940b1f67d8ec4bf9acdaeedcf474c1a8eb410243fce91027b8287"
+    },
+    {
+      "file": "sw.js",
+      "size": 6114,
+      "sha256": "27023c136c24f32f5948d613c4ea0cd9a249b779fc9b1fe84b87f2705b38d9ea"
+    },
+    {
+      "file": "tools/audit_source.py",
+      "size": 10769,
+      "sha256": "7c27991842cb05b6cb76c80a4ffc28fe7dbe1a0bbc83a28e4e5da00abfa1488d"
+    },
+    {
+      "file": "tools/build_project.py",
+      "size": 2168,
+      "sha256": "7053d24661532432b09dcacaa795b947d84a6d9d1c5abc728784cb46c883aefe"
+    },
+    {
+      "file": "tools/deep_inventory.py",
+      "size": 14126,
+      "sha256": "346ebc1003e351dd89b47872ab9112a31822361506d9a1c89395643ecfb967db"
+    },
+    {
+      "file": "tools/test_v643_mobility.js",
+      "size": 6499,
+      "sha256": "aab6f4a82d9b6bc50fbb203a17c09387ba166a7b0c082aacfa14a00e7dea673c"
+    },
+    {
+      "file": "tools/test_v643_world_systems.py",
+      "size": 3597,
+      "sha256": "8e2cf35901c0e8e32ab9550745f33aa176e09bfd5b0981a57e6df43cfc044dfb"
+    },
+    {
+      "file": "tools/validate_project.py",
+      "size": 6127,
+      "sha256": "6174aae0a87865918f99f8c090c3bb35d4ddda93e715767d3180e828ac23ddcb"
+    },
+    {
+      "file": "tools/verify_equivalence.py",
+      "size": 4790,
+      "sha256": "117006c85ee7b9e3d5ae6662c327b622aaebc892388dae50547aeb533f8a85a6"
+    },
+    {
+      "file": "v54-render-premium.css",
+      "size": 18980,
+      "sha256": "d9a8e5be06ac37f233edf2c05b8d6675edd3d3cae908c6651cc20279ea19ee33"
+    },
+    {
+      "file": "v54-render-premium.js",
+      "size": 23334,
+      "sha256": "07dd037530835d5b6b7998feab785c9fffc04f4eba0afc3521b4a6dc9bc5b874"
+    }
+  ]
+}

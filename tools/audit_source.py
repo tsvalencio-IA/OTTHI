@@ -128,7 +128,7 @@ for item in MANIFEST['javascript']:
     })
 
 summary={
-    'version':642,
+    'version':643,
     'functions':len(functions),
     'conditions':len(conditions),
     'events':len(events),
@@ -142,7 +142,7 @@ summary={
 (DOCS/'AUDITORIA-ESTATICA-RESUMO.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n','utf-8')
 
 lines=[]
-lines.append('# Checklist técnico completo — OTTHI World Edu V642')
+lines.append('# Checklist técnico completo — OTTHI World Edu V643')
 lines.append('')
 lines.append('Este checklist foi gerado sobre a fonte modular completa. Ele não declara que cada experiência física foi aprovada; separa presença no código, auditoria estática e teste obrigatório em aparelho real.')
 lines.append('')

@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 10-player-skills.js
  * Escopo: Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills
  * Linhas de origem V642: 1625-1691

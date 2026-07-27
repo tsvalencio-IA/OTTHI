@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 20-world-build-cloud-houses.js
  * Escopo: Construção do mundo, recursos, baús, casas em nuvem e interiores
  * Linhas de origem V642: 3097-3240

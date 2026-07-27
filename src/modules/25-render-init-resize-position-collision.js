@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 25-render-init-resize-position-collision.js
  * Escopo: Three.js, qualidade, viewport, resize, posição segura e colisões
  * Linhas de origem V642: 3755-3885

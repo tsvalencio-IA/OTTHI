@@ -4,22 +4,23 @@
   'use strict';
 
   const OTTHI_GAME_LIVE_BASE = new URL('./', window.location.href).href;
-  const OTTHI_GAME_WEB_BUILD = '642.0-complete-modular-source-equivalence';
-  window.OTTHI_GAME_VERSION = 642;
+  const OTTHI_GAME_WEB_BUILD = '643.0-precision-mobility-traffic-fishing';
+  window.OTTHI_GAME_VERSION = 643;
   window.OTTHI_GAME_BUILD = OTTHI_GAME_WEB_BUILD;
 
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, t) => a + (b - a) * t;
+  const approachNumber=(value,target,step)=>value<target?Math.min(target,value+Math.abs(step)):Math.max(target,value-Math.abs(step));
   const lerpAngle = (a, b, t) => { let d=((b-a+Math.PI)%(Math.PI*2))-Math.PI; if(d<-Math.PI)d+=Math.PI*2; return a+d*t; };
   const distance2D = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : `p-${Date.now()}-${Math.random().toString(16).slice(2)}`);
   const safePointerCapture=(element,pointerId)=>{try{if(element?.setPointerCapture&&Number.isInteger(pointerId))element.setPointerCapture(pointerId);return true;}catch{return false;}};
   const safePointerRelease=(element,pointerId)=>{try{if(element?.hasPointerCapture?.(pointerId))element.releasePointerCapture(pointerId);return true;}catch{return false;}};
-  const APP_VERSION = 642;
-  const STORAGE_KEY = 'otthos_life_world_roleplay_v642';
-  const LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v624','otthos_life_world_roleplay_v623','otthos_life_world_roleplay_v622','otthos_life_world_roleplay_v621','otthos_life_world_roleplay_v620','otthos_life_world_roleplay_v619','otthos_life_world_roleplay_v618','otthos_life_world_roleplay_v617','otthos_life_world_roleplay_v616','otthos_life_world_roleplay_v615','otthos_life_world_roleplay_v614','otthos_life_world_roleplay_v613','otthos_life_world_roleplay_v612','otthos_life_world_roleplay_v611','otthos_life_world_roleplay_v610','otthos_life_world_roleplay_v609','otthos_life_world_roleplay_v608','otthos_life_world_roleplay_v607','otthos_life_world_roleplay_v606','otthos_life_world_roleplay_v605','otthos_life_world_roleplay_v604','otthos_life_world_roleplay_v603','otthos_life_world_roleplay_v602','otthos_life_world_roleplay_v601','otthos_life_world_complete_v600'];
+  const APP_VERSION = 643;
+  const STORAGE_KEY = 'otthos_life_world_roleplay_v643';
+  const LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v642','otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v624','otthos_life_world_roleplay_v623','otthos_life_world_roleplay_v622','otthos_life_world_roleplay_v621','otthos_life_world_roleplay_v620','otthos_life_world_roleplay_v619','otthos_life_world_roleplay_v618','otthos_life_world_roleplay_v617','otthos_life_world_roleplay_v616','otthos_life_world_roleplay_v615','otthos_life_world_roleplay_v614','otthos_life_world_roleplay_v613','otthos_life_world_roleplay_v612','otthos_life_world_roleplay_v611','otthos_life_world_roleplay_v610','otthos_life_world_roleplay_v609','otthos_life_world_roleplay_v608','otthos_life_world_roleplay_v607','otthos_life_world_roleplay_v606','otthos_life_world_roleplay_v605','otthos_life_world_roleplay_v604','otthos_life_world_roleplay_v603','otthos_life_world_roleplay_v602','otthos_life_world_roleplay_v601','otthos_life_world_complete_v600'];
   const safeLocalGet = key => { try { return window.localStorage?.getItem(key) ?? null; } catch { return null; } };
   const safeLocalSet = (key, value) => { try { window.localStorage?.setItem(key, value); return true; } catch { return false; } };
   const safeLocalRemove = key => { try { window.localStorage?.removeItem(key); return true; } catch { return false; } };
@@ -601,7 +602,7 @@
         return true;
       }
     } catch (error) {
-      console.warn('[OTTHI-GAME UPDATE] Verificação adiada:', error?.message || error);
+      console.warn('[OTTHI UPDATE] Verificação adiada:', error?.message || error);
     }
     return false;
   }
@@ -637,7 +638,7 @@
         probeOtthiGameUpdate(false);
       }, OTTHI_UPDATE_INTERVAL_MS);
     } catch (error) {
-      console.warn('[OTTHI-GAME UPDATE] Service Worker indisponível:', error?.message || error);
+      console.warn('[OTTHI UPDATE] Service Worker indisponível:', error?.message || error);
     }
   }
 
@@ -1107,11 +1108,14 @@
     world.trafficSnapshot=actors;world.trafficSnapshotAt=now;return actors;
   }
 
+  function trafficPriority(actor){if(actor?.incidentTargetId||actor?.targetFireId)return 50;let type=actor?.route?.schoolBus?'school':actor?.route?'bus':actor?.type||actor?.kind||actor?.trafficType||'';if(!type&&world.ambulances?.includes(actor))type='ambulance';else if(!type&&world.fireTrucks?.includes(actor))type='fire';else if(!type&&world.policeCars?.includes(actor))type='police';return({ambulance:45,fire:44,police:43,school:28,bus:22,car:16,moto:14,bike:10,skate:8})[type]||18;}
   function trafficSpeedFactor(actor,heading,lookAhead=7){
     if(!actor?.group)return 1;const now=performance.now();if(now<Number(actor.incidentUntil||0))return 0;
-    const ax=actor.group.position.x,az=actor.group.position.z,fx=Math.sin(heading),fz=Math.cos(heading),rx=Math.cos(heading),rz=-Math.sin(heading);let factor=1;
-    for(const other of trafficActorList()){if(other.ref===actor||other.id===actor.id)continue;const dx=other.group.position.x-ax,dz=other.group.position.z-az,forward=dx*fx+dz*fz,side=Math.abs(dx*rx+dz*rz),gap=(actor.radius||1.5)+(other.radius||1.5);
-      if(forward>0&&forward<lookAhead+gap&&side<gap*.82){factor=Math.min(factor,clamp((forward-gap*.9)/Math.max(1,lookAhead),0,1));}
+    const ax=actor.group.position.x,az=actor.group.position.z,fx=Math.sin(heading),fz=Math.cos(heading),rx=Math.cos(heading),rz=-Math.sin(heading),actorSpeed=Math.max(.4,Math.abs(actor.currentSpeed||actor.speed||0));let factor=1;
+    for(const other of trafficActorList()){if(other.ref===actor||other.id===actor.id)continue;const dx=other.group.position.x-ax,dz=other.group.position.z-az,forward=dx*fx+dz*fz,side=Math.abs(dx*rx+dz*rz),gap=(actor.radius||1.5)+(other.radius||1.5)+.38;
+      if(forward>-.25&&forward<lookAhead+gap&&side<gap*.86)factor=Math.min(factor,clamp((forward-gap*.92)/Math.max(1,lookAhead),0,1));
+      const otherHeading=Number(other.group.rotation?.y||0),horizon=clamp(1.0+gap/Math.max(2,actorSpeed+other.speed),.75,1.75),futureAx=ax+fx*actorSpeed*horizon,futureAz=az+fz*actorSpeed*horizon,futureBx=other.group.position.x+Math.sin(otherHeading)*other.speed*horizon,futureBz=other.group.position.z+Math.cos(otherHeading)*other.speed*horizon,futureGap=Math.hypot(futureBx-futureAx,futureBz-futureAz);
+      if(futureGap<gap*1.18&&Math.hypot(dx,dz)<lookAhead+gap+4){const myPriority=trafficPriority(actor),otherPriority=trafficPriority(other);if(myPriority<=otherPriority)factor=Math.min(factor,clamp((futureGap-gap*.65)/(gap*.8),0,.58));}
     }return factor;
   }
 
@@ -1123,8 +1127,8 @@
       const a=actors[i],b=actors[j];if(a.ref?.incidentUntil||b.ref?.incidentUntil)continue;const dx=b.group.position.x-a.group.position.x,dz=b.group.position.z-a.group.position.z,d=Math.hypot(dx,dz),gap=(a.radius+b.radius)*.78;if(d>=gap)continue;
       const aEmergency=!!a.ref?.incidentTargetId||!!a.ref?.targetFireId,bEmergency=!!b.ref?.incidentTargetId||!!b.ref?.targetFireId;
       let yieldActor;if(aEmergency!==bEmergency)yieldActor=aEmergency?b:a;else if(Math.abs(a.speed-b.speed)>.25)yieldActor=a.speed>b.speed?a:b;else yieldActor=a.id>b.id?a:b;
-      const old=before?.get(yieldActor.id);if(old){yieldActor.group.position.x=old.x;yieldActor.group.position.z=old.z;snapTrafficToRoad(yieldActor.group,old);}yieldActor.ref.currentSpeed=0;
-      const remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);if(remain<gap*.7){const other=yieldActor===a?b:a,otherOld=before?.get(other.id);if(otherOld){other.group.position.x=otherOld.x;other.group.position.z=otherOld.z;snapTrafficToRoad(other.group,otherOld);}other.ref.currentSpeed=0;}
+      const old=before?.get(yieldActor.id);if(old){yieldActor.group.position.x=old.x;yieldActor.group.position.z=old.z;snapTrafficToRoad(yieldActor.group,old);}yieldActor.ref.currentSpeed=0;yieldActor.ref.trafficHoldUntil=performance.now()+450;
+      const remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);if(remain<gap*.82){const other=yieldActor===a?b:a,otherOld=before?.get(other.id);if(otherOld){other.group.position.x=otherOld.x;other.group.position.z=otherOld.z;snapTrafficToRoad(other.group,otherOld);}other.ref.currentSpeed=0;other.ref.trafficHoldUntil=performance.now()+240;const nx=(b.group.position.x-a.group.position.x)/(remain||1),nz=(b.group.position.z-a.group.position.z)/(remain||1),push=(gap-remain)*.52;yieldActor.group.position.x-=nx*push;yieldActor.group.position.z-=nz*push;snapTrafficToRoad(yieldActor.group,old);}
     }
     world.trafficSnapshot=null;
   }
@@ -1475,11 +1479,12 @@
     gamepadX:0,gamepadZ:0,gamepadActive:false,
     virtualX:0,virtualZ:0,virtualActive:false,
     touchSprint:false,gamepadSprint:false,isSprinting:false,
+    mobilityAccelerate:false,mobilityBrake:false,mobilityControlSource:'',
     keys:new Set(),cameraDrag:null,cameraPointers:new Map(),pinchDistance:0
   };
   const world = {
     houses: [], npcs: [], interactables: [], enemies: [], fireballs: [], resources: [], crystals: [], platforms: [], colliders: [], hazards: [], builds: [], ghosts: new Map(),
-    bridgeParts: [], secretChest: null, vehicle: null, activeVehicle:null, vehicles:[], buses:[], busStops:[], metroStations:[], policeCars:[], policeAlert:null, policeStations:[], school:null, schools:[], policeStation:null, fireStation:null, fireTrucks:[], ambulances:[], fires:[], trafficIncidents:[], activeIncident:null, nextFireAt:0, emergencySeq:0, mine:null, well:null, deliveryPoint: null, raceCoins: [], waypointMarker: null, gym: null, routeGuide: null, routeArrows: [], routeLastBuild: 0, routeLastX: Infinity, routeLastZ: Infinity, routePath: [], navCache: new Map(), landmarks: [], outlines: [], glows: [], criticalSurfaces: [], boat:null, campfires:[], animals:[], houseExtensions:[], remoteCampfires:new Map(), remoteExtensions:new Map(), challengeTokens:[], activeChallenge:null, activityAcc:0
+    bridgeParts: [], secretChest: null, vehicle: null, activeVehicle:null, vehicles:[], buses:[], busStops:[], metroStations:[], policeCars:[], policeAlert:null, policeStations:[], school:null, schools:[], policeStation:null, fireStation:null, fireTrucks:[], ambulances:[], fires:[], trafficIncidents:[], activeIncident:null, nextFireAt:0, emergencySeq:0, mine:null, well:null, deliveryPoint: null, raceCoins: [], waypointMarker: null, gym: null, routeGuide: null, routeArrows: [], routeLastBuild: 0, routeLastX: Infinity, routeLastZ: Infinity, routePath: [], navCache: new Map(), landmarks: [], outlines: [], glows: [], criticalSurfaces: [], boat:null, campfires:[], animals:[], houseExtensions:[], remoteCampfires:new Map(), remoteExtensions:new Map(), challengeTokens:[], activeChallenge:null, activityAcc:0, shoreFishers:[], waterSurfaces:[]
   };
   const textures = {};
   const materials = {};
@@ -1760,7 +1765,7 @@
     textures.grass = professionalTexture('./assets/textures/grass-v628.png','grass',['#348f32','#62c94e','#28762c','#91df63'],46,46);
     textures.road = professionalTexture('./assets/textures/asphalt-v628.png','road',['#252d38','#3d4652'],10,30);
     textures.sidewalk = professionalTexture('./assets/textures/sidewalk-v632.png','sidewalk',['#d9dde3','#aeb7c2'],7,16);
-    textures.water = canvasTexture('water', ['#2fb8ec','#bdf1ff']); textures.water.repeat.set(5,5);
+    textures.water = professionalTexture('./assets/textures/water-ripples-v643.png','water',['#187fb5','#4ac9ef','#bdf1ff'],7,7);
     textures.wood = professionalTexture('./assets/textures/wood-v628.png','wood',['#9a5a28','#693819'],2,2);
     textures.brick = professionalTexture('./assets/textures/brick-v628.png','brick',['#c38142','#8a4e25'],3,2);
     textures.stone = professionalTexture('./assets/textures/stone-v628.png','stone',['#8795a6','#677482','#aab5bf'],4,3);
@@ -1789,7 +1794,7 @@
     materials.tile = new THREE.MeshStandardMaterial({ map:textures.tile,roughness:.42,metalness:.03 });
     materials.fabric = new THREE.MeshStandardMaterial({ map:textures.fabric,roughness:.86 });
     materials.metal = new THREE.MeshStandardMaterial({ map:textures.metal,roughness:.38,metalness:.48 });
-    materials.water = new THREE.MeshStandardMaterial({ map:textures.water, color:0x2fc8f4, emissive:0x087aa7, emissiveIntensity:.18, transparent:true, opacity:.76, roughness:.2, metalness:.1 });
+    materials.water = new THREE.MeshStandardMaterial({ map:textures.water, color:0x70d9f5, emissive:0x075d82, emissiveIntensity:.13, transparent:true, opacity:.82, roughness:.16, metalness:.06 });
     materials.interiorFloor = new THREE.MeshStandardMaterial({map:textures.interiorFloor,roughness:.68});
     materials.interiorWall = new THREE.MeshStandardMaterial({map:textures.interiorWall,roughness:.82});
     materials.marketFloor = new THREE.MeshStandardMaterial({map:textures.marketFloor,roughness:.58});
@@ -2507,19 +2512,19 @@
   }
 
   const BUS_ROUTES=[
-    {id:'solar',name:'Linha Solar',number:'101',color:0x168de2,speed:7.0,copies:2,dwell:3600,points:[
+    {id:'solar',name:'Linha Solar',number:'101',color:0x168de2,speed:6.6,copies:2,dwell:3600,laneOffset:1.72,points:[
       {x:0,z:10,stopId:'central-norte',stopName:'Central Norte'},{x:7,z:11},{x:7,z:27},{x:0,z:34},{x:0,z:55},{x:0,z:94,stopId:'bairro-norte',stopName:'Bairro Norte'},{x:0,z:55},{x:0,z:34},{x:7,z:27},{x:7,z:11},{x:7,z:0},{x:0,z:0},{x:55,z:0,stopId:'fazenda',stopName:'Fazenda'},{x:55,z:48,stopId:'castelo',stopName:'Castelo'},{x:55,z:88,stopId:'ginasio',stopName:'Ginásio'},{x:55,z:48},{x:55,z:0},{x:0,z:0}
     ]},
-    {id:'verde',name:'Linha Verde',number:'202',color:0x27b36a,speed:6.7,copies:2,dwell:3600,points:[
+    {id:'verde',name:'Linha Verde',number:'202',color:0x27b36a,speed:6.4,copies:2,dwell:3600,laneOffset:1.38,points:[
       {x:0,z:-10,stopId:'central-sul',stopName:'Central Sul'},{x:0,z:-55,stopId:'academia',stopName:'Academia'},{x:0,z:-94,stopId:'vale',stopName:'Vale dos Cristais'},{x:0,z:-55},{x:-55,z:-55,stopId:'floresta',stopName:'Floresta'},{x:-55,z:-10,stopId:'mercado',stopName:'Mercadinho'},{x:-55,z:0},{x:-70,z:0,stopId:'escola-sol',stopName:'Escola Vila do Sol'},{x:-55,z:0},{x:0,z:0}
     ]},
-    {id:'escolar',name:'Circular Escolar',number:'E10',color:0xf0b62d,speed:6.2,copies:1,dwell:4200,schoolBus:true,points:[
+    {id:'escolar',name:'Circular Escolar',number:'E10',color:0xf0b62d,speed:5.9,copies:1,dwell:4200,schoolBus:true,laneOffset:1.18,points:[
       {x:-70,z:0,stopId:'escola-sol',stopName:'Escola Vila do Sol'},{x:-55,z:0},{x:0,z:0,stopId:'central-escolar',stopName:'Praça Central'},{x:55,z:0},{x:55,z:18,stopId:'escola-horizonte',stopName:'Escola Horizonte'},{x:55,z:0},{x:0,z:0},{x:-55,z:0}
     ]},
-    {id:'circular',name:'Circular da Cidade',number:'303',color:0x8b5cf6,speed:6.9,copies:2,dwell:3500,points:[
+    {id:'circular',name:'Circular da Cidade',number:'303',color:0x8b5cf6,speed:6.3,copies:1,dwell:3500,laneOffset:1.62,points:[
       {x:0,z:0,stopId:'praca-central',stopName:'Praça Central'},{x:55,z:0,stopId:'delegacia-central',stopName:'Delegacia Central'},{x:55,z:-18},{x:55,z:-68,stopId:'bombeiros',stopName:'Corpo de Bombeiros'},{x:55,z:-18},{x:0,z:-18,stopId:'comercio',stopName:'Mercado e Oficina'},{x:-55,z:-18},{x:-55,z:0},{x:-55,z:22,stopId:'posto-bairro',stopName:'Posto Policial do Bairro'},{x:-55,z:0},{x:0,z:0}
     ]},
-    {id:'turismo',name:'Linha Turismo Kids',number:'404',color:0xe05c42,speed:6.5,copies:1,dwell:3900,points:[
+    {id:'turismo',name:'Linha Turismo Kids',number:'404',color:0xe05c42,speed:6.1,copies:1,dwell:3900,laneOffset:1.28,points:[
       {x:0,z:10,stopId:'central-norte',stopName:'Central Norte'},{x:0,z:50,stopId:'lago-acesso',stopName:'Acesso ao Lago'},{x:0,z:78},{x:55,z:78},{x:55,z:88,stopId:'ginasio',stopName:'Ginásio'},{x:55,z:48,stopId:'castelo',stopName:'Castelo'},{x:55,z:18,stopId:'escola-horizonte',stopName:'Escola Horizonte'},{x:55,z:0},{x:0,z:0}
     ]}
   ];
@@ -2559,7 +2564,7 @@
         center.push(final?{...leg[j],...targetSource,x:to.x,z:to.z}:leg[j]);
       }
     }
-    const lane=offsetBusPath(compactBusPath(center));if(lane.length>1&&Math.hypot(lane[0].x-lane[lane.length-1].x,lane[0].z-lane[lane.length-1].z)<.12)lane.pop();return lane;
+    const lane=offsetBusPath(compactBusPath(center),Number(route.laneOffset||BUS_LANE_OFFSET));if(lane.length>1&&Math.hypot(lane[0].x-lane[lane.length-1].x,lane[0].z-lane[lane.length-1].z)<.12)lane.pop();return lane;
   }
   function busRoutePoints(bus){return bus?.runtimePoints?.length?bus.runtimePoints:(bus?.route?.points||[]);}
   function busNextStop(bus){const points=busRoutePoints(bus);for(let step=0;step<points.length;step++){const point=points[(bus.pointIndex+step)%points.length];if(point?.stopId)return point;}return null;}
@@ -2569,8 +2574,8 @@
     return best;
   }
   function recoverBusRoute(bus,reason='route-recovery'){
-    const points=busRoutePoints(bus),projection=nearestForwardBusSegment(bus,points);if(!projection)return false;
-    bus.group.position.x=projection.point.x;bus.group.position.z=projection.point.z;bus.pointIndex=projection.nextIndex;bus.currentSpeed=0;bus.targetSpeed=0;bus.lastProgressAt=performance.now();bus.lastProgressX=bus.group.position.x;bus.lastProgressZ=bus.group.position.z;bus.lastRecoveryAt=bus.lastProgressAt;setBusState(bus,BUS_STATES.RECOVERING,reason);return true;
+    const points=busRoutePoints(bus);let projection=nearestForwardBusSegment(bus,points);const global=projectPointToPolyline(bus.group.position,points);if(global&&(!projection||global.distance+1.2<projection.distance))projection=global;if(!projection)return false;
+    bus.group.position.x=projection.point.x;bus.group.position.z=projection.point.z;bus.pointIndex=projection.nextIndex;bus.currentSpeed=0;bus.targetSpeed=0;bus.trafficHoldUntil=performance.now()+650;bus.lastProgressAt=performance.now();bus.lastProgressX=bus.group.position.x;bus.lastProgressZ=bus.group.position.z;bus.lastRecoveryAt=bus.lastProgressAt;setBusState(bus,BUS_STATES.RECOVERING,reason);return true;
   }
   function setBusState(bus,next,reason=''){
     if(!bus||bus.state===next)return false;bus.stateHistory=bus.stateHistory||[];bus.stateHistory.push({from:bus.state||'',to:next,at:Date.now(),reason});bus.stateHistory=bus.stateHistory.slice(-24);bus.state=next;bus.stateSince=performance.now();bus.lastStateReason=reason;return true;
@@ -2622,6 +2627,9 @@
     let stop=world.busStops.find(s=>s.id===point.stopId);if(stop){if(!stop.routes.includes(route.id))stop.routes.push(route.id);return stop;}
     stop={id:point.stopId,name:point.stopName,x:point.x,z:point.z,roadX:point.x,roadZ:point.z,routes:[route.id]};world.busStops.push(stop);const g=new THREE.Group();const sideX=Math.abs(point.x)<9?4.8:point.x<0?4.8:-4.8;g.position.set(point.x+sideX,0,point.z);worldGroup.add(g);premiumBox(.18,2.7,.18,0x23364b,0,1.35,0,g);premiumBox(1.5,.92,.16,route.color,0,2.35,0,g);const sign=new THREE.Mesh(new THREE.PlaneGeometry(.72,.72),new THREE.MeshStandardMaterial({map:iconTexture('🚌','#ffffff','#17324d'),transparent:true,side:THREE.DoubleSide}));sign.position.set(0,2.38,.1);g.add(sign);premiumBox(2.8,.18,.82,0xd3dce3,0,.1,0,g);stop.sign=g;stop.x=point.x+sideX;registerInteractable({id:`bus-stop-${stop.id}`,type:'bus-stop',icon:'🚌',label:`Parada: ${stop.name}`,x:stop.x,z:stop.z,radius:3.3,priority:190,action:()=>openBusStop(stop)});return stop;
   }
+  function busSpawnIndex(runtimePoints,preferredOffset){
+    if(!runtimePoints.length)return 0;let best=preferredOffset,bestScore=-Infinity;for(let i=0;i<runtimePoints.length;i++){const point=runtimePoints[i],roadOk=pointOnRoad(point.x,point.z,.03),distanceToTraffic=trafficActorList().reduce((min,actor)=>Math.min(min,Math.hypot(actor.group.position.x-point.x,actor.group.position.z-point.z)-(actor.radius||1.5)),999),distanceToBus=(world.buses||[]).reduce((min,bus)=>Math.min(min,Math.hypot(bus.group.position.x-point.x,bus.group.position.z-point.z)-5.5),999),cycle=Math.min(Math.abs(i-preferredOffset),runtimePoints.length-Math.abs(i-preferredOffset)),score=(roadOk?0:-500)+Math.min(distanceToTraffic,distanceToBus)-cycle*.045+(point.stopId?-1.2:0);if(score>bestScore){bestScore=score;best=i;}}return best;
+  }
   function createBusModel(route,copy=0,routeOrder=0){
     const g=new THREE.Group(),body=renderMat(route.color,{roughness:.4,metalness:.14}),dark=renderMat(0x11263a,{roughness:.08,metalness:.28,transparent:true,opacity:.42}),light=renderMat(0xf5f7fa,{roughness:.46}),rail=renderMat(0xf6c934,{roughness:.34,metalness:.32}),seat=materials.fabric;
     premiumBox(3.08,.48,7.0,0x26384b,0,.4,0,g);premiumBox(2.92,.2,6.65,materials.tile,0,.72,0,g);
@@ -2641,7 +2649,7 @@
     premiumBox(.68,1.9,.08,renderMat(0x98e7ff,{transparent:true,opacity:.22,roughness:.08}),1.54,1.7,2.52,g);premiumBox(.12,2.08,.12,rail,1.5,1.78,1.84,g);
     const wheels=[];for(const p of [[-1.48,.47,-2.3],[1.48,.47,-2.3],[-1.48,.47,2.25],[1.48,.47,2.25]]){const wheel=premiumCylinder(.48,.28,0x111720,p[0],p[1],p[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}
     const passengerColors=[0xffd84d,0xff72b6,0x54c7ff];for(let i=0;i<3;i++){const pg=new THREE.Group();pg.position.set(i%2?-.72:.72,1.2,-1.6+i*1.35);g.add(pg);premiumBox(.42,.52,.38,passengerColors[i],0,.25,0,pg);premiumBox(.36,.36,.36,0xffc997,0,.68,0,pg);}
-    const runtimePoints=buildBusRoadPath(route),copies=Math.max(1,Number(route.copies||1)),preferredOffset=Math.floor(((copy/copies)+(routeOrder/Math.max(1,BUS_ROUTES.length)))*runtimePoints.length)%runtimePoints.length;let routeOffset=preferredOffset;if(world.buses.length){let bestScore=-Infinity;for(let i=0;i<runtimePoints.length;i++){const p=runtimePoints[i],minDistance=Math.min(...world.buses.map(existing=>Math.hypot(existing.group.position.x-p.x,existing.group.position.z-p.z))),cycleDistance=Math.min(Math.abs(i-preferredOffset),runtimePoints.length-Math.abs(i-preferredOffset)),score=minDistance-cycleDistance*.08;if(score>bestScore){bestScore=score;routeOffset=i;}}}const start=runtimePoints[routeOffset],now=performance.now(),bus={id:`bus-${route.id}-${copy+1}`,route,runtimePoints,group:g,pointIndex:(routeOffset+1)%runtimePoints.length,stopUntil:start.stopId?now+1200:0,lastStopId:start.stopId||'',lastStopName:start.stopName||'',wheels,speed:route.speed,currentSpeed:0,targetSpeed:0,seatOffset:new THREE.Vector3(-.72,.94,.55),interiorSeats:8,doorsOpen:!!start.stopId,state:start.stopId?BUS_STATES.DOORS_OPEN:BUS_STATES.SPAWNING,stateSince:now,stateHistory:[],lastProgressAt:now,lastProgressX:start.x,lastProgressZ:start.z,lastRecoveryAt:0,offerStopId:'',openAt:0,closeUntil:0};g.position.set(start.x,.02,start.z);g.userData.roadPath=runtimePoints;g.userData.busId=bus.id;worldGroup.add(g);world.buses.push(bus);
+    const runtimePoints=buildBusRoadPath(route),copies=Math.max(1,Number(route.copies||1)),preferredOffset=Math.floor(((copy/copies)+(routeOrder/Math.max(1,BUS_ROUTES.length)))*runtimePoints.length)%runtimePoints.length;let routeOffset=busSpawnIndex(runtimePoints,preferredOffset);const start=runtimePoints[routeOffset],now=performance.now(),bus={id:`bus-${route.id}-${copy+1}`,route,runtimePoints,group:g,pointIndex:(routeOffset+1)%runtimePoints.length,stopUntil:start.stopId?now+1200:0,lastStopId:start.stopId||'',lastStopName:start.stopName||'',wheels,speed:route.speed,currentSpeed:0,targetSpeed:0,seatOffset:new THREE.Vector3(-.72,.94,.55),interiorSeats:8,doorsOpen:!!start.stopId,state:start.stopId?BUS_STATES.DOORS_OPEN:BUS_STATES.SPAWNING,stateSince:now,stateHistory:[],lastProgressAt:now,lastProgressX:start.x,lastProgressZ:start.z,lastRecoveryAt:0,offerStopId:'',openAt:0,closeUntil:0};g.position.set(start.x,.02,start.z);g.userData.roadPath=runtimePoints;g.userData.busId=bus.id;worldGroup.add(g);world.buses.push(bus);
     registerInteractable({id:`board-${bus.id}`,type:'bus',icon:'🚌',label:`Embarcar • ${route.number} ${route.name}`,radius:4.6,priority:210,getPos:()=>({x:bus.group.position.x,z:bus.group.position.z}),action:()=>enterBus(bus)});
     for(const point of runtimePoints)if(point.stopId)ensureBusStop(route,point);return bus;
   }
@@ -2712,6 +2720,7 @@
     for(const bus of world.buses){
       const points=busRoutePoints(bus);if(!points.length)continue;
       if(bus.state===BUS_STATES.SPAWNING)setBusState(bus,BUS_STATES.MOVING,'spawn-complete');
+      if(now<Number(bus.trafficHoldUntil||0)){bus.currentSpeed=lerp(Number(bus.currentSpeed||0),0,Math.min(1,dt*10));continue;}
       if(bus.state===BUS_STATES.ACCIDENT){bus.currentSpeed=lerp(Number(bus.currentSpeed||0),0,Math.min(1,dt*8));continue;}
       if(bus.state===BUS_STATES.TURNING_AROUND){
         bus.currentSpeed=0;const targetHeading=Number(bus.turnTargetHeading||0),delta=((targetHeading-bus.group.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI;bus.group.rotation.y=lerpAngle(bus.group.rotation.y,targetHeading,Math.min(1,dt*4.8));if(Math.abs(delta)<.045||now>=Number(bus.turnUntil||0)){bus.group.rotation.y=targetHeading;bus.turnTargetHeading=0;bus.turnUntil=0;setBusState(bus,BUS_STATES.MOVING,'turn-complete');}
@@ -2784,7 +2793,7 @@
   function helpExtinguishFire(fire){if(!fire?.active){toast('A ocorrência já foi resolvida.','good');return;}if(Math.hypot(player.x-fire.x,player.z-fire.z)>5){toast('Chegue mais perto da área segura demarcada.','warn');return;}fire.playerHelping=true;player.sitUntil=performance.now()+2400;toast('Mangueira ativada. Mantenha distância segura!','good',1800);for(let i=0;i<8;i++)setTimeout(()=>spawnDust(lerp(player.x,fire.x,(i+1)/9),lerp(player.z,fire.z,(i+1)/9),0x70dcff),i*90);setTimeout(()=>{if(fire.active)extinguishFireIncident(fire,true);},2300);}
   function extinguishFireIncident(fire,byPlayer=false){if(!fire?.active)return;fire.active=false;fire.group.visible=false;fire.playerHelping=false;fire.truckHelping=false;state.cityServices.firesExtinguished=(state.cityServices.firesExtinguished||0)+1;if(byPlayer)state.stats.firesHelped=(state.stats.firesHelped||0)+1;for(const truck of world.fireTrucks)if(truck.targetFireId===fire.id){truck.targetFireId='';truck.route=[];truck.routeIndex=0;truck.arrivedAt=0;}if(state.career.activeJob?.id==='firefighter'){state.career.activeJob.completed=true;completeActiveJob();}if(state.waypoint?.id===`fire-${fire.id}`){state.waypoint=null;updateWaypointMarker();updateNavigation(0,true);}addXP(byPlayer?65:20);toast(byPlayer?'Emergência resolvida em equipe!':'Os bombeiros controlaram a ocorrência.','good',2400);saveState(true);}
   function serviceVehicleRoute(vehicle,target){if(!vehicle.route.length){vehicle.route=buildRoutePoints({x:vehicle.group.position.x,z:vehicle.group.position.z},target);vehicle.routeIndex=1;}return vehicle.route;}
-  function moveServiceVehicle(vehicle,target,dt){const route=serviceVehicleRoute(vehicle,target),point=route[vehicle.routeIndex];if(!point)return 0;const dx=point.x-vehicle.group.position.x,dz=point.z-vehicle.group.position.z,d=Math.hypot(dx,dz);if(d<.45){vehicle.routeIndex++;if(vehicle.routeIndex>=route.length)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);return moveServiceVehicle(vehicle,target,dt);}const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(vehicle,heading,8),targetSpeed=vehicle.speed*factor;vehicle.currentSpeed=lerp(Number(vehicle.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const move=Math.min(d,vehicle.currentSpeed*dt),previous={x:vehicle.group.position.x,z:vehicle.group.position.z};if(move>.0001){vehicle.group.position.x+=dx/d*move;vehicle.group.position.z+=dz/d*move;snapTrafficToRoad(vehicle.group,previous);vehicle.group.rotation.y=lerpAngle(vehicle.group.rotation.y,heading,Math.min(1,dt*6));for(const wheel of vehicle.wheels)wheel.rotation.x-=move*2.1;}return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}
+  function moveServiceVehicle(vehicle,target,dt){if(performance.now()<Number(vehicle.trafficHoldUntil||0)){vehicle.currentSpeed=0;return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}const route=serviceVehicleRoute(vehicle,target),point=route[vehicle.routeIndex];if(!point)return 0;const dx=point.x-vehicle.group.position.x,dz=point.z-vehicle.group.position.z,d=Math.hypot(dx,dz);if(d<.45){vehicle.routeIndex++;if(vehicle.routeIndex>=route.length)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);return moveServiceVehicle(vehicle,target,dt);}const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(vehicle,heading,8),targetSpeed=vehicle.speed*factor;vehicle.currentSpeed=lerp(Number(vehicle.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const move=Math.min(d,vehicle.currentSpeed*dt),previous={x:vehicle.group.position.x,z:vehicle.group.position.z};if(move>.0001){vehicle.group.position.x+=dx/d*move;vehicle.group.position.z+=dz/d*move;snapTrafficToRoad(vehicle.group,previous);vehicle.group.rotation.y=lerpAngle(vehicle.group.rotation.y,heading,Math.min(1,dt*6));for(const wheel of vehicle.wheels)wheel.rotation.x-=move*2.1;}return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}
   function updateFireService(dt){
     const now=performance.now();if(!world.fires.length)return;if(!world.fires.some(f=>f.active)&&now>world.nextFireAt&&!currentHouse)activateFireIncident();
     for(const fire of world.fires){if(!fire.active)continue;fire.flames.forEach((flame,i)=>{flame.scale.y=.82+Math.sin(now*.008+i)*.22;flame.rotation.y+=dt*(.7+i*.08);});fire.smoke.forEach((puff,i)=>{puff.position.y=1.25+i*.35+Math.sin(now*.002+i)*.14;puff.rotation.y+=dt*.35;});}
@@ -2813,6 +2822,7 @@
     createAmbulance();
   }
   function movePoliceToward(car,target,dt,speed=car.speed){
+    if(performance.now()<Number(car.trafficHoldUntil||0)){car.currentSpeed=0;return Math.hypot(car.group.position.x-target.x,car.group.position.z-target.z);}
     const dx=target.x-car.group.position.x,dz=target.z-car.group.position.z,d=Math.hypot(dx,dz);if(d<.08)return d;const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(car,heading,8),targetSpeed=speed*factor;car.currentSpeed=lerp(Number(car.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const move=Math.min(d,car.currentSpeed*dt),previous={x:car.group.position.x,z:car.group.position.z};if(move>.0001){car.group.position.x+=dx/d*move;car.group.position.z+=dz/d*move;snapTrafficToRoad(car.group,previous);car.group.rotation.y=lerpAngle(car.group.rotation.y,heading,Math.min(1,dt*6));for(const wheel of car.wheels)wheel.rotation.x-=move*2.8;}return d;
   }
   function updatePolicePatrol(car,dt){
@@ -2862,7 +2872,7 @@
       for(const car of world.policeCars){if(car.npcTarget)continue;const npc=world.npcs.find(item=>item.mobility&&['car','moto'].includes(item.mobility.type)&&now>Number(item.policeCooldown||0)&&Math.hypot(item.group.position.x-car.group.position.x,item.group.position.z-car.group.position.z)<2.0);if(npc){car.npcTarget=npc.id;car.npcChaseUntil=now+6500;npc.policeCooldown=now+45000;break;}}
     }
   }
-  function moveIncidentResponder(vehicle,target,dt){
+  function moveIncidentResponder(vehicle,target,dt){if(performance.now()<Number(vehicle.trafficHoldUntil||0)){vehicle.currentSpeed=0;return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}
     if(!vehicle.responseRoute?.length){vehicle.responseRoute=buildRoutePoints({x:vehicle.group.position.x,z:vehicle.group.position.z},target);vehicle.responseIndex=1;}
     const point=vehicle.responseRoute[vehicle.responseIndex];if(!point)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);
     const dx=point.x-vehicle.group.position.x,dz=point.z-vehicle.group.position.z,d=Math.hypot(dx,dz);if(d<.45){vehicle.responseIndex++;if(vehicle.responseIndex>=vehicle.responseRoute.length)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);return moveIncidentResponder(vehicle,target,dt);}
@@ -3051,6 +3061,21 @@
     else if(v.phase==='escaping'){const t=clamp((now-v.phaseAt)/760,0,1);v.bobber.position.set(v.target.x,.12-t*.5,v.target.z);v.bobber.scale.setScalar(1-t*.65);if(t>=1)stopFishingVisual();}
     setFishingLine(tip,lineEnd);
   }
+  function createShoreFisher(id,name,x,z,heading,color){
+    const npc=createNPC(id,name,x,z,color,0);npc.fishingActivity={heading,phase:Math.random()*Math.PI*2};npc.group.rotation.y=heading;npc.baseX=x;npc.baseZ=z;
+    const rod=new THREE.Group();rod.rotation.x=-.58;rod.position.set(.46,1.45,.12);npc.group.add(rod);premiumCylinder(.035,2.25,0x8b5a2b,0,0,0,rod,7);rod.children[rod.children.length-1].rotation.x=Math.PI/2;
+    const lineGeo=new THREE.BufferGeometry(),lineArr=new Float32Array(6);lineGeo.setAttribute('position',new THREE.BufferAttribute(lineArr,3));const line=new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0xe8f7ff,transparent:true,opacity:.75,depthWrite:false}));worldGroup.add(line);
+    const bobber=new THREE.Mesh(new THREE.SphereGeometry(.09,8,6),renderMat(0xff5647,{emissive:0x8c160f,emissiveIntensity:.32,roughness:.5}));worldGroup.add(bobber);const reach=3.8+Math.random()*1.4,dx=Math.sin(heading),dz=Math.cos(heading);bobber.position.set(x+dx*reach,.16,z+dz*reach);npc.fishingActivity.rod=rod;npc.fishingActivity.line=line;npc.fishingActivity.bobber=bobber;npc.fishingActivity.reach=reach;world.shoreFishers.push(npc);return npc;
+  }
+  function createShoreFishingLife(){
+    if(world.shoreFishers.length)return;[
+      ['shore-fisher-otto','Otto',-24.8,44.1,-2.72,0x2f78d1],['shore-fisher-luna','Luna',-27.7,43.3,-2.95,0xe35d9c],['shore-fisher-pedro','Pedro',-31.0,43.9,2.95,0x2faa68],['shore-fisher-maya','Maya',-25.3,59.7,.22,0xf09a31],['shore-fisher-caio','Caio',-29.2,60.2,-.12,0x805ad5]
+    ].forEach(args=>createShoreFisher(...args));
+  }
+  function updateShoreFishers(dt){
+    if(textures.water){textures.water.offset.x=(textures.water.offset.x+dt*.012)%1;textures.water.offset.y=(textures.water.offset.y+dt*.006)%1;}
+    const now=performance.now();for(const npc of world.shoreFishers){const act=npc.fishingActivity;if(!act)continue;npc.group.position.set(npc.baseX,0,npc.baseZ);npc.group.rotation.y=act.heading;const pulse=Math.sin(now*.0021+act.phase),bite=Math.sin(now*.006+act.phase)> .92;act.rod.rotation.x=-.58+pulse*.035-(bite?.1:0);if(npc.limbs){npc.limbs.leftArm.rotation.x=lerp(npc.limbs.leftArm.rotation.x,-1.55+(bite?-.18:0),.18);npc.limbs.rightArm.rotation.x=lerp(npc.limbs.rightArm.rotation.x,-1.72+(bite?-.25:0),.18);npc.limbs.leftLeg.rotation.x=lerp(npc.limbs.leftLeg.rotation.x,.16,.18);npc.limbs.rightLeg.rotation.x=lerp(npc.limbs.rightLeg.rotation.x,-.16,.18);}act.bobber.position.y=.15+Math.sin(now*.004+act.phase)*.035-(bite?.055:0);const tip=new THREE.Vector3();act.rod.localToWorld(tip.set(0,1.08,0));const arr=act.line.geometry.attributes.position.array;arr[0]=tip.x;arr[1]=tip.y;arr[2]=tip.z;arr[3]=act.bobber.position.x;arr[4]=act.bobber.position.y;arr[5]=act.bobber.position.z;act.line.geometry.attributes.position.needsUpdate=true;}
+  }
   function createBoatModel(){
     const g=new THREE.Group();const hull=renderMat(0x7b3f20,{roughness:.72}),edge=renderMat(0xe3ad55,{roughness:.62}),seat=renderMat(0x374151,{roughness:.72});
     premiumBox(2.4,.42,4.4,hull,0,.38,0,g);premiumBox(2.75,.25,3.85,edge,0,.67,0,g);premiumBox(1.85,.23,3.15,renderMat(0x2d6f8d,{roughness:.48}),0,.83,0,g);premiumBox(1.75,.25,.55,seat,0,1.02,-.65,g);premiumBox(1.75,.25,.55,seat,0,1.02,.72,g);premiumBox(.12,1.8,.12,0xd8c28d,.95,1.35,.1,g);premiumBox(1.45,.05,.72,0xf5f1df,.25,2.05,.1,g);g.position.set(-38,.1,52);worldGroup.add(g);world.boat={id:'lake-boat',group:g,x:-38,z:52,heading:0,driverUid:'',passengerUid:''};
@@ -3067,7 +3092,7 @@
     if(player.transit.mode||!world.boat)return false;
     const p=world.boat.group.position;if(Math.hypot(player.x-p.x,player.z-p.z)>3.6){toast('Chegue perto do barco pelo píer.','warn');return false;}
     const lock=await window.OTTHOS_RTDB?.claimBoat?.(world.boat.id);if(lock&&lock.ok===false){toast(lock.error||'O barco já está sendo usado por outro jogador.','warn',2800);return false;}
-    player.boating=true;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.passengerBotId='';player.boat.heading=world.boat.heading||0;player.boat.speed=0;player.boat.steerVisual=0;player.x=p.x;player.z=p.z;player.y=.18;player.vx=player.vz=0;state.boats.activeBoatId=world.boat.id;state.boats.passengerOf='';const companion=nearestRideCompanion(9);if(companion)boardNpcPassenger(companion,'boat');updateBoatPanel();auditPlayerMode('board-boat-driver');toast('Barco pronto. Use o manche para navegar.','good',2300);saveState(true);return true;
+    input.mobilityAccelerate=false;input.mobilityBrake=false;player.boating=true;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.passengerBotId='';player.boat.heading=world.boat.heading||0;player.boat.speed=0;player.boat.steerVisual=0;player.x=p.x;player.z=p.z;player.y=.18;player.vx=player.vz=0;state.boats.activeBoatId=world.boat.id;state.boats.passengerOf='';const companion=nearestRideCompanion(9);if(companion)boardNpcPassenger(companion,'boat');updateBoatPanel();updateVehicleControlsUI();auditPlayerMode('board-boat-driver');toast('Barco pronto. Use o manche para navegar.','good',2300);saveState(true);return true;
   }
   function enterBoatAsPassenger(hostUid){
     const ghost=world.ghosts.get(hostUid),target=ghost?.userData?.target;
@@ -3075,19 +3100,22 @@
     if(player.boating){toast('Você já está em um barco.','warn');return false;}
     if(player.vehicle)exitVehicle(true);
     if(player.transit.mode||!canEnterMobility(PLAYER_MODES.BOAT_PASSENGER))return false;
-    player.boating=true;player.boat.passengerOf=hostUid;player.boat.passengerBotId='';player.boat.speed=0;player.x=ghost.position.x;player.z=ghost.position.z;state.boats.activeBoatId=target.boatId||'lake-boat';state.boats.passengerOf=hostUid;updateBoatPanel();auditPlayerMode('board-remote-boat');toast('Você entrou como passageiro. O motorista controla o barco.','good',2600);saveState(true);return true;
+    player.boating=true;player.boat.passengerOf=hostUid;player.boat.passengerBotId='';player.boat.speed=0;player.x=ghost.position.x;player.z=ghost.position.z;state.boats.activeBoatId=target.boatId||'lake-boat';state.boats.passengerOf=hostUid;updateBoatPanel();updateVehicleControlsUI();auditPlayerMode('board-remote-boat');toast('Você entrou como passageiro. O motorista controla o barco.','good',2600);saveState(true);return true;
   }
   function exitBoat(silent=false){
     if(!player.boating)return false;
     if(!silent&&!validBoatExit()){toast('Encoste a lateral do barco no píer para sair com segurança.','warn',2500);return false;}
     const passengerHost=player.boat.passengerOf,hostedPassenger=player.boat.passengerUid,wasPassenger=!!passengerHost;
     if(passengerHost)window.OTTHOS_RTDB?.sendInteraction?.(passengerHost,{type:'boatPassengerLeft'});else if(hostedPassenger)window.OTTHOS_RTDB?.sendInteraction?.(hostedPassenger,{type:'boatEnded'});
-    releaseNpcPassenger('boat');player.boating=false;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.speed=0;player.boat.steerVisual=0;state.boats.passengerOf='';state.boats.activeBoatId='';if(!wasPassenger&&world.boat)window.OTTHOS_RTDB?.releaseBoat?.(world.boat.id);if(world.boat&&!wasPassenger){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}
-    const safe=safeBoatExitPoint();player.x=safe.x;player.z=safe.z;player.y=groundHeightAt(safe.x,safe.z);player.vx=player.vy=player.vz=0;player.grounded=true;rememberSafePlayerPosition(true);updateBoatPanel();auditPlayerMode('exit-boat');if(!silent)toast('Você desembarcou no píer.','good');saveState(true);return true;
+    releaseNpcPassenger('boat');input.mobilityAccelerate=false;input.mobilityBrake=false;player.boating=false;player.boat.passengerOf='';player.boat.passengerUid='';player.boat.speed=0;player.boat.steerVisual=0;state.boats.passengerOf='';state.boats.activeBoatId='';if(!wasPassenger&&world.boat)window.OTTHOS_RTDB?.releaseBoat?.(world.boat.id);if(world.boat&&!wasPassenger){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}
+    const safe=safeBoatExitPoint();player.x=safe.x;player.z=safe.z;player.y=groundHeightAt(safe.x,safe.z);player.vx=player.vy=player.vz=0;player.grounded=true;rememberSafePlayerPosition(true);updateBoatPanel();updateVehicleControlsUI();auditPlayerMode('exit-boat');if(!silent)toast('Você desembarcou no píer.','good');saveState(true);return true;
   }
   function updateBoatPhysics(dt,ix,iz){
     const boat=player.boat;if(boat.passengerOf){const ghost=world.ghosts.get(boat.passengerOf),target=ghost?.userData?.target;if(!ghost||!target){boat.hostMissingAt=boat.hostMissingAt||performance.now();if(performance.now()-boat.hostMissingAt>3500){toast('O motorista saiu. Você voltou ao píer.','warn');player.x=-24.7;player.z=52;exitBoat(true);}player.vx=player.vz=0;return;}boat.hostMissingAt=0;const tx=Number(target.x||ghost.position.x),tz=Number(target.z||ghost.position.z);player.vx=clamp((tx-player.x)*8,-18,18);player.vz=clamp((tz-player.z)*8,-18,18);boat.heading=Number(target.r||boat.heading);player.facing=boat.heading;return;}
-    const throttle=Math.abs(iz)<.06?0:iz,steer=Math.abs(ix)<.07?0:ix;const braking=boat.speed*throttle<-.08?1.7:1;boat.speed+=throttle*8.2*braking*dt;if(!throttle)boat.speed*=Math.pow(.12,dt);boat.speed=clamp(boat.speed,-3.2,8.4);boat.steerVisual=lerp(boat.steerVisual||0,steer,Math.min(1,dt*6.5));const authority=clamp(Math.abs(boat.speed)/2.8,0,1);const turnRate=1.45/(1+Math.abs(boat.speed)*.075);boat.heading+=boat.steerVisual*turnRate*authority*dt*(boat.speed<-.08?-1:1);player.vx=Math.sin(boat.heading)*boat.speed;player.vz=Math.cos(boat.heading)*boat.speed;player.facing=boat.heading;
+    // V643: mesma convenção do carro — manche para a direita vira para a direita.
+    const steer=Math.abs(ix)<.07?0:-ix,command=mobilityThrottleIntent(iz,boat.speed),throttle=command.throttle;
+    if(command.brake)boat.speed=approachNumber(boat.speed,0,(7.2+Math.abs(boat.speed)*.8)*dt);else{const crossing=boat.speed*throttle<-.08;boat.speed+=throttle*8.5*(crossing?1.8:1)*dt;}
+    if(!throttle&&!command.brake)boat.speed*=Math.pow(.12,dt);if(Math.abs(boat.speed)<.02&&!throttle)boat.speed=0;boat.speed=clamp(boat.speed,-3.4,8.8);boat.steerVisual=lerp(boat.steerVisual||0,steer,Math.min(1,dt*6.5));const authority=Math.max(clamp(Math.abs(boat.speed)/2.8,0,1),Math.abs(throttle)>.1?.12:0);const turnRate=1.5/(1+Math.abs(boat.speed)*.075);boat.heading+=boat.steerVisual*turnRate*authority*dt*(boat.speed<-.08?-1:1);player.vx=Math.sin(boat.heading)*boat.speed;player.vz=Math.cos(boat.heading)*boat.speed;player.facing=boat.heading;updateMobilityControlLabels();
   }
   function constrainBoat(prevX,prevZ){if(!player.boating)return;if(!isInsideLakeNavigable(player.x,player.z)){player.x=prevX;player.z=prevZ;player.boat.speed*=-.18;player.vx=player.vz=0;}if(world.boat){world.boat.group.position.set(player.x,.1,player.z);world.boat.group.rotation.y=player.boat.heading;world.boat.heading=player.boat.heading;}state.boats.lastPosition={x:+player.x.toFixed(2),z:+player.z.toFixed(2),heading:+player.boat.heading.toFixed(3)};}
   function weightedFish(){let r=Math.random()*100;for(const fish of FISH_SPECIES){r-=fish.weight;if(r<=0)return fish;}return FISH_SPECIES[0];}
@@ -3128,9 +3156,13 @@
   function costText(cost){return Object.entries(cost).map(([k,v])=>`${v} ${k==='wood'?'madeiras':k==='stone'?'pedras':'blocos'}`).join(' + ');}
   function openHouseExtensionPlanner(type){const house=nearestOwnedHouseForExtension();if(!house||distance2D(player,house)>16){toast('Chegue perto de uma casa que você possui.','warn');return;}let side=0;const spec=ROOM_SPECS[type];const place=extensionPlacement(house,side);extensionDraft={id:uid(),houseId:house.id,type,side,...place,ownerId:state.profile.playerId,ownerName:playerDisplayName()};renderExtensionPreview();openModal(`Ampliar: ${spec.name}`,`<p>A prévia transparente aparece ao lado da casa. Ajuste o lado e a rotação antes de confirmar.</p><div class="extension-status" data-extension-status></div><div class="modal-actions"><button class="btn" data-side>Próximo lado</button><button class="btn" data-rotate>Girar</button><button class="btn primary" data-confirm-extension>Confirmar • ${costText(spec.cost)}</button><button class="btn danger" data-cancel-extension>Cancelar</button></div>`,root=>{const status=$('[data-extension-status]',root),update=()=>{const p=extensionPlacement(house,side);extensionDraft={...extensionDraft,side,x:p.x,z:p.z};renderExtensionPreview();status.textContent=extensionValid(extensionDraft)?'✓ Terreno válido':'⚠ Este local está bloqueado';status.className=`extension-status ${extensionValid(extensionDraft)?'good':'bad'}`;};update();$('[data-side]',root).onclick=()=>{side=(side+1)%4;update();};$('[data-rotate]',root).onclick=()=>{extensionDraft.rotation=(Number(extensionDraft.rotation||0)+Math.PI/2)%(Math.PI*2);renderExtensionPreview();};$('[data-cancel-extension]',root).onclick=closeModal;$('[data-confirm-extension]',root).onclick=()=>{if(!extensionValid(extensionDraft)){toast('Escolha um lado livre da casa.','warn');return;}if(!resourcesEnough(spec.cost)){toast(`Faltam recursos: ${costText(spec.cost)}.`,'warn',2600);return;}for(const[k,v]of Object.entries(spec.cost))state.inventory[k]-=v;const data={...extensionDraft,createdAt:Date.now()};state.houseExtensions.push(data);clearExtensionPreview();closeModal();spawnHouseExtension(data);saveState(true);window.OTTHOS_RTDB?.syncHouseExtensions?.(state.houseExtensions);toast(`${spec.name} construído sem alterar os cômodos antigos.`,'good',2800);};});}
   function openHouseExtensionMenu(){openModal('Ampliação modular da casa',`<p>Escolha o novo cômodo. Os interiores e móveis existentes serão preservados.</p><div class="choice-grid">${Object.entries(ROOM_SPECS).map(([id,r])=>`<button class="choice" data-room="${id}"><b>${r.icon} ${r.name}</b><span>${costText(r.cost)}</span></button>`).join('')}</div>`,root=>{$$('[data-room]',root).forEach(btn=>btn.onclick=()=>{closeModal();openHouseExtensionPlanner(btn.dataset.room);});});}
-  function createLakeExpansion(){premiumBox(12,.32,3,materials.wood,-30,.34,52);registerPlatform(-30,52,12,3,.5,{pier:true});for(const z of [44.8,59.2])premiumBox(2.2,.35,.35,0xd7c7a0,-25.5,.25,z);createSignpost(-22,47,'Píer e Pesca',Math.PI/2);registerInteractable({id:'shore-fishing',type:'fishing',icon:'🎣',label:'Pescar na margem',x:-25.5,z:45,radius:3.2,priority:160,action:()=>startFishing('shore')});createBoatModel();}
+  function createLakeExpansion(){
+    premiumBox(12,.32,3,materials.wood,-30,.34,52);registerPlatform(-30,52,12,3,.5,{pier:true});for(const z of [44.8,59.2])premiumBox(2.2,.35,.35,0xd7c7a0,-25.5,.25,z);createSignpost(-22,47,'Píer e Pesca',Math.PI/2);
+    for(const [x,z,s] of [[-23.8,42.9,.75],[-26.5,42.4,.55],[-29.4,42.7,.68],[-32.2,43.1,.52],[-23.9,60.8,.68],[-27.1,61.2,.55],[-30.4,61.0,.72]]){premiumBox(1.1*s,.28*s,.8*s,materials.stone,x,.1,z);for(let i=0;i<3;i++){const reed=premiumCylinder(.035,.85+Math.random()*.35,0x4f8f42,x+(i-1)*.18,.45,z+(Math.random()-.5)*.28,worldGroup,6);reed.rotation.z=(Math.random()-.5)*.12;}}
+    registerInteractable({id:'shore-fishing',type:'fishing',icon:'🎣',label:'Pescar na margem',x:-25.5,z:45,radius:3.2,priority:160,action:()=>startFishing('shore')});createShoreFishingLife();createBoatModel();
+  }
   function restoreLifeExpansion(){for(const c of state.campfires){if(Number(c.expiresAt||0)>Date.now())spawnCampfire(c);if(c.cooking&&Number(c.cooking.endsAt||0)<=Date.now())finishCampfireCooking(c,c.cooking.id);}for(const e of state.houseExtensions)spawnHouseExtension(e);}
-  function updateLifeActivities(dt){world.activityAcc+=dt;if(world.activityAcc<.5)return;world.activityAcc=0;const now=Date.now();for(const c of [...world.campfires]){if(c.flame)c.flame.scale.y=.85+Math.sin(performance.now()*.009+c.data.x)*.18;if(c.data.cooking&&Number(c.data.cooking.endsAt||0)<=now)finishCampfireCooking(c.data,c.data.cooking.id);if(Number(c.data.expiresAt||0)<=now){c.data.expired=true;c.interactable.disabled=true;worldGroup.remove(c.group);world.campfires=world.campfires.filter(x=>x!==c);if(!c.data.remote)state.campfires=state.campfires.filter(x=>x.id!==c.data.id);}}
+  function updateLifeActivities(dt){updateShoreFishers(dt);world.activityAcc+=dt;if(world.activityAcc<.5)return;world.activityAcc=0;const now=Date.now();for(const c of [...world.campfires]){if(c.flame)c.flame.scale.y=.85+Math.sin(performance.now()*.009+c.data.x)*.18;if(c.data.cooking&&Number(c.data.cooking.endsAt||0)<=now)finishCampfireCooking(c.data,c.data.cooking.id);if(Number(c.data.expiresAt||0)<=now){c.data.expired=true;c.interactable.disabled=true;worldGroup.remove(c.group);world.campfires=world.campfires.filter(x=>x!==c);if(!c.data.remote)state.campfires=state.campfires.filter(x=>x.id!==c.data.id);}}
     for(const a of world.animals){if(!a.available&&a.respawnAt<=now){a.available=true;a.group.visible=true;}if(a.available){a.group.rotation.y+=Math.sin(performance.now()*.0005+a.x)*.004;}}
     if(Math.random()<.08&&state.campfires.length!==world.campfires.filter(c=>!c.data.remote).length){saveState();window.OTTHOS_RTDB?.syncCampfires?.(state.campfires);}
   }
@@ -3633,26 +3665,30 @@
     }
   }
 
+  function mobilityDriverActive(){return(player.vehicle&&!player.car.passengerOf)||(player.boating&&!player.boat.passengerOf);}
+  function updateMobilityControlLabels(){
+    const mobility=mobilityDriverActive(),isBoat=player.boating&&!player.boat.passengerOf,speed=isBoat?Number(player.boat.speed||0):Number(player.car.speed||0);
+    const runIcon=$('b',els.runBtn),runLabel=$('span',els.runBtn),jumpIcon=$('b',els.jumpBtn),jumpLabel=$('span',els.jumpBtn),actionIcon=$('b',els.actionBtn),actionLabel=$('span',els.actionBtn);
+    if(mobility){if(runIcon)runIcon.textContent='▲';if(runLabel)runLabel.textContent='Acelerar';if(jumpIcon)jumpIcon.textContent=speed>.04?'■':'▼';if(jumpLabel)jumpLabel.textContent=speed>.04?'Freio':'Ré';if(actionIcon)actionIcon.textContent=isBoat?'🛶':'🚗';if(actionLabel)actionLabel.textContent='Sair';}
+    else{if(runIcon)runIcon.textContent='🏃';if(runLabel)runLabel.textContent='Correr';if(jumpIcon)jumpIcon.textContent='⬆';if(jumpLabel)jumpLabel.textContent='Pular';}
+    els.runBtn?.classList.toggle('mobility-accelerate',mobility);els.runBtn?.classList.toggle('active',mobility?input.mobilityAccelerate:sprintRequested());els.jumpBtn?.classList.toggle('mobility-brake',mobility);els.jumpBtn?.classList.toggle('active',mobility&&input.mobilityBrake);
+    if(els.runBtn)els.runBtn.setAttribute('aria-label',mobility?`Acelerar ${isBoat?'barco':'veículo'}`:'Correr');if(els.jumpBtn)els.jumpBtn.setAttribute('aria-label',mobility?(speed>.04?'Frear':'Engatar ré'):'Pular');
+  }
   function updateVehicleControlsUI(){
-    document.body.classList.toggle('mode-vehicle',!!player.vehicle);document.body.classList.toggle('mode-passenger',!!player.car.passengerOf);document.body.classList.toggle('mode-transit',!!player.transit.mode);document.body.classList.toggle('mode-boat',!!player.boating);document.body.classList.toggle('mode-building',!!buildMode);document.body.classList.toggle('mode-fishing',!!fishingSession);
-    els.secondaryActions?.classList.toggle('vehicle-hidden',player.vehicle);
-    els.jumpBtn?.classList.toggle('vehicle-disabled',player.vehicle);
-    els.specialBtn?.classList.toggle('vehicle-horn',player.vehicle);
+    const vehiclePassenger=!!player.car.passengerOf,boatPassenger=!!player.boat.passengerOf,mobility=mobilityDriverActive();document.body.classList.toggle('mode-vehicle',!!player.vehicle);document.body.classList.toggle('mode-passenger',vehiclePassenger||boatPassenger);document.body.classList.toggle('mode-transit',!!player.transit.mode);document.body.classList.toggle('mode-boat',!!player.boating);document.body.classList.toggle('mode-mobility-driver',mobility);document.body.classList.toggle('mode-building',!!buildMode);document.body.classList.toggle('mode-fishing',!!fishingSession);
+    els.secondaryActions?.classList.toggle('vehicle-hidden',!!player.vehicle||!!player.boating);
+    els.jumpBtn?.classList.toggle('vehicle-disabled',(!!player.vehicle||!!player.boating)&&!mobility);
+    els.specialBtn?.classList.toggle('vehicle-horn',mobility);
     const specialIcon=$('b',els.specialBtn),specialLabel=$('span',els.specialBtn);
-    if(specialIcon)specialIcon.textContent=player.vehicle?'📣':'🔥';
-    if(specialLabel)specialLabel.textContent=player.vehicle?'Buzina':'Poder';
-    if(els.specialBtn)els.specialBtn.setAttribute('aria-label',player.vehicle?'Buzina do carro':`Poder de ${playerDisplayName()}`);
+    if(specialIcon)specialIcon.textContent=mobility?'📣':'🔥';if(specialLabel)specialLabel.textContent=mobility?'Buzina':'Poder';if(els.specialBtn)els.specialBtn.setAttribute('aria-label',mobility?`Buzina do ${player.boating?'barco':'carro'}`:`Poder de ${playerDisplayName()}`);updateMobilityControlLabels();
   }
   function vehicleHorn(){
-    if(!player.vehicle||player.car.passengerOf||paused||!els.modal.hidden)return;
-    const t=performance.now();if(t<player.hornUntil)return;player.hornUntil=t+360;
-    beep(410,95,'square');setTimeout(()=>{if(player.vehicle)beep(520,70,'square');},105);vibrate(18);
-    vehicleVisual.scale.set(1.015,.99,1.015);setTimeout(()=>vehicleVisual?.scale?.set(1,1,1),120);
+    if(!mobilityDriverActive()||paused||!els.modal.hidden)return;const t=performance.now();if(t<player.hornUntil)return;player.hornUntil=t+360;const boat=player.boating;beep(boat?330:410,boat?125:95,boat?'sine':'square');setTimeout(()=>{if(mobilityDriverActive())beep(boat?390:520,boat?100:70,boat?'sine':'square');},105);vibrate(18);if(!boat&&vehicleVisual){vehicleVisual.scale.set(1.015,.99,1.015);setTimeout(()=>vehicleVisual?.scale?.set(1,1,1),120);}
   }
   function enterVehicle(vehicle=world.vehicle){
     if(player.vehicle||player.boating||player.transit.mode||!vehicle||vehicle.occupied||!canEnterMobility(PLAYER_MODES.VEHICLE_DRIVER))return false;
     activeVehicleRef=vehicle;world.activeVehicle=vehicle;player.preVehicleAbilities={scaleMode:player.scaleMode,crouched:player.crouched};player.sitUntil=0;player.attackUntil=0;player.spinUntil=0;player.jumpBuffer=0;player.vy=0;player.grounded=true;clearMovementInputs();
-    player.vehicle=true;player.car.id=vehicle.id;player.car.label=vehicle.label;player.car.passengerOf='';player.car.passengerUid='';player.car.passengerBotId='';player.car.heading=vehicle.group.rotation.y||player.facing;player.car.speed=0;player.car.steerVisual=0;player.car.drift=0;player.car._prevSpeed=0;player.x=vehicle.group.position.x;player.z=vehicle.group.position.z;player.y=groundHeightAt(player.x,player.z);player.facing=player.car.heading;vehicle.occupied=true;
+    input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=true;player.car.id=vehicle.id;player.car.label=vehicle.label;player.car.passengerOf='';player.car.passengerUid='';player.car.passengerBotId='';player.car.heading=vehicle.group.rotation.y||player.facing;player.car.speed=0;player.car.steerVisual=0;player.car.drift=0;player.car._prevSpeed=0;player.x=vehicle.group.position.x;player.z=vehicle.group.position.z;player.y=groundHeightAt(player.x,player.z);player.facing=player.car.heading;vehicle.occupied=true;
     player.scaleMode='normal';player.crouched=false;syncPlayerRootScale();updateAbilityUI();if(playerModel)playerModel.visible=false;if(avatarLayer)avatarLayer.visible=false;applyVehicleAppearance(vehicle);vehicleVisual.visible=true;vehicleVisual.scale.set(1,1,1);vehicleVisual.rotation.set(0,0,0);vehicle.group.visible=false;els.vehicleBadge.hidden=false;updateVehicleControlsUI();updateRunUI();setFlag('gotVehicle');state.vehicles.lastUsedId=vehicle.id;
     if(state.career.activeJob?.id==='delivery'){setMissionState(state.career.activeJob,MISSION_STATES.TRAVELLING,'vehicle-boarded');state.waypoint={id:'delivery-maya',name:'Entregar para Maya',x:65,z:54,navX:55,navZ:48,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();}
     const companion=nearestRideCompanion();if(companion)boardNpcPassenger(companion,'car');toast(`${vehicle.label} ligado! Use o manche para dirigir.`,'good');startEngineSound();saveState(true);return true;
@@ -3670,7 +3706,7 @@
     if(!player.vehicle)return false;
     const passengerHost=player.car.passengerOf,hostedPassenger=player.car.passengerUid,wasPassenger=!!passengerHost,drivenVehicle=currentVehicleRef(),parkX=player.x,parkZ=player.z,parkHeading=player.car.heading;const exitPoint=safeVehicleExitPoint(drivenVehicle);
     if(passengerHost)window.OTTHOS_RTDB?.sendInteraction?.(passengerHost,{type:'vehiclePassengerLeft'});else if(hostedPassenger)window.OTTHOS_RTDB?.sendInteraction?.(hostedPassenger,{type:'vehicleEnded'});
-    releaseNpcPassenger('car');player.vehicle=false;player.vx=0;player.vz=0;player.car.speed=0;player.car._prevSpeed=0;player.car.passengerOf='';player.car.passengerUid='';player.car.hostMissingAt=0;clearMovementInputs();
+    releaseNpcPassenger('car');input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=false;player.vx=0;player.vz=0;player.car.speed=0;player.car._prevSpeed=0;player.car.passengerOf='';player.car.passengerUid='';player.car.hostMissingAt=0;clearMovementInputs();
     const prior=player.preVehicleAbilities||state.abilities||{scaleMode:'normal',crouched:false};player.scaleMode=['mini','normal','giant'].includes(prior.scaleMode)?prior.scaleMode:'normal';player.crouched=!!prior.crouched;player.preVehicleAbilities=null;syncPlayerRootScale();if(playerModel)playerModel.visible=true;if(avatarLayer)avatarLayer.visible=true;vehicleVisual.visible=false;vehicleVisual.rotation.set(0,0,0);els.vehicleBadge.hidden=true;updateVehicleControlsUI();updateRunUI();updateAbilityUI();stopEngineSound();
     if(drivenVehicle&&!wasPassenger){drivenVehicle.occupied=false;drivenVehicle.group.visible=true;drivenVehicle.group.position.set(parkX,groundHeightAt(parkX,parkZ),parkZ);drivenVehicle.group.rotation.y=parkHeading;drivenVehicle.x=parkX;drivenVehicle.z=parkZ;drivenVehicle.heading=parkHeading;persistParkedVehicle(drivenVehicle);}
     activeVehicleRef=null;world.activeVehicle=null;player.x=exitPoint.x;player.z=exitPoint.z;player.y=exitPoint.y;player.vx=player.vy=player.vz=0;player.grounded=true;player.car.id='';player.car.kind='car';rememberSafePlayerPosition(true);auditPlayerMode('exit-vehicle');if(!silent)toast('Saiu do veículo em local seguro.','good');saveState(true);return true;
@@ -3956,14 +3992,13 @@
   }
   function sprintRequested(){return !!(input.touchSprint||input.gamepadSprint||input.keys.has('ShiftLeft')||input.keys.has('ShiftRight'));}
   function updateRunUI(){
-    if(!els.runBtn)return;const active=sprintRequested();els.runBtn.classList.toggle('active',active);
-    const icon=$('b',els.runBtn),label=$('span',els.runBtn);if(icon)icon.textContent=player.vehicle?'⚡':'🏃';if(label)label.textContent=player.vehicle?'Turbo':'Correr';
+    if(!els.runBtn)return;if(typeof mobilityDriverActive==='function'&&mobilityDriverActive()){updateMobilityControlLabels();return;}const active=sprintRequested();els.runBtn.classList.toggle('active',active);const icon=$('b',els.runBtn),label=$('span',els.runBtn);if(icon)icon.textContent='🏃';if(label)label.textContent='Correr';
   }
   function clearMovementInputs(){
     input.keys.clear();input.joyId=null;input.joyX=0;input.joyZ=0;
     input.gamepadX=0;input.gamepadZ=0;input.gamepadActive=false;
     input.virtualX=0;input.virtualZ=0;input.virtualActive=false;
-    input.touchSprint=false;input.gamepadSprint=false;input.isSprinting=false;
+    input.touchSprint=false;input.gamepadSprint=false;input.isSprinting=false;input.mobilityAccelerate=false;input.mobilityBrake=false;input.mobilityControlSource='';
     input.x=0;input.z=0;input.targetX=0;input.targetZ=0;updateRunUI();
     if(els.joystickKnob)els.joystickKnob.style.transform='translate(-50%,-50%)';
   }
@@ -4005,18 +4040,32 @@
     if(!recoverPlayerIfInvalid())rememberSafePlayerPosition();
     animatePlayer(dt);checkHazards();collectNearbyCrystals();updateContext();
   }
+  function mobilityThrottleIntent(analogThrottle,currentSpeed){
+    let throttle=Math.abs(analogThrottle)<.05?0:clamp(analogThrottle,-1,1);
+    if(input.mobilityAccelerate)throttle=1;
+    if(input.mobilityBrake){
+      if(currentSpeed>.04)return{throttle:0,brake:true,reverse:false};
+      if(currentSpeed<-.04)return{throttle:-1,brake:false,reverse:true};
+      return{throttle:-1,brake:false,reverse:true};
+    }
+    if(input.mobilityAccelerate&&currentSpeed<-.04)return{throttle:0,brake:true,reverse:false};
+    if(throttle<-.05&&currentSpeed>.04)return{throttle:0,brake:true,reverse:false};
+    if(throttle>.05&&currentSpeed<-.04)return{throttle:0,brake:true,reverse:false};
+    return{throttle,brake:false,reverse:throttle<0};
+  }
   function updateVehiclePhysics(dt,ix,iz){
-    const car=player.car;if(performance.now()<Number(car.incidentUntil||0)){car.speed=lerp(car.speed,0,Math.min(1,dt*8));player.vx=lerp(player.vx,0,Math.min(1,dt*10));player.vz=lerp(player.vz,0,Math.min(1,dt*10));return;}const steer=Math.abs(ix)<.06?0:ix,throttle=Math.abs(iz)<.05?0:iz;
+    const car=player.car;if(performance.now()<Number(car.incidentUntil||0)){car.speed=lerp(car.speed,0,Math.min(1,dt*8));player.vx=lerp(player.vx,0,Math.min(1,dt*10));player.vz=lerp(player.vz,0,Math.min(1,dt*10));updateMobilityControlLabels();return;}
+    // V643: o eixo lateral foi invertido para que direita no manche vire fisicamente para a direita.
+    const steer=Math.abs(ix)<.06?0:-ix;
     if(car.passengerOf){const ghost=world.ghosts.get(car.passengerOf),target=ghost?.userData?.target;if(!ghost||!target?.vehicle){car.hostMissingAt=car.hostMissingAt||performance.now();if(performance.now()-car.hostMissingAt>3500){toast('O motorista saiu. Você deixou o carro.','warn');exitVehicle(true);}player.vx=player.vz=0;return;}car.hostMissingAt=0;const heading=Number(target.r||ghost.rotation.y||car.heading),tx=Number(target.x??ghost.position.x)+Math.cos(heading)*.62-Math.sin(heading)*.12,tz=Number(target.z??ghost.position.z)-Math.sin(heading)*.62-Math.cos(heading)*.12;player.vx=clamp((tx-player.x)*10,-26,26);player.vz=clamp((tz-player.z)*10,-26,26);car.heading=heading;player.facing=heading;return;}
-    const turbo=sprintRequested();const maxSpeed=turbo?29:23.5,maxReverse=-8.5;
-    const accelFactor=car.speed>=0?Math.max(.22,1-car.speed/maxSpeed):1;
-    const braking=(car.speed>0.2&&throttle<0)||(car.speed<-.2&&throttle>0)?2.75:1;
-    const throttleAccel=throttle>=0?throttle*(turbo?23:16.5)*accelFactor:throttle*10.5*braking;
-    car.speed+=throttleAccel*dt;if(!throttle)car.speed*=Math.pow(.05,dt);car.speed=clamp(car.speed,maxReverse,maxSpeed);
+    const command=mobilityThrottleIntent(iz,car.speed),throttle=command.throttle;const turbo=sprintRequested()&&!input.mobilityAccelerate;const maxSpeed=turbo?29:23.5,maxReverse=-8.5;
+    if(command.brake){car.speed=approachNumber(car.speed,0,(18+Math.abs(car.speed)*1.25)*dt);}
+    else{const accelFactor=car.speed>=0?Math.max(.22,1-car.speed/maxSpeed):1;const crossing=(car.speed>0.2&&throttle<0)||(car.speed<-.2&&throttle>0);const throttleAccel=throttle>=0?throttle*(turbo?23:17.8)*accelFactor:throttle*10.8*(crossing?2.9:1);car.speed+=throttleAccel*dt;}
+    if(!throttle&&!command.brake)car.speed*=Math.pow(.05,dt);if(Math.abs(car.speed)<.025&&!throttle)car.speed=0;car.speed=clamp(car.speed,maxReverse,maxSpeed);
     const speedRatio=clamp(Math.abs(car.speed)/7,0,1),highSpeedDamp=1/(1+Math.abs(car.speed)/20);car.steerVisual=lerp(car.steerVisual,steer,Math.min(1,dt*9));
     const steeringAuthority=Math.max(clamp(Math.abs(car.speed)/1.5,0,1),Math.abs(throttle)>.1?.2:0);const lowSpeedAssist=.72+speedRatio*.48,turnRate=3.05*lowSpeedAssist*highSpeedDamp*(car.speed<-.08?-1:1);car.heading+=car.steerVisual*turnRate*steeringAuthority*dt;
     const fx=Math.sin(car.heading),fz=Math.cos(car.heading),desiredVx=fx*car.speed,desiredVz=fz*car.speed;const turnHarshness=Math.abs(car.steerVisual)*speedRatio,grip=clamp(1-turnHarshness*.56,.38,1);
-    player.vx=lerp(player.vx,desiredVx,Math.min(1,dt*13.5*grip));player.vz=lerp(player.vz,desiredVz,Math.min(1,dt*13.5*grip));car.drift=clamp((1-grip)*clamp(Math.abs(car.speed)/8,0,1),0,1);player.facing=car.heading;
+    player.vx=lerp(player.vx,desiredVx,Math.min(1,dt*13.5*grip));player.vz=lerp(player.vz,desiredVz,Math.min(1,dt*13.5*grip));car.drift=clamp((1-grip)*clamp(Math.abs(car.speed)/8,0,1),0,1);player.facing=car.heading;updateMobilityControlLabels();
   }
   let animTime=0;
   function animatePlayer(dt){
@@ -4082,6 +4131,8 @@
       const oldX=npc.group.position.x,oldZ=npc.group.position.z;
       if(npc.passengerMode){
         const heading=npc.passengerMode==='boat'?player.boat.heading:player.car.heading,lx=.65,lz=npc.passengerMode==='boat'?.62:-.18;npc.group.position.x=player.x+Math.cos(heading)*lx+Math.sin(heading)*lz;npc.group.position.z=player.z-Math.sin(heading)*lx+Math.cos(heading)*lz;npc.group.position.y=npc.passengerMode==='boat'?.75:.3;npc.group.rotation.y=heading;
+      }else if(npc.fishingActivity){
+        npc.group.position.x=npc.baseX;npc.group.position.z=npc.baseZ;npc.group.rotation.y=npc.fishingActivity.heading;
       }else if(npc.following){
         const backX=player.x-Math.sin(player.facing)*2.2,backZ=player.z-Math.cos(player.facing)*2.2;
         npc.group.position.x=lerp(npc.group.position.x,backX,Math.min(1,dt*2.4));npc.group.position.z=lerp(npc.group.position.z,backZ,Math.min(1,dt*2.4));npc.group.rotation.y=lerpAngle(npc.group.rotation.y,player.facing,Math.min(1,dt*5));
@@ -4089,7 +4140,7 @@
         const look=Math.atan2(player.x-npc.group.position.x,player.z-npc.group.position.z);
         npc.group.rotation.y=lerpAngle(npc.group.rotation.y,look,Math.min(1,dt*5.5));
       }else if(npc.mobility){
-        const route=npc.mobility.route,target=route[npc.mobility.index],dx=target.x-npc.group.position.x,dz=target.z-npc.group.position.z,d=Math.hypot(dx,dz);if(d<.2)npc.mobility.index=(npc.mobility.index+1)%route.length;else{const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(npc.mobility,heading,6),targetSpeed=npc.mobility.speed*factor;npc.mobility.currentSpeed=lerp(Number(npc.mobility.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const step=Math.min(d,npc.mobility.currentSpeed*dt),previous={x:npc.group.position.x,z:npc.group.position.z};if(step>.0001){npc.group.position.x+=dx/d*step;npc.group.position.z+=dz/d*step;snapTrafficToRoad(npc.group,previous);npc.group.rotation.y=lerpAngle(npc.group.rotation.y,heading,Math.min(1,dt*5));for(const wheel of npc.mobility.wheels)wheel.rotation.x-=step*3;}}
+        const route=npc.mobility.route,target=route[npc.mobility.index],dx=target.x-npc.group.position.x,dz=target.z-npc.group.position.z,d=Math.hypot(dx,dz);if(performance.now()<Number(npc.mobility.trafficHoldUntil||0)){npc.mobility.currentSpeed=0;}else if(d<.2)npc.mobility.index=(npc.mobility.index+1)%route.length;else{const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(npc.mobility,heading,6),targetSpeed=npc.mobility.speed*factor;npc.mobility.currentSpeed=lerp(Number(npc.mobility.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const step=Math.min(d,npc.mobility.currentSpeed*dt),previous={x:npc.group.position.x,z:npc.group.position.z};if(step>.0001){npc.group.position.x+=dx/d*step;npc.group.position.z+=dz/d*step;snapTrafficToRoad(npc.group,previous);npc.group.rotation.y=lerpAngle(npc.group.rotation.y,heading,Math.min(1,dt*5));for(const wheel of npc.mobility.wheels)wheel.rotation.x-=step*3;}}
       }else{
         npc.phase+=dt*.45;
         const tx=npc.baseX+Math.sin(npc.phase)*npc.pathRadius,tz=npc.baseZ+Math.cos(npc.phase*.83)*npc.pathRadius;
@@ -4129,7 +4180,7 @@
   }
   function firePower(){
     if(!els.modal.hidden||paused||player.transit.mode)return;
-    if(player.vehicle){vehicleHorn();return;}
+    if(player.vehicle||player.boating){vehicleHorn();return;}
     if(currentHouse){toast('Use o poder do lado de fora.','warn');return;}
     const dir={x:Math.sin(player.facing),z:Math.cos(player.facing)};const mesh=new THREE.Mesh(new THREE.BoxGeometry(.42,.42,.42),mat(0xff5a12,{emissive:0xff2a00,emissiveIntensity:.9}));mesh.position.set(player.x,player.y+1.35,player.z);worldGroup.add(mesh);world.fireballs.push({mesh,x:player.x,y:player.y+1.35,z:player.z,vx:dir.x*12,vz:dir.z*12,life:1.4});beep(220,90,'sawtooth');vibrate(18);
   }
@@ -4400,15 +4451,19 @@
     els.joystick.addEventListener('pointerup',resetJoy);els.joystick.addEventListener('pointercancel',resetJoy);
     function updateJoy(e){const r=els.joystick.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,max=r.width*.32;let dx=e.clientX-cx,dy=e.clientY-cy;const mag=Math.hypot(dx,dy);if(mag>max){dx=dx/mag*max;dy=dy/mag*max;}input.joyX=dx/max;input.joyZ=-dy/max;els.joystickKnob.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;}
     const press=(el,fn)=>el?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();fn();},{passive:false});
-    press(els.jumpBtn,requestJump);press(els.actionBtn,doAction);
+    press(els.actionBtn,doAction);
     const setTouchSprint=active=>{input.touchSprint=!!active;updateRunUI();};
-    els.runBtn?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();setTouchSprint(true);safePointerCapture(els.runBtn,e.pointerId);},{passive:false});
-    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>els.runBtn?.addEventListener(type,()=>setTouchSprint(false)));
+    const setAccelerate=active=>{if(mobilityDriverActive()){input.mobilityAccelerate=!!active;input.mobilityControlSource=active?'accelerator':'';if(active)input.mobilityBrake=false;updateMobilityControlLabels();}else setTouchSprint(active);};
+    const setBrake=active=>{if(mobilityDriverActive()){input.mobilityBrake=!!active;input.mobilityControlSource=active?'brake':'';if(active)input.mobilityAccelerate=false;updateMobilityControlLabels();}else if(active)requestJump();};
+    els.runBtn?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();setAccelerate(true);safePointerCapture(els.runBtn,e.pointerId);},{passive:false});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>els.runBtn?.addEventListener(type,()=>setAccelerate(false)));
+    els.jumpBtn?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();setBrake(true);safePointerCapture(els.jumpBtn,e.pointerId);},{passive:false});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>els.jumpBtn?.addEventListener(type,()=>setBrake(false)));
     const adjustCamera=delta=>{cameraZoom=clamp(cameraZoom+delta,-4.5,9);state.settings.cameraZoom=+cameraZoom.toFixed(2);saveState();};
     press(els.cameraNearBtn,()=>adjustCamera(-1.6));press(els.cameraFarBtn,()=>adjustCamera(1.6));press(els.cameraResetBtn,()=>{cameraZoom=0;cameraPitch=.38;cameraYaw=currentHouse?0:player.facing;state.settings.cameraZoom=0;saveState();toast('Câmera centralizada.','good',900);});
     els.miniNav?.addEventListener('click',openMap);press(els.specialBtn,firePower);press(els.crouchBtn,()=>toggleCrouch());press(els.miniBtn,()=>setScaleMode('mini'));press(els.normalBtn,()=>setScaleMode('normal'));press(els.giantBtn,()=>setScaleMode('giant'));press(els.spinBtn,spinPlayer);
     [els.quickBar,els.inventoryBtn,els.buildBtn,els.mapBtn,els.gameSettingsBtn].forEach(el=>el?.addEventListener('pointerdown',e=>e.stopPropagation()));
-    window.addEventListener('keydown',e=>{input.keys.add(e.code);if(['Space','KeyE','KeyF','KeyC','Digit1','Digit2','Digit3','KeyR','KeyQ','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();updateRunUI();if(e.code==='Space')requestJump();if(e.code==='KeyE')doAction();if(e.code==='KeyF')firePower();if(e.code==='KeyC')toggleCrouch();if(e.code==='Digit1')setScaleMode('mini');if(e.code==='Digit2')setScaleMode('normal');if(e.code==='Digit3')setScaleMode('giant');if(e.code==='KeyR')spinPlayer();if(e.code==='KeyQ'&&buildMode)rotateBuildPreview();if(e.code==='Escape'){e.preventDefault();if(!running)return;if(buildMode){endBuildMode('cancelled');return;}if(pauseMenuOpen)closeModal();else if(!els.modal.hidden)closeModal();else openPauseMenu();}});window.addEventListener('keyup',e=>{input.keys.delete(e.code);updateRunUI();});
+    window.addEventListener('keydown',e=>{input.keys.add(e.code);if(['Space','KeyE','KeyF','KeyC','Digit1','Digit2','Digit3','KeyR','KeyQ','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();if(mobilityDriverActive()&&e.code==='ShiftLeft'){input.mobilityAccelerate=true;input.mobilityBrake=false;}if(mobilityDriverActive()&&e.code==='Space'){input.mobilityBrake=true;input.mobilityAccelerate=false;}updateRunUI();updateMobilityControlLabels();if(e.code==='Space'&&!mobilityDriverActive())requestJump();if(e.code==='KeyE')doAction();if(e.code==='KeyF')firePower();if(e.code==='KeyC')toggleCrouch();if(e.code==='Digit1')setScaleMode('mini');if(e.code==='Digit2')setScaleMode('normal');if(e.code==='Digit3')setScaleMode('giant');if(e.code==='KeyR')spinPlayer();if(e.code==='KeyQ'&&buildMode)rotateBuildPreview();if(e.code==='Escape'){e.preventDefault();if(!running)return;if(buildMode){endBuildMode('cancelled');return;}if(pauseMenuOpen)closeModal();else if(!els.modal.hidden)closeModal();else openPauseMenu();}});window.addEventListener('keyup',e=>{input.keys.delete(e.code);if(e.code==='ShiftLeft'||e.code==='ShiftRight')input.mobilityAccelerate=false;if(e.code==='Space')input.mobilityBrake=false;updateRunUI();updateMobilityControlLabels();});
     els.stage.addEventListener('pointerdown',e=>{if(e.target!==renderer?.domElement)return;input.cameraDrag={id:e.pointerId,x:e.clientX,y:e.clientY};safePointerCapture(els.stage,e.pointerId);});
     els.stage.addEventListener('pointermove',e=>{const d=input.cameraDrag;if(!d||d.id!==e.pointerId)return;const dx=e.clientX-d.x,dy=e.clientY-d.y;cameraYaw-=dx*.006;cameraPitch=clamp(cameraPitch+dy*.003,.05,.9);d.x=e.clientX;d.y=e.clientY;});
     const endDrag=e=>{if(input.cameraDrag?.id===e.pointerId)input.cameraDrag=null;};els.stage.addEventListener('pointerup',endDrag);els.stage.addEventListener('pointercancel',endDrag);
@@ -4419,7 +4474,7 @@
     const gp=[...(navigator.getGamepads?.()||[])].find(Boolean);
     if(!gp){input.gamepadX=0;input.gamepadZ=0;input.gamepadActive=false;input.gamepadSprint=false;updateRunUI();return;}
     const ax=gp.axes[0]||0,az=-(gp.axes[1]||0);
-    input.gamepadActive=Math.hypot(ax,az)>.16;input.gamepadX=input.gamepadActive?ax:0;input.gamepadZ=input.gamepadActive?az:0;input.gamepadSprint=!!(gp.buttons[10]?.pressed||gp.buttons[7]?.value>.45);updateRunUI();
+    input.gamepadActive=Math.hypot(ax,az)>.16;input.gamepadX=input.gamepadActive?ax:0;input.gamepadZ=input.gamepadActive?az:0;input.gamepadSprint=!!gp.buttons[10]?.pressed;if(mobilityDriverActive()){input.mobilityAccelerate=gp.buttons[7]?.value>.18;input.mobilityBrake=gp.buttons[6]?.value>.18;}updateRunUI();updateMobilityControlLabels();
     const jump=!!gp.buttons[0]?.pressed,action=!!gp.buttons[2]?.pressed,power=!!gp.buttons[1]?.pressed,crouch=!!gp.buttons[4]?.pressed,size=!!gp.buttons[5]?.pressed;
     if(jump&&!gamepadJump)requestJump();if(action&&!gamepadAction)doAction();if(power&&!gamepadPower)firePower();if(crouch&&!gamepadCrouch)toggleCrouch();if(size&&!gamepadSize)setScaleMode(player.scaleMode==='normal'?'mini':player.scaleMode==='mini'?'giant':'normal');
     gamepadJump=jump;gamepadAction=action;gamepadPower=power;gamepadCrouch=crouch;gamepadSize=size;
@@ -4492,11 +4547,11 @@
 
   // Public test/audit API
   window.OTTHOS_TEST_API={
-    version:'V642_COMPLETE_MODULAR_SOURCE_EQUIVALENCE_1',
+    version:'V643_PRECISION_MOBILITY_TRAFFIC_FISHING_1',
     diagnostics:runtimeDiagnostics,
     playerMode:()=>({state:playerModeMachine.state,enteredAt:playerModeMachine.enteredAt,lastReason:playerModeMachine.lastReason,conflicts:[...playerModeMachine.conflicts],history:playerModeMachine.history.map(x=>({...x}))}),
     toggleTechnicalPanel,
-    controlMath:(x=0,z=0,yaw=0,mode='WALKING')=>{const key=String(mode).toUpperCase(),resolved=PLAYER_MODES[key]||String(mode).toLowerCase();if([PLAYER_MODES.CAR_DRIVER,PLAYER_MODES.MOTORCYCLE_DRIVER,PLAYER_MODES.BICYCLE,PLAYER_MODES.SKATE,PLAYER_MODES.BOAT_DRIVER].includes(resolved))return{x:clamp(Number(x)||0,-1,1),z:clamp(Number(z)||0,-1,1),steer:clamp(Number(x)||0,-1,1),throttle:clamp(Number(z)||0,-1,1),mode:resolved};const vector=cameraRelativeVector(Number(x)||0,Number(z)||0,Number(yaw)||0);return{x:vector.x,z:vector.z,steer:0,throttle:0,mode:resolved};},
+    controlMath:(x=0,z=0,yaw=0,mode='WALKING')=>{const key=String(mode).toUpperCase(),resolved=PLAYER_MODES[key]||String(mode).toLowerCase();if([PLAYER_MODES.CAR_DRIVER,PLAYER_MODES.MOTORCYCLE_DRIVER,PLAYER_MODES.BICYCLE,PLAYER_MODES.SKATE,PLAYER_MODES.BOAT_DRIVER].includes(resolved))return{x:clamp(Number(x)||0,-1,1),z:clamp(Number(z)||0,-1,1),steer:-clamp(Number(x)||0,-1,1),throttle:clamp(Number(z)||0,-1,1),mode:resolved};const vector=cameraRelativeVector(Number(x)||0,Number(z)||0,Number(yaw)||0);return{x:vector.x,z:vector.z,steer:0,throttle:0,mode:resolved};},
     missionStates:()=>({...MISSION_STATES}),
     startJobById:(id='gather',focus=false)=>startJob(JOBS.find(j=>j.id===id),{focus}),
     forceCompleteJob:()=>completeActiveJob(),
@@ -4524,6 +4579,8 @@
     exitVehicle:()=>{exitVehicle();return !player.vehicle;},
     setDriveInput:(steer=0,throttle=0)=>{input.virtualX=clamp(Number(steer)||0,-1,1);input.virtualZ=clamp(Number(throttle)||0,-1,1);input.virtualActive=Math.abs(input.virtualX)+Math.abs(input.virtualZ)>.001;resolveMovementInput();return {active:input.virtualActive,x:input.targetX,z:input.targetZ};},
     clearDriveInput:()=>{input.virtualX=0;input.virtualZ=0;input.virtualActive=false;resolveMovementInput();return {x:input.targetX,z:input.targetZ};},
+    setMobilityButtons:(accelerate=false,brake=false)=>{input.mobilityAccelerate=!!accelerate;input.mobilityBrake=!!brake;if(input.mobilityAccelerate)input.mobilityBrake=false;updateMobilityControlLabels();return{accelerate:input.mobilityAccelerate,brake:input.mobilityBrake};},
+    mobilityControls:()=>({driver:mobilityDriverActive(),vehicle:!!player.vehicle,boat:!!player.boating,accelerate:!!input.mobilityAccelerate,brake:!!input.mobilityBrake,speed:player.boating?player.boat.speed:player.car.speed,steeringConvention:'joystick-right => negative internal steer => visual right turn',acceleratorLabel:$('span',els.runBtn)?.textContent||'',brakeLabel:$('span',els.jumpBtn)?.textContent||''}),
     refreshInput:()=>resolveMovementInput(),
     stepVehicleSimulation,
     vehicle:()=>({active:player.vehicle,activeVehicleId:currentVehicleRef()?.id||'',parkedVehicles:world.vehicles.map(v=>({id:v.id,visible:v.group.visible,occupied:v.occupied,x:v.group.position.x,z:v.group.position.z})),speed:player.car.speed,heading:player.car.heading,drift:player.car.drift,sitUntilRemaining:Math.max(0,player.sitUntil-performance.now()),driveInput:{x:input.x,z:input.z,targetX:input.targetX,targetZ:input.targetZ,virtualActive:input.virtualActive,joyX:input.joyX,joyZ:input.joyZ,gamepadActive:input.gamepadActive},playerVisible:playerModel?.visible!==false,accessoriesVisible:avatarLayer?.visible!==false,vehicleVisible:!!vehicleVisual?.visible,parkedVisible:currentVehicleRef()?.group?.visible!==false,preVehicleAbilities:player.preVehicleAbilities?{...player.preVehicleAbilities}:null,specialLabel:$('span',els.specialBtn)?.textContent||'',fireballs:world.fireballs.length,engineActive:!!engineAudio,wheelCount:vehicleVisual?.userData?.wheels?.length||0,frontWheelCount:vehicleVisual?.userData?.frontWheels?.length||0,impactCount:vehicleImpactCount,rootScale:{x:playerGroup?.scale?.x||0,y:playerGroup?.scale?.y||0,z:playerGroup?.scale?.z||0}}),
@@ -4604,7 +4661,7 @@
     startFishing:(source='shore')=>startFishing(source),
     enterBoat:()=>enterBoat(),
     boatDock:()=>({distance:distanceToBoatDock(),canExit:validBoatExit(),dock:{...BOAT_DOCK}}),
-    forceBoatState:(x=-38,z=52,heading=0)=>{player.boating=true;player.boat.passengerOf='';player.boat.heading=Number(heading)||0;player.boat.speed=0;player.boat.steerVisual=0;player.x=Number(x);player.z=Number(z);player.y=.78;state.boats.activeBoatId='lake-boat';if(world.boat){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}updateBoatPanel();return{canExit:validBoatExit(),distance:distanceToBoatDock()};},
+    forceBoatState:(x=-38,z=52,heading=0)=>{if(player.vehicle)exitVehicle(true);player.boating=true;player.boat.passengerOf='';player.boat.heading=Number(heading)||0;player.boat.speed=0;player.boat.steerVisual=0;input.mobilityAccelerate=false;input.mobilityBrake=false;player.x=Number(x);player.z=Number(z);player.y=.78;state.boats.activeBoatId='lake-boat';if(world.boat){world.boat.group.position.set(player.x,.1,player.z);world.boat.heading=player.boat.heading;world.boat.group.rotation.y=player.boat.heading;}updateBoatPanel();updateVehicleControlsUI();return{canExit:validBoatExit(),distance:distanceToBoatDock()};},
     exitBoat:(silent=false)=>exitBoat(!!silent),
     stepBoat:(steer=0,throttle=0,frames=60)=>{const n=clamp(Math.round(Number(frames)||60),1,600),dt=1/60,start={x:player.x,z:player.z,heading:player.boat.heading};for(let i=0;i<n;i++){updateBoatPhysics(dt,clamp(Number(steer)||0,-1,1),clamp(Number(throttle)||0,-1,1));const px=player.x,pz=player.z;player.x+=player.vx*dt;player.z+=player.vz*dt;constrainBoat(px,pz);}return{x:player.x,z:player.z,heading:player.boat.heading,speed:player.boat.speed,deltaHeading:player.boat.heading-start.heading,distance:Math.hypot(player.x-start.x,player.z-start.z)};},
     buildCampfire,

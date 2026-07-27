@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 29-game-loop-controls-gamepad.js
  * Escopo: Loop principal, controles, gamepad e início do jogo
  * Linhas de origem V642: 4305-4377
@@ -46,15 +46,19 @@
     els.joystick.addEventListener('pointerup',resetJoy);els.joystick.addEventListener('pointercancel',resetJoy);
     function updateJoy(e){const r=els.joystick.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,max=r.width*.32;let dx=e.clientX-cx,dy=e.clientY-cy;const mag=Math.hypot(dx,dy);if(mag>max){dx=dx/mag*max;dy=dy/mag*max;}input.joyX=dx/max;input.joyZ=-dy/max;els.joystickKnob.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;}
     const press=(el,fn)=>el?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();fn();},{passive:false});
-    press(els.jumpBtn,requestJump);press(els.actionBtn,doAction);
+    press(els.actionBtn,doAction);
     const setTouchSprint=active=>{input.touchSprint=!!active;updateRunUI();};
-    els.runBtn?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();setTouchSprint(true);safePointerCapture(els.runBtn,e.pointerId);},{passive:false});
-    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>els.runBtn?.addEventListener(type,()=>setTouchSprint(false)));
+    const setAccelerate=active=>{if(mobilityDriverActive()){input.mobilityAccelerate=!!active;input.mobilityControlSource=active?'accelerator':'';if(active)input.mobilityBrake=false;updateMobilityControlLabels();}else setTouchSprint(active);};
+    const setBrake=active=>{if(mobilityDriverActive()){input.mobilityBrake=!!active;input.mobilityControlSource=active?'brake':'';if(active)input.mobilityAccelerate=false;updateMobilityControlLabels();}else if(active)requestJump();};
+    els.runBtn?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();setAccelerate(true);safePointerCapture(els.runBtn,e.pointerId);},{passive:false});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>els.runBtn?.addEventListener(type,()=>setAccelerate(false)));
+    els.jumpBtn?.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();setBrake(true);safePointerCapture(els.jumpBtn,e.pointerId);},{passive:false});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>els.jumpBtn?.addEventListener(type,()=>setBrake(false)));
     const adjustCamera=delta=>{cameraZoom=clamp(cameraZoom+delta,-4.5,9);state.settings.cameraZoom=+cameraZoom.toFixed(2);saveState();};
     press(els.cameraNearBtn,()=>adjustCamera(-1.6));press(els.cameraFarBtn,()=>adjustCamera(1.6));press(els.cameraResetBtn,()=>{cameraZoom=0;cameraPitch=.38;cameraYaw=currentHouse?0:player.facing;state.settings.cameraZoom=0;saveState();toast('Câmera centralizada.','good',900);});
     els.miniNav?.addEventListener('click',openMap);press(els.specialBtn,firePower);press(els.crouchBtn,()=>toggleCrouch());press(els.miniBtn,()=>setScaleMode('mini'));press(els.normalBtn,()=>setScaleMode('normal'));press(els.giantBtn,()=>setScaleMode('giant'));press(els.spinBtn,spinPlayer);
     [els.quickBar,els.inventoryBtn,els.buildBtn,els.mapBtn,els.gameSettingsBtn].forEach(el=>el?.addEventListener('pointerdown',e=>e.stopPropagation()));
-    window.addEventListener('keydown',e=>{input.keys.add(e.code);if(['Space','KeyE','KeyF','KeyC','Digit1','Digit2','Digit3','KeyR','KeyQ','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();updateRunUI();if(e.code==='Space')requestJump();if(e.code==='KeyE')doAction();if(e.code==='KeyF')firePower();if(e.code==='KeyC')toggleCrouch();if(e.code==='Digit1')setScaleMode('mini');if(e.code==='Digit2')setScaleMode('normal');if(e.code==='Digit3')setScaleMode('giant');if(e.code==='KeyR')spinPlayer();if(e.code==='KeyQ'&&buildMode)rotateBuildPreview();if(e.code==='Escape'){e.preventDefault();if(!running)return;if(buildMode){endBuildMode('cancelled');return;}if(pauseMenuOpen)closeModal();else if(!els.modal.hidden)closeModal();else openPauseMenu();}});window.addEventListener('keyup',e=>{input.keys.delete(e.code);updateRunUI();});
+    window.addEventListener('keydown',e=>{input.keys.add(e.code);if(['Space','KeyE','KeyF','KeyC','Digit1','Digit2','Digit3','KeyR','KeyQ','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();if(mobilityDriverActive()&&e.code==='ShiftLeft'){input.mobilityAccelerate=true;input.mobilityBrake=false;}if(mobilityDriverActive()&&e.code==='Space'){input.mobilityBrake=true;input.mobilityAccelerate=false;}updateRunUI();updateMobilityControlLabels();if(e.code==='Space'&&!mobilityDriverActive())requestJump();if(e.code==='KeyE')doAction();if(e.code==='KeyF')firePower();if(e.code==='KeyC')toggleCrouch();if(e.code==='Digit1')setScaleMode('mini');if(e.code==='Digit2')setScaleMode('normal');if(e.code==='Digit3')setScaleMode('giant');if(e.code==='KeyR')spinPlayer();if(e.code==='KeyQ'&&buildMode)rotateBuildPreview();if(e.code==='Escape'){e.preventDefault();if(!running)return;if(buildMode){endBuildMode('cancelled');return;}if(pauseMenuOpen)closeModal();else if(!els.modal.hidden)closeModal();else openPauseMenu();}});window.addEventListener('keyup',e=>{input.keys.delete(e.code);if(e.code==='ShiftLeft'||e.code==='ShiftRight')input.mobilityAccelerate=false;if(e.code==='Space')input.mobilityBrake=false;updateRunUI();updateMobilityControlLabels();});
     els.stage.addEventListener('pointerdown',e=>{if(e.target!==renderer?.domElement)return;input.cameraDrag={id:e.pointerId,x:e.clientX,y:e.clientY};safePointerCapture(els.stage,e.pointerId);});
     els.stage.addEventListener('pointermove',e=>{const d=input.cameraDrag;if(!d||d.id!==e.pointerId)return;const dx=e.clientX-d.x,dy=e.clientY-d.y;cameraYaw-=dx*.006;cameraPitch=clamp(cameraPitch+dy*.003,.05,.9);d.x=e.clientX;d.y=e.clientY;});
     const endDrag=e=>{if(input.cameraDrag?.id===e.pointerId)input.cameraDrag=null;};els.stage.addEventListener('pointerup',endDrag);els.stage.addEventListener('pointercancel',endDrag);
@@ -65,7 +69,7 @@
     const gp=[...(navigator.getGamepads?.()||[])].find(Boolean);
     if(!gp){input.gamepadX=0;input.gamepadZ=0;input.gamepadActive=false;input.gamepadSprint=false;updateRunUI();return;}
     const ax=gp.axes[0]||0,az=-(gp.axes[1]||0);
-    input.gamepadActive=Math.hypot(ax,az)>.16;input.gamepadX=input.gamepadActive?ax:0;input.gamepadZ=input.gamepadActive?az:0;input.gamepadSprint=!!(gp.buttons[10]?.pressed||gp.buttons[7]?.value>.45);updateRunUI();
+    input.gamepadActive=Math.hypot(ax,az)>.16;input.gamepadX=input.gamepadActive?ax:0;input.gamepadZ=input.gamepadActive?az:0;input.gamepadSprint=!!gp.buttons[10]?.pressed;if(mobilityDriverActive()){input.mobilityAccelerate=gp.buttons[7]?.value>.18;input.mobilityBrake=gp.buttons[6]?.value>.18;}updateRunUI();updateMobilityControlLabels();
     const jump=!!gp.buttons[0]?.pressed,action=!!gp.buttons[2]?.pressed,power=!!gp.buttons[1]?.pressed,crouch=!!gp.buttons[4]?.pressed,size=!!gp.buttons[5]?.pressed;
     if(jump&&!gamepadJump)requestJump();if(action&&!gamepadAction)doAction();if(power&&!gamepadPower)firePower();if(crouch&&!gamepadCrouch)toggleCrouch();if(size&&!gamepadSize)setScaleMode(player.scaleMode==='normal'?'mini':player.scaleMode==='mini'?'giant':'normal');
     gamepadJump=jump;gamepadAction=action;gamepadPower=power;gamepadCrouch=crouch;gamepadSize=size;

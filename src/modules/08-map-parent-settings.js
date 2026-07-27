@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 08-map-parent-settings.js
  * Escopo: Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações
  * Linhas de origem V642: 1201-1359

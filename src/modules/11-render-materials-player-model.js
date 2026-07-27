@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 11-render-materials-player-model.js
  * Escopo: Texturas, materiais, geometria, personagem e avatar 3D
  * Linhas de origem V642: 1692-1962
@@ -55,7 +55,7 @@
     textures.grass = professionalTexture('./assets/textures/grass-v628.png','grass',['#348f32','#62c94e','#28762c','#91df63'],46,46);
     textures.road = professionalTexture('./assets/textures/asphalt-v628.png','road',['#252d38','#3d4652'],10,30);
     textures.sidewalk = professionalTexture('./assets/textures/sidewalk-v632.png','sidewalk',['#d9dde3','#aeb7c2'],7,16);
-    textures.water = canvasTexture('water', ['#2fb8ec','#bdf1ff']); textures.water.repeat.set(5,5);
+    textures.water = professionalTexture('./assets/textures/water-ripples-v643.png','water',['#187fb5','#4ac9ef','#bdf1ff'],7,7);
     textures.wood = professionalTexture('./assets/textures/wood-v628.png','wood',['#9a5a28','#693819'],2,2);
     textures.brick = professionalTexture('./assets/textures/brick-v628.png','brick',['#c38142','#8a4e25'],3,2);
     textures.stone = professionalTexture('./assets/textures/stone-v628.png','stone',['#8795a6','#677482','#aab5bf'],4,3);
@@ -84,7 +84,7 @@
     materials.tile = new THREE.MeshStandardMaterial({ map:textures.tile,roughness:.42,metalness:.03 });
     materials.fabric = new THREE.MeshStandardMaterial({ map:textures.fabric,roughness:.86 });
     materials.metal = new THREE.MeshStandardMaterial({ map:textures.metal,roughness:.38,metalness:.48 });
-    materials.water = new THREE.MeshStandardMaterial({ map:textures.water, color:0x2fc8f4, emissive:0x087aa7, emissiveIntensity:.18, transparent:true, opacity:.76, roughness:.2, metalness:.1 });
+    materials.water = new THREE.MeshStandardMaterial({ map:textures.water, color:0x70d9f5, emissive:0x075d82, emissiveIntensity:.13, transparent:true, opacity:.82, roughness:.16, metalness:.06 });
     materials.interiorFloor = new THREE.MeshStandardMaterial({map:textures.interiorFloor,roughness:.68});
     materials.interiorWall = new THREE.MeshStandardMaterial({map:textures.interiorWall,roughness:.82});
     materials.marketFloor = new THREE.MeshStandardMaterial({map:textures.marketFloor,roughness:.58});

@@ -1,0 +1,163 @@
+{
+  "version": 643,
+  "sourceFunctions": [
+    "mobilityThrottleIntent",
+    "updateVehiclePhysics",
+    "updateBoatPhysics"
+  ],
+  "passed": true,
+  "counts": {
+    "passed": 12,
+    "failed": 0
+  },
+  "tests": [
+    {
+      "name": "Carro acelera apenas pelo botão",
+      "passed": true,
+      "detail": {
+        "x": 0,
+        "z": 21.994172867700748,
+        "heading": 0,
+        "speed": 18.383536567046136
+      }
+    },
+    {
+      "name": "Carro: comando direita produz curva visual à direita",
+      "passed": true,
+      "detail": {
+        "x": -12.25410484219171,
+        "z": -7.782346448779782,
+        "heading": -3.4176994563681187,
+        "speed": 18.383536567046136
+      }
+    },
+    {
+      "name": "Carro: comando esquerda produz curva visual à esquerda",
+      "passed": true,
+      "detail": {
+        "x": 12.25410484219171,
+        "z": -7.782346448779782,
+        "heading": 3.4176994563681187,
+        "speed": 18.383536567046136
+      }
+    },
+    {
+      "name": "Carro: curvas laterais são simétricas e opostas",
+      "passed": true,
+      "detail": {
+        "right": {
+          "x": -12.25410484219171,
+          "z": -7.782346448779782,
+          "heading": -3.4176994563681187,
+          "speed": 18.383536567046136
+        },
+        "left": {
+          "x": 12.25410484219171,
+          "z": -7.782346448779782,
+          "heading": 3.4176994563681187,
+          "speed": 18.383536567046136
+        }
+      }
+    },
+    {
+      "name": "Carro: Freio reduz a velocidade antes da ré",
+      "passed": true,
+      "detail": {
+        "speedBeforeBrake": 16.00978348918801,
+        "afterBrake": 2.4654799153597238
+      }
+    },
+    {
+      "name": "Carro: botão Freio/Ré engata ré depois de parar",
+      "passed": true,
+      "detail": {
+        "afterBrake": {
+          "x": 0,
+          "z": 4.57099736447367,
+          "heading": 0,
+          "speed": 2.4654799153597238
+        },
+        "afterReverse": {
+          "x": 0,
+          "z": -8.92273256045839,
+          "heading": 0,
+          "speed": -8.5
+        }
+      }
+    },
+    {
+      "name": "Carro: Acelerar freia a ré e volta ao avanço",
+      "passed": true,
+      "detail": {
+        "reverseSpeed": -8.5,
+        "recoverForward": {
+          "x": 0,
+          "z": 19.532652430742043,
+          "heading": 0,
+          "speed": 18.251866897140793
+        }
+      }
+    },
+    {
+      "name": "Barco acelera apenas pelo botão",
+      "passed": true,
+      "detail": {
+        "x": 0,
+        "z": 13.117916666666655,
+        "heading": 0,
+        "speed": 8.8
+      }
+    },
+    {
+      "name": "Barco: comando direita produz curva visual à direita",
+      "passed": true,
+      "detail": {
+        "x": -13.641463652104628,
+        "z": 7.956080988656932,
+        "heading": -1.7740883783837578,
+        "speed": 8.8
+      }
+    },
+    {
+      "name": "Barco: comando esquerda produz curva visual à esquerda",
+      "passed": true,
+      "detail": {
+        "x": 13.641463652104628,
+        "z": 7.956080988656932,
+        "heading": 1.7740883783837578,
+        "speed": 8.8
+      }
+    },
+    {
+      "name": "Barco: Freio reduz antes da ré",
+      "passed": true,
+      "detail": {
+        "boatBeforeBrake": 8.8,
+        "boatBrake": {
+          "x": 0,
+          "z": 3.1206131316192924,
+          "heading": 0,
+          "speed": 1.4049082716600343
+        }
+      }
+    },
+    {
+      "name": "Barco: Freio/Ré engata ré após parar",
+      "passed": true,
+      "detail": {
+        "boatBrake": {
+          "x": 0,
+          "z": 3.1206131316192924,
+          "heading": 0,
+          "speed": 1.4049082716600343
+        },
+        "boatReverse": {
+          "x": 0,
+          "z": -4.279732695609552,
+          "heading": 0,
+          "speed": -3.4
+        }
+      }
+    }
+  ]
+}

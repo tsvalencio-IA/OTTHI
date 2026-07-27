@@ -1,8 +1,21 @@
-# OTTHI World Edu V642
+# OTTHI World Edu V643
 
-Mundo aberto infantil online com aprendizado adaptativo, casas, multiplayer por bairros, roupas, skills, construção e profissões da cidade.
+Mundo aberto infantil online com aprendizado adaptativo, casas, multiplayer por bairros, roupas, skills, construção, pescaria e profissões da cidade.
 
-## Funções preservadas
+## Atualização V643 — mobilidade, trânsito e pesca viva
+
+- direção lateral corrigida em carro e barco;
+- botão **Acelerar** separado;
+- botão **Freio/Ré**: freia enquanto avança e engata a ré depois de parar;
+- joystick continua responsável pela direção e também aceita controle analógico vertical;
+- passageiro não recebe comandos de motorista;
+- buzina, sair e ações contextuais preservadas;
+- prioridade de trânsito para ambulância, bombeiro e polícia em atendimento;
+- previsão de conflitos, separação de veículos sobrepostos e spawn de ônibus em trecho livre;
+- cinco NPCs pescando nas margens, com vara, linha e boia;
+- nova textura leve de ondulações da água.
+
+## Sistemas preservados
 
 - roupas, acessórios e uniformes profissionais;
 - skills Mini, Normal, Grande, Abaixar e Girar;
@@ -11,48 +24,41 @@ Mundo aberto infantil online com aprendizado adaptativo, casas, multiplayer por 
 - ambulâncias e serviços de emergência;
 - casas, interiores, construção, pesca, barcos, ônibus e metrô;
 - missões, recompensas, inventário e salvamento;
-- desafios educativos e multiplayer Firebase.
+- desafios educativos e multiplayer Firebase;
+- responsividade automática em retrato e paisagem.
 
-## Novas fundações da V642
+## Arquitetura modular
 
-- qualidade adaptativa durante a partida;
-- sistemas pesados atualizados em frequências separadas;
-- sombras desligadas por padrão em celular;
-- proteção de `setPointerCapture`;
-- responsividade retrato/paisagem reorganizada;
-- menus com escala proporcional;
-- multiplayer dividido por bairros;
-- diretório de casas por bairro;
-- trilha educacional adaptativa independente;
-- camada inicial de segurança infantil;
-- fonte integral dividida em 31 módulos JavaScript e 11 módulos CSS, com bundles gerados automaticamente sem apagar recursos.
+- **31 módulos JavaScript** em `src/modules/`;
+- **12 módulos CSS** em `src/styles/`;
+- `app.js` e `style.css` são bundles gerados automaticamente;
+- **552 funções nomeadas** inventariadas;
+- fluxo, eventos, variáveis e nós HTML exportados em CSV/JSON;
+- workflow sem npm para reconstruir, testar e validar os bundles.
 
-## Nome exato recomendado do repositório
+Não edite `app.js` ou `style.css` como fonte principal. Altere o módulo correspondente; o workflow recompila os arquivos da raiz.
 
-`OTTHI-WORLD-EDU`
+## Repositório e GitHub Pages
 
-Depois de criar o repositório, envie todo o conteúdo deste ZIP para a raiz e ative GitHub Pages em **Settings → Pages → Deploy from a branch → main / root**.
+Repositório: `tsvalencio-IA/OTTHI`
+
+Página: `https://tsvalencio-ia.github.io/OTTHI/`
+
+Envie todo o conteúdo extraído para a raiz e ative **Settings → Pages → Deploy from a branch → main / root**.
 
 ## Firebase
 
-O arquivo `firebase-config.js` mantém a configuração já utilizada. Publique as regras de `firebase-database.rules.json` no Realtime Database antes de testar bairros e casas online.
+O arquivo `firebase-config.js` mantém a configuração existente. Publique manualmente `firebase-database.rules.json` no Realtime Database antes de testar bairros, casas e multiplayer.
 
-Consulte `docs/CONFIGURAR-FIREBASE.md` e `docs/TESTES-OBRIGATORIOS.md`.
+## Documentação principal
+
+- `docs/ARQUITETURA-MODULAR-V643.md`
+- `docs/INDICE-TECNICO-V643.md`
+- `docs/CHECKLIST-ATUALIZACAO-V643.md`
+- `docs/CHECKLIST-COMPLETO-FUNCOES-JOGABILIDADES.md`
+- `docs/CHECKLIST-552-FUNCOES.md`
+- `docs/CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md`
+- `docs/RELATORIO-TESTE-MOBILIDADE-V643.json`
+- `docs/VALIDACAO-ESTRUTURAL-V643.md`
 
 Powered by thIAguinho Soluções Digitais.
-
-
-## V642 — fonte completamente modular
-
-- 31 módulos JavaScript de domínio.
-- 11 módulos CSS.
-- Bundle automático sem npm.
-- 544 funções inventariadas.
-- Condições, eventos, variáveis e nós HTML exportados em CSV/JSON.
-- Workflow automático para reconstruir `app.js` e `style.css`.
-
-Consulte `docs/ARQUITETURA-MODULAR-V642.md`, `docs/CHECKLIST-COMPLETO-FUNCOES-JOGABILIDADES.md` e `docs/MATRIZ-COMPLETA-JOGABILIDADES-E-TESTES.md`.
-
-### Regra obrigatória de manutenção
-
-Não edite `app.js` ou `style.css` como fonte principal. Altere o arquivo correspondente em `src/modules/` ou `src/styles/`; o workflow recompila, audita as 544 funções e verifica equivalência antes de publicar.

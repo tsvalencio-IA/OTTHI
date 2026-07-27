@@ -1,4 +1,4 @@
-# Matriz completa de jogabilidades e testes — OTTHI World Edu V642
+# Matriz completa de jogabilidades e testes — OTTHI World Edu V643
 
 Esta matriz distingue duas coisas:
 
@@ -447,7 +447,7 @@ Esta matriz distingue duas coisas:
 - [x] Código preservado — WebView e URL detectada pelo workflow.
 - [x] Código preservado — permissões e orientação.
 - [x] Código preservado — workflow do GitHub Actions.
-- [x] Código preservado — nome do APK V642.
+- [x] Código preservado — nome do APK V643.
 - [ ] Teste físico — gerar APK pelo Actions.
 - [ ] Teste físico — instalar sobre versão anterior.
 - [ ] Teste físico — retrato/paisagem automáticos.

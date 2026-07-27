@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 23-vehicle-effects-driving.js
  * Escopo: Poeira, som, efeitos, controles, direção, passageiros e ponte
  * Linhas de origem V642: 3531-3644
@@ -65,26 +65,30 @@
     }
   }
 
+  function mobilityDriverActive(){return(player.vehicle&&!player.car.passengerOf)||(player.boating&&!player.boat.passengerOf);}
+  function updateMobilityControlLabels(){
+    const mobility=mobilityDriverActive(),isBoat=player.boating&&!player.boat.passengerOf,speed=isBoat?Number(player.boat.speed||0):Number(player.car.speed||0);
+    const runIcon=$('b',els.runBtn),runLabel=$('span',els.runBtn),jumpIcon=$('b',els.jumpBtn),jumpLabel=$('span',els.jumpBtn),actionIcon=$('b',els.actionBtn),actionLabel=$('span',els.actionBtn);
+    if(mobility){if(runIcon)runIcon.textContent='▲';if(runLabel)runLabel.textContent='Acelerar';if(jumpIcon)jumpIcon.textContent=speed>.04?'■':'▼';if(jumpLabel)jumpLabel.textContent=speed>.04?'Freio':'Ré';if(actionIcon)actionIcon.textContent=isBoat?'🛶':'🚗';if(actionLabel)actionLabel.textContent='Sair';}
+    else{if(runIcon)runIcon.textContent='🏃';if(runLabel)runLabel.textContent='Correr';if(jumpIcon)jumpIcon.textContent='⬆';if(jumpLabel)jumpLabel.textContent='Pular';}
+    els.runBtn?.classList.toggle('mobility-accelerate',mobility);els.runBtn?.classList.toggle('active',mobility?input.mobilityAccelerate:sprintRequested());els.jumpBtn?.classList.toggle('mobility-brake',mobility);els.jumpBtn?.classList.toggle('active',mobility&&input.mobilityBrake);
+    if(els.runBtn)els.runBtn.setAttribute('aria-label',mobility?`Acelerar ${isBoat?'barco':'veículo'}`:'Correr');if(els.jumpBtn)els.jumpBtn.setAttribute('aria-label',mobility?(speed>.04?'Frear':'Engatar ré'):'Pular');
+  }
   function updateVehicleControlsUI(){
-    document.body.classList.toggle('mode-vehicle',!!player.vehicle);document.body.classList.toggle('mode-passenger',!!player.car.passengerOf);document.body.classList.toggle('mode-transit',!!player.transit.mode);document.body.classList.toggle('mode-boat',!!player.boating);document.body.classList.toggle('mode-building',!!buildMode);document.body.classList.toggle('mode-fishing',!!fishingSession);
-    els.secondaryActions?.classList.toggle('vehicle-hidden',player.vehicle);
-    els.jumpBtn?.classList.toggle('vehicle-disabled',player.vehicle);
-    els.specialBtn?.classList.toggle('vehicle-horn',player.vehicle);
+    const vehiclePassenger=!!player.car.passengerOf,boatPassenger=!!player.boat.passengerOf,mobility=mobilityDriverActive();document.body.classList.toggle('mode-vehicle',!!player.vehicle);document.body.classList.toggle('mode-passenger',vehiclePassenger||boatPassenger);document.body.classList.toggle('mode-transit',!!player.transit.mode);document.body.classList.toggle('mode-boat',!!player.boating);document.body.classList.toggle('mode-mobility-driver',mobility);document.body.classList.toggle('mode-building',!!buildMode);document.body.classList.toggle('mode-fishing',!!fishingSession);
+    els.secondaryActions?.classList.toggle('vehicle-hidden',!!player.vehicle||!!player.boating);
+    els.jumpBtn?.classList.toggle('vehicle-disabled',(!!player.vehicle||!!player.boating)&&!mobility);
+    els.specialBtn?.classList.toggle('vehicle-horn',mobility);
     const specialIcon=$('b',els.specialBtn),specialLabel=$('span',els.specialBtn);
-    if(specialIcon)specialIcon.textContent=player.vehicle?'📣':'🔥';
-    if(specialLabel)specialLabel.textContent=player.vehicle?'Buzina':'Poder';
-    if(els.specialBtn)els.specialBtn.setAttribute('aria-label',player.vehicle?'Buzina do carro':`Poder de ${playerDisplayName()}`);
+    if(specialIcon)specialIcon.textContent=mobility?'📣':'🔥';if(specialLabel)specialLabel.textContent=mobility?'Buzina':'Poder';if(els.specialBtn)els.specialBtn.setAttribute('aria-label',mobility?`Buzina do ${player.boating?'barco':'carro'}`:`Poder de ${playerDisplayName()}`);updateMobilityControlLabels();
   }
   function vehicleHorn(){
-    if(!player.vehicle||player.car.passengerOf||paused||!els.modal.hidden)return;
-    const t=performance.now();if(t<player.hornUntil)return;player.hornUntil=t+360;
-    beep(410,95,'square');setTimeout(()=>{if(player.vehicle)beep(520,70,'square');},105);vibrate(18);
-    vehicleVisual.scale.set(1.015,.99,1.015);setTimeout(()=>vehicleVisual?.scale?.set(1,1,1),120);
+    if(!mobilityDriverActive()||paused||!els.modal.hidden)return;const t=performance.now();if(t<player.hornUntil)return;player.hornUntil=t+360;const boat=player.boating;beep(boat?330:410,boat?125:95,boat?'sine':'square');setTimeout(()=>{if(mobilityDriverActive())beep(boat?390:520,boat?100:70,boat?'sine':'square');},105);vibrate(18);if(!boat&&vehicleVisual){vehicleVisual.scale.set(1.015,.99,1.015);setTimeout(()=>vehicleVisual?.scale?.set(1,1,1),120);}
   }
   function enterVehicle(vehicle=world.vehicle){
     if(player.vehicle||player.boating||player.transit.mode||!vehicle||vehicle.occupied||!canEnterMobility(PLAYER_MODES.VEHICLE_DRIVER))return false;
     activeVehicleRef=vehicle;world.activeVehicle=vehicle;player.preVehicleAbilities={scaleMode:player.scaleMode,crouched:player.crouched};player.sitUntil=0;player.attackUntil=0;player.spinUntil=0;player.jumpBuffer=0;player.vy=0;player.grounded=true;clearMovementInputs();
-    player.vehicle=true;player.car.id=vehicle.id;player.car.label=vehicle.label;player.car.passengerOf='';player.car.passengerUid='';player.car.passengerBotId='';player.car.heading=vehicle.group.rotation.y||player.facing;player.car.speed=0;player.car.steerVisual=0;player.car.drift=0;player.car._prevSpeed=0;player.x=vehicle.group.position.x;player.z=vehicle.group.position.z;player.y=groundHeightAt(player.x,player.z);player.facing=player.car.heading;vehicle.occupied=true;
+    input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=true;player.car.id=vehicle.id;player.car.label=vehicle.label;player.car.passengerOf='';player.car.passengerUid='';player.car.passengerBotId='';player.car.heading=vehicle.group.rotation.y||player.facing;player.car.speed=0;player.car.steerVisual=0;player.car.drift=0;player.car._prevSpeed=0;player.x=vehicle.group.position.x;player.z=vehicle.group.position.z;player.y=groundHeightAt(player.x,player.z);player.facing=player.car.heading;vehicle.occupied=true;
     player.scaleMode='normal';player.crouched=false;syncPlayerRootScale();updateAbilityUI();if(playerModel)playerModel.visible=false;if(avatarLayer)avatarLayer.visible=false;applyVehicleAppearance(vehicle);vehicleVisual.visible=true;vehicleVisual.scale.set(1,1,1);vehicleVisual.rotation.set(0,0,0);vehicle.group.visible=false;els.vehicleBadge.hidden=false;updateVehicleControlsUI();updateRunUI();setFlag('gotVehicle');state.vehicles.lastUsedId=vehicle.id;
     if(state.career.activeJob?.id==='delivery'){setMissionState(state.career.activeJob,MISSION_STATES.TRAVELLING,'vehicle-boarded');state.waypoint={id:'delivery-maya',name:'Entregar para Maya',x:65,z:54,navX:55,navZ:48,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();}
     const companion=nearestRideCompanion();if(companion)boardNpcPassenger(companion,'car');toast(`${vehicle.label} ligado! Use o manche para dirigir.`,'good');startEngineSound();saveState(true);return true;
@@ -102,7 +106,7 @@
     if(!player.vehicle)return false;
     const passengerHost=player.car.passengerOf,hostedPassenger=player.car.passengerUid,wasPassenger=!!passengerHost,drivenVehicle=currentVehicleRef(),parkX=player.x,parkZ=player.z,parkHeading=player.car.heading;const exitPoint=safeVehicleExitPoint(drivenVehicle);
     if(passengerHost)window.OTTHOS_RTDB?.sendInteraction?.(passengerHost,{type:'vehiclePassengerLeft'});else if(hostedPassenger)window.OTTHOS_RTDB?.sendInteraction?.(hostedPassenger,{type:'vehicleEnded'});
-    releaseNpcPassenger('car');player.vehicle=false;player.vx=0;player.vz=0;player.car.speed=0;player.car._prevSpeed=0;player.car.passengerOf='';player.car.passengerUid='';player.car.hostMissingAt=0;clearMovementInputs();
+    releaseNpcPassenger('car');input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=false;player.vx=0;player.vz=0;player.car.speed=0;player.car._prevSpeed=0;player.car.passengerOf='';player.car.passengerUid='';player.car.hostMissingAt=0;clearMovementInputs();
     const prior=player.preVehicleAbilities||state.abilities||{scaleMode:'normal',crouched:false};player.scaleMode=['mini','normal','giant'].includes(prior.scaleMode)?prior.scaleMode:'normal';player.crouched=!!prior.crouched;player.preVehicleAbilities=null;syncPlayerRootScale();if(playerModel)playerModel.visible=true;if(avatarLayer)avatarLayer.visible=true;vehicleVisual.visible=false;vehicleVisual.rotation.set(0,0,0);els.vehicleBadge.hidden=true;updateVehicleControlsUI();updateRunUI();updateAbilityUI();stopEngineSound();
     if(drivenVehicle&&!wasPassenger){drivenVehicle.occupied=false;drivenVehicle.group.visible=true;drivenVehicle.group.position.set(parkX,groundHeightAt(parkX,parkZ),parkZ);drivenVehicle.group.rotation.y=parkHeading;drivenVehicle.x=parkX;drivenVehicle.z=parkZ;drivenVehicle.heading=parkHeading;persistParkedVehicle(drivenVehicle);}
     activeVehicleRef=null;world.activeVehicle=null;player.x=exitPoint.x;player.z=exitPoint.z;player.y=exitPoint.y;player.vx=player.vy=player.vz=0;player.grounded=true;player.car.id='';player.car.kind='car';rememberSafePlayerPosition(true);auditPlayerMode('exit-vehicle');if(!silent)toast('Saiu do veículo em local seguro.','good');saveState(true);return true;

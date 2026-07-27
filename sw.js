@@ -1,26 +1,26 @@
-const CACHE = 'otthi-world-edu-v642-1';
-const CACHE_PREFIXES = ['otthi-world-edu-','otthi-game-web-','otthos-life-world-main-'];
-const BUILD = '642.0-complete-modular-source-equivalence';
+const CACHE = 'otthi-v643-1';
+const CACHE_PREFIXES = ['otthi-','otthi-game-web-','otthos-life-world-main-'];
+const BUILD = '643.0-precision-mobility-traffic-fishing';
 const THREE_R128 = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 
 const REQUIRED_SHELL = [
   './',
-  './index.html?v=642',
-  './style.css?v=642',
-  './assets/js/core/runtime-config.js?v=642',
-  './assets/js/core/safe-pointer.js?v=642',
-  './assets/js/core/viewport-manager.js?v=642',
-  './assets/js/save-db.js?v=642',
-  './firebase-config.js?v=642',
-  './assets/js/game-account.js?v=642',
-  './assets/js/multiplayer-rtdb.js?v=642',
-  './app.js?v=642',
-  './assets/js/ui/shared-modal.js?v=642',
-  './assets/js/core/performance-guardian.js?v=642',
-  './assets/js/multiplayer/room-manager.js?v=642',
-  './assets/js/education/adaptive-learning.js?v=642',
-  './assets/js/safety/child-safety.js?v=642',
-  './manifest.webmanifest?v=642'
+  './index.html?v=643',
+  './style.css?v=643',
+  './assets/js/core/runtime-config.js?v=643',
+  './assets/js/core/safe-pointer.js?v=643',
+  './assets/js/core/viewport-manager.js?v=643',
+  './assets/js/save-db.js?v=643',
+  './firebase-config.js?v=643',
+  './assets/js/game-account.js?v=643',
+  './assets/js/multiplayer-rtdb.js?v=643',
+  './app.js?v=643',
+  './assets/js/ui/shared-modal.js?v=643',
+  './assets/js/core/performance-guardian.js?v=643',
+  './assets/js/multiplayer/room-manager.js?v=643',
+  './assets/js/education/adaptive-learning.js?v=643',
+  './assets/js/safety/child-safety.js?v=643',
+  './manifest.webmanifest?v=643'
 ];
 
 const OPTIONAL_ASSETS = [
@@ -83,7 +83,7 @@ async function cacheApplicationShell() {
   for (const resource of REQUIRED_SHELL) await fetchAndCache(cache, resource, true);
   const optional = await Promise.all(OPTIONAL_ASSETS.map(resource => fetchAndCache(cache, resource, false)));
   const failed = optional.filter(item => !item.ok);
-  if (failed.length) console.warn('[OTTHI-GAME SW] Recursos opcionais não pré-cacheados:', failed);
+  if (failed.length) console.warn('[OTTHI SW] Recursos opcionais não pré-cacheados:', failed);
 }
 
 self.addEventListener('install', event => {
@@ -98,7 +98,7 @@ self.addEventListener('activate', event => {
       .map(name => caches.delete(name)));
     await self.clients.claim();
     const clients = await self.clients.matchAll({ type:'window', includeUncontrolled:true });
-    clients.forEach(client => client.postMessage({ type:'OTTHI_GAME_UPDATE_READY', build:BUILD, version:642 }));
+    clients.forEach(client => client.postMessage({ type:'OTTHI_GAME_UPDATE_READY', build:BUILD, version:643 }));
   })());
 });
 
@@ -124,7 +124,7 @@ async function networkFirst(request, navigation = false) {
     const cached = await cache.match(request, { ignoreSearch:false }) || await caches.match(request);
     if (cached) return cached;
     if (navigation) {
-      return await cache.match('./index.html?v=642') || await cache.match('./') || Response.error();
+      return await cache.match('./index.html?v=643') || await cache.match('./') || Response.error();
     }
     throw error;
   }

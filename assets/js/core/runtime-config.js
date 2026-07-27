@@ -1,11 +1,11 @@
 (() => {
   'use strict';
-  const repo = 'OTTHI-WORLD-EDU';
+  const repo = 'OTTHI';
   const baseUrl = new URL('./', location.href).href;
   const savedRoom = (() => { try { return localStorage.getItem('otthi_selected_room_v1') || ''; } catch { return ''; } })();
   window.OTTHI_CONFIG = {
-    version: 642,
-    build: '642.0-complete-modular-source-equivalence',
+    version: 643,
+    build: '643.0-precision-mobility-traffic-fishing',
     repository: repo,
     baseUrl,
     firebaseRoot: 'otthosWorld',

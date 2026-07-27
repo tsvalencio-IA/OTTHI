@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 17-adventures-learning-world.js
  * Escopo: Castelo, aventuras, desafios e praça educacional
  * Linhas de origem V642: 2865-2924

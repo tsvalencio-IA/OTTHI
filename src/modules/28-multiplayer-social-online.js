@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 28-multiplayer-social-online.js
  * Escopo: Desafios online, social, chat, presença, fantasmas e sincronização
  * Linhas de origem V642: 4158-4304

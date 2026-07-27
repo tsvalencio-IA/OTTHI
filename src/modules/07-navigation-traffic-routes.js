@@ -1,5 +1,5 @@
 /**
- * OTTHI World Edu V642 — módulo-fonte
+ * OTTHI World Edu V643 — módulo-fonte
  * Arquivo: 07-navigation-traffic-routes.js
  * Escopo: Rotas, trânsito, grafo, GPS e minimapa
  * Linhas de origem V642: 1064-1200
@@ -38,11 +38,14 @@
     world.trafficSnapshot=actors;world.trafficSnapshotAt=now;return actors;
   }
 
+  function trafficPriority(actor){if(actor?.incidentTargetId||actor?.targetFireId)return 50;let type=actor?.route?.schoolBus?'school':actor?.route?'bus':actor?.type||actor?.kind||actor?.trafficType||'';if(!type&&world.ambulances?.includes(actor))type='ambulance';else if(!type&&world.fireTrucks?.includes(actor))type='fire';else if(!type&&world.policeCars?.includes(actor))type='police';return({ambulance:45,fire:44,police:43,school:28,bus:22,car:16,moto:14,bike:10,skate:8})[type]||18;}
   function trafficSpeedFactor(actor,heading,lookAhead=7){
     if(!actor?.group)return 1;const now=performance.now();if(now<Number(actor.incidentUntil||0))return 0;
-    const ax=actor.group.position.x,az=actor.group.position.z,fx=Math.sin(heading),fz=Math.cos(heading),rx=Math.cos(heading),rz=-Math.sin(heading);let factor=1;
-    for(const other of trafficActorList()){if(other.ref===actor||other.id===actor.id)continue;const dx=other.group.position.x-ax,dz=other.group.position.z-az,forward=dx*fx+dz*fz,side=Math.abs(dx*rx+dz*rz),gap=(actor.radius||1.5)+(other.radius||1.5);
-      if(forward>0&&forward<lookAhead+gap&&side<gap*.82){factor=Math.min(factor,clamp((forward-gap*.9)/Math.max(1,lookAhead),0,1));}
+    const ax=actor.group.position.x,az=actor.group.position.z,fx=Math.sin(heading),fz=Math.cos(heading),rx=Math.cos(heading),rz=-Math.sin(heading),actorSpeed=Math.max(.4,Math.abs(actor.currentSpeed||actor.speed||0));let factor=1;
+    for(const other of trafficActorList()){if(other.ref===actor||other.id===actor.id)continue;const dx=other.group.position.x-ax,dz=other.group.position.z-az,forward=dx*fx+dz*fz,side=Math.abs(dx*rx+dz*rz),gap=(actor.radius||1.5)+(other.radius||1.5)+.38;
+      if(forward>-.25&&forward<lookAhead+gap&&side<gap*.86)factor=Math.min(factor,clamp((forward-gap*.92)/Math.max(1,lookAhead),0,1));
+      const otherHeading=Number(other.group.rotation?.y||0),horizon=clamp(1.0+gap/Math.max(2,actorSpeed+other.speed),.75,1.75),futureAx=ax+fx*actorSpeed*horizon,futureAz=az+fz*actorSpeed*horizon,futureBx=other.group.position.x+Math.sin(otherHeading)*other.speed*horizon,futureBz=other.group.position.z+Math.cos(otherHeading)*other.speed*horizon,futureGap=Math.hypot(futureBx-futureAx,futureBz-futureAz);
+      if(futureGap<gap*1.18&&Math.hypot(dx,dz)<lookAhead+gap+4){const myPriority=trafficPriority(actor),otherPriority=trafficPriority(other);if(myPriority<=otherPriority)factor=Math.min(factor,clamp((futureGap-gap*.65)/(gap*.8),0,.58));}
     }return factor;
   }
 
@@ -54,8 +57,8 @@
       const a=actors[i],b=actors[j];if(a.ref?.incidentUntil||b.ref?.incidentUntil)continue;const dx=b.group.position.x-a.group.position.x,dz=b.group.position.z-a.group.position.z,d=Math.hypot(dx,dz),gap=(a.radius+b.radius)*.78;if(d>=gap)continue;
       const aEmergency=!!a.ref?.incidentTargetId||!!a.ref?.targetFireId,bEmergency=!!b.ref?.incidentTargetId||!!b.ref?.targetFireId;
       let yieldActor;if(aEmergency!==bEmergency)yieldActor=aEmergency?b:a;else if(Math.abs(a.speed-b.speed)>.25)yieldActor=a.speed>b.speed?a:b;else yieldActor=a.id>b.id?a:b;
-      const old=before?.get(yieldActor.id);if(old){yieldActor.group.position.x=old.x;yieldActor.group.position.z=old.z;snapTrafficToRoad(yieldActor.group,old);}yieldActor.ref.currentSpeed=0;
-      const remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);if(remain<gap*.7){const other=yieldActor===a?b:a,otherOld=before?.get(other.id);if(otherOld){other.group.position.x=otherOld.x;other.group.position.z=otherOld.z;snapTrafficToRoad(other.group,otherOld);}other.ref.currentSpeed=0;}
+      const old=before?.get(yieldActor.id);if(old){yieldActor.group.position.x=old.x;yieldActor.group.position.z=old.z;snapTrafficToRoad(yieldActor.group,old);}yieldActor.ref.currentSpeed=0;yieldActor.ref.trafficHoldUntil=performance.now()+450;
+      const remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);if(remain<gap*.82){const other=yieldActor===a?b:a,otherOld=before?.get(other.id);if(otherOld){other.group.position.x=otherOld.x;other.group.position.z=otherOld.z;snapTrafficToRoad(other.group,otherOld);}other.ref.currentSpeed=0;other.ref.trafficHoldUntil=performance.now()+240;const nx=(b.group.position.x-a.group.position.x)/(remain||1),nz=(b.group.position.z-a.group.position.z)/(remain||1),push=(gap-remain)*.52;yieldActor.group.position.x-=nx*push;yieldActor.group.position.z-=nz*push;snapTrafficToRoad(yieldActor.group,old);}
     }
     world.trafficSnapshot=null;
   }

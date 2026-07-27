@@ -1,10 +1,10 @@
-OTTHI WORLD EDU V642 — COMO SUBIR PELO CELULAR
+OTTHI WORLD EDU V643 — COMO SUBIR PELO CELULAR
 
 NOME DO NOVO REPOSITÓRIO:
-OTTHI-WORLD-EDU
+OTTHI
 
 1. Extraia completamente o ZIP.
-2. No GitHub, crie um repositório público chamado OTTHI-WORLD-EDU.
+2. No GitHub, crie um repositório público chamado OTTHI.
 3. Entre na raiz do novo repositório.
 4. Use Add file > Upload files.
 5. Envie TODO o conteúdo extraído, preservando as pastas:
@@ -22,7 +22,7 @@ OTTHI-WORLD-EDU
 8. Abra Settings > Pages.
 9. Selecione Deploy from a branch > main > /root.
 10. Publique firebase-database.rules.json no Realtime Database.
-11. Abra https://tsvalencio-ia.github.io/OTTHI-WORLD-EDU/
+11. Abra https://tsvalencio-ia.github.io/OTTHI/
 
 REGRA DE CORREÇÃO FUTURA:
 - JavaScript: altere src/modules/<módulo>.js.
