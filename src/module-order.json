@@ -1,13 +1,13 @@
 {
   "version": 643,
-  "build": "643.0-precision-mobility-traffic-fishing",
+  "build": "643.1-responsive-fullscreen-controls",
   "javascript": [
     {
       "file": "src/modules/00-runtime-foundation.js",
       "startLine": 2,
       "endLine": 26,
       "description": "Runtime, utilitários, versão, storage e chaves de migração",
-      "sha256Body": "10ed96616e977682228f58f50853bd122db2d84920f7e4d5b1c9b14c98b378ce"
+      "sha256Body": "700c02f44864285bb607d0b65f455bbfe2c8fc61e9895be8500d2b9bc3e7748e"
     },
     {
       "file": "src/modules/01-build-persistence.js",
@@ -182,7 +182,7 @@
       "startLine": 3755,
       "endLine": 3885,
       "description": "Three.js, qualidade, viewport, resize, posição segura e colisões",
-      "sha256Body": "6e50413fd8904e2855b0985261aa4a95171ece67f8b76fcc3558b1e883789d23"
+      "sha256Body": "187214936c536b14d6cb5b88bcf995eb239dc0251b6ce186e1cb32daf8c416d3"
     },
     {
       "file": "src/modules/26-input-player-physics.js",
@@ -210,7 +210,7 @@
       "startLine": 4305,
       "endLine": 4377,
       "description": "Loop principal, controles, gamepad e início do jogo",
-      "sha256Body": "917ea1551571740141c43856d8574506939a329da093d61c9e1ee7ace224b23c"
+      "sha256Body": "112eaa61906ae89a052e0e97c067c587ca44262b3da0e506c53453ea468d8db4"
     },
     {
       "file": "src/modules/30-pause-tests-public-api-bootstrap.js",
@@ -304,6 +304,13 @@
       "endLine": 0,
       "description": "Controles Acelerar/Freio-Ré, mobilidade responsiva e precisão V643",
       "sha256Body": "387201cfc25ccbc5df444932ac206d7c3e285c321da48f72007cbc09db40051e"
+    },
+    {
+      "file": "src/styles/12-fullscreen-responsive-hotfix-v6431.css",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Hotfix V643.1: WebGL em tela inteira e zonas sem sobreposição",
+      "sha256Body": "36407f245dfd26972ef43b1c92dcf1f91d4f66f945e2946c627a36bd80fac7fd"
     }
   ]
 }

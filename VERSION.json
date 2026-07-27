@@ -1,6 +1,6 @@
 {
   "version": 643,
-  "build": "643.0-precision-mobility-traffic-fishing",
+  "build": "643.1-responsive-fullscreen-controls",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
@@ -35,5 +35,11 @@
   ],
   "validation": {
     "physicalDeviceApproved": false
-  }
+  },
+  "hotfix": "643.1",
+  "notes": [
+    "Canvas WebGL ocupa 100% da tela em DPR adaptativo",
+    "Controles de paisagem separados do minimapa e dos botões de ação",
+    "Retrato e paisagem usam o palco real como medida"
+  ]
 }

@@ -11,7 +11,7 @@
   'use strict';
 
   const OTTHI_GAME_LIVE_BASE = new URL('./', window.location.href).href;
-  const OTTHI_GAME_WEB_BUILD = '643.0-precision-mobility-traffic-fishing';
+  const OTTHI_GAME_WEB_BUILD = '643.1-responsive-fullscreen-controls';
   window.OTTHI_GAME_VERSION = 643;
   window.OTTHI_GAME_BUILD = OTTHI_GAME_WEB_BUILD;
 

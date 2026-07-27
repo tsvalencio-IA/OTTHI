@@ -10,8 +10,8 @@
 // @otthi-module-body
   function initThree(){
     if(!window.THREE){openModal('Erro ao carregar 3D','<p>A biblioteca Three.js não carregou. Verifique a internet e recarregue a página.</p>');return false;}
-    scene=new THREE.Scene();clock=new THREE.Clock();camera=new THREE.PerspectiveCamera(58,innerWidth/innerHeight,.05,1200);
-    renderer=new THREE.WebGLRenderer({antialias:qualityTier()==='high'&&!perf.mobile,alpha:false,powerPreference:'high-performance',precision:'highp',depth:true,stencil:false});renderer.setPixelRatio(Math.min(devicePixelRatio||1,targetDpr()));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=qualityTier()==='high'&&!perf.mobile;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.94;els.stage.innerHTML='';els.stage.appendChild(renderer.domElement);renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();paused=true;toast('A placa gráfica reiniciou. Toque no menu para recarregar o jogo.','bad',5000);});renderer.domElement.addEventListener('webglcontextrestored',()=>{toast('Render restaurado.','good',1800);paused=false;});
+    scene=new THREE.Scene();clock=new THREE.Clock();const initialViewport=viewportMetrics();camera=new THREE.PerspectiveCamera(58,initialViewport.w/initialViewport.h,.05,1200);
+    renderer=new THREE.WebGLRenderer({antialias:qualityTier()==='high'&&!perf.mobile,alpha:false,powerPreference:'high-performance',precision:'highp',depth:true,stencil:false});renderer.setPixelRatio(Math.min(devicePixelRatio||1,targetDpr()));renderer.setSize(initialViewport.w,initialViewport.h,false);renderer.shadowMap.enabled=qualityTier()==='high'&&!perf.mobile;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.94;els.stage.innerHTML='';els.stage.appendChild(renderer.domElement);renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();paused=true;toast('A placa gráfica reiniciou. Toque no menu para recarregar o jogo.','bad',5000);});renderer.domElement.addEventListener('webglcontextrestored',()=>{toast('Render restaurado.','good',1800);paused=false;});
     initMaterials();
     scene.add(new THREE.HemisphereLight(0xdff4ff,0x28401f,.72));sunLight=new THREE.DirectionalLight(0xffdf9a,1.28);sunLight.position.set(32,46,24);sunLight.castShadow=qualityTier()==='high'&&!perf.mobile;sunLight.shadow.mapSize.set(qualityTier()==='high'?1024:768,qualityTier()==='high'?1024:768);sunLight.shadow.camera.left=-80;sunLight.shadow.camera.right=80;sunLight.shadow.camera.top=80;sunLight.shadow.camera.bottom=-80;sunLight.shadow.camera.far=160;sunLight.shadow.bias=-.0015;scene.add(sunLight);
     const fill=new THREE.DirectionalLight(0xb9ddff,.16);fill.position.set(-28,20,-18);scene.add(fill); // preenchimento barato (sem sombra) para suavizar o lado escuro dos objetos
@@ -20,7 +20,12 @@
   function applyQuality(){ if(!renderer)return;applyAdaptiveRenderSettings(); }
   function viewportMetrics(){
     const vv=window.visualViewport,de=document.documentElement,rect=els.stage?.getBoundingClientRect?.()||{};
-    let w=Math.round(vv?.width||de.clientWidth||innerWidth||rect.width||390),h=Math.round(vv?.height||de.clientHeight||innerHeight||rect.height||720);
+    // Dentro da PWA/WebView, visualViewport pode reportar uma área menor que o palco real.
+    // O retângulo CSS do #stage é a fonte de verdade para o WebGL; isso impede a cena
+    // de ocupar apenas parte da tela quando a qualidade usa pixelRatio abaixo de 1.
+    const stageW=Number(rect.width||0),stageH=Number(rect.height||0);
+    let w=Math.round(stageW>2?stageW:(de.clientWidth||vv?.width||innerWidth||390));
+    let h=Math.round(stageH>2?stageH:(de.clientHeight||vv?.height||innerHeight||720));
     const offsetTop=0,offsetLeft=0;
     const type=String(screen.orientation?.type||''),cssLandscape=matchMedia('(orientation: landscape)').matches,dimensionLandscape=w>h,landscape=Math.abs(w-h)>12?dimensionLandscape:(type.includes('landscape')?true:type.includes('portrait')?false:cssLandscape);
     const layoutHeight=Math.round(de.clientHeight||innerHeight||h),keyboard=Math.max(0,layoutHeight-h)>120;

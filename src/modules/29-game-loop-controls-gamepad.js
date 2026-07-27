@@ -36,7 +36,7 @@
       perf.modeAuditAcc+=dt;if(perf.modeAuditAcc>=.75){perf.modeAuditAcc=0;auditPlayerMode('loop');}
       perf.panelAcc+=dt;if(perf.panelAcc>=1){perf.panelAcc=0;refreshTechnicalPanel();}
     }
-    renderer.setScissorTest(false);renderer.setViewport(0,0,renderer.domElement.width,renderer.domElement.height);renderer.autoClear=true;renderer.render(scene,camera);
+    const renderW=Math.max(1,perf.lastRenderW||els.stage?.clientWidth||innerWidth),renderH=Math.max(1,perf.lastRenderH||els.stage?.clientHeight||innerHeight);renderer.setScissorTest(false);renderer.setViewport(0,0,renderW,renderH);renderer.autoClear=true;renderer.render(scene,camera);
   }
 
   function setupControls(){

@@ -1,8 +1,8 @@
 {
-  "name": "OTTHI World Edu V643",
+  "name": "OTTHI World Edu V643.1",
   "short_name": "OTTHI EDU",
   "description": "Mundo aberto infantil online com casas, profissões, roupas, skills, construção, serviços da cidade e aprendizado adaptativo.",
-  "start_url": "./?source=pwa&v=643",
+  "start_url": "./?source=pwa&v=6431",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",

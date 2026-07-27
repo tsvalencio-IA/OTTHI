@@ -5,7 +5,7 @@
   const savedRoom = (() => { try { return localStorage.getItem('otthi_selected_room_v1') || ''; } catch { return ''; } })();
   window.OTTHI_CONFIG = {
     version: 643,
-    build: '643.0-precision-mobility-traffic-fishing',
+    build: '643.1-responsive-fullscreen-controls',
     repository: repo,
     baseUrl,
     firebaseRoot: 'otthosWorld',
