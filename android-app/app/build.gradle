@@ -10,8 +10,8 @@ android {
         applicationId 'br.com.thiaguinhosolucoes.otthos'
         minSdk 24
         targetSdk 35
-        versionCode 643
-        versionName '6.43'
+        versionCode 645
+        versionName '6.45'
     }
 
     buildTypes {

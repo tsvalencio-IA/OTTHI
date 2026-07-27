@@ -46,10 +46,10 @@ def main():
     for p in sorted((ROOT/'assets/js').rglob('*.js')): run(['node','--check',str(p.relative_to(ROOT))],f'Sintaxe {p.relative_to(ROOT)}')
     for rel in ['manifest.webmanifest','firebase-database.rules.json','VERSION.json','src/module-order.json']:parse_json(rel)
     index=(ROOT/'index.html').read_text('utf-8'); a=Audit();a.feed(index); dup=sorted({x for x in a.ids if a.ids.count(x)>1}); missing=sorted(x for x in a.local if not (ROOT/x).exists())
-    add('IDs HTML únicos',not dup,dup);add('Referências locais existem',not missing,missing);add('Versão 644 no index',index.count('?v=644')>=10,index.count('?v=644'));add('GitHub Pages OTTHI',('OTTHI'+'-WORLD-EDU') not in index)
+    add('IDs HTML únicos',not dup,dup);add('Referências locais existem',not missing,missing);add('Versão 645 no index',index.count('?v=645')>=10,index.count('?v=645'));add('GitHub Pages OTTHI',('OTTHI'+'-WORLD-EDU') not in index)
     op,cl=css_braces((ROOT/'style.css').read_text('utf-8'));add('Chaves CSS balanceadas',op==cl,f'{op}/{cl}')
     app=(ROOT/'app.js').read_text('utf-8'); funcs=re.findall(r'^  function\s+([A-Za-z_$][\w$]*)\s*\(',app,re.M)
-    add('564 funções nomeadas',len(funcs)==564,len(funcs));add('Runtime V644',"window.OTTHI_GAME_VERSION = 644;" in app and "const APP_VERSION = 644;" in app);add('Save V644 e migração V643',"roleplay_v644'" in app and 'roleplay_v643' in app)
+    add('564 funções nomeadas',len(funcs)==564,len(funcs));add('Runtime V645',"window.OTTHI_GAME_VERSION = 645;" in app and "const APP_VERSION = 645;" in app);add('Save V645 e migração V644',"roleplay_v645'" in app and 'roleplay_v644' in app)
     for token in ['mobilityThrottleIntent','const steer=Math.abs(ix)<.06?0:-ix','const steer=Math.abs(ix)<.07?0:-ix','Acelerar','Freio','createShoreFishingLife','trafficPriority','busSpawnIndex','water-ripples-v643.png']:
       add(f'Token preservado {token}',token in app or token in (ROOT/'style.css').read_text('utf-8'))
     for token in ['miniMapLogicalSize','miniMapScale','currentMapLocations','clearRemoteRoomEntities','applyRoomWorld','mapRegionsMarkup','focusCurrentRoom']:
@@ -64,14 +64,14 @@ def main():
     cfg=(ROOT/'assets/js/core/runtime-config.js').read_text('utf-8')
     add('Cinco bairros com 10 vagas',cfg.count('capacity:10')==5 and 'maxPlayersPerRoom: 10' in cfg,cfg.count('capacity:10'))
     rules=json.loads((ROOT/'firebase-database.rules.json').read_text('utf-8')); slots=rules['rules']['otthosWorld']['rooms']['$roomId'].get('slots',{})
-    add('Regra Firebase limita 10 usuários',slots.get('.validate')=='!newData.exists() || newData.numChildren() <= 10',slots.get('.validate'))
-    sw=(ROOT/'sw.js').read_text('utf-8');add('Service Worker V644',"otthi-v644-1" in sw and "644.0-neighborhoods-capacity-map" in sw)
-    gradle=(ROOT/'android-app/app/build.gradle').read_text('utf-8');add('Android V643 preservado',"versionCode 643" in gradle and "versionName '6.43'" in gradle)
+    slot_rule=slots.get('$slotId',{}); rule_text=slot_rule.get('.write','')+' '+slot_rule.get('.validate',''); add('Regra Firebase limita 10 usuários',all(f"slot-{i:02d}" in rule_text for i in range(1,11)) and 'numChildren' not in json.dumps(rules),slot_rule.get('.validate'))
+    sw=(ROOT/'sw.js').read_text('utf-8');add('Service Worker V645',"otthi-v645-1" in sw and "645.0-consolidated-neighborhood-world" in sw)
+    gradle=(ROOT/'android-app/app/build.gradle').read_text('utf-8');add('Android V645',"versionCode 645" in gradle and "versionName '6.45'" in gradle)
     preservation=DOCS/'RELATORIO-PRESERVACAO-V642-V644.json'; data=json.loads(preservation.read_text('utf-8')) if preservation.exists() else {};add('Preservação V642/V644 aprovada',data.get('passed') is True)
-    neighborhood=DOCS/'RELATORIO-TESTE-BAIRROS-V644.json'; ndata=json.loads(neighborhood.read_text('utf-8')) if neighborhood.exists() else {};add('Bairros/mapa V644 aprovados',ndata.get('passed') is True)
-    report={'version':644,'passed':not errors,'checks':checks,'errors':errors,'counts':{'checks':len(checks),'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'functions':len(funcs),'javascriptModules':len(js),'styleModules':len(css),'htmlIds':len(a.ids)},'hashes':{x:hashlib.sha256((ROOT/x).read_bytes()).hexdigest() for x in ['app.js','style.css','src/module-order.json']}}
-    (DOCS/'VALIDACAO-ESTRUTURAL-V644.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n','utf-8')
-    md=['# Validação estrutural automática — V644','',f"- Resultado: **{'APROVADO' if report['passed'] else 'REPROVADO'}**",f"- Verificações: **{report['counts']['passed']} aprovadas / {report['counts']['failed']} falhas**",'', '## Verificações','']+[f"- [{'x' if x['passed'] else ' '}] {x['name']}{' — '+x['detail'] if x['detail'] else ''}" for x in checks]+['','## Limites','', '- Não substitui teste físico de orientação instalada, multiplayer entre dois aparelhos, Firebase remoto, AR e APK.', '- Os testes V644 validam reserva de vaga, limpeza de bairro, transporte, mapa sem distorção e regras estruturais.']
-    (DOCS/'VALIDACAO-ESTRUTURAL-V644.md').write_text('\n'.join(md)+'\n','utf-8')
+    neighborhood=DOCS/'RELATORIO-TESTE-BAIRROS-V645.json'; ndata=json.loads(neighborhood.read_text('utf-8')) if neighborhood.exists() else {};add('Bairros/mapa V645 aprovados',ndata.get('passed') is True)
+    report={'version':645,'passed':not errors,'checks':checks,'errors':errors,'counts':{'checks':len(checks),'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'functions':len(funcs),'javascriptModules':len(js),'styleModules':len(css),'htmlIds':len(a.ids)},'hashes':{x:hashlib.sha256((ROOT/x).read_bytes()).hexdigest() for x in ['app.js','style.css','src/module-order.json']}}
+    (DOCS/'VALIDACAO-ESTRUTURAL-V645.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n','utf-8')
+    md=['# Validação estrutural automática — V645','',f"- Resultado: **{'APROVADO' if report['passed'] else 'REPROVADO'}**",f"- Verificações: **{report['counts']['passed']} aprovadas / {report['counts']['failed']} falhas**",'', '## Verificações','']+[f"- [{'x' if x['passed'] else ' '}] {x['name']}{' — '+x['detail'] if x['detail'] else ''}" for x in checks]+['','## Limites','', '- Não substitui teste físico de orientação instalada, multiplayer entre dois aparelhos, Firebase remoto, AR e APK.', '- Os testes V645 validam reserva de vaga, limpeza de bairro, transporte, mapa sem distorção e regras estruturais.']
+    (DOCS/'VALIDACAO-ESTRUTURAL-V645.md').write_text('\n'.join(md)+'\n','utf-8')
     print(json.dumps(report,ensure_ascii=False,indent=2));return 0 if report['passed'] else 1
 if __name__=='__main__':sys.exit(main())

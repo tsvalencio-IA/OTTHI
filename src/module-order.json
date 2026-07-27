@@ -7,7 +7,7 @@
       "startLine": 2,
       "endLine": 26,
       "description": "Runtime, utilitários, versão, storage e chaves de migração",
-      "sha256Body": "21c760375eb4d9d1fc3a3858bf87b29367f8526ac56189ac83370f3a1151e909"
+      "sha256Body": "36bbd40a85b0832f3da3b96ec8300cb9e9db08bdea942bbbe75120d2459b5b35"
     },
     {
       "file": "src/modules/01-build-persistence.js",

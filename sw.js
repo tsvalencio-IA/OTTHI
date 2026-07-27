@@ -1,26 +1,26 @@
-const CACHE = 'otthi-v6441-1';
+const CACHE = 'otthi-v645-1';
 const CACHE_PREFIXES = ['otthi-','otthi-game-web-','otthos-life-world-main-'];
-const BUILD = '644.1-fixed-firebase-room-slots';
+const BUILD = '645.0-consolidated-neighborhood-world';
 const THREE_R128 = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 
 const REQUIRED_SHELL = [
   './',
-  './index.html?v=6441',
-  './style.css?v=6441',
-  './assets/js/core/runtime-config.js?v=6441',
-  './assets/js/core/safe-pointer.js?v=6441',
-  './assets/js/core/viewport-manager.js?v=6441',
-  './assets/js/save-db.js?v=6441',
-  './firebase-config.js?v=6441',
-  './assets/js/game-account.js?v=6441',
-  './assets/js/multiplayer-rtdb.js?v=6441',
-  './app.js?v=6441',
-  './assets/js/ui/shared-modal.js?v=6441',
-  './assets/js/core/performance-guardian.js?v=6441',
-  './assets/js/multiplayer/room-manager.js?v=6441',
-  './assets/js/education/adaptive-learning.js?v=6441',
-  './assets/js/safety/child-safety.js?v=6441',
-  './manifest.webmanifest?v=6441'
+  './index.html?v=645',
+  './style.css?v=645',
+  './assets/js/core/runtime-config.js?v=645',
+  './assets/js/core/safe-pointer.js?v=645',
+  './assets/js/core/viewport-manager.js?v=645',
+  './assets/js/save-db.js?v=645',
+  './firebase-config.js?v=645',
+  './assets/js/game-account.js?v=645',
+  './assets/js/multiplayer-rtdb.js?v=645',
+  './app.js?v=645',
+  './assets/js/ui/shared-modal.js?v=645',
+  './assets/js/core/performance-guardian.js?v=645',
+  './assets/js/multiplayer/room-manager.js?v=645',
+  './assets/js/education/adaptive-learning.js?v=645',
+  './assets/js/safety/child-safety.js?v=645',
+  './manifest.webmanifest?v=645'
 ];
 
 const OPTIONAL_ASSETS = [
@@ -98,7 +98,7 @@ self.addEventListener('activate', event => {
       .map(name => caches.delete(name)));
     await self.clients.claim();
     const clients = await self.clients.matchAll({ type:'window', includeUncontrolled:true });
-    clients.forEach(client => client.postMessage({ type:'OTTHI_GAME_UPDATE_READY', build:BUILD, version:'644' }));
+    clients.forEach(client => client.postMessage({ type:'OTTHI_GAME_UPDATE_READY', build:BUILD, version:'645' }));
   })());
 });
 
@@ -124,7 +124,7 @@ async function networkFirst(request, navigation = false) {
     const cached = await cache.match(request, { ignoreSearch:false }) || await caches.match(request);
     if (cached) return cached;
     if (navigation) {
-      return await cache.match('./index.html?v=6441') || await cache.match('./') || Response.error();
+      return await cache.match('./index.html?v=645') || await cache.match('./') || Response.error();
     }
     throw error;
   }

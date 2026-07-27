@@ -4,8 +4,8 @@
   const baseUrl = new URL('./', location.href).href;
   const savedRoom = (() => { try { return localStorage.getItem('otthi_selected_room_v1') || ''; } catch { return ''; } })();
   window.OTTHI_CONFIG = {
-    version: 644,
-    build: '644.1-fixed-firebase-room-slots',
+    version: 645,
+    build: '645.0-consolidated-neighborhood-world',
     repository: repo,
     baseUrl,
     firebaseRoot: 'otthosWorld',

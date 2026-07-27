@@ -1,22 +1,22 @@
 {
-  "version": 644,
-  "build": "644.1-fixed-firebase-room-slots",
+  "version": 645,
+  "build": "645.0-consolidated-neighborhood-world",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
   "styleBundle": "style.css",
   "changes": [
-    "bairros funcionais com transição real do mundo",
-    "limite de 10 jogadores por bairro",
-    "reserva e liberação automática de vaga",
-    "contadores de ocupação em tempo real",
-    "limpeza de jogadores e objetos do bairro anterior",
-    "casas online separadas por bairro",
-    "teleporte seguro para a entrada coerente de cada bairro",
-    "mapa e minimapa com regiões e escalas responsivas",
-    "corrige regras Firebase sem numChildren",
-    "limite real de 10 usando slot-01 até slot-10",
-    "reserva concorrente por transaction"
+    "bairros completos em um único pacote consolidado",
+    "cinco bairros físicos e multiplayer",
+    "dez vagas fixas por bairro com transação",
+    "bloqueio real de bairro lotado",
+    "limpeza do bairro anterior",
+    "transporte seguro para a entrada do novo bairro",
+    "jogadores, casas, barcos e objetos separados por bairro",
+    "mapa completo e minimapa com escala X/Z coerente",
+    "responsividade automática em retrato e paisagem",
+    "regras Firebase publicáveis sem numChildren",
+    "preservação das correções V643 e V643.1"
   ],
   "preserves": [
     "roupas",
@@ -40,11 +40,11 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "644.1",
+  "hotfix": "645.0",
   "notes": [
-    "Retrato e paisagem preservam a escala do mapa",
-    "Minimapa recalcula o buffer conforme o tamanho visual",
-    "Firebase Realtime Database mantido",
-    "Não publique o firebase-database.rules.json anterior da V644."
+    "Pacote completo e independente; não depende de instalar V644 ou V644.1 antes.",
+    "Regras usam apenas slot-01 a slot-10.",
+    "O mapa mantém a mesma escala nos eixos X e Z.",
+    "Firebase Realtime Database mantido."
   ]
 }
