@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
-    private static final int PERMISSION_REQUEST_CODE = 642;
+    private static final int PERMISSION_REQUEST_CODE = 643;
     private WebView gameWebView;
     private ProgressBar loadingProgress;
     private PermissionRequest pendingWebPermission;
