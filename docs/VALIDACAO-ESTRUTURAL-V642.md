@@ -1,0 +1,110 @@
+# Validação estrutural automática — V642
+
+- Resultado: **APROVADO**
+- Verificações: **95 aprovadas / 0 falhas**
+
+## Verificações
+
+- [x] Arquivo obrigatório index.html
+- [x] Arquivo obrigatório app.js
+- [x] Arquivo obrigatório style.css
+- [x] Arquivo obrigatório sw.js
+- [x] Arquivo obrigatório manifest.webmanifest
+- [x] Arquivo obrigatório firebase-config.js
+- [x] Arquivo obrigatório firebase-database.rules.json
+- [x] Arquivo obrigatório athos.glb
+- [x] Arquivo obrigatório src/module-order.json
+- [x] Arquivo obrigatório tools/build_project.py
+- [x] Arquivo obrigatório tools/audit_source.py
+- [x] Arquivo obrigatório tools/deep_inventory.py
+- [x] Arquivo obrigatório tools/verify_equivalence.py
+- [x] Arquivo obrigatório tools/validate_project.py
+- [x] Arquivo obrigatório .github/workflows/build-modular-app.yml
+- [x] Arquivo obrigatório .github/workflows/gerar-apk.yml
+- [x] Arquivo obrigatório android-app/app/build.gradle
+- [x] 31 módulos JavaScript — 31
+- [x] 11 módulos CSS — 11
+- [x] Manifesto contém 31 módulos JS — 31
+- [x] Manifesto contém 11 módulos CSS — 11
+- [x] Ordem JS corresponde aos arquivos
+- [x] Ordem CSS corresponde aos arquivos
+- [x] Sintaxe app.js
+- [x] Sintaxe assets/js/core/performance-guardian.js
+- [x] Sintaxe assets/js/core/runtime-config.js
+- [x] Sintaxe assets/js/core/safe-pointer.js
+- [x] Sintaxe assets/js/core/viewport-manager.js
+- [x] Sintaxe assets/js/education/adaptive-learning.js
+- [x] Sintaxe assets/js/game-account.js
+- [x] Sintaxe assets/js/multiplayer/room-manager.js
+- [x] Sintaxe assets/js/multiplayer-rtdb.js
+- [x] Sintaxe assets/js/safety/child-safety.js
+- [x] Sintaxe assets/js/save-db.js
+- [x] Sintaxe assets/js/ui/shared-modal.js
+- [x] Sintaxe src/modules/00-runtime-foundation.js
+- [x] Sintaxe src/modules/01-build-persistence.js
+- [x] Sintaxe src/modules/02-state-save-cloud-account.js
+- [x] Sintaxe src/modules/03-ui-modal-install-pwa.js
+- [x] Sintaxe src/modules/04-education-daily-quiz.js
+- [x] Sintaxe src/modules/05-avatar-life-customization.js
+- [x] Sintaxe src/modules/06-missions-profile-hud-inventory-tools.js
+- [x] Sintaxe src/modules/07-navigation-traffic-routes.js
+- [x] Sintaxe src/modules/08-map-parent-settings.js
+- [x] Sintaxe src/modules/09-responsive-ar-quality-diagnostics.js
+- [x] Sintaxe src/modules/10-player-skills.js
+- [x] Sintaxe src/modules/11-render-materials-player-model.js
+- [x] Sintaxe src/modules/12-world-resources-nature.js
+- [x] Sintaxe src/modules/13-houses-npcs-vehicles-base.js
+- [x] Sintaxe src/modules/14-world-district-decoration.js
+- [x] Sintaxe src/modules/15-transit-bus-metro.js
+- [x] Sintaxe src/modules/16-emergency-services.js
+- [x] Sintaxe src/modules/17-adventures-learning-world.js
+- [x] Sintaxe src/modules/18-water-fishing-boats.js
+- [x] Sintaxe src/modules/19-campfire-hunting-house-extensions.js
+- [x] Sintaxe src/modules/20-world-build-cloud-houses.js
+- [x] Sintaxe src/modules/21-interactions-shop-social-races.js
+- [x] Sintaxe src/modules/22-careers-jobs-uniforms.js
+- [x] Sintaxe src/modules/23-vehicle-effects-driving.js
+- [x] Sintaxe src/modules/24-construction-system.js
+- [x] Sintaxe src/modules/25-render-init-resize-position-collision.js
+- [x] Sintaxe src/modules/26-input-player-physics.js
+- [x] Sintaxe src/modules/27-npc-enemies-combat-camera-action.js
+- [x] Sintaxe src/modules/28-multiplayer-social-online.js
+- [x] Sintaxe src/modules/29-game-loop-controls-gamepad.js
+- [x] Sintaxe src/modules/30-pause-tests-public-api-bootstrap.js
+- [x] JSON manifest.webmanifest
+- [x] JSON firebase-database.rules.json
+- [x] JSON VERSION.json
+- [x] JSON src/module-order.json
+- [x] IDs HTML únicos
+- [x] Referências locais do index existem
+- [x] Versão 642 no index — 15 referências
+- [x] Meta PWA moderna
+- [x] Chaves CSS balanceadas — 1763/1763
+- [x] 544 funções nomeadas — 544
+- [x] Versão runtime 642
+- [x] Migração inclui V641
+- [x] Service Worker V642
+- [x] SW referencia manifest.webmanifest
+- [x] SW referencia style.css
+- [x] SW referencia assets/js/core/runtime-config.js
+- [x] SW referencia assets/js/core/safe-pointer.js
+- [x] SW referencia assets/js/core/viewport-manager.js
+- [x] SW referencia assets/js/save-db.js
+- [x] SW referencia firebase-config.js
+- [x] SW referencia assets/js/game-account.js
+- [x] SW referencia assets/js/multiplayer-rtdb.js
+- [x] SW referencia app.js
+- [x] SW referencia assets/js/ui/shared-modal.js
+- [x] SW referencia assets/js/core/performance-guardian.js
+- [x] SW referencia assets/js/multiplayer/room-manager.js
+- [x] SW referencia assets/js/education/adaptive-learning.js
+- [x] SW referencia assets/js/safety/child-safety.js
+- [x] Equivalência V641/V642 aprovada
+
+## Limites desta validação
+
+- Não comprova FPS em aparelho físico.
+- Não comprova WebGL no navegador do usuário.
+- Não comprova multiplayer real em duas contas.
+- Não comprova AR e APK em aparelho físico.
+- Dependências externas precisam de internet no primeiro carregamento, salvo se já estiverem em cache.

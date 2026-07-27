@@ -1,0 +1,499 @@
+{
+  "version": 642,
+  "passed": true,
+  "checks": [
+    {
+      "name": "Arquivo obrigatório index.html",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório style.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório sw.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório firebase-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório firebase-database.rules.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório athos.glb",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório src/module-order.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/build_project.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/audit_source.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/deep_inventory.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/verify_equivalence.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/validate_project.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório .github/workflows/build-modular-app.yml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório .github/workflows/gerar-apk.yml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório android-app/app/build.gradle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "31 módulos JavaScript",
+      "passed": true,
+      "detail": "31"
+    },
+    {
+      "name": "11 módulos CSS",
+      "passed": true,
+      "detail": "11"
+    },
+    {
+      "name": "Manifesto contém 31 módulos JS",
+      "passed": true,
+      "detail": "31"
+    },
+    {
+      "name": "Manifesto contém 11 módulos CSS",
+      "passed": true,
+      "detail": "11"
+    },
+    {
+      "name": "Ordem JS corresponde aos arquivos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ordem CSS corresponde aos arquivos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/performance-guardian.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/runtime-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/safe-pointer.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/viewport-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/education/adaptive-learning.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/game-account.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/multiplayer/room-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/multiplayer-rtdb.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/safety/child-safety.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/save-db.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/ui/shared-modal.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/00-runtime-foundation.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/01-build-persistence.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/02-state-save-cloud-account.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/03-ui-modal-install-pwa.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/04-education-daily-quiz.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/05-avatar-life-customization.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/06-missions-profile-hud-inventory-tools.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/07-navigation-traffic-routes.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/08-map-parent-settings.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/09-responsive-ar-quality-diagnostics.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/10-player-skills.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/11-render-materials-player-model.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/12-world-resources-nature.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/13-houses-npcs-vehicles-base.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/14-world-district-decoration.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/15-transit-bus-metro.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/16-emergency-services.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/17-adventures-learning-world.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/18-water-fishing-boats.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/19-campfire-hunting-house-extensions.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/20-world-build-cloud-houses.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/21-interactions-shop-social-races.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/22-careers-jobs-uniforms.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/23-vehicle-effects-driving.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/24-construction-system.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/25-render-init-resize-position-collision.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/26-input-player-physics.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/27-npc-enemies-combat-camera-action.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/28-multiplayer-social-online.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/29-game-loop-controls-gamepad.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe src/modules/30-pause-tests-public-api-bootstrap.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON firebase-database.rules.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON VERSION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON src/module-order.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "IDs HTML únicos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Referências locais do index existem",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Versão 642 no index",
+      "passed": true,
+      "detail": "15 referências"
+    },
+    {
+      "name": "Meta PWA moderna",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Chaves CSS balanceadas",
+      "passed": true,
+      "detail": "1763/1763"
+    },
+    {
+      "name": "544 funções nomeadas",
+      "passed": true,
+      "detail": "544"
+    },
+    {
+      "name": "Versão runtime 642",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Migração inclui V641",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Service Worker V642",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia style.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/core/runtime-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/core/safe-pointer.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/core/viewport-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/save-db.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia firebase-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/game-account.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/multiplayer-rtdb.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/ui/shared-modal.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/core/performance-guardian.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/multiplayer/room-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/education/adaptive-learning.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SW referencia assets/js/safety/child-safety.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Equivalência V641/V642 aprovada",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "errors": [],
+  "counts": {
+    "checks": 95,
+    "passed": 95,
+    "failed": 0,
+    "functions": 544,
+    "javascriptModules": 31,
+    "styleModules": 11,
+    "htmlIds": 104,
+    "externalDependencies": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    ]
+  },
+  "hashes": {
+    "app.js": "67adf70228a52640c6f86aef3813cad1fe85b81a3f166cf55651d996f99a0cc3",
+    "style.css": "26e49d52f396f72fdace404d38e592d8024da110ba6fa70ffa50f8fe659c1cb3",
+    "src/module-order.json": "8b8569f384211aea6736ad80c92fb3811f7624a362ff8b940a32ac27738aab80"
+  }
+}

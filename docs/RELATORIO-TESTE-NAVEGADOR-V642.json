@@ -1,0 +1,170 @@
+{
+  "version": 642,
+  "executedAt": "2026-07-27T13:38:51.837040+00:00",
+  "browserSmoke": {
+    "result": {
+      "title": "OTTHI World Edu",
+      "version": 642,
+      "build": "642.0-complete-modular-source-equivalence",
+      "testApi": "V642_COMPLETE_MODULAR_SOURCE_EQUIVALENCE_1",
+      "learning": true,
+      "rooms": true,
+      "safety": true,
+      "requiredIds": [],
+      "active": "lobby",
+      "viewport": [
+        1024,
+        768
+      ],
+      "three": null
+    },
+    "menu": {
+      "hidden": false,
+      "rect": {
+        "left": 132,
+        "top": 37.5,
+        "right": 892,
+        "bottom": 730.5,
+        "width": 760,
+        "height": 693
+      },
+      "inside": true
+    },
+    "exceptions": [],
+    "logs": [
+      {
+        "level": "error",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+        "url": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      },
+      {
+        "level": "warning",
+        "text": "<meta name=\"apple-mobile-web-app-capable\" content=\"yes\"> is deprecated. Please include <meta name=\"mobile-web-app-capable\" content=\"yes\">",
+        "url": "http://127.0.0.1:8766/"
+      },
+      {
+        "level": "info",
+        "text": "Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.",
+        "url": "http://127.0.0.1:8766/"
+      },
+      {
+        "level": "error",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+        "url": "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"
+      },
+      {
+        "level": "error",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+        "url": "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"
+      },
+      {
+        "level": "error",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+        "url": "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"
+      },
+      {
+        "level": "error",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+        "url": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      }
+    ]
+  },
+  "responsive": [
+    {
+      "viewport": "320x568",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.94,
+      "menuHeightRatio": 0.86
+    },
+    {
+      "viewport": "360x640",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.94,
+      "menuHeightRatio": 0.86
+    },
+    {
+      "viewport": "390x844",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.94,
+      "menuHeightRatio": 0.86
+    },
+    {
+      "viewport": "412x915",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.94,
+      "menuHeightRatio": 0.86
+    },
+    {
+      "viewport": "568x320",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.92,
+      "menuHeightRatio": 0.975
+    },
+    {
+      "viewport": "640x360",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.92,
+      "menuHeightRatio": 0.9778
+    },
+    {
+      "viewport": "740x360",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.92,
+      "menuHeightRatio": 0.9778
+    },
+    {
+      "viewport": "844x390",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.92,
+      "menuHeightRatio": 0.9795
+    },
+    {
+      "viewport": "915x412",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.8962,
+      "menuHeightRatio": 0.9806
+    },
+    {
+      "viewport": "1024x768",
+      "horizontalOverflow": false,
+      "menuInsideViewport": true,
+      "menuWidthRatio": 0.7422,
+      "menuHeightRatio": 0.9049
+    }
+  ],
+  "summary": {
+    "pageLoaded": true,
+    "buildLoaded": true,
+    "testApiLoaded": true,
+    "educationModuleLoaded": true,
+    "roomsModuleLoaded": true,
+    "safetyModuleLoaded": true,
+    "requiredDomIdsPresent": true,
+    "menuInsideViewport": true,
+    "javascriptExceptions": 0,
+    "responsiveSizesChecked": 10,
+    "horizontalOverflowFailures": 0,
+    "menuViewportFailures": 0,
+    "threeAvailableInTestEnvironment": false,
+    "externalLoadFailuresInOfflineDnsEnvironment": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+      "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js",
+      "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js",
+      "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"
+    ]
+  },
+  "limitations": [
+    "O ambiente de teste não resolve os domínios externos do CDN Three.js e dos módulos Firebase.",
+    "O mundo 3D, FPS, Firebase real, AR, PWA instalada e APK não foram aprovados fisicamente neste ambiente.",
+    "A validação comprova carregamento da camada web local, APIs, DOM, menus e responsividade geométrica simulada."
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "baseline": "OTTHI World Edu V641",
+  "candidate": "OTTHI World Edu V642 modular",
+  "functionCountExpected": 544,
+  "functionCountActual": 544,
+  "functionOrderEqual": true,
+  "missingFunctions": [],
+  "addedFunctions": [],
+  "normalizedJavascriptShaExpected": "1ef2b96cce8ed2cf75681a2de45651af597f775ba92ed72aeaf71eaa5069e6b9",
+  "normalizedJavascriptShaActual": "1ef2b96cce8ed2cf75681a2de45651af597f775ba92ed72aeaf71eaa5069e6b9",
+  "normalizedJavascriptEquivalent": true,
+  "normalizedStylesheetShaExpected": "d2f3c8258bbd932ae999d430ec670734a0ef3b807974867d5089bc26bfddc732",
+  "normalizedStylesheetShaActual": "d2f3c8258bbd932ae999d430ec670734a0ef3b807974867d5089bc26bfddc732",
+  "normalizedStylesheetEquivalent": true,
+  "preservedAssetsChecked": 83,
+  "preservedAssetsUnchanged": 83,
+  "preservedAssetFailures": [],
+  "requiredSystemTokens": {
+    "roupas_e_avatar": {
+      "required": [
+        "applyAvatarCustomization",
+        "openAvatarStudio",
+        "uniform"
+      ],
+      "present": [
+        "applyAvatarCustomization",
+        "openAvatarStudio",
+        "uniform"
+      ],
+      "complete": true
+    },
+    "skills": {
+      "required": [
+        "setScaleMode",
+        "toggleCrouch",
+        "spinPlayer"
+      ],
+      "present": [
+        "setScaleMode",
+        "toggleCrouch",
+        "spinPlayer"
+      ],
+      "complete": true
+    },
+    "bombeiros": {
+      "required": [
+        "createFireTruck",
+        "openFireStationDesk",
+        "activateFireIncident"
+      ],
+      "present": [
+        "createFireTruck",
+        "openFireStationDesk",
+        "activateFireIncident"
+      ],
+      "complete": true
+    },
+    "policia": {
+      "required": [
+        "createPoliceCar",
+        "startPoliceAlert",
+        "updatePoliceSystem"
+      ],
+      "present": [
+        "createPoliceCar",
+        "startPoliceAlert",
+        "updatePoliceSystem"
+      ],
+      "complete": true
+    },
+    "ambulancias": {
+      "required": [
+        "createAmbulance",
+        "createTrafficIncident",
+        "resolveTrafficIncident"
+      ],
+      "present": [
+        "createAmbulance",
+        "createTrafficIncident",
+        "resolveTrafficIncident"
+      ],
+      "complete": true
+    },
+    "construcao": {
+      "required": [
+        "beginBuildMode",
+        "placeBuild",
+        "reconcileWorldBuilds"
+      ],
+      "present": [
+        "beginBuildMode",
+        "placeBuild",
+        "reconcileWorldBuilds"
+      ],
+      "complete": true
+    },
+    "pescaria": {
+      "required": [
+        "startFishing",
+        "updateFishingVisual",
+        "restoreFishingCamera"
+      ],
+      "present": [
+        "startFishing",
+        "updateFishingVisual",
+        "restoreFishingCamera"
+      ],
+      "complete": true
+    },
+    "transporte": {
+      "required": [
+        "createBusModel",
+        "enterBus",
+        "openMetroStation"
+      ],
+      "present": [
+        "createBusModel",
+        "enterBus",
+        "openMetroStation"
+      ],
+      "complete": true
+    },
+    "multiplayer": {
+      "required": [
+        "remotePlayerEvent",
+        "openSocialHub",
+        "updateMultiplayer"
+      ],
+      "present": [
+        "remotePlayerEvent",
+        "openSocialHub",
+        "updateMultiplayer"
+      ],
+      "complete": true
+    },
+    "educacao": {
+      "required": [
+        "openEducationHub",
+        "runEducationGame",
+        "OTTHI_LEARNING"
+      ],
+      "present": [
+        "openEducationHub",
+        "runEducationGame",
+        "OTTHI_LEARNING"
+      ],
+      "complete": true
+    }
+  },
+  "passed": true
+}
