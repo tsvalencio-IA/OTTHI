@@ -10,6 +10,8 @@ on:
       - "tools/deep_inventory.py"
       - "tools/verify_equivalence.py"
       - "tools/validate_project.py"
+      - "tools/test_v643_mobility.js"
+      - "tools/test_v643_world_systems.py"
 
 permissions:
   contents: write
@@ -31,6 +33,8 @@ jobs:
           python tools/audit_source.py
           python tools/deep_inventory.py
           python tools/verify_equivalence.py
+          node tools/test_v643_mobility.js
+          python tools/test_v643_world_systems.py
           python tools/validate_project.py
       - name: Validar JavaScript
         run: node --check app.js
