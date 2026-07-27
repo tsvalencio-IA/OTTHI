@@ -1,0 +1,35 @@
+OTTHI WORLD EDU V642 — COMO SUBIR PELO CELULAR
+
+NOME DO NOVO REPOSITÓRIO:
+OTTHI-WORLD-EDU
+
+1. Extraia completamente o ZIP.
+2. No GitHub, crie um repositório público chamado OTTHI-WORLD-EDU.
+3. Entre na raiz do novo repositório.
+4. Use Add file > Upload files.
+5. Envie TODO o conteúdo extraído, preservando as pastas:
+   .github/
+   android-app/
+   assets/
+   docs/
+   icons/
+   moldes/
+   src/
+   tools/
+   e os arquivos da raiz.
+6. Não envie o ZIP fechado como único arquivo.
+7. Confirme o commit na branch main.
+8. Abra Settings > Pages.
+9. Selecione Deploy from a branch > main > /root.
+10. Publique firebase-database.rules.json no Realtime Database.
+11. Abra https://tsvalencio-ia.github.io/OTTHI-WORLD-EDU/
+
+REGRA DE CORREÇÃO FUTURA:
+- JavaScript: altere src/modules/<módulo>.js.
+- CSS: altere src/styles/<módulo>.css.
+- Não use app.js e style.css como fonte principal.
+- O workflow Build modular OTTHI World Edu recompila e valida os bundles.
+
+FIREBASE:
+O firebase-config.js mantém as mesmas chaves/configurações da base V641.
+As regras novas precisam ser publicadas manualmente no Firebase Console.

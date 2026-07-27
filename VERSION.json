@@ -1,0 +1,47 @@
+{
+  "version": 642,
+  "build": "642.0-complete-modular-source-equivalence",
+  "name": "OTTHI World Edu",
+  "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
+  "runtimeBundle": "app.js",
+  "styleBundle": "style.css",
+  "preserves": [
+    "roupas",
+    "texturas",
+    "skills",
+    "bombeiros",
+    "ambulancias",
+    "policia",
+    "casas",
+    "interiores",
+    "construcao",
+    "pescaria",
+    "barcos",
+    "onibus",
+    "metro",
+    "missoes",
+    "multiplayer",
+    "educacao adaptativa",
+    "firebase"
+  ],
+  "appSha256": "67adf70228a52640c6f86aef3813cad1fe85b81a3f166cf55651d996f99a0cc3",
+  "styleSha256": "26e49d52f396f72fdace404d38e592d8024da110ba6fa70ffa50f8fe659c1cb3",
+  "moduleManifestSha256": "8b8569f384211aea6736ad80c92fb3811f7624a362ff8b940a32ac27738aab80",
+  "sourceFiles": {
+    "javascriptModules": 31,
+    "styleModules": 11,
+    "namedFunctions": 544,
+    "arrowCallbacks": 848,
+    "controlFlowOccurrences": 2851,
+    "eventBindings": 236,
+    "htmlNodes": 262,
+    "htmlIds": 104,
+    "moduleDependencyPairs": 271
+  },
+  "validation": {
+    "equivalenceV641": true,
+    "structuralChecks": 95,
+    "browserResponsiveSizes": 10,
+    "physicalDeviceApproved": false
+  }
+}

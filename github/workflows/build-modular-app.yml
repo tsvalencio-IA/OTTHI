@@ -1,0 +1,47 @@
+name: Build modular OTTHI World Edu
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/**"
+      - "tools/build_project.py"
+      - "tools/audit_source.py"
+      - "tools/deep_inventory.py"
+      - "tools/verify_equivalence.py"
+      - "tools/validate_project.py"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Gerar bundles e inventários
+        run: |
+          python tools/build_project.py
+          python tools/audit_source.py
+          python tools/deep_inventory.py
+          python tools/verify_equivalence.py
+          python tools/validate_project.py
+      - name: Validar JavaScript
+        run: node --check app.js
+      - name: Salvar bundles gerados
+        run: |
+          if [ -n "$(git status --porcelain app.js style.css src/module-order.json docs/)" ]; then
+            git config user.name "OTTHI Modular Builder"
+            git config user.email "actions@users.noreply.github.com"
+            git add app.js style.css src/module-order.json docs/
+            git commit -m "build: atualizar bundles modulares [skip actions]"
+            git push
+          else
+            echo "Bundles já estão atualizados."
+          fi
