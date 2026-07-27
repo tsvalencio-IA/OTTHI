@@ -12,6 +12,7 @@ on:
       - "tools/validate_project.py"
       - "tools/test_v643_mobility.js"
       - "tools/test_v643_world_systems.py"
+      - "tools/test_v644_neighborhoods.py"
 
 permissions:
   contents: write
@@ -35,6 +36,7 @@ jobs:
           python tools/verify_equivalence.py
           node tools/test_v643_mobility.js
           python tools/test_v643_world_systems.py
+          python tools/test_v644_neighborhoods.py
           python tools/validate_project.py
       - name: Validar JavaScript
         run: node --check app.js
