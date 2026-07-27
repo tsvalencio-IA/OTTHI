@@ -1,17 +1,17 @@
-# Checklist técnico completo — OTTHI World Edu V643
+# Checklist técnico completo — OTTHI World Edu V644
 
 Este checklist foi gerado sobre a fonte modular completa. Ele não declara que cada experiência física foi aprovada; separa presença no código, auditoria estática e teste obrigatório em aparelho real.
 
 ## Cobertura estática
 
-- [x] Funções: **552**
-- [x] Condições/loops capturados: **1562**
-- [x] Bindings de eventos: **188**
-- [x] Declarações de topo: **94**
+- [x] Funções: **564**
+- [x] Condições/loops capturados: **1577**
+- [x] Bindings de eventos: **192**
+- [x] Declarações de topo: **96**
 - [x] Nós HTML: **263**
 - [x] IDs HTML: **104**
-- [x] Módulos JavaScript: **31**
-- [x] Módulos CSS: **12**
+- [x] Módulos JavaScript: **32**
+- [x] Módulos CSS: **14**
 
 ## Módulos JavaScript
 
@@ -22,8 +22,8 @@ Este checklist foi gerado sobre a fonte modular completa. Ele não declara que c
 - [x] `04-education-daily-quiz.js` — Desafios diários, educação, quiz e coleção — 30 funções, 42 condições/loops, 6 eventos
 - [x] `05-avatar-life-customization.js` — Avatar, roupas, uniformes, vida, moldes e ajuda — 6 funções, 3 condições/loops, 7 eventos
 - [x] `06-missions-profile-hud-inventory-tools.js` — Missões, objetivos, perfil, HUD, inventário e ferramentas — 22 funções, 17 condições/loops, 4 eventos
-- [x] `07-navigation-traffic-routes.js` — Rotas, trânsito, grafo, GPS e minimapa — 26 funções, 62 condições/loops, 0 eventos
-- [x] `08-map-parent-settings.js` — Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações — 15 funções, 35 condições/loops, 35 eventos
+- [x] `07-navigation-traffic-routes.js` — Rotas, trânsito, grafo, GPS e minimapa — 28 funções, 68 condições/loops, 0 eventos
+- [x] `08-map-parent-settings.js` — Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações — 16 funções, 35 condições/loops, 35 eventos
 - [x] `09-responsive-ar-quality-diagnostics.js` — Responsividade, AR, modos, qualidade, LOD e diagnóstico — 29 funções, 81 condições/loops, 13 eventos
 - [x] `10-player-skills.js` — Escala, Mini/Normal/Grande, abaixar, girar e domínio de skills — 9 funções, 28 condições/loops, 0 eventos
 - [x] `11-render-materials-player-model.js` — Texturas, materiais, geometria, personagem e avatar 3D — 29 funções, 80 condições/loops, 0 eventos
@@ -46,10 +46,11 @@ Este checklist foi gerado sobre a fonte modular completa. Ele não declara que c
 - [x] `28-multiplayer-social-online.js` — Desafios online, social, chat, presença, fantasmas e sincronização — 43 funções, 109 condições/loops, 27 eventos
 - [x] `29-game-loop-controls-gamepad.js` — Loop principal, controles, gamepad e início do jogo — 3 funções, 38 condições/loops, 15 eventos
 - [x] `30-pause-tests-public-api-bootstrap.js` — Pausa, testes de veículo, API pública de auditoria e bootstrap final — 5 funções, 23 condições/loops, 6 eventos
+- [x] `31-neighborhood-world-controller.js` — Bairros reais, limite de vagas, transição, casas e mapa V644 — 9 funções, 9 condições/loops, 4 eventos
 
 ## Sistemas e jogabilidades preservados
 
-- [x] Estado, migração V600–V641 e salvamento local/nuvem
+- [x] Estado, migração V600–V644 e salvamento local/nuvem
 - [x] Conta e autenticação Firebase
 - [x] Roupas, acessórios e uniformes profissionais
 - [x] Skills Mini, Normal, Grande, Abaixar e Girar
@@ -102,20 +103,20 @@ Este checklist foi gerado sobre a fonte modular completa. Ele não declara que c
 
 ## Auditoria profunda de condições, callbacks e dependências
 
-- [x] Declarações de função nomeadas: **552**
-- [x] Funções arrow de topo: **18**
-- [x] Tokens `=>` incluindo callbacks: **860**
-- [x] Ocorrências de fluxo (`if/else/switch/case/for/while/catch/return/throw`): **2937**
-- [x] Bindings de evento detalhados: **238**
-- [x] Pares de dependência entre módulos: **299**
+- [x] Declarações de função nomeadas: **564**
+- [x] Funções arrow de topo: **19**
+- [x] Tokens `=>` incluindo callbacks: **871**
+- [x] Ocorrências de fluxo (`if/else/switch/case/for/while/catch/return/throw`): **2972**
+- [x] Bindings de evento detalhados: **242**
+- [x] Pares de dependência entre módulos: **313**
 
 ### Fluxo por tipo
 
 - [x] `catch`: **34** ocorrências
 - [x] `else`: **241** ocorrências
-- [x] `for`: **286** ocorrências
-- [x] `if`: **1472** ocorrências
-- [x] `return`: **885** ocorrências
+- [x] `for`: **288** ocorrências
+- [x] `if`: **1492** ocorrências
+- [x] `return`: **898** ocorrências
 - [x] `throw`: **14** ocorrências
 - [x] `while`: **5** ocorrências
 
@@ -129,10 +130,10 @@ Este checklist foi gerado sobre a fonte modular completa. Ele não declara que c
 - `INVENTARIO-CALLABLES.csv`
 - `DEPENDENCIAS-MODULOS.csv`
 - `AUDITORIA-PROFUNDA-RESUMO.json`
-- `RELATORIO-PRESERVACAO-V642-V643.md`
-- `RELATORIO-PRESERVACAO-V642-V643.json`
-- `CHECKLIST-552-FUNCOES.md`
+- `RELATORIO-PRESERVACAO-V642-V644.md`
+- `RELATORIO-PRESERVACAO-V642-V644.json`
+- `CHECKLIST-564-FUNCOES.md`
 - `CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md`
-- `CHECKLIST-238-EVENTOS.md`
+- `CHECKLIST-242-EVENTOS.md`
 - `CHECKLIST-263-NOS-HTML.md`
 - `MATRIZ-COMPLETA-JOGABILIDADES-E-TESTES.md`

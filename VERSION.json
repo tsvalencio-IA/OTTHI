@@ -1,18 +1,19 @@
 {
-  "version": 643,
-  "build": "643.1-responsive-fullscreen-controls",
+  "version": 644,
+  "build": "644.0-neighborhoods-capacity-map",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
   "styleBundle": "style.css",
   "changes": [
-    "direção lateral corrigida em carros e barcos",
-    "botão Acelerar",
-    "botão Freio/Ré alternado",
-    "NPCs pescando nas margens",
-    "textura de água V643",
-    "prioridade e previsão de colisão no trânsito",
-    "spawn e recuperação de ônibus reforçados"
+    "bairros funcionais com transição real do mundo",
+    "limite de 10 jogadores por bairro",
+    "reserva e liberação automática de vaga",
+    "contadores de ocupação em tempo real",
+    "limpeza de jogadores e objetos do bairro anterior",
+    "casas online separadas por bairro",
+    "teleporte seguro para a entrada coerente de cada bairro",
+    "mapa e minimapa com regiões e escalas responsivas"
   ],
   "preserves": [
     "roupas",
@@ -36,10 +37,10 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "643.1",
+  "hotfix": "",
   "notes": [
-    "Canvas WebGL ocupa 100% da tela em DPR adaptativo",
-    "Controles de paisagem separados do minimapa e dos botões de ação",
-    "Retrato e paisagem usam o palco real como medida"
+    "Retrato e paisagem preservam a escala do mapa",
+    "Minimapa recalcula o buffer conforme o tamanho visual",
+    "Firebase Realtime Database mantido"
   ]
 }

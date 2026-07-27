@@ -1,0 +1,351 @@
+{
+  "version": 644,
+  "passed": true,
+  "counts": {
+    "passed": 68,
+    "failed": 0,
+    "total": 68
+  },
+  "checks": [
+    {
+      "name": "Bairro configurado bairro-central",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Bairro configurado bairro-floresta",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Bairro configurado bairro-lago",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Bairro configurado bairro-montanha",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Bairro configurado bairro-escola",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Cinco bairros únicos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Capacidade 10 em todos",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "Limite multiplayer 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Entradas físicas dos bairros",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "Limites cartográficos dos bairros",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "Cinco geometrias de bairro interpretadas",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "Entrada dentro dos limites bairro-central",
+      "passed": true,
+      "detail": "{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}"
+    },
+    {
+      "name": "Limites dentro do mundo bairro-central",
+      "passed": true,
+      "detail": "{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}"
+    },
+    {
+      "name": "Entrada dentro dos limites bairro-floresta",
+      "passed": true,
+      "detail": "{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}"
+    },
+    {
+      "name": "Limites dentro do mundo bairro-floresta",
+      "passed": true,
+      "detail": "{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}"
+    },
+    {
+      "name": "Entrada dentro dos limites bairro-lago",
+      "passed": true,
+      "detail": "{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}"
+    },
+    {
+      "name": "Limites dentro do mundo bairro-lago",
+      "passed": true,
+      "detail": "{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}"
+    },
+    {
+      "name": "Entrada dentro dos limites bairro-montanha",
+      "passed": true,
+      "detail": "{'id': 'bairro-montanha', 'name': 'Bairro da Montanha', 'capacity': 10, 'entryX': 82.0, 'entryZ': 62.0, 'xMin': 48.0, 'xMax': 116.0, 'zMin': 30.0, 'zMax': 112.0}"
+    },
+    {
+      "name": "Limites dentro do mundo bairro-montanha",
+      "passed": true,
+      "detail": "{'id': 'bairro-montanha', 'name': 'Bairro da Montanha', 'capacity': 10, 'entryX': 82.0, 'entryZ': 62.0, 'xMin': 48.0, 'xMax': 116.0, 'zMin': 30.0, 'zMax': 112.0}"
+    },
+    {
+      "name": "Entrada dentro dos limites bairro-escola",
+      "passed": true,
+      "detail": "{'id': 'bairro-escola', 'name': 'Bairro da Academia', 'capacity': 10, 'entryX': 18.0, 'entryZ': -32.0, 'xMin': 8.0, 'xMax': 46.0, 'zMin': -62.0, 'zMax': -20.0}"
+    },
+    {
+      "name": "Limites dentro do mundo bairro-escola",
+      "passed": true,
+      "detail": "{'id': 'bairro-escola', 'name': 'Bairro da Academia', 'capacity': 10, 'entryX': 18.0, 'entryZ': -32.0, 'xMin': 8.0, 'xMax': 46.0, 'zMin': -62.0, 'zMax': -20.0}"
+    },
+    {
+      "name": "Mapa completo usa a mesma escala X/Z",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Minimapa usa uma escala única X/Z",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB reserveRoomSlot",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB watchRoomCounts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB refreshRoomCounts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB roomCapacity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB otthi:room-changing",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB otthi:room-changed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB onDisconnect(slotRef).remove",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "RTDB slots/${user.uid}",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reserva antes de desconectar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Rollback para bairro anterior",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Contadores por sala",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador clearRemoteRoomEntities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador resetMobilityForRoomChange",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador applyRoomWorld",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador focusCurrentRoom",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador roomHouseMarkers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador mapHouseLocations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Controlador mapRegionsMarkup",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Troca limpa mundo antes de conectar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Transporte para entrada real",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Estado salva bairro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Jogadores antigos removidos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Casas antigas removidas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Minimapa miniMapLogicalSize",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Minimapa miniMapScale",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Minimapa OTTHI_ROOM_WORLD?.houseMarkers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Minimapa room.bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Minimapa room.accent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa completo currentMapLocations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa completo mapRegionsMarkup",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa completo mapHouseLocations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa completo mapLocations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa completo quadrado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa retrato responsivo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa paisagem responsivo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Canvas minimapa acompanha caixa",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Regras possuem slots",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Regra limita 10",
+      "passed": true,
+      "detail": "!newData.exists() || newData.numChildren() <= 10"
+    },
+    {
+      "name": "Usuário escreve somente própria vaga",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vaga valida bairro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "UI mostra ocupação",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "UI bloqueia lotado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "UI só seleciona após sucesso",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Módulo 31 no manifesto",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS 13 no manifesto",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

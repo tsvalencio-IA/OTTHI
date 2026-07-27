@@ -1,0 +1,456 @@
+{
+  "version": 644,
+  "passed": true,
+  "checks": [
+    {
+      "name": "Arquivo obrigatório index.html",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório style.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório sw.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório firebase-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório firebase-database.rules.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório athos.glb",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório VERSION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório src/module-order.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/build_project.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/verify_equivalence.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/validate_project.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v643_mobility.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v643_world_systems.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v644_neighborhoods.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório .github/workflows/build-modular-app.yml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório .github/workflows/gerar-apk.yml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório android-app/app/build.gradle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório assets/textures/water-ripples-v643.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório docs/CHECKLIST-ATUALIZACAO-V643.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório docs/RELATORIO-TESTE-BAIRROS-V644.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório docs/RELATORIO-TESTE-BAIRROS-V644.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório src/modules/31-neighborhood-world-controller.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório src/styles/13-neighborhood-world-map-v644.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "32 módulos JavaScript",
+      "passed": true,
+      "detail": "32"
+    },
+    {
+      "name": "14 módulos CSS",
+      "passed": true,
+      "detail": "14"
+    },
+    {
+      "name": "Manifesto JS completo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Manifesto CSS completo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ordem JS corresponde aos arquivos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ordem CSS corresponde aos arquivos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe app.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe sw.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "12 testes determinísticos de mobilidade V643",
+      "passed": true,
+      "detail": "┌─────────┬──────────────────────────────────────────────────────────┬────────────┐\n│ (index) │ teste                                                    │ resultado  │\n├─────────┼──────────────────────────────────────────────────────────┼────────────┤\n│ 0       │ 'Carro acelera apenas pelo botão'                        │ 'APROVADO' │\n│ 1       │ 'Carro: comando direita produz curva visual à direita'   │ 'APROVADO' │\n│ 2       │ 'Carro: comando esquerda produz curva visual à esquerda' │ 'APROVADO' │\n│ 3       │ 'Carro: curvas laterais são simétricas e opostas'        │ 'APROVADO' │\n│ 4       │ 'Carro: Freio reduz a velocidade antes da ré'            │ 'APROVADO' │\n│ 5       │ 'Carro: botão Freio/Ré engata ré depois de parar'        │ 'APROVADO' │\n│ 6       │ 'Carro: Acelerar freia a ré e volta ao avanço'           │ 'APROVADO' │\n│ 7       │ 'Barco acelera apenas pelo botão'                        │ 'APROVADO' │\n│ 8       │ 'Barco: comando direita produz curva visual à direita'   │ 'APROVADO' │\n│ 9       │ 'Barco: comando esquerda produz curva visual à esquerda' │ 'APROVADO' │\n│ 10      │ 'Barco: Freio reduz antes da ré'                         │ 'APROVADO' │\n│ 11      │ 'Barco: Freio/Ré engata ré após parar'                   │ 'APROVADO' │\n└─────────┴──────────────────────────────────────────────────────────┴────────────┘\n{\"passed\":12,\"failed\":0}"
+    },
+    {
+      "name": "34 testes de mundo V643",
+      "passed": true,
+      "detail": "{\n  \"version\": 643,\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 34,\n    \"failed\": 0,\n    \"total\": 34\n  },\n  \"checks\": [\n    {\n      \"name\": \"Cinco pescadores de margem\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Pesca viva: createShoreFisher\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: createShoreFishingLife\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: updateShoreFishers\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: fishingActivity\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: bobber\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: line.geometry.attributes.position.needsUpdate\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva criada na expansão do lago\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Textura de água PNG válida\",\n      \"passed\": true,\n      \"detail\": \"(512, 512)\"\n    },\n    {\n      \"name\": \"Textura de água usada no material\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Frota inicial limitada\",\n      \"passed\": true,\n      \"detail\": \"{'solar': 2, 'verde': 2, 'escolar': 1, 'circular': 1, 'turismo': 1}\"\n    },\n    {\n      \"name\": \"Circular da Cidade com uma unidade\",\n      \"passed\": true,\n      \"detail\": \"1\"\n    },\n    {\n      \"name\": \"Trânsito: trafficPriority\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: trafficSpeedFactor\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: captureTrafficPositions\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: resolveTrafficOverlaps\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: trafficHoldUntil\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: busSpawnIndex\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: buildBusRoadPath\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: recoverBusRoute\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: validateBusCoverage\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: laneOffset\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Serviços de emergência respeitam retenção\",\n      \"passed\": true,\n      \"detail\": \"3\"\n    },\n    {\n      \"name\": \"NPCs/veículos respeitam retenção\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: mode-mobility-driver #runBtn\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: mode-mobility-driver #jumpBtn\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: orientation:portrait\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS m"
+    },
+    {
+      "name": "Testes de bairros/mapa V644",
+      "passed": true,
+      "detail": "{\n  \"version\": 644,\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 68,\n    \"failed\": 0,\n    \"total\": 68\n  },\n  \"checks\": [\n    {\n      \"name\": \"Bairro configurado bairro-central\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-montanha\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-escola\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Cinco bairros únicos\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Capacidade 10 em todos\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Limite multiplayer 10\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Entradas físicas dos bairros\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Limites cartográficos dos bairros\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Cinco geometrias de bairro interpretadas\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-central\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-central\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-montanha\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-montanha', 'name': 'Bair"
+    },
+    {
+      "name": "Sintaxe assets/js/core/performance-guardian.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/runtime-config.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/safe-pointer.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/core/viewport-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/education/adaptive-learning.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/game-account.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/multiplayer/room-manager.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/multiplayer-rtdb.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/safety/child-safety.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/save-db.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sintaxe assets/js/ui/shared-modal.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON manifest.webmanifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON firebase-database.rules.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON VERSION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON src/module-order.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "IDs HTML únicos",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Referências locais existem",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Versão 644 no index",
+      "passed": true,
+      "detail": "15"
+    },
+    {
+      "name": "GitHub Pages OTTHI",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Chaves CSS balanceadas",
+      "passed": true,
+      "detail": "1864/1864"
+    },
+    {
+      "name": "564 funções nomeadas",
+      "passed": true,
+      "detail": "564"
+    },
+    {
+      "name": "Runtime V644",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Save V644 e migração V643",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado mobilityThrottleIntent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado const steer=Math.abs(ix)<.06?0:-ix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado const steer=Math.abs(ix)<.07?0:-ix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado Acelerar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado Freio",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado createShoreFishingLife",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado trafficPriority",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado busSpawnIndex",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token preservado water-ripples-v643.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 miniMapLogicalSize",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 miniMapScale",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 currentMapLocations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 clearRemoteRoomEntities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 applyRoomWorld",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 mapRegionsMarkup",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Token V644 focusCurrentRoom",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Viewport usa palco real",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Viewport lógico sem DPR duplicado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Canvas ocupa 100%",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Zonas de paisagem separadas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mapa principal escala 1:1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Responsividade automática do mapa",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Cinco bairros com 10 vagas",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "Regra Firebase limita 10 usuários",
+      "passed": true,
+      "detail": "!newData.exists() || newData.numChildren() <= 10"
+    },
+    {
+      "name": "Service Worker V644",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Android V643 preservado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Preservação V642/V644 aprovada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Bairros/mapa V644 aprovados",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "errors": [],
+  "counts": {
+    "checks": 87,
+    "passed": 87,
+    "failed": 0,
+    "functions": 564,
+    "javascriptModules": 32,
+    "styleModules": 14,
+    "htmlIds": 104
+  },
+  "hashes": {
+    "app.js": "2017c4d2a490efe5e95b284abaed0a1ae47b2284388e7de5356349ce712f0449",
+    "style.css": "d00cee9131fc6a8c22615a4d6d055e2ec52e8d3e0ba843955071f8ffb19a000e",
+    "src/module-order.json": "73810c45e65714e23725f0d7ca21dc334ffbded546774833d9e3971ee200c60b"
+  }
+}

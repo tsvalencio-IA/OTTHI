@@ -1,0 +1,237 @@
+{
+  "baseline": "OTTHI World Edu V641 / fonte modular V642",
+  "candidate": "OTTHI World Edu V644 bairros, capacidade, mapa e responsividade",
+  "functionCountBaseline": 544,
+  "functionCountActual": 564,
+  "baselineFunctionsPreserved": true,
+  "baselineFunctionOrderPreserved": true,
+  "missingFunctions": [],
+  "addedFunctions": [
+    "trafficPriority",
+    "miniMapLogicalSize",
+    "miniMapScale",
+    "currentMapLocations",
+    "busSpawnIndex",
+    "createShoreFisher",
+    "createShoreFishingLife",
+    "updateShoreFishers",
+    "mobilityDriverActive",
+    "updateMobilityControlLabels",
+    "mobilityThrottleIntent",
+    "roomWorldInfo",
+    "roomHouseMarkers",
+    "mapHouseLocations",
+    "mapRegionsMarkup",
+    "clearRemoteRoomEntities",
+    "resetMobilityForRoomChange",
+    "canChangeRoom",
+    "focusCurrentRoom",
+    "applyRoomWorld"
+  ],
+  "requiredV644FunctionsPresent": true,
+  "requiredV644Functions": [
+    "trafficPriority",
+    "busSpawnIndex",
+    "createShoreFisher",
+    "createShoreFishingLife",
+    "updateShoreFishers",
+    "mobilityDriverActive",
+    "updateMobilityControlLabels",
+    "mobilityThrottleIntent",
+    "miniMapLogicalSize",
+    "miniMapScale",
+    "currentMapLocations",
+    "roomWorldInfo",
+    "roomHouseMarkers",
+    "mapHouseLocations",
+    "mapRegionsMarkup",
+    "clearRemoteRoomEntities",
+    "resetMobilityForRoomChange",
+    "canChangeRoom",
+    "focusCurrentRoom",
+    "applyRoomWorld"
+  ],
+  "preservedAssetsChecked": 83,
+  "preservedAssetsUnchanged": 80,
+  "approvedMutableAssetChanges": [
+    "assets/js/multiplayer-rtdb.js",
+    "assets/js/multiplayer/room-manager.js",
+    "firebase-database.rules.json"
+  ],
+  "preservedAssetFailures": [],
+  "requiredSystemTokens": {
+    "roupas_e_avatar": {
+      "required": [
+        "applyAvatarCustomization",
+        "openAvatarStudio",
+        "uniform"
+      ],
+      "present": [
+        "applyAvatarCustomization",
+        "openAvatarStudio",
+        "uniform"
+      ],
+      "complete": true
+    },
+    "skills": {
+      "required": [
+        "setScaleMode",
+        "toggleCrouch",
+        "spinPlayer"
+      ],
+      "present": [
+        "setScaleMode",
+        "toggleCrouch",
+        "spinPlayer"
+      ],
+      "complete": true
+    },
+    "bombeiros": {
+      "required": [
+        "createFireTruck",
+        "openFireStationDesk",
+        "activateFireIncident"
+      ],
+      "present": [
+        "createFireTruck",
+        "openFireStationDesk",
+        "activateFireIncident"
+      ],
+      "complete": true
+    },
+    "policia": {
+      "required": [
+        "createPoliceCar",
+        "startPoliceAlert",
+        "updatePoliceSystem"
+      ],
+      "present": [
+        "createPoliceCar",
+        "startPoliceAlert",
+        "updatePoliceSystem"
+      ],
+      "complete": true
+    },
+    "ambulancias": {
+      "required": [
+        "createAmbulance",
+        "createTrafficIncident",
+        "resolveTrafficIncident"
+      ],
+      "present": [
+        "createAmbulance",
+        "createTrafficIncident",
+        "resolveTrafficIncident"
+      ],
+      "complete": true
+    },
+    "construcao": {
+      "required": [
+        "beginBuildMode",
+        "placeBuild",
+        "reconcileWorldBuilds"
+      ],
+      "present": [
+        "beginBuildMode",
+        "placeBuild",
+        "reconcileWorldBuilds"
+      ],
+      "complete": true
+    },
+    "pescaria": {
+      "required": [
+        "startFishing",
+        "updateFishingVisual",
+        "restoreFishingCamera",
+        "createShoreFishingLife"
+      ],
+      "present": [
+        "startFishing",
+        "updateFishingVisual",
+        "restoreFishingCamera",
+        "createShoreFishingLife"
+      ],
+      "complete": true
+    },
+    "transporte": {
+      "required": [
+        "createBusModel",
+        "enterBus",
+        "openMetroStation",
+        "trafficPriority",
+        "busSpawnIndex"
+      ],
+      "present": [
+        "createBusModel",
+        "enterBus",
+        "openMetroStation",
+        "trafficPriority",
+        "busSpawnIndex"
+      ],
+      "complete": true
+    },
+    "mobilidade_v643": {
+      "required": [
+        "mobilityThrottleIntent",
+        "updateMobilityControlLabels",
+        "mobilityAccelerate",
+        "mobilityBrake"
+      ],
+      "present": [
+        "mobilityThrottleIntent",
+        "updateMobilityControlLabels",
+        "mobilityAccelerate",
+        "mobilityBrake"
+      ],
+      "complete": true
+    },
+    "multiplayer": {
+      "required": [
+        "remotePlayerEvent",
+        "openSocialHub",
+        "updateMultiplayer",
+        "applyRoomWorld",
+        "clearRemoteRoomEntities"
+      ],
+      "present": [
+        "remotePlayerEvent",
+        "openSocialHub",
+        "updateMultiplayer",
+        "applyRoomWorld",
+        "clearRemoteRoomEntities"
+      ],
+      "complete": true
+    },
+    "bairros_v644": {
+      "required": [
+        "miniMapScale",
+        "currentMapLocations",
+        "mapRegionsMarkup",
+        "roomHouseMarkers",
+        "focusCurrentRoom"
+      ],
+      "present": [
+        "miniMapScale",
+        "currentMapLocations",
+        "mapRegionsMarkup",
+        "roomHouseMarkers",
+        "focusCurrentRoom"
+      ],
+      "complete": true
+    },
+    "educacao": {
+      "required": [
+        "openEducationHub",
+        "runEducationGame",
+        "OTTHI_LEARNING"
+      ],
+      "present": [
+        "openEducationHub",
+        "runEducationGame",
+        "OTTHI_LEARNING"
+      ],
+      "complete": true
+    }
+  },
+  "passed": true
+}

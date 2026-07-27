@@ -1,0 +1,76 @@
+# Relatório de teste — bairros V644
+
+- Resultado: **APROVADO**
+- Aprovados: **68**
+- Falhas: **0**
+
+## Verificações
+
+- [x] Bairro configurado bairro-central
+- [x] Bairro configurado bairro-floresta
+- [x] Bairro configurado bairro-lago
+- [x] Bairro configurado bairro-montanha
+- [x] Bairro configurado bairro-escola
+- [x] Cinco bairros únicos
+- [x] Capacidade 10 em todos — 5
+- [x] Limite multiplayer 10
+- [x] Entradas físicas dos bairros — 5
+- [x] Limites cartográficos dos bairros — 5
+- [x] Cinco geometrias de bairro interpretadas — 5
+- [x] Entrada dentro dos limites bairro-central — {'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}
+- [x] Limites dentro do mundo bairro-central — {'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}
+- [x] Entrada dentro dos limites bairro-floresta — {'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}
+- [x] Limites dentro do mundo bairro-floresta — {'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}
+- [x] Entrada dentro dos limites bairro-lago — {'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}
+- [x] Limites dentro do mundo bairro-lago — {'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}
+- [x] Entrada dentro dos limites bairro-montanha — {'id': 'bairro-montanha', 'name': 'Bairro da Montanha', 'capacity': 10, 'entryX': 82.0, 'entryZ': 62.0, 'xMin': 48.0, 'xMax': 116.0, 'zMin': 30.0, 'zMax': 112.0}
+- [x] Limites dentro do mundo bairro-montanha — {'id': 'bairro-montanha', 'name': 'Bairro da Montanha', 'capacity': 10, 'entryX': 82.0, 'entryZ': 62.0, 'xMin': 48.0, 'xMax': 116.0, 'zMin': 30.0, 'zMax': 112.0}
+- [x] Entrada dentro dos limites bairro-escola — {'id': 'bairro-escola', 'name': 'Bairro da Academia', 'capacity': 10, 'entryX': 18.0, 'entryZ': -32.0, 'xMin': 8.0, 'xMax': 46.0, 'zMin': -62.0, 'zMax': -20.0}
+- [x] Limites dentro do mundo bairro-escola — {'id': 'bairro-escola', 'name': 'Bairro da Academia', 'capacity': 10, 'entryX': 18.0, 'entryZ': -32.0, 'xMin': 8.0, 'xMax': 46.0, 'zMin': -62.0, 'zMax': -20.0}
+- [x] Mapa completo usa a mesma escala X/Z
+- [x] Minimapa usa uma escala única X/Z
+- [x] RTDB reserveRoomSlot
+- [x] RTDB watchRoomCounts
+- [x] RTDB refreshRoomCounts
+- [x] RTDB roomCapacity
+- [x] RTDB otthi:room-changing
+- [x] RTDB otthi:room-changed
+- [x] RTDB onDisconnect(slotRef).remove
+- [x] RTDB slots/${user.uid}
+- [x] Reserva antes de desconectar
+- [x] Rollback para bairro anterior
+- [x] Contadores por sala
+- [x] Controlador clearRemoteRoomEntities
+- [x] Controlador resetMobilityForRoomChange
+- [x] Controlador applyRoomWorld
+- [x] Controlador focusCurrentRoom
+- [x] Controlador roomHouseMarkers
+- [x] Controlador mapHouseLocations
+- [x] Controlador mapRegionsMarkup
+- [x] Troca limpa mundo antes de conectar
+- [x] Transporte para entrada real
+- [x] Estado salva bairro
+- [x] Jogadores antigos removidos
+- [x] Casas antigas removidas
+- [x] Minimapa miniMapLogicalSize
+- [x] Minimapa miniMapScale
+- [x] Minimapa OTTHI_ROOM_WORLD?.houseMarkers
+- [x] Minimapa room.bounds
+- [x] Minimapa room.accent
+- [x] Mapa completo currentMapLocations
+- [x] Mapa completo mapRegionsMarkup
+- [x] Mapa completo mapHouseLocations
+- [x] Mapa completo mapLocations
+- [x] Mapa completo quadrado
+- [x] Mapa retrato responsivo
+- [x] Mapa paisagem responsivo
+- [x] Canvas minimapa acompanha caixa
+- [x] Regras possuem slots
+- [x] Regra limita 10 — !newData.exists() || newData.numChildren() <= 10
+- [x] Usuário escreve somente própria vaga
+- [x] Vaga valida bairro
+- [x] UI mostra ocupação
+- [x] UI bloqueia lotado
+- [x] UI só seleciona após sucesso
+- [x] Módulo 31 no manifesto
+- [x] CSS 13 no manifesto

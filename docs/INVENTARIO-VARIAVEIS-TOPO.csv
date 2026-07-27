@@ -1,6 +1,6 @@
 ﻿kind,module,sourceLine,declaration
 const,00-runtime-foundation.js,4,"OTTHI_GAME_LIVE_BASE = new URL('./', window.location.href).href;"
-const,00-runtime-foundation.js,5,OTTHI_GAME_WEB_BUILD = '643.0-precision-mobility-traffic-fishing';
+const,00-runtime-foundation.js,5,OTTHI_GAME_WEB_BUILD = '644.0-neighborhoods-capacity-map';
 const,00-runtime-foundation.js,9,"$ = (s, root = document) => root.querySelector(s);"
 const,00-runtime-foundation.js,10,"$$ = (s, root = document) => [...root.querySelectorAll(s)];"
 const,00-runtime-foundation.js,11,"clamp = (v, a, b) => Math.max(a, Math.min(b, v));"
@@ -11,9 +11,9 @@ const,00-runtime-foundation.js,15,"distance2D = (a, b) => Math.hypot(a.x - b.x, 
 const,00-runtime-foundation.js,16,uid = () => (crypto.randomUUID ? crypto.randomUUID() : `p-${Date.now()}-${Math.random().toString(16).slice(2)}`);
 const,00-runtime-foundation.js,17,"safePointerCapture=(element,pointerId)=>{try{if(element?.setPointerCapture&&Number.isInteger(pointerId))element.setPointerCapture(pointerId);return true;}catch{return false;}};"
 const,00-runtime-foundation.js,18,"safePointerRelease=(element,pointerId)=>{try{if(element?.hasPointerCapture?.(pointerId))element.releasePointerCapture(pointerId);return true;}catch{return false;}};"
-const,00-runtime-foundation.js,19,APP_VERSION = 643;
-const,00-runtime-foundation.js,20,STORAGE_KEY = 'otthos_life_world_roleplay_v643';
-const,00-runtime-foundation.js,21,"LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v642','otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v624','otthos_life_world_roleplay_v62"
+const,00-runtime-foundation.js,19,APP_VERSION = 644;
+const,00-runtime-foundation.js,20,STORAGE_KEY = 'otthos_life_world_roleplay_v644';
+const,00-runtime-foundation.js,21,"LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v643','otthos_life_world_roleplay_v642','otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v62"
 const,00-runtime-foundation.js,22,safeLocalGet = key => { try { return window.localStorage?.getItem(key) ?? null; } catch { return null; } };
 const,00-runtime-foundation.js,23,"safeLocalSet = (key, value) => { try { window.localStorage?.setItem(key, value); return true; } catch { return false; } };"
 const,00-runtime-foundation.js,24,safeLocalRemove = key => { try { window.localStorage?.removeItem(key); return true; } catch { return false; } };
@@ -43,12 +43,12 @@ const,06-missions-profile-hud-inventory-tools.js,1029,TOOL_DEFS={
 const,06-missions-profile-hud-inventory-tools.js,1057,"WORLD_MAP_ROADS=[{x:0,z:0,w:18,d:210},{x:0,z:0,w:210,d:18},{x:-55,z:-55,w:9,d:105},{x:55,z:48,w:9,d:92},{x:55,z:-55,w:9,d:105},{x:-55,z:22,w:9,d:44},{x:27.5,z:78,w:55,d:9}];"
 const,06-missions-profile-hud-inventory-tools.js,1058,NAV_BASE_NODES={
 const,06-missions-profile-hud-inventory-tools.js,1063,"NAV_BASE_EDGES=[['VS','V55S'],['V55S','V18S'],['V18S','C'],['C','V18N'],['V18N','V50N'],['V50N','V78N'],['V78N','VN'],['HW','H88W'],['H88W','H55W'],['H55W','H25W'],['H25W','C'],['C','H25E'],['H25E','H55E'],['H55E','H88E'],['H88E','HE'],['W105S','W55S'],['W55S','H55W'],['H55W','W22N'],['W22N','W40N'],['E105S','E55S'],['E55S','E18S'],['E18S','H55E'],['H55E','E48N'],['E48N','E78N'],['E78N','E94N'],['V78N','E78N']];"
-const,07-navigation-traffic-routes.js,1143,METRO_STATIONS = [
-const,07-navigation-traffic-routes.js,1151,MAP_LOCATIONS = [
-const,07-navigation-traffic-routes.js,1185,MAP_LOCATION_DETAILS={
-let,08-map-parent-settings.js,1204,mapSelectedId='';
-let,08-map-parent-settings.js,1277,mapResizeTimer=0;
-let,08-map-parent-settings.js,1308,deferredSettingsRefresh = null;
+const,07-navigation-traffic-routes.js,1153,METRO_STATIONS = [
+const,07-navigation-traffic-routes.js,1161,MAP_LOCATIONS = [
+const,07-navigation-traffic-routes.js,1195,MAP_LOCATION_DETAILS={
+let,08-map-parent-settings.js,1205,mapSelectedId='';
+let,08-map-parent-settings.js,1278,mapResizeTimer=0;
+let,08-map-parent-settings.js,1309,deferredSettingsRefresh = null;
 const,09-responsive-ar-quality-diagnostics.js,1370,toggleMission = () => openObjectivesPanel();
 let,09-responsive-ar-quality-diagnostics.js,1447,"scene, camera, renderer, clock, worldGroup, playerGroup, playerModel, playerMixer, avatarLayer, contactShadow, vehicleVisual, toolVisual, sunLight;"
 let,09-responsive-ar-quality-diagnostics.js,1448,activeVehicleRef = null;
@@ -86,10 +86,12 @@ let,22-careers-jobs-uniforms.js,3529,fxParticles=[];
 const,22-careers-jobs-uniforms.js,3530,FX_MAX_PARTICLES=40;
 let,23-vehicle-effects-driving.js,3546,"engineAudio=null,driftSoundCooldown=0,vehicleImpactCount=0;"
 const,23-vehicle-effects-driving.js,3640,BUILD_RECIPES={
-const,25-render-init-resize-position-collision.js,3813,"autoSaveInterval=setInterval(()=>{if(running){savePlayerPosition(true);}},8000);"
+const,25-render-init-resize-position-collision.js,3818,"autoSaveInterval=setInterval(()=>{if(running){savePlayerPosition(true);}},8000);"
 let,26-input-player-physics.js,3980,animTime=0;
 let,27-npc-enemies-combat-camera-action.js,4156,"localChannel=null,lastPublish=0,lastPublishSnapshot=null,lastPublishHeartbeat=0;"
 let,27-npc-enemies-combat-camera-action.js,4158,"multiplayerState={mode:'solo',connected:false,count:0,room:'mundo-publico',error:'',players:[]};const remotePresence=new Map();let pendingCloudCampfires={},pendingCloudExtensions={};"
 const,27-npc-enemies-combat-camera-action.js,4159,"cloudHouses=new Map(),cloudChat=[],incomingChallenges=new Map(),incomingSocialRequests=new Map(),gameSessions=new Map(),shownChallengeToasts=new Set(),shownSocialToasts=new Set(),shownGameResults=new Set();let activeMultiplayerGameId='',promptChallengeId='',promptSessionId='',promptSocialRequestId='';"
 const,28-multiplayer-social-online.js,4164,"SOCIAL_ACTION_LABELS={dance:'dançar',play:'brincar',highfive:'fazer toca aqui',hug:'dar um abraço',selfie:'tirar uma selfie',vehiclePassenger:'entrar no carro como passageiro',boatPassenger:'entrar no barco como passageiro',fishTogether:'pescar junto',campfireJoin:'participar da fogueira',huntTogether:'rastrear animais junto'};"
 let,29-game-loop-controls-gamepad.js,4361,"gamepadJump=false,gamepadAction=false,gamepadPower=false,gamepadCrouch=false,gamepadSize=false;"
+const,31-neighborhood-world-controller.js,0,"ROOM_WORLD_LAYOUTS=new Map((window.OTTHI_CONFIG?.rooms||[]).map(room=>[room.id,{...room,shortName:String(room.name||'Bairro').replace('Bairro da ','').replace('Bairro do ','').replace('Bairro ','')}]))"
+let,31-neighborhood-world-controller.js,1,appliedRoomId='';

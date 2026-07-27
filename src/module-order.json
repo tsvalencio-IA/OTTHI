@@ -7,14 +7,14 @@
       "startLine": 2,
       "endLine": 26,
       "description": "Runtime, utilitários, versão, storage e chaves de migração",
-      "sha256Body": "700c02f44864285bb607d0b65f455bbfe2c8fc61e9895be8500d2b9bc3e7748e"
+      "sha256Body": "21c760375eb4d9d1fc3a3858bf87b29367f8526ac56189ac83370f3a1151e909"
     },
     {
       "file": "src/modules/01-build-persistence.js",
       "startLine": 27,
       "endLine": 142,
       "description": "Normalização, merge, tombstones e persistência das construções",
-      "sha256Body": "0995f52cafc358b41a039df9aa5c3156c2bd5407b58f6956ea76228a35fb0e44"
+      "sha256Body": "d73df03266f31264e6140b69e7022096be74b7e27145f065fbc896b659eb3264"
     },
     {
       "file": "src/modules/02-state-save-cloud-account.js",
@@ -56,14 +56,14 @@
       "startLine": 1064,
       "endLine": 1200,
       "description": "Rotas, trânsito, grafo, GPS e minimapa",
-      "sha256Body": "5e0847e96681c8cc9bc8290922d19f77c20dfc97944fb9ec5586bf3f12a7cd17"
+      "sha256Body": "98f5d0625adf5b3358d39bf12232f959fc833aca9fd192303b8ced982baead89"
     },
     {
       "file": "src/modules/08-map-parent-settings.js",
       "startLine": 1201,
       "endLine": 1359,
       "description": "Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",
-      "sha256Body": "af3a41cad9f4472710de0dcad7b4e0e5605677bb674c859d510b66f6a07d52b6"
+      "sha256Body": "bb545667e37ec3b02197583e302823f50faccd540492dfafe4725cf452835a37"
     },
     {
       "file": "src/modules/09-responsive-ar-quality-diagnostics.js",
@@ -147,7 +147,7 @@
       "startLine": 3097,
       "endLine": 3240,
       "description": "Construção do mundo, recursos, baús, casas em nuvem e interiores",
-      "sha256Body": "d1f064aaf0c897acfe0ba30e9d72b922028b9b3f4418f3cdd96f05f0ba9dae7a"
+      "sha256Body": "b7a424cb2956751b2f4a04b8da0eea0e41ce2be76dca124e05cfe119523f478f"
     },
     {
       "file": "src/modules/21-interactions-shop-social-races.js",
@@ -210,7 +210,7 @@
       "startLine": 4305,
       "endLine": 4377,
       "description": "Loop principal, controles, gamepad e início do jogo",
-      "sha256Body": "112eaa61906ae89a052e0e97c067c587ca44262b3da0e506c53453ea468d8db4"
+      "sha256Body": "901b4ccf43ff5ddfba8cb563c10d92f4f8b4b58ef69864b5c72a1f5d9a2fb256"
     },
     {
       "file": "src/modules/30-pause-tests-public-api-bootstrap.js",
@@ -218,6 +218,13 @@
       "endLine": 4557,
       "description": "Pausa, testes de veículo, API pública de auditoria e bootstrap final",
       "sha256Body": "8539dc76be417801be7672f65d3fe20108b13c402059ad777197920e5c604802"
+    },
+    {
+      "file": "src/modules/31-neighborhood-world-controller.js",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Bairros reais, limite de vagas, transição, casas e mapa V644",
+      "sha256Body": "c077d7777f196bc9dc03bc62dd3f73c9c15e8f8b5222cff0b94c926d78058ba7"
     }
   ],
   "styles": [
@@ -311,6 +318,13 @@
       "endLine": 0,
       "description": "Hotfix V643.1: WebGL em tela inteira e zonas sem sobreposição",
       "sha256Body": "36407f245dfd26972ef43b1c92dcf1f91d4f66f945e2946c627a36bd80fac7fd"
+    },
+    {
+      "file": "src/styles/13-neighborhood-world-map-v644.css",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Bairros, vagas e mapa responsivo V644",
+      "sha256Body": "b9b6f6d86986f46d2be48800eec8b34375a96d1305a5a4ee99f5799c0b7d3262"
     }
   ]
 }

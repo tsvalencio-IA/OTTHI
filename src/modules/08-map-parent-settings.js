@@ -10,6 +10,7 @@
 // @otthi-module-body
   function mapLocationDetails(loc){const d=MAP_LOCATION_DETAILS[loc.id]||MAP_LOCATION_DETAILS.default;return{description:d[0],actions:d[1]};}
   function worldToMap(x,z){ return { left:clamp((x+116)/232*100,2.5,97.5), top:clamp((116-z)/232*100,2.5,97.5) }; }
+  function currentMapLocations(){return [...MAP_LOCATIONS,...(window.OTTHI_ROOM_WORLD?.mapHouseLocations?.()||[])];}
   function mapDistance(point){ return Math.round(Math.hypot(player.x-(point.navX??point.x),player.z-(point.navZ??point.z))); }
   let mapSelectedId='';
   function mapMarkerPlacements(locations,playerPoint,mapWidth=0,mapHeight=0){
@@ -57,24 +58,24 @@
     });
   }
   function mapSelectionMarkup(id){
-    const loc=MAP_LOCATIONS.find(x=>x.id===id);if(!loc)return'<div class="map-selection empty"><b>Toque em um ícone</b><span>O nome aparecerá aqui antes de iniciar a rota.</span></div>';
+    const loc=currentMapLocations().find(x=>x.id===id);if(!loc)return'<div class="map-selection empty"><b>Toque em um ícone</b><span>O nome aparecerá aqui antes de iniciar a rota.</span></div>';
     const details=mapLocationDetails(loc);return`<div class="map-selection detailed"><div class="map-selection-title"><b>${loc.icon} ${loc.name}</b><span>${loc.group}</span></div><p>${details.description}</p><div class="map-action-chips">${details.actions.map(action=>`<i>${action}</i>`).join('')}</div><footer><span>${mapDistance(loc)} m de distância</span><button class="btn primary compact" data-route-selected="${loc.id}">Ir para este local</button></footer></div>`;
   }
   function setWaypoint(id){
-    const point=MAP_LOCATIONS.find(p=>p.id===id);if(!point)return;
+    const point=currentMapLocations().find(p=>p.id===id);if(!point)return;
     state.waypoint={id:point.id,name:point.name,x:point.x,z:point.z,navX:point.navX??point.x,navZ:point.navZ??point.z,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);
     updateWaypointMarker();updateNavigation(0,true);saveState(true);closeModal();toast(`Destino marcado: ${point.name} • siga as setas azuis`,'good',2600);
   }
   function clearWaypoint(){ state.waypoint=null; updateWaypointMarker(); updateNavigation(0,true); saveState(true); closeModal(); toast('Destino removido.','good'); }
   function openMap(){
     const pp=worldToMap(player.x,player.z),angleDeg=(Math.PI-(player.facing||0))*180/Math.PI,activeId=state.waypoint?.id||'',route=state.waypoint?(world.routePath.length?world.routePath:buildRoutePoints(player,state.waypoint)):[],routeInfo=state.waypoint?routeProgressInfo(route,player):null;
-    if(!mapSelectedId||!MAP_LOCATIONS.some(x=>x.id===mapSelectedId))mapSelectedId=activeId||'home';
-    const placements=mapMarkerPlacements(MAP_LOCATIONS,pp);
+    const mapLocations=currentMapLocations();if(!mapSelectedId||!mapLocations.some(x=>x.id===mapSelectedId))mapSelectedId=activeId||'home';
+    const placements=mapMarkerPlacements(mapLocations,pp);
     const markers=placements.map(({loc,left,top})=>{const active=loc.id===activeId?' active':'',selected=loc.id===mapSelectedId?' selected':'';return `<button class="map-marker clean${active}${selected}" style="left:${left.toFixed(2)}%;top:${top.toFixed(2)}%" data-map-marker="${loc.id}" aria-label="${loc.name}" title="${loc.name}"><b>${loc.icon}</b><span>${loc.name}</span></button>`;}).join('');
-    const grouped=[...new Set(MAP_LOCATIONS.map(x=>x.group))].map(group=>{const items=MAP_LOCATIONS.filter(x=>x.group===group).sort((a,b)=>mapDistance(a)-mapDistance(b)).map(loc=>`<button class="map-destination ${loc.id===activeId?'active':''}" data-map-list="${loc.id}"><b>${loc.icon}<em>${loc.name}</em></b><span>${mapDistance(loc)} m</span></button>`).join('');return `<section class="map-destination-group"><h4>${group}</h4><div>${items}</div></section>`;}).join('');
+    const grouped=[...new Set(mapLocations.map(x=>x.group))].map(group=>{const items=mapLocations.filter(x=>x.group===group).sort((a,b)=>mapDistance(a)-mapDistance(b)).map(loc=>`<button class="map-destination ${loc.id===activeId?'active':''}" data-map-list="${loc.id}"><b>${loc.icon}<em>${loc.name}</em></b><span>${mapDistance(loc)} m</span></button>`).join('');return `<section class="map-destination-group"><h4>${group}</h4><div>${items}</div></section>`;}).join('');
     const current=state.waypoint?`<div class="gps-current"><small>ROTA ATUAL</small><b>${state.waypoint.name}</b><span>${Math.round(routeInfo.remaining)} m • ${routeInfo.instruction}</span><button class="btn danger" data-clear-waypoint>Cancelar</button></div>`:`<div class="gps-current empty"><b>Para onde vamos?</b><span>Escolha um lugar no mapa ou na lista.</span></div>`;
-    openModal('Mapa',`<div class="map-layout v626"><div class="map-main"><div class="world-map clean-map"><i class="map-road horizontal"></i><i class="map-road vertical"></i><i class="map-road west"></i><i class="map-road east"></i><i class="map-river"></i><div class="map-region forest">FLORESTA</div><div class="map-region city">VILA</div><div class="map-region adventure">AVENTURA</div>${route.length?routeSvgMarkup(route):''}${markers}<span class="player-dot" style="left:${pp.left}%;top:${pp.top}%;--player-angle:${angleDeg}deg"><i></i><b>VOCÊ</b></span><span class="map-north">N</span></div>${current}<div id="mapSelection">${mapSelectionMarkup(mapSelectedId)}</div></div><aside class="map-sidebar"><h3>Escolha um lugar</h3><div class="map-destinations grouped">${grouped}</div></aside></div>`,root=>{
-      const refitMarkers=()=>{const map=$('.clean-map',root);if(!map)return;const rect=map.getBoundingClientRect();applyMapMarkerPlacements(root,mapMarkerPlacements(MAP_LOCATIONS,pp,rect.width,rect.height));};
+    openModal('Mapa',`<div class="map-layout v626"><div class="map-main"><div class="world-map clean-map"><i class="map-road horizontal"></i><i class="map-road vertical"></i><i class="map-road west"></i><i class="map-road east"></i><i class="map-river"></i><div class="map-region forest">FLORESTA</div><div class="map-region city">VILA</div><div class="map-region adventure">AVENTURA</div>${window.OTTHI_ROOM_WORLD?.mapRegionsMarkup?.(worldToMap)||''}${route.length?routeSvgMarkup(route):''}${markers}<span class="player-dot" style="left:${pp.left}%;top:${pp.top}%;--player-angle:${angleDeg}deg"><i></i><b>VOCÊ</b></span><span class="map-north">N</span></div>${current}<div id="mapSelection">${mapSelectionMarkup(mapSelectedId)}</div></div><aside class="map-sidebar"><h3>Escolha um lugar</h3><div class="map-destinations grouped">${grouped}</div></aside></div>`,root=>{
+      const refitMarkers=()=>{const map=$('.clean-map',root);if(!map)return;const rect=map.getBoundingClientRect();applyMapMarkerPlacements(root,mapMarkerPlacements(mapLocations,pp,rect.width,rect.height));};
       requestAnimationFrame(()=>{refitMarkers();requestAnimationFrame(refitMarkers);});
       const selectMapLocation=id=>{mapSelectedId=id;$$('[data-map-marker]',root).forEach(x=>x.classList.toggle('selected',x.dataset.mapMarker===id));$$('[data-map-list]',root).forEach(x=>x.classList.toggle('selected',x.dataset.mapList===id));selection.innerHTML=mapSelectionMarkup(id);bindRoute();selection.scrollIntoView?.({behavior:'smooth',block:'nearest'});};
       $$('[data-map-list]',root).forEach(btn=>btn.onclick=()=>selectMapLocation(btn.dataset.mapList));

@@ -127,7 +127,7 @@ for f in functions:callable_rows.append({'type':'function-declaration','name':f[
 with (DOCS/'INVENTARIO-CALLABLES.csv').open('w',newline='',encoding='utf-8-sig') as fh:
     fields6=['type','name','module','line','snippet'];w=csv.DictWriter(fh,fieldnames=fields6);w.writeheader();w.writerows(sorted(callable_rows,key=lambda x:(x['line'],x['name'])))
 
-summary={'version':643,'namedFunctionDeclarations':len(functions),'topLevelArrowFunctions':sum(1 for x in callable_rows if x['type']=='top-level-arrow'),'arrowTokensIncludingCallbacks':len(arrow_rows),'controlFlowOccurrences':len(condition_rows),'eventBindings':len(event_rows),'moduleDependencyPairs':len(dep_rows),'conditionsByType':{}}
+summary={'version':644,'namedFunctionDeclarations':len(functions),'topLevelArrowFunctions':sum(1 for x in callable_rows if x['type']=='top-level-arrow'),'arrowTokensIncludingCallbacks':len(arrow_rows),'controlFlowOccurrences':len(condition_rows),'eventBindings':len(event_rows),'moduleDependencyPairs':len(dep_rows),'conditionsByType':{}}
 for r in condition_rows:summary['conditionsByType'][r['type']]=summary['conditionsByType'].get(r['type'],0)+1
 (DOCS/'AUDITORIA-PROFUNDA-RESUMO.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n','utf-8')
 
@@ -160,8 +160,8 @@ if checklist.exists():
         '- `INVENTARIO-CALLABLES.csv`',
         '- `DEPENDENCIAS-MODULOS.csv`',
         '- `AUDITORIA-PROFUNDA-RESUMO.json`',
-        '- `RELATORIO-PRESERVACAO-V642-V643.md`',
-        '- `RELATORIO-PRESERVACAO-V642-V643.json`',
+        '- `RELATORIO-PRESERVACAO-V642-V644.md`',
+        '- `RELATORIO-PRESERVACAO-V642-V644.json`',
         f"- `CHECKLIST-{summary['namedFunctionDeclarations']}-FUNCOES.md`",
         '- `CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md`',
         f"- `CHECKLIST-{summary['eventBindings']}-EVENTOS.md`",
@@ -173,7 +173,7 @@ if checklist.exists():
 print(json.dumps(summary,ensure_ascii=False,indent=2))
 
 # Checklists literais completos para inspeção humana.
-function_md=[f"# Checklist das {summary['namedFunctionDeclarations']} funções — OTTHI World Edu V643",'',
+function_md=[f"# Checklist das {summary['namedFunctionDeclarations']} funções — OTTHI World Edu V644",'',
              'Cada item confirma presença na fonte modular. `endBoundaryLine` termina na próxima declaração de função de topo; não é uma afirmação de parsing semântico do corpo JavaScript.','']
 current_module=None
 for f in functions:
@@ -185,7 +185,7 @@ for f in functions:
     function_md.append(f"- [x] `{f['function']}()` — linhas {f['startLine']}–{f['endBoundaryLine']} — {logic} — chama: {calls}")
 (DOCS/f"CHECKLIST-{summary['namedFunctionDeclarations']}-FUNCOES.md").write_text('\n'.join(function_md)+'\n','utf-8')
 
-flow_md=['# Checklist das ocorrências de fluxo — OTTHI World Edu V643','',
+flow_md=['# Checklist das ocorrências de fluxo — OTTHI World Edu V644','',
          'Inventário lexical de todas as ocorrências encontradas de `if`, `else`, `switch`, `case`, `for`, `while`, `catch`, `return` e `throw`. Um trecho pode conter mais de uma ocorrência.','']
 current_module=None
 for row in condition_rows:
@@ -196,7 +196,7 @@ for row in condition_rows:
     flow_md.append(f"- [x] `{row['type']}` — linha {row['line']}, coluna {row['column']}{owner} — `{snippet}`")
 (DOCS/'CHECKLIST-FLUXO-IF-ELSE-SWITCH-LOOPS.md').write_text('\n'.join(flow_md)+'\n','utf-8')
 
-event_md=[f"# Checklist dos {summary['eventBindings']} bindings de evento — OTTHI World Edu V643",'']
+event_md=[f"# Checklist dos {summary['eventBindings']} bindings de evento — OTTHI World Edu V644",'']
 current_module=None
 for row in event_rows:
     if row['module']!=current_module:
@@ -208,7 +208,7 @@ for row in event_rows:
 
 # Reaproveita o inventário de nós HTML gerado pelo auditor estático.
 html_csv=DOCS/'INVENTARIO-NOS-HTML.csv'
-node_md=['# Checklist dos nós HTML — OTTHI World Edu V643','']
+node_md=['# Checklist dos nós HTML — OTTHI World Edu V644','']
 if html_csv.exists():
     with html_csv.open('r',encoding='utf-8-sig',newline='') as fh:
         html_rows=list(csv.DictReader(fh))

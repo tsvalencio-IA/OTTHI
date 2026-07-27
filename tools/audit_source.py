@@ -128,7 +128,7 @@ for item in MANIFEST['javascript']:
     })
 
 summary={
-    'version':643,
+    'version':644,
     'functions':len(functions),
     'conditions':len(conditions),
     'events':len(events),
@@ -142,7 +142,7 @@ summary={
 (DOCS/'AUDITORIA-ESTATICA-RESUMO.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n','utf-8')
 
 lines=[]
-lines.append('# Checklist técnico completo — OTTHI World Edu V643')
+lines.append('# Checklist técnico completo — OTTHI World Edu V644')
 lines.append('')
 lines.append('Este checklist foi gerado sobre a fonte modular completa. Ele não declara que cada experiência física foi aprovada; separa presença no código, auditoria estática e teste obrigatório em aparelho real.')
 lines.append('')
@@ -159,7 +159,7 @@ lines.append('')
 lines.append('## Sistemas e jogabilidades preservados')
 lines.append('')
 for item in [
-    'Estado, migração V600–V641 e salvamento local/nuvem','Conta e autenticação Firebase','Roupas, acessórios e uniformes profissionais',
+    'Estado, migração V600–V644 e salvamento local/nuvem','Conta e autenticação Firebase','Roupas, acessórios e uniformes profissionais',
     'Skills Mini, Normal, Grande, Abaixar e Girar','Missões, objetivos, medalhas e recompensas','Inventário, ferramentas, oficina e fundição',
     'Mapa, GPS, waypoint, minimapa e trânsito','Casas, interiores, baús, propriedades e ampliações','Construção persistente com preview, giro, colocar, cancelar e remover',
     'Veículos, passageiros, colisões, física, som e efeitos','Ônibus, paradas, rotas e metrô','Bombeiros, caminhões, incêndios e missões',

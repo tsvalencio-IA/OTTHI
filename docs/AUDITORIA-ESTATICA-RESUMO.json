@@ -1,13 +1,13 @@
 {
-  "version": 643,
-  "functions": 552,
-  "conditions": 1562,
-  "events": 188,
-  "topLevelDeclarations": 94,
+  "version": 644,
+  "functions": 564,
+  "conditions": 1577,
+  "events": 192,
+  "topLevelDeclarations": 96,
   "htmlNodes": 263,
   "htmlIds": 104,
-  "javascriptModules": 31,
-  "styleModules": 12,
+  "javascriptModules": 32,
+  "styleModules": 14,
   "moduleStats": [
     {
       "file": "00-runtime-foundation.js",
@@ -75,8 +75,8 @@
     {
       "file": "07-navigation-traffic-routes.js",
       "description": "Rotas, trânsito, grafo, GPS e minimapa",
-      "functions": 26,
-      "conditions": 62,
+      "functions": 28,
+      "conditions": 68,
       "events": 0,
       "startLine": 1064,
       "endLine": 1200
@@ -84,7 +84,7 @@
     {
       "file": "08-map-parent-settings.js",
       "description": "Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",
-      "functions": 15,
+      "functions": 16,
       "conditions": 35,
       "events": 35,
       "startLine": 1201,
@@ -287,6 +287,15 @@
       "events": 6,
       "startLine": 4378,
       "endLine": 4557
+    },
+    {
+      "file": "31-neighborhood-world-controller.js",
+      "description": "Bairros reais, limite de vagas, transição, casas e mapa V644",
+      "functions": 9,
+      "conditions": 9,
+      "events": 4,
+      "startLine": 0,
+      "endLine": 0
     }
   ]
 }
