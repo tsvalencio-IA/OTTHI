@@ -1,6 +1,6 @@
 {
   "version": 644,
-  "build": "644.0-neighborhoods-capacity-map",
+  "build": "644.1-fixed-firebase-room-slots",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
@@ -13,7 +13,10 @@
     "limpeza de jogadores e objetos do bairro anterior",
     "casas online separadas por bairro",
     "teleporte seguro para a entrada coerente de cada bairro",
-    "mapa e minimapa com regiões e escalas responsivas"
+    "mapa e minimapa com regiões e escalas responsivas",
+    "corrige regras Firebase sem numChildren",
+    "limite real de 10 usando slot-01 até slot-10",
+    "reserva concorrente por transaction"
   ],
   "preserves": [
     "roupas",
@@ -37,10 +40,11 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "",
+  "hotfix": "644.1",
   "notes": [
     "Retrato e paisagem preservam a escala do mapa",
     "Minimapa recalcula o buffer conforme o tamanho visual",
-    "Firebase Realtime Database mantido"
+    "Firebase Realtime Database mantido",
+    "Não publique o firebase-database.rules.json anterior da V644."
   ]
 }

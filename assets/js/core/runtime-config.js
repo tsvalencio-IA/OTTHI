@@ -5,7 +5,7 @@
   const savedRoom = (() => { try { return localStorage.getItem('otthi_selected_room_v1') || ''; } catch { return ''; } })();
   window.OTTHI_CONFIG = {
     version: 644,
-    build: '644.0-neighborhoods-capacity-map',
+    build: '644.1-fixed-firebase-room-slots',
     repository: repo,
     baseUrl,
     firebaseRoot: 'otthosWorld',

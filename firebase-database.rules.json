@@ -120,10 +120,9 @@
             }
           },
           "slots": {
-            ".validate": "!newData.exists() || newData.numChildren() <= 10",
-            "$uid": {
-              ".write": "auth != null && auth.uid === $uid",
-              ".validate": "!newData.exists() || (newData.hasChildren(['uid','name','room','joinedAtClient','updatedAtClient']) && newData.child('uid').val() === $uid && newData.child('room').val() === $roomId && newData.child('name').isString() && newData.child('name').val().length >= 3 && newData.child('name').val().length <= 24 && newData.child('joinedAtClient').isNumber() && newData.child('updatedAtClient').isNumber())"
+            "$slotId": {
+              ".write": "auth != null && ((!newData.exists() && data.child('uid').val() === auth.uid) || (($slotId === 'slot-01' || $slotId === 'slot-02' || $slotId === 'slot-03' || $slotId === 'slot-04' || $slotId === 'slot-05' || $slotId === 'slot-06' || $slotId === 'slot-07' || $slotId === 'slot-08' || $slotId === 'slot-09' || $slotId === 'slot-10') && ((!data.exists() && newData.exists() && newData.child('uid').val() === auth.uid) || (data.exists() && data.child('uid').val() === auth.uid && newData.exists() && newData.child('uid').val() === auth.uid))))",
+              ".validate": "!newData.exists() || (($slotId === 'slot-01' || $slotId === 'slot-02' || $slotId === 'slot-03' || $slotId === 'slot-04' || $slotId === 'slot-05' || $slotId === 'slot-06' || $slotId === 'slot-07' || $slotId === 'slot-08' || $slotId === 'slot-09' || $slotId === 'slot-10') && newData.hasChildren(['slot','uid','name','room','joinedAtClient','updatedAtClient']) && newData.child('slot').val() === $slotId && newData.child('uid').val() === auth.uid && newData.child('room').val() === $roomId && newData.child('name').isString() && newData.child('name').val().length >= 3 && newData.child('name').val().length <= 24 && newData.child('joinedAtClient').isNumber() && newData.child('updatedAtClient').isNumber())"
             }
           }
         }
