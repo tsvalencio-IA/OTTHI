@@ -81,12 +81,12 @@ jobs:
       - name: Renomear APK
         run: |
           mkdir -p apk-pronto
-          cp android-app/app/build/outputs/apk/debug/app-debug.apk apk-pronto/OTTHI-V643.apk
+          cp android-app/app/build/outputs/apk/debug/app-debug.apk apk-pronto/OTTHI-V645.apk
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
-          name: OTTHI-V643-APK
-          path: apk-pronto/OTTHI-V643.apk
+          name: OTTHI-V645-APK
+          path: apk-pronto/OTTHI-V645.apk
           if-no-files-found: error
           retention-days: 30
