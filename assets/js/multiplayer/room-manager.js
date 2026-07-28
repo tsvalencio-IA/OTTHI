@@ -5,6 +5,8 @@
   let selected=(()=>{try{return localStorage.getItem(KEY)||window.OTTHI_CONFIG?.defaultRoom||'bairro-central'}catch{return'bairro-central'}})();
   let counts={};
   let switching=false;
+  let refreshingCounts=false;
+  let renderQueued=false;
 
   function escapeText(value){return String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));}
   function neutralPlayerName(uid=''){const suffix=String(uid||'0000').replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');return`Jogador ${suffix}`;}
@@ -36,8 +38,21 @@
   }
 
   function bindButtons(root){root.querySelectorAll('[data-room]').forEach(button=>button.addEventListener('click',()=>change(button.dataset.room)));}
-  function open(){window.OTTHI_MODAL?.open('Bairros e casas online',html(),bindButtons);window.OTTHOS_RTDB?.refreshRoomCounts?.();}
-  function renderIfOpen(){if(isOpen())open();}
+  function render(){return window.OTTHI_MODAL?.open('Bairros e casas online',html(),bindButtons);}
+  function requestRender(){
+    if(!isOpen()||renderQueued)return;
+    renderQueued=true;
+    requestAnimationFrame(()=>{renderQueued=false;if(isOpen())render();});
+  }
+  function open(){
+    render();
+    if(refreshingCounts)return;
+    const refresh=window.OTTHOS_RTDB?.refreshRoomCounts;
+    if(typeof refresh!=='function')return;
+    refreshingCounts=true;
+    Promise.resolve(refresh.call(window.OTTHOS_RTDB)).catch(error=>console.warn('Falha ao atualizar bairros:',error)).finally(()=>{refreshingCounts=false;});
+  }
+  function renderIfOpen(){requestRender();}
   function availableRooms(exclude=''){return rooms.filter(room=>room.id!==exclude&&roomCount(room.id)<Number(room.capacity||10));}
   function fullMessage(room){const alternatives=availableRooms(room.id);return `<div class="room-full-message"><span>🚧</span><h3>${escapeText(room.name)} está lotado</h3><p>O limite é de ${room.capacity||10} jogadores para manter o mundo rápido e estável.</p>${alternatives.length?`<h4>Bairros com vaga</h4><div>${alternatives.map(r=>`<button type="button" data-room="${r.id}">${r.icon} ${escapeText(r.name)} <b>${roomCount(r.id)}/${r.capacity||10}</b></button>`).join('')}</div>`:'<p>Nenhum bairro possui vaga neste momento. Tente novamente em instantes.</p>'}</div>`;}
 
@@ -49,17 +64,25 @@
     if(count>=capacity){window.OTTHI_MODAL?.open('Bairro lotado',fullMessage(room),bindButtons);return;}
     const preflight=window.OTTHI_ROOM_WORLD?.canChangeRoom?.(room.id);
     if(preflight?.ok===false){window.OTTHI_MODAL?.open('Finalize a atividade atual',`<p>${escapeText(preflight.error||'Não é possível trocar de bairro agora.')}</p>`);return;}
-    switching=true;open();
-    const result=await window.OTTHOS_RTDB?.setRoom?.(room.id);
-    switching=false;
-    if(!result?.ok){
-      if(result?.full){counts[room.id]=Number(result.count||capacity);window.OTTHI_MODAL?.open('Bairro lotado',fullMessage(room),bindButtons);}
-      else window.OTTHI_MODAL?.open('Não foi possível trocar de bairro',`<p>${escapeText(result?.error||'Confira a internet e tente novamente.')}</p>`);
-      return;
+    switching=true;render();
+    try{
+      const changeRoom=window.OTTHOS_RTDB?.setRoom;
+      if(typeof changeRoom!=='function')throw new Error('Multiplayer ainda não foi inicializado. Feche e abra o jogo novamente.');
+      const result=await changeRoom.call(window.OTTHOS_RTDB,room.id);
+      if(!result?.ok){
+        if(result?.full){counts[room.id]=Number(result.count||capacity);window.OTTHI_MODAL?.open('Bairro lotado',fullMessage(room),bindButtons);}
+        else window.OTTHI_MODAL?.open('Não foi possível trocar de bairro',`<p>${escapeText(result?.error||'Confira a internet e tente novamente.')}</p>`);
+        return;
+      }
+      selected=room.id;try{localStorage.setItem(KEY,selected)}catch{};
+      if(window.OTTHI_CONFIG)window.OTTHI_CONFIG.defaultRoom=selected;
+      window.OTTHI_MODAL?.close?.();
+    }catch(error){
+      console.warn('Troca de bairro:',error);
+      window.OTTHI_MODAL?.open('Não foi possível trocar de bairro',`<p>${escapeText(error?.message||'Confira a internet e tente novamente.')}</p>`);
+    }finally{
+      switching=false;
     }
-    selected=room.id;try{localStorage.setItem(KEY,selected)}catch{};
-    if(window.OTTHI_CONFIG)window.OTTHI_CONFIG.defaultRoom=selected;
-    window.OTTHI_MODAL?.close?.();
   }
 
   function bind(){
