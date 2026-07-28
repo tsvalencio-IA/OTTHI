@@ -110,6 +110,16 @@ class ReleaseV646Tests(unittest.TestCase):
         self.assertIn('Gesto simbólico, sem transferir saldo', text('src/modules/28-multiplayer-social-online.js'))
         self.assertIn('safeHouseName', text('assets/js/multiplayer/room-manager.js'))
 
+    def test_guardian_communication_toggle_persists(self):
+        backend = text('assets/js/multiplayer-rtdb.js')
+        parent = text('src/modules/08-map-parent-settings.js')
+        self.assertIn("requestedCommunication=settings?.communicationEnabled===true", backend)
+        self.assertIn("chatEnabled:requestedCommunication", backend)
+        self.assertIn("saved.communicationEnabled!==clean.communicationEnabled", backend)
+        self.assertIn("draft.chatEnabled=draft.communicationEnabled===true", parent)
+        self.assertIn("draft.chatEnabled=draft.communicationEnabled", parent)
+        self.assertIn("const saved=result?.settings||result", parent)
+
     def test_parent_and_moderation_ui_are_present(self):
         parent = text('src/modules/08-map-parent-settings.js')
         social = text('src/modules/28-multiplayer-social-online.js')

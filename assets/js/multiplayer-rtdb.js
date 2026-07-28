@@ -113,8 +113,9 @@ async function saveGuardianSettings(settings={}){
   try{
     const f=await ensureServices();user=auth.currentUser||user;if(!user||user.isAnonymous||!user.email)return{ok:false,error:'Vincule uma conta antes de alterar os controles parentais.'};
     if(Date.now()-reauthenticatedAt>PARENTAL_REAUTH_MS)return{ok:false,error:'Confirme a senha novamente antes de alterar os controles parentais.',requiresReauthentication:true};
-    const clean=normalizeParentalControls(settings);await user.getIdToken(true);await f.set(f.ref(db,`${ROOT}/users/${user.uid}/guardianSettings`),{...clean,updatedAt:f.serverTimestamp(),updatedByUid:user.uid});
-    parentalControls=clean;dispatch('otthi:guardian-settings',{...clean});if(!multiplayerAllowed())await disconnect();return{ok:true,...clean,settings:{...clean}};
+    const requestedCommunication=settings?.communicationEnabled===true,clean=normalizeParentalControls({...settings,communicationEnabled:requestedCommunication,chatEnabled:requestedCommunication}),guardianRef=f.ref(db,`${ROOT}/users/${user.uid}/guardianSettings`);await user.getIdToken(true);await f.set(guardianRef,{...clean,updatedAt:f.serverTimestamp(),updatedByUid:user.uid});
+    const savedSnapshot=await f.get(guardianRef),saved=normalizeParentalControls(savedSnapshot.val()||{});if(saved.multiplayerEnabled!==clean.multiplayerEnabled||saved.communicationEnabled!==clean.communicationEnabled||saved.sessionLimitMinutes!==clean.sessionLimitMinutes)return{ok:false,error:'O Firebase não confirmou os controles. Confirme a senha e tente novamente.'};
+    parentalControls=saved;dispatch('otthi:guardian-settings',{...saved});if(!multiplayerAllowed())await disconnect();return{ok:true,...saved,settings:{...saved}};
   }catch(error){return{ok:false,error:friendlyAuthError(error)}}
 }
 async function signOutPlayerAccount(password=''){
