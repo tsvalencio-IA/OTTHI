@@ -1,4 +1,4 @@
-const REVISION = '8c0717a58272dbd7';
+const REVISION = 'cd8d3f1400a72812';
 const CACHE = `otthi-v646-${REVISION}`;
 const CACHE_PREFIXES = ['otthi-','otthi-game-web-','otthos-life-world-main-'];
 const BUILD = '646.0-safe-rooms-atomic-pwa';

@@ -14,14 +14,14 @@
       "startLine": 27,
       "endLine": 142,
       "description": "Normalização, merge, tombstones e persistência das construções",
-      "sha256Body": "2b4ce7bd60bce95399df230b36adc3f74ab4fdbeca3fbbcc93d1945cd32e99d4"
+      "sha256Body": "7d7a101c5ae8668de8415cd3d4f6fbfcf2e7292049588985cfd66f4906a4bd4d"
     },
     {
       "file": "src/modules/02-state-save-cloud-account.js",
       "startLine": 143,
       "endLine": 396,
       "description": "Estado, save local, IndexedDB, nuvem e conta",
-      "sha256Body": "4d37d9e6079e014eccc90bf0cf46d072a34960228b7db8572de000b8c0ce3fcc"
+      "sha256Body": "4f73be09b5bd9a5b98f48e5324d2aaddbeebf0cdcc54509687b6e2fc25a8490b"
     },
     {
       "file": "src/modules/03-ui-modal-install-pwa.js",
@@ -49,7 +49,7 @@
       "startLine": 928,
       "endLine": 1063,
       "description": "Missões, objetivos, perfil, HUD, inventário e ferramentas",
-      "sha256Body": "c4a5d532fe7e573e4bc5dec83b8c1e3b231ba492bae3af04f7c9cfe67955de34"
+      "sha256Body": "2d800f84cc37e1748f9491c64617d7abc3ad8ed12db072e129af683ef2215af2"
     },
     {
       "file": "src/modules/07-navigation-traffic-routes.js",
@@ -63,14 +63,14 @@
       "startLine": 1201,
       "endLine": 1359,
       "description": "Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",
-      "sha256Body": "f0ab915e987116f9bf7b181a304cbcab9b5834dd7421300c9d80b38de17ac1b1"
+      "sha256Body": "e22f80f750589cb792d9d67dd00b1948f7875fc327bdf1fa7cbe66d21a9282c6"
     },
     {
       "file": "src/modules/09-responsive-ar-quality-diagnostics.js",
       "startLine": 1360,
       "endLine": 1624,
       "description": "Responsividade, AR, modos, qualidade, LOD e diagnóstico",
-      "sha256Body": "4bc190ba043fa4a07a38b3efaf8aee1e0b9cd6eb820dd171aae083a2bfa57bae"
+      "sha256Body": "0ae733f48a4f75e09f4c64ffbd145f8525105cca3672399816556909eba1532a"
     },
     {
       "file": "src/modules/10-player-skills.js",
@@ -84,7 +84,7 @@
       "startLine": 1692,
       "endLine": 1962,
       "description": "Texturas, materiais, geometria, personagem e avatar 3D",
-      "sha256Body": "898ea4f08122408c58fbc799db0a0c756d820ba0b8963ef84aef6297b724cb3e"
+      "sha256Body": "2b1897880fc745b64c5eb5762f0d5697144a34d4678497d3f75b8dc81d1fad7b"
     },
     {
       "file": "src/modules/12-world-resources-nature.js",
@@ -119,7 +119,7 @@
       "startLine": 2723,
       "endLine": 2864,
       "description": "Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",
-      "sha256Body": "9d0e3633e86cc6eeaadf989d2dc124798ed8542aa5fdf8d0e49c811b0ff57409"
+      "sha256Body": "30d8c49d366035a3873cd5cdc51793dd07b91097ceae661062b206686d1ffa4d"
     },
     {
       "file": "src/modules/17-adventures-learning-world.js",
@@ -140,7 +140,7 @@
       "startLine": 3065,
       "endLine": 3096,
       "description": "Fogueira, caça, animais e ampliações de casas",
-      "sha256Body": "a2f015bf78ecd2faa3d96c22f9d915987f76673e63369fc2309202088480c99e"
+      "sha256Body": "7f86c48ac958e4ffdb72934f252616af915f3fa1c8a0c42fabd5acd3ecbbfca3"
     },
     {
       "file": "src/modules/20-world-build-cloud-houses.js",
@@ -161,7 +161,7 @@
       "startLine": 3416,
       "endLine": 3530,
       "description": "Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",
-      "sha256Body": "ef5a63dfcb9d19f444bce6d0447c85a0eaf4c0277f7884319a4103432e44c989"
+      "sha256Body": "209c0cca11e28d6a83f5dd2a176a9e44a415e808b66cce1e506cdffd8aae7ed4"
     },
     {
       "file": "src/modules/23-vehicle-effects-driving.js",
@@ -325,6 +325,13 @@
       "endLine": 0,
       "description": "Bairros, vagas e mapa responsivo V644",
       "sha256Body": "b9b6f6d86986f46d2be48800eec8b34375a96d1305a5a4ee99f5799c0b7d3262"
+    },
+    {
+      "file": "src/styles/14-commercial-responsive-map-missions-furniture.css",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Acabamento comercial: mapa/GPS responsivo, missões explicáveis, móveis e uniformes",
+      "sha256Body": "01dc21a785a5a037029c6ed631524dbb01ad520fc3e2ca93d114345386551835"
     }
   ]
 }

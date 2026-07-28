@@ -121,6 +121,7 @@
     adventures: { completed:[], bestTimes:{}, active:null },
     hunting: { lastAttempt: 0, tracksFound: 0, successful: 0, failed: 0, cooperativeRewards: [] },
     houseExtensions: [],
+    roomFurniture: [],
     multiplayerRequests: { lastSentAt: 0, completed: [] },
     npcSociety: { lastEvent:0, houses:{}, friendships:{}, moods:{} },
     lastSaved: Date.now()

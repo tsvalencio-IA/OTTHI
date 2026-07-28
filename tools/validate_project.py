@@ -113,6 +113,8 @@ def main() -> int:
         'android-app/app/build.gradle', 'assets/textures/water-ripples-v643.png',
         'src/modules/31-neighborhood-world-controller.js',
         'src/styles/13-neighborhood-world-map-v644.css',
+        'src/styles/14-commercial-responsive-map-missions-furniture.css',
+        'tools/test_v6462_commercial_polish.py',
     ]
     for relative in required:
         add(f'Arquivo obrigatório {relative}', (ROOT / relative).is_file())
@@ -125,9 +127,9 @@ def main() -> int:
     js_modules = sorted((ROOT / 'src/modules').glob('*.js'))
     css_modules = sorted((ROOT / 'src/styles').glob('*.css'))
     add('32 módulos JavaScript', len(js_modules) == 32, len(js_modules))
-    add('14 módulos CSS', len(css_modules) == 14, len(css_modules))
+    add('15 módulos CSS', len(css_modules) == 15, len(css_modules))
     add('Manifesto JS completo', len(manifest.get('javascript', [])) == 32)
-    add('Manifesto CSS completo', len(manifest.get('styles', [])) == 14)
+    add('Manifesto CSS completo', len(manifest.get('styles', [])) == len(css_modules) == 15)
     add('Ordem JS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('javascript', [])] == [path.name for path in js_modules])
     add('Ordem CSS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('styles', [])] == [path.name for path in css_modules])
     add('Versões centrais unificadas', version.get('version') == 646 and version.get('build') == '646.0-safe-rooms-atomic-pwa' and manifest.get('version') == 646 and manifest.get('build') == version.get('build'))
