@@ -39,7 +39,7 @@ jobs:
         with:
           gradle-version: "8.7"
 
-      - name: Definir endereço do jogo
+      - name: Validar release e definir endereco do jogo
         shell: bash
         env:
           INPUT_APP_URL: ${{ inputs.app_url }}
@@ -57,36 +57,58 @@ jobs:
           fi
           case "$app_url" in
             http://*|https://*) ;;
-            *) echo "URL inválida: $app_url"; exit 1 ;;
+            *) echo "URL invalida: $app_url"; exit 1 ;;
           esac
           [[ "$app_url" == */ ]] || app_url="$app_url/"
           echo "APP_URL=$app_url" >> "$GITHUB_ENV"
           export APP_URL="$app_url"
           python3 - <<'PY'
+          import json
           import os
+          import urllib.parse
+          import urllib.request
           from pathlib import Path
-          p = Path('android-app/app/src/main/res/values/strings.xml')
-          text = p.read_text(encoding='utf-8')
-          text = text.replace('__APP_URL__', os.environ['APP_URL'])
-          p.write_text(text, encoding='utf-8')
-          print('APK apontará para:', os.environ['APP_URL'])
+
+          version = json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          manifest_url = urllib.parse.urljoin(os.environ['APP_URL'], 'release-manifest.json')
+          request = urllib.request.Request(
+              manifest_url + '?apk_check=' + str(version['version']),
+              headers={'Cache-Control': 'no-cache'},
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              remote = json.load(response)
+          if remote.get('version') != version['version'] or remote.get('build') != version['build']:
+              raise SystemExit(
+                  f"GitHub Pages ainda nao esta na V{version['version']} "
+                  f"({version['build']}). Recebido: {remote.get('version')} / {remote.get('build')}"
+              )
+
+          gradle = Path('android-app/app/build.gradle').read_text(encoding='utf-8')
+          if f"versionCode {version['version']}" not in gradle:
+              raise SystemExit('versionCode do Android diverge de VERSION.json')
+
+          strings = Path('android-app/app/src/main/res/values/strings.xml')
+          text = strings.read_text(encoding='utf-8').replace('__APP_URL__', os.environ['APP_URL'])
+          strings.write_text(text, encoding='utf-8')
+          print('Release remota validada:', remote['build'], remote.get('revision', 'sem-revisao'))
+          print('APK apontara para:', os.environ['APP_URL'])
           PY
 
-      - name: Copiar ícone oficial
+      - name: Copiar icone oficial
         run: cp icons/icon-512.png android-app/app/src/main/res/drawable/icon_otthos.png
 
-      - name: Compilar APK
+      - name: Compilar APK de teste instalavel
         run: gradle -p android-app --no-daemon assembleDebug
 
       - name: Renomear APK
         run: |
           mkdir -p apk-pronto
-          cp android-app/app/build/outputs/apk/debug/app-debug.apk apk-pronto/OTTHI-V645.apk
+          cp android-app/app/build/outputs/apk/debug/app-debug.apk apk-pronto/OTTHI-V646-TESTE.apk
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
-          name: OTTHI-V645-APK
-          path: apk-pronto/OTTHI-V645.apk
+          name: OTTHI-V646-APK-TESTE
+          path: apk-pronto/OTTHI-V646-TESTE.apk
           if-no-files-found: error
           retention-days: 30

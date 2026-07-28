@@ -3,19 +3,10 @@ name: Build modular OTTHI World Edu
 on:
   workflow_dispatch:
   push:
-    paths:
-      - "src/**"
-      - "tools/build_project.py"
-      - "tools/audit_source.py"
-      - "tools/deep_inventory.py"
-      - "tools/verify_equivalence.py"
-      - "tools/validate_project.py"
-      - "tools/test_v643_mobility.js"
-      - "tools/test_v643_world_systems.py"
-      - "tools/test_v644_neighborhoods.py"
+  pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -28,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Gerar bundles e inventários
+      - name: Gerar bundles e inventarios
         run: |
           python tools/build_project.py
           python tools/audit_source.py
@@ -37,17 +28,10 @@ jobs:
           node tools/test_v643_mobility.js
           python tools/test_v643_world_systems.py
           python tools/test_v644_neighborhoods.py
+          node tools/test_v646_runtime.js
+          python tools/test_v646_release.py
           python tools/validate_project.py
       - name: Validar JavaScript
         run: node --check app.js
-      - name: Salvar bundles gerados
-        run: |
-          if [ -n "$(git status --porcelain app.js style.css src/module-order.json docs/)" ]; then
-            git config user.name "OTTHI Modular Builder"
-            git config user.email "actions@users.noreply.github.com"
-            git add app.js style.css src/module-order.json docs/
-            git commit -m "build: atualizar bundles modulares [skip actions]"
-            git push
-          else
-            echo "Bundles já estão atualizados."
-          fi
+      - name: Confirmar bundles versionados
+        run: git diff --exit-code -- app.js style.css src/module-order.json release-manifest.json index.html sw.js
