@@ -30,6 +30,7 @@ jobs:
           python tools/test_v644_neighborhoods.py
           python tools/test_v646_professional_services.py
           python tools/test_v6462_commercial_polish.py
+          python tools/test_v6463_coop_responsive.py
           node tools/test_v646_runtime.js
           python tools/test_v646_release.py
           python tools/validate_project.py
