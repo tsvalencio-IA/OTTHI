@@ -195,12 +195,27 @@
     if(wp)world.waypointMarker.position.set(wp.x,0,wp.z);
   }
   function createAthleticsGym(){
-    const gym={x:45,z:78,startX:26,finishX:76,lane1Z:73,lane2Z:78};world.gym=gym;
-    box(58,.16,15,0xc46a3b,51,.08,75.5);box(54,.06,3.2,0xf4d35e,51,.18,73);box(54,.06,3.2,0x5ad8ff,51,.18,78);
-    for(let x=28;x<=76;x+=6){box(.12,.05,14,0xffffff,x,.22,75.5);}
-    box(.45,3.2,15,0xffffff,gym.finishX,1.6,75.5);box(12,3.6,6,0x315779,45,1.8,88);box(10,.7,5,0xffd84d,45,3.95,88);
-    createLamp(27,67);createLamp(75,67);createLamp(27,84);createLamp(75,84);
-    registerInteractable({id:'athletics-gym',type:'race',icon:'🏃',label:'Abrir desafios do ginásio',x:45,z:84,radius:3.2,priority:120,action:()=>openRaceCenter()});
+    const gym={x:51,z:75.5,centerX:51,centerZ:75.5,radiusX:25,radiusZ:8,startX:76,finishX:76,lane1Z:75.5,lane2Z:77.4};world.gym=gym;
+    // Ginásio oval: pista contínua com duas faixas, campo central e arquibancada.
+    premiumBox(58,.12,23,0x315f3b,gym.centerX,.06,gym.centerZ,worldGroup);
+    const trackMat=renderMat(0xc55f42,{roughness:.88}),lineMat=renderMat(0xf8f3da,{roughness:.72}),segments=64;
+    for(let i=0;i<segments;i++){
+      const a=i/segments*Math.PI*2,b=(i+1)/segments*Math.PI*2,mid=(a+b)/2;
+      for(const offset of [0,2.15,-2.15]){
+        const rx=gym.radiusX+offset,rz=gym.radiusZ+offset*.22,x=gym.centerX+Math.cos(mid)*rx,z=gym.centerZ+Math.sin(mid)*rz;
+        const nextX=gym.centerX+Math.cos(b)*rx,nextZ=gym.centerZ+Math.sin(b)*rz,len=Math.hypot(nextX-(gym.centerX+Math.cos(a)*rx),nextZ-(gym.centerZ+Math.sin(a)*rz));
+        const piece=new THREE.Mesh(new THREE.BoxGeometry(Math.max(.65,len+.12),.12,offset===0?4.15:.12),offset===0?trackMat:lineMat);piece.position.set(x,.16,z);piece.rotation.y=-Math.atan2(Math.sin(mid)*rz,Math.cos(mid)*rx);worldGroup.add(piece);
+      }
+    }
+    // Gramado listrado, linha de largada, placar e arquibancada sem bloquear a pista.
+    for(let stripe=-4;stripe<=4;stripe++)premiumBox(43,0.035,1.35,stripe%2?0x3b9b4d:0x46aa57,gym.centerX,.19,gym.centerZ+stripe*1.35,worldGroup);
+    for(let j=-2;j<=2;j++)premiumBox(.18,.07,.72,j%2?0x111827:0xffffff,gym.finishX,.24,gym.centerZ+j*.72,worldGroup);
+    premiumBox(14,3.4,5.2,0x315779,51,1.7,91,worldGroup);premiumBox(12,.72,4.3,0xffd84d,51,3.82,91,worldGroup);
+    const arenaSign=new THREE.Mesh(new THREE.PlaneGeometry(9.8,1.15),new THREE.MeshStandardMaterial({map:signTexture('OTTHI ARENA • 3 VOLTAS','#123b63','#ffffff'),roughness:.55,side:THREE.DoubleSide}));arenaSign.position.set(51,3.86,88.35);arenaSign.rotation.y=Math.PI;worldGroup.add(arenaSign);
+    for(let row=0;row<3;row++)premiumBox(16-row*1.1,.42,1.25,row%2?0x6f98b8:0x5d83a1,51,.45+row*.48,87.2+row*.72,worldGroup);
+    for(const x of [27,39,51,63,75])premiumBox(.42,.09,.42,0xf5d84d,x,.25,66.5,worldGroup);
+    createLamp(25,67);createLamp(77,67);createLamp(25,84);createLamp(77,84);
+    registerInteractable({id:'athletics-gym',type:'race',icon:'🏃',label:'Abrir desafios do ginásio oval',x:51,z:86,radius:3.4,priority:120,action:()=>openRaceCenter()});
   }
   function createSizeChallenges(){
     // Passagem mini

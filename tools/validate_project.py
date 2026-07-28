@@ -115,6 +115,9 @@ def main() -> int:
         'src/styles/13-neighborhood-world-map-v644.css',
         'src/styles/14-commercial-responsive-map-missions-furniture.css',
         'tools/test_v6462_commercial_polish.py',
+        'src/modules/32-cooperative-missions.js',
+        'src/styles/15-coop-map-responsive-v6463.css',
+        'tools/test_v6463_coop_responsive.py',
     ]
     for relative in required:
         add(f'Arquivo obrigatório {relative}', (ROOT / relative).is_file())
@@ -126,10 +129,10 @@ def main() -> int:
     release = read_json('release-manifest.json')
     js_modules = sorted((ROOT / 'src/modules').glob('*.js'))
     css_modules = sorted((ROOT / 'src/styles').glob('*.css'))
-    add('32 módulos JavaScript', len(js_modules) == 32, len(js_modules))
-    add('15 módulos CSS', len(css_modules) == 15, len(css_modules))
-    add('Manifesto JS completo', len(manifest.get('javascript', [])) == 32)
-    add('Manifesto CSS completo', len(manifest.get('styles', [])) == len(css_modules) == 15)
+    add('33 módulos JavaScript', len(js_modules) == 33, len(js_modules))
+    add('16 módulos CSS', len(css_modules) == 16, len(css_modules))
+    add('Manifesto JS completo', len(manifest.get('javascript', [])) == 33)
+    add('Manifesto CSS completo', len(manifest.get('styles', [])) == len(css_modules) == 16)
     add('Ordem JS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('javascript', [])] == [path.name for path in js_modules])
     add('Ordem CSS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('styles', [])] == [path.name for path in css_modules])
     add('Versões centrais unificadas', version.get('version') == 646 and version.get('build') == '646.0-safe-rooms-atomic-pwa' and manifest.get('version') == 646 and manifest.get('build') == version.get('build'))
@@ -145,6 +148,9 @@ def main() -> int:
     run([PYTHON, 'tools/test_v644_neighborhoods.py'], 'Testes de bairros e mapa')
     run([NODE, 'tools/test_v646_runtime.js'], 'Harness real de slots e Service Worker V646')
     run([PYTHON, 'tools/test_v646_release.py'], 'Testes de segurança e release V646')
+    run([PYTHON, 'tools/test_v646_professional_services.py'], 'Serviços profissionais preservados')
+    run([PYTHON, 'tools/test_v6462_commercial_polish.py'], 'Mapa, missões, móveis e roupas preservados')
+    run([PYTHON, 'tools/test_v6463_coop_responsive.py'], 'Missões cooperativas e responsividade V646.3')
 
     index = (ROOT / 'index.html').read_text('utf-8')
     html = HtmlAudit()
@@ -170,7 +176,7 @@ def main() -> int:
         'trafficPriority', 'busSpawnIndex', 'miniMapLogicalSize', 'miniMapScale',
         'clearRemoteRoomEntities', 'applyRoomWorld', 'mapRegionsMarkup',
         'approvedChatPhrases', 'openReportPlayer', 'updatePlayUsage',
-        'OTTHI_RELEASE_COHERENT',
+        'OTTHI_RELEASE_COHERENT', 'COOP_MISSION_TEMPLATES', 'createCooperativeMissionWorld',
     ]:
         add(f'Token preservado {token}', token in app)
     opened, closed = css_braces(style)

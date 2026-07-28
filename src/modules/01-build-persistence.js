@@ -123,6 +123,7 @@
     houseExtensions: [],
     roomFurniture: [],
     multiplayerRequests: { lastSentAt: 0, completed: [] },
+    cooperative: { active:null, completed:[], history:[], preferredMode:'coop', soloFallback:true, lastLobbyNotice:0 },
     npcSociety: { lastEvent:0, houses:{}, friendships:{}, moods:{} },
     lastSaved: Date.now()
   });

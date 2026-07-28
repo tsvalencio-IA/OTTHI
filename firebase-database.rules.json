@@ -569,6 +569,121 @@
                 ".validate": false
               }
             }
+          },
+          "coopMissions": {
+            ".read": "auth != null && root.child('otthosWorld').child('users').child(auth.uid).child('guardianSettings').child('multiplayerEnabled').val() !== false && root.child('otthosWorld').child('users').child(auth.uid).child('guardianSettings').child('communicationEnabled').val() === true",
+            ".indexOn": [
+              "updatedAtClient",
+              "status",
+              "type"
+            ],
+            "$missionId": {
+              ".write": "auth != null && root.child('otthosWorld').child('users').child(auth.uid).child('guardianSettings').child('multiplayerEnabled').val() !== false && root.child('otthosWorld').child('users').child(auth.uid).child('guardianSettings').child('communicationEnabled').val() === true && ((!data.exists() && newData.child('hostUid').val() === auth.uid && newData.child('room').val() === $roomId) || (data.exists() && (data.child('hostUid').val() === auth.uid || data.child('participants').child(auth.uid).exists() || (!data.child('participants').child(auth.uid).exists() && data.child('status').val() === 'lobby' && newData.child('participants').child(auth.uid).child('uid').val() === auth.uid))))",
+              ".validate": "!newData.exists() || (newData.hasChildren(['id','type','title','icon','hostUid','room','status','mode','minPlayers','maxPlayers','createdAt','createdAtClient','updatedAt','updatedAtClient','participants','progress']) && newData.child('id').val() === $missionId && newData.child('hostUid').isString() && newData.child('room').val() === $roomId && (newData.child('type').val() === 'firefighter' || newData.child('type').val() === 'paramedic' || newData.child('type').val() === 'police' || newData.child('type').val() === 'fishing' || newData.child('type').val() === 'school' || newData.child('type').val() === 'streetRace' || newData.child('type').val() === 'ovalRace') && (newData.child('status').val() === 'lobby' || newData.child('status').val() === 'active' || newData.child('status').val() === 'completed' || newData.child('status').val() === 'cancelled') && (newData.child('mode').val() === 'coop' || newData.child('mode').val() === 'solo') && newData.child('minPlayers').isNumber() && newData.child('minPlayers').val() >= 1 && newData.child('minPlayers').val() <= 3 && newData.child('maxPlayers').isNumber() && newData.child('maxPlayers').val() >= newData.child('minPlayers').val() && newData.child('maxPlayers').val() <= 3 && newData.child('createdAtClient').isNumber() && newData.child('updatedAtClient').isNumber() && (!data.exists() || (newData.child('id').val() === data.child('id').val() && newData.child('type').val() === data.child('type').val() && newData.child('hostUid').val() === data.child('hostUid').val() && newData.child('room').val() === data.child('room').val() && (newData.child('status').val() === data.child('status').val() || auth.uid === data.child('hostUid').val()))))",
+              "participants": {
+                "$participantUid": {
+                  ".validate": "!newData.exists() || (newData.hasChildren(['uid','name','role','ready','joinedAtClient','updatedAtClient']) && newData.child('uid').val() === $participantUid && newData.child('name').isString() && newData.child('name').val().matches(/^Jogador [A-Z0-9]{4}$/) && (newData.child('role').val() === 'driver' || newData.child('role').val() === 'hose' || newData.child('role').val() === 'rescuer' || newData.child('role').val() === 'medic' || newData.child('role').val() === 'stretcher' || newData.child('role').val() === 'officer' || newData.child('role').val() === 'fisher' || newData.child('role').val() === 'cook' || newData.child('role').val() === 'guide' || newData.child('role').val() === 'teacher' || newData.child('role').val() === 'runner' || newData.child('role').val() === 'helper') && newData.child('ready').isBoolean() && newData.child('joinedAtClient').isNumber() && newData.child('updatedAtClient').isNumber())",
+                  "uid": {
+                    ".validate": true
+                  },
+                  "name": {
+                    ".validate": true
+                  },
+                  "role": {
+                    ".validate": true
+                  },
+                  "ready": {
+                    ".validate": true
+                  },
+                  "joinedAt": {
+                    ".validate": true
+                  },
+                  "joinedAtClient": {
+                    ".validate": true
+                  },
+                  "updatedAtClient": {
+                    ".validate": true
+                  },
+                  "$other": {
+                    ".validate": false
+                  }
+                }
+              },
+              "progress": {
+                ".validate": "newData.hasChildren(['phase','counter','target','updatedAtClient']) && newData.child('phase').isNumber() && newData.child('phase').val() >= 0 && newData.child('phase').val() <= 12 && newData.child('counter').isNumber() && newData.child('counter').val() >= 0 && newData.child('counter').val() <= 999 && newData.child('target').isNumber() && newData.child('target').val() >= 1 && newData.child('target').val() <= 99 && newData.child('updatedAtClient').isNumber()",
+                "phase": {
+                  ".validate": true
+                },
+                "counter": {
+                  ".validate": true
+                },
+                "target": {
+                  ".validate": true
+                },
+                "updatedAt": {
+                  ".validate": true
+                },
+                "updatedAtClient": {
+                  ".validate": true
+                },
+                "events": {
+                  "$eventId": {
+                    ".validate": "newData.hasChildren(['uid','role','kind','value','createdAtClient']) && newData.child('uid').isString() && newData.child('role').isString() && newData.child('kind').isString() && newData.child('kind').val().length <= 24 && newData.child('value').isNumber() && newData.child('value').val() >= 0 && newData.child('value').val() <= 99 && newData.child('createdAtClient').isNumber()"
+                  }
+                }
+              },
+              "id": {
+                ".validate": true
+              },
+              "type": {
+                ".validate": true
+              },
+              "title": {
+                ".validate": true
+              },
+              "icon": {
+                ".validate": true
+              },
+              "hostUid": {
+                ".validate": true
+              },
+              "room": {
+                ".validate": true
+              },
+              "status": {
+                ".validate": true
+              },
+              "mode": {
+                ".validate": true
+              },
+              "minPlayers": {
+                ".validate": true
+              },
+              "maxPlayers": {
+                ".validate": true
+              },
+              "createdAt": {
+                ".validate": true
+              },
+              "createdAtClient": {
+                ".validate": true
+              },
+              "updatedAt": {
+                ".validate": true
+              },
+              "updatedAtClient": {
+                ".validate": true
+              },
+              "startedAt": {
+                ".validate": true
+              },
+              "completedAt": {
+                ".validate": true
+              },
+              "$other": {
+                ".validate": false
+              }
+            }
           }
         }
       }

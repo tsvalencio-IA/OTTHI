@@ -263,7 +263,8 @@
       delivery:{primary:0xe59a2f,secondary:0x4b3425,accent:0xf8f0d7,boot:0x241b16},
       mechanic:{primary:0x315f91,secondary:0x26384e,accent:0xdce8f2,boot:0x151a20},
       miner:{primary:0xc68b24,secondary:0x3b3026,accent:0xf2d25c,boot:0x181617},
-      builder:{primary:0xe9782b,secondary:0x34404d,accent:0xfff2a1,boot:0x171a1e}
+      builder:{primary:0xe9782b,secondary:0x34404d,accent:0xfff2a1,boot:0x171a1e},
+      sport:{primary:0x2f7fd8,secondary:0x172f4a,accent:0xf5d84d,boot:0xffffff}
     };return palettes[uniform]||{primary:0x2477d4,secondary:0x26384e,accent:0xf4f6f8,boot:0x151a20};
   }
   function dressAnimatedAvatar(outfit,uniform){
@@ -304,7 +305,8 @@
       }else if(uniform==='delivery'){box(.82,.95,.42,0x8b5a2b,0,1.62,-.58,avatarLayer);addUniformPatch(body,'ENTREGA','#ffffff','#b86d13',0,.15,.43,0,.75,.20);
       }else if(uniform==='mechanic'){box(.22,.32,.08,0xf3bd37,.34,-.03,.44,body);box(.90,.16,.85,0x26384e,0,3.25,0,avatarLayer);addUniformPatch(body,'OFICINA','#ffffff','#274d75',0,.15,.43,0,.75,.20);
       }else if(uniform==='miner'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xf0bb2d,{metalness:.08}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.22,.22,.08,0xf8f4c6,0,3.17,.58,avatarLayer);box(.75,.18,.07,0x3b2c1b,0,.15,.43,body);
-      }else if(uniform==='builder'){box(1.14,.20,.82,0xf8d54a,0,3.24,0,avatarLayer);box(.72,.15,.85,0xf8d54a,0,3.15,.50,avatarLayer);box(.12,1.02,.07,0xfff2a1,-.33,0,.43,body);box(.12,1.02,.07,0xfff2a1,.33,0,.43,body);}
+      }else if(uniform==='builder'){box(1.14,.20,.82,0xf8d54a,0,3.24,0,avatarLayer);box(.72,.15,.85,0xf8d54a,0,3.15,.50,avatarLayer);box(.12,1.02,.07,0xfff2a1,-.33,0,.43,body);box(.12,1.02,.07,0xfff2a1,.33,0,.43,body);
+      }else if(uniform==='sport'){box(.20,.70,.07,0xf5d84d,-.33,.02,.44,body);box(.20,.70,.07,0xf5d84d,.33,.02,.44,body);addUniformPatch(body,'ATLETA','#ffffff','#185fa8',0,.15,.43,0,.72,.20);}
     }
     if(uniform==='none'){
       if(hat==='cap'){box(1.0,.22,1.0,0x2477d4,0,3.28,0,avatarLayer);box(.55,.10,.55,0x2477d4,0,3.18,.58,avatarLayer);}

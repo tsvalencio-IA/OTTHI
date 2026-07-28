@@ -16,7 +16,12 @@
     "Three.js local incluído no shell obrigatório e disponível offline",
     "tela de carregamento e falha amigável sem apagar o save",
     "validação portátil em Windows e GitHub Actions",
-    "preservação integral de mobilidade, mapa, construção e educação"
+    "preservação integral de mobilidade, mapa, construção e educação",
+    "mapa e GPS responsivos com agrupamento de marcadores em retrato e paisagem",
+    "missões cooperativas infantis para emergência, pesca, escola e corridas",
+    "funções sincronizadas para equipes de dois ou três jogadores com alternativa solo",
+    "ginásio oval com atletas bots e progresso de voltas compartilhado",
+    "uniforme esportivo e integração dos veículos de serviço com objetivos cooperativos"
   ],
   "preserves": [
     "roupas",
@@ -40,10 +45,10 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "646.0",
+  "hotfix": "646.3",
   "notes": [
     "Pacote completo e independente; migra automaticamente o save V645.",
-    "Regras Firebase mudaram e precisam ser publicadas manualmente.",
+    "As regras Firebase incluem missões cooperativas e precisam ser publicadas manualmente para o modo online funcionar.",
     "O service worker só ativa depois de validar o shell completo.",
     "O workflow apenas valida bundles já sincronizados e não publica commit corretivo parcial.",
     "Teste físico de dois celulares, AR e APK continua exigindo aparelho real."

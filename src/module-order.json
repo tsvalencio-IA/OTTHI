@@ -14,14 +14,14 @@
       "startLine": 27,
       "endLine": 142,
       "description": "Normalização, merge, tombstones e persistência das construções",
-      "sha256Body": "7d7a101c5ae8668de8415cd3d4f6fbfcf2e7292049588985cfd66f4906a4bd4d"
+      "sha256Body": "938e057a239cd5997ac8e3f4fb672d27f47e6a3c6c104bcd070eb6c8c3e0e8ff"
     },
     {
       "file": "src/modules/02-state-save-cloud-account.js",
       "startLine": 143,
       "endLine": 396,
       "description": "Estado, save local, IndexedDB, nuvem e conta",
-      "sha256Body": "4f73be09b5bd9a5b98f48e5324d2aaddbeebf0cdcc54509687b6e2fc25a8490b"
+      "sha256Body": "56bc858a68199f7c5c65d3f653cea3fb346f5dc8ac891370cd4092149904b6b7"
     },
     {
       "file": "src/modules/03-ui-modal-install-pwa.js",
@@ -49,7 +49,7 @@
       "startLine": 928,
       "endLine": 1063,
       "description": "Missões, objetivos, perfil, HUD, inventário e ferramentas",
-      "sha256Body": "2d800f84cc37e1748f9491c64617d7abc3ad8ed12db072e129af683ef2215af2"
+      "sha256Body": "178d197114587ed9c603698409a36cd437f1b95ecd2a9e7b126d80f9c77c313b"
     },
     {
       "file": "src/modules/07-navigation-traffic-routes.js",
@@ -63,7 +63,7 @@
       "startLine": 1201,
       "endLine": 1359,
       "description": "Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",
-      "sha256Body": "e22f80f750589cb792d9d67dd00b1948f7875fc327bdf1fa7cbe66d21a9282c6"
+      "sha256Body": "024378cce0ebe94b822d6d678a865f1dda4062db4c8841075ca09109916b61a7"
     },
     {
       "file": "src/modules/09-responsive-ar-quality-diagnostics.js",
@@ -84,7 +84,7 @@
       "startLine": 1692,
       "endLine": 1962,
       "description": "Texturas, materiais, geometria, personagem e avatar 3D",
-      "sha256Body": "2b1897880fc745b64c5eb5762f0d5697144a34d4678497d3f75b8dc81d1fad7b"
+      "sha256Body": "743e4bf46db2d49b5757d08466e470424f5c0f81d238b464309f2dcf56a45232"
     },
     {
       "file": "src/modules/12-world-resources-nature.js",
@@ -98,7 +98,7 @@
       "startLine": 2185,
       "endLine": 2417,
       "description": "Casas, interiores, NPCs, inimigos, cristais, veículos e academia",
-      "sha256Body": "a6ef906435a7d86e4c6827d4ec7876619a5b2f3a0d9d904865755c1e6774d972"
+      "sha256Body": "3b53de4b0fa3d9a75d0a2f7a768c98ccb837c004c8956e4403fdb92b03ede954"
     },
     {
       "file": "src/modules/14-world-district-decoration.js",
@@ -119,7 +119,7 @@
       "startLine": 2723,
       "endLine": 2864,
       "description": "Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",
-      "sha256Body": "30d8c49d366035a3873cd5cdc51793dd07b91097ceae661062b206686d1ffa4d"
+      "sha256Body": "53f96b993a7b752474829098e787c9833846e23364256c45adf48992bb57252d"
     },
     {
       "file": "src/modules/17-adventures-learning-world.js",
@@ -147,7 +147,7 @@
       "startLine": 3097,
       "endLine": 3240,
       "description": "Construção do mundo, recursos, baús, casas em nuvem e interiores",
-      "sha256Body": "9fbfc0aef8b7e02388671063563ad0fd04f1381e3279c29759aa0d28fc5596d8"
+      "sha256Body": "712fcc110bd8927592ba637c22f8c81b4ab42f6ba5d1d1863f5e2ad3978e21b9"
     },
     {
       "file": "src/modules/21-interactions-shop-social-races.js",
@@ -161,7 +161,7 @@
       "startLine": 3416,
       "endLine": 3530,
       "description": "Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",
-      "sha256Body": "209c0cca11e28d6a83f5dd2a176a9e44a415e808b66cce1e506cdffd8aae7ed4"
+      "sha256Body": "5b8ccea7fe11dfd5bb6c050c6706dbecea3e5f8bf36ec666cf4baa6a7bf0e169"
     },
     {
       "file": "src/modules/23-vehicle-effects-driving.js",
@@ -196,7 +196,7 @@
       "startLine": 4001,
       "endLine": 4157,
       "description": "Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",
-      "sha256Body": "43d21ea8d076dbbace74c2fd7690661207e50cae040e25005a6fc2cde9e343df"
+      "sha256Body": "e93543bd683176e6db4f61bb1e30723964b945757c79df0d22b2099f51547f58"
     },
     {
       "file": "src/modules/28-multiplayer-social-online.js",
@@ -210,7 +210,7 @@
       "startLine": 4305,
       "endLine": 4377,
       "description": "Loop principal, controles, gamepad e início do jogo",
-      "sha256Body": "8c10170bb54a4394eda513b1de7d18d548affb3ac1710562948660acc9b30b0a"
+      "sha256Body": "9a0d36e129acbaa2afa4e9ff78d6d5601b76beefd6290cc199f385b81ea6d035"
     },
     {
       "file": "src/modules/30-pause-tests-public-api-bootstrap.js",
@@ -225,6 +225,13 @@
       "endLine": 0,
       "description": "Bairros reais, limite de vagas, transição, casas e mapa V644",
       "sha256Body": "c077d7777f196bc9dc03bc62dd3f73c9c15e8f8b5222cff0b94c926d78058ba7"
+    },
+    {
+      "file": "src/modules/32-cooperative-missions.js",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Missões cooperativas infantis, equipes online/solo, pesca, escola e corridas",
+      "sha256Body": "6beb1e9de1f2c14cd69ba56f241980430c9bb8593b5327926889db129ff3a011"
     }
   ],
   "styles": [
@@ -332,6 +339,13 @@
       "endLine": 0,
       "description": "Acabamento comercial: mapa/GPS responsivo, missões explicáveis, móveis e uniformes",
       "sha256Body": "01dc21a785a5a037029c6ed631524dbb01ad520fc3e2ca93d114345386551835"
+    },
+    {
+      "file": "src/styles/15-coop-map-responsive-v6463.css",
+      "startLine": 0,
+      "endLine": 0,
+      "description": "Mapa final responsivo, agrupamento de marcadores e missões cooperativas",
+      "sha256Body": "062b650e78cf7dc31bb371059fb892e65dab447ba115bcae950813176cb8062c"
     }
   ]
 }

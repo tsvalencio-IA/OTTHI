@@ -72,7 +72,8 @@ class CommercialPolishTests(unittest.TestCase):
 
     def test_new_style_is_last_and_build_outputs_match(self):
         order = json.loads(text('src/module-order.json'))
-        self.assertEqual(order['styles'][-1]['file'], 'src/styles/14-commercial-responsive-map-missions-furniture.css')
+        self.assertIn('src/styles/14-commercial-responsive-map-missions-furniture.css', [item['file'] for item in order['styles']])
+        self.assertEqual(order['styles'][-1]['file'], 'src/styles/15-coop-map-responsive-v6463.css')
         app = text('app.js')
         style = text('style.css')
         for token in ['serviceVehicleMapLocation', 'openFurnitureManager', 'dressAnimatedAvatar']:
