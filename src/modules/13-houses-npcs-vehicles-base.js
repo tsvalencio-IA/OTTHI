@@ -165,6 +165,7 @@
   function applyVehicleAppearance(vehicle){
     const a=vehicle?.appearance||{},m=vehicleVisual?.userData?.appearanceMaterials;if(!m)return;
     m.chassis.color.setHex(Number(a.chassis??0x26384e));m.primary.color.setHex(Number(a.primary??0xf28a22));m.primaryDark.color.setHex(Number(a.primaryDark??a.primary??0xc85b16));m.secondary.color.setHex(Number(a.secondary??0x0aa7b8));m.glass.color.setHex(Number(a.glass??0x102338));
+    if(typeof applyServiceVehicleVisual==='function')applyServiceVehicleVisual(vehicle);
   }
   function persistParkedVehicle(vehicle){
     if(!vehicle||!state.vehicles)return;state.vehicles.parked[vehicle.id]={x:+vehicle.group.position.x.toFixed(2),z:+vehicle.group.position.z.toFixed(2),heading:+vehicle.group.rotation.y.toFixed(3)};state.vehicles.lastUsedId=vehicle.id;
@@ -178,7 +179,7 @@
     const headlight=renderMat(0xfff1a8,{emissive:0xffd75b,emissiveIntensity:.9,roughness:.2});box(.3,.17,.08,headlight,-.58,.5,1.27,group);box(.3,.17,.08,headlight,.58,.5,1.27,group);
     for(const p of [[-.84,.24,-.79],[.84,.24,-.79],[-.84,.24,.79],[.84,.24,.79]]){const wheel=cylinder(.34,.28,0x10151d,p[0],p[1],p[2],group,14);wheel.rotation.z=Math.PI/2;const hub=cylinder(.12,.3,0xf5a623,p[0],p[1],p[2],group,10);hub.rotation.z=Math.PI/2;}
     group.traverse(o=>{if(o.isMesh)addVoxelOutline(o,0x14243a,.28);});
-    const vehicle={id,x:group.position.x,z:group.position.z,heading,group,label:options.label||'Carro da cidade',appearance,occupied:false};world.vehicles.push(vehicle);if(!world.vehicle)world.vehicle=vehicle;
+    const vehicle={id,x:group.position.x,z:group.position.z,heading,group,label:options.label||'Carro da cidade',kind:options.kind||'car',serviceType:options.serviceType||'',appearance,occupied:false,radius:Number(options.radius||1.55)};world.vehicles.push(vehicle);if(!world.vehicle)world.vehicle=vehicle;
     registerInteractable({id:`vehicle-${id}`,type:'vehicle',icon:'🚗',label:`Entrar: ${vehicle.label}`,radius:2.5,priority:155,getPos:()=>({x:vehicle.group.position.x,z:vehicle.group.position.z}),available:()=>!vehicle.occupied&&vehicle.group.visible,action:()=>enterVehicle(vehicle)});return vehicle;
   }
 

@@ -175,11 +175,12 @@
   const JOBS = [
     {id:'delivery',title:'Entregador da Vila',icon:'📦',reward:120,rep:30,description:'Pegue o carrinho e entregue o pacote para Maya.'},
     {id:'police',title:'Patrulha Educativa',icon:'👮',reward:160,rep:38,description:'Visite três pontos da cidade e oriente o trânsito com segurança.'},
-    {id:'firefighter',title:'Bombeiro Kids',icon:'🚒',reward:180,rep:42,description:'Atenda uma emergência controlada e ajude a equipe a apagar o fogo.'},
+    {id:'firefighter',title:'Bombeiro Kids',icon:'🚒',reward:180,rep:42,description:'Vista o uniforme, dirija o caminhão dos bombeiros e atenda uma emergência controlada.'},
+    {id:'paramedic',title:'Socorrista da Vila',icon:'🚑',reward:175,rep:40,description:'Vista o uniforme, dirija a ambulância e responda a um acidente com segurança.'},
     {id:'teacher',title:'Professor por um Dia',icon:'🧑‍🏫',reward:150,rep:34,description:'Vá a uma escola e conduza uma atividade educativa.'},
     {id:'gather',title:'Ajudante da Oficina',icon:'🪵',reward:90,rep:18,description:'Colete 3 madeiras e 2 pedras.',target:{wood:3,stone:2}},
     {id:'crystals',title:'Explorador de Cristais',icon:'💎',reward:140,rep:24,description:'Colete 3 novos cristais.',target:{crystals:3}},
     {id:'builder',title:'Decorador do Bairro',icon:'🧱',reward:110,rep:20,description:'Construa 2 objetos perto de uma casa.',target:{builds:2}}
   ];
   const MISSION_STATES=Object.freeze({LOCKED:'LOCKED',AVAILABLE:'AVAILABLE',ACCEPTED:'ACCEPTED',PREPARING:'PREPARING',TRAVELLING:'TRAVELLING',AT_LOCATION:'AT_LOCATION',ACTION_REQUIRED:'ACTION_REQUIRED',RETURNING:'RETURNING',COMPLETING:'COMPLETING',COMPLETED:'COMPLETED',CANCELLED:'CANCELLED',FAILED_SAFE:'FAILED_SAFE'});
-  const JOB_UNIFORMS={delivery:'delivery',police:'police',firefighter:'firefighter',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
+  const JOB_UNIFORMS={delivery:'delivery',police:'police',firefighter:'firefighter',paramedic:'paramedic',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};

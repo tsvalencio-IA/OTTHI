@@ -15,15 +15,14 @@
     state.avatar.uniform=uniform;applyAvatarCustomization();saveState(true);return uniform;
   }
   function focusActiveJob(){
-    const job=state.career.activeJob;if(!job){toast('Nenhum trabalho ativo.','warn');return false;}
-    if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();
-    if(job.id==='delivery')setWaypoint('garage');
+    const job=state.career.activeJob;if(!job){toast('Nenhum trabalho ativo.','warn');return false;}if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();const serviceKind=serviceKindForJob(job);
+    if(serviceKind&&!job.serviceVehicleBoarded){const vehicle=reserveMissionServiceVehicle(job,{waypoint:true});if(!vehicle)return false;closeModal();updateMissionHUD();toast(`Primeiro passo: vista o uniforme e entre em ${serviceKind==='police'?'uma viatura':serviceKind==='firefighter'?'um caminhão dos bombeiros':'uma ambulância'}.`,'good',2600);return true;}
+    if(job.emergencyIncidentId){const incident=world.activeIncident?.id===job.emergencyIncidentId?world.activeIncident:null;if(incident){state.waypoint={id:`assist-${incident.id}`,name:'Área do acidente',x:incident.x,z:incident.z,navX:incident.navX,navZ:incident.navZ,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();updateNavigation(0,true);}}
+    else if(job.id==='delivery')setWaypoint('garage');
     else if(job.id==='police'){const id=(job.route||[])[Number(job.progress||0)]||'police';setWaypoint(id);}
     else if(job.id==='firefighter'){const fire=ensureActiveFire(true);if(fire){state.waypoint={id:`fire-${fire.id}`,name:fire.name,x:fire.x,z:fire.z,navX:fire.navX,navZ:fire.navZ,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();updateNavigation(0,true);}}
-    else if(job.id==='teacher')setWaypoint(job.schoolId||'school');
-    else if(job.id==='gather')setWaypoint('forest');
-    else if(job.id==='crystals')setWaypoint('crystal');
-    else if(job.id==='builder')setWaypoint('home-extension');
+    else if(job.id==='paramedic'){const incident=ensureActiveTrafficIncident(true);if(incident){job.emergencyIncidentId=incident.id;focusActiveJob();return true;}}
+    else if(job.id==='teacher')setWaypoint(job.schoolId||'school');else if(job.id==='gather')setWaypoint('forest');else if(job.id==='crystals')setWaypoint('crystal');else if(job.id==='builder')setWaypoint('home-extension');
     closeModal();updateMissionHUD();toast(`Missão ativa: ${job.title}. Siga a rota azul.`,'good',2300);return true;
   }
   async function cancelActiveJob(){
@@ -31,20 +30,19 @@
     const ok=await confirmModal('Cancelar trabalho',`Deseja encerrar "${job.title}"? Suas moedas, itens e conquistas continuam salvos.`,'Cancelar trabalho','Continuar missão');if(!ok)return false;
     setMissionState(job,MISSION_STATES.CANCELLED,'player-cancel');job.uniformLocked=false;
     if(job.id==='delivery'){state.flags.deliveryActive=false;state.inventory.package=Number(job.previousPackage||0);}
-    state.avatar.uniform=job.previousUniform||'none';state.career.lastMission={...job,endedAt:Date.now()};state.career.activeJob=null;state.waypoint=null;world.routePath=[];updateWaypointMarker();applyAvatarCustomization();updateMissionHUD();saveState(true);closeModal();toast('Trabalho cancelado. Você pode escolher outro.','good',1900);return true;
+    releaseMissionServiceVehicle(job);state.avatar.uniform=job.previousUniform||'none';state.career.lastMission={...job,endedAt:Date.now()};state.career.activeJob=null;state.waypoint=null;world.routePath=[];updateWaypointMarker();applyAvatarCustomization();updateMissionHUD();saveState(true);closeModal();toast('Trabalho cancelado. Você pode escolher outro.','good',1900);return true;
   }
 
   function activeJobProgress(job){
-    if(!job)return{percent:0,label:'0%'};
-    const start=job.start||{};
+    if(!job)return{percent:0,label:'0%'};const start=job.start||{},serviceKind=serviceKindForJob(job);
+    if(serviceKind&&!job.serviceVehicleBoarded)return{percent:18,label:`Entre ${serviceKind==='police'?'na viatura':serviceKind==='firefighter'?'no caminhão dos bombeiros':'na ambulância'}`};
     if(job.id==='delivery')return{percent:state.flags.deliveryDone?100:(player.vehicle?55:25),label:state.flags.deliveryDone?'concluído':player.vehicle?'Leve o pacote até Maya':'Pegue o carrinho'};
-    if(job.id==='police'){const done=Number(job.progress||0),total=(job.route||[]).length||3;return{percent:clamp(done/total*100,0,100),label:`${done}/${total} pontos patrulhados`};}
-    if(job.id==='firefighter'){const fire=world.fires.find(f=>f.active);return{percent:job.completed?100:(fire?.playerHelping?70:fire?35:15),label:job.completed?'emergência concluída':fire?.playerHelping?'Ajudando com a mangueira':fire?'Siga até a ocorrência':'Aguardando chamado'};}
+    if(job.id==='police'){if(job.emergencyIncidentId)return{percent:job.sceneTaskCompleted?90:job.serviceVehicleArrived?72:42,label:job.sceneTaskCompleted?'Área protegida; aguarde conclusão':job.serviceVehicleArrived?'Saia da viatura e use AÇÃO':'Dirija a viatura até o acidente'};const done=Number(job.progress||0),total=(job.route||[]).length||3;return{percent:clamp(24+done/total*76,0,100),label:`${done}/${total} pontos patrulhados com a viatura`};}
+    if(job.id==='firefighter'){if(job.emergencyIncidentId)return{percent:job.sceneTaskCompleted?90:job.serviceVehicleArrived?72:42,label:job.sceneTaskCompleted?'Incêndio controlado':job.serviceVehicleArrived?'Saia do caminhão e use AÇÃO':'Dirija o caminhão até o acidente'};const fire=world.fires.find(f=>f.active);return{percent:job.completed?100:(fire?.playerHelping?88:job.serviceVehicleArrived?68:fire?42:25),label:job.completed?'emergência concluída':fire?.playerHelping?'Mangueira em operação':job.serviceVehicleArrived?'Estacione e ajude com a mangueira':fire?'Dirija até a ocorrência':'Aguardando chamado'};}
+    if(job.id==='paramedic')return{percent:job.sceneTaskCompleted?90:job.serviceVehicleArrived?70:42,label:job.sceneTaskCompleted?'Atendimento realizado; aguarde liberação':job.serviceVehicleArrived?'Saia da ambulância e use AÇÃO':'Dirija a ambulância até o acidente'};
     if(job.id==='teacher')return{percent:job.completed?100:(currentHouse?.id?.startsWith('school')?55:20),label:job.completed?'aula concluída':'Vá até uma escola e use o quadro'};
     if(job.id==='gather'){const w=Math.max(0,state.inventory.wood-(start.wood||0)),r=Math.max(0,state.inventory.stone-(start.stone||0));return{percent:clamp((w/3+r/2)*50,0,100),label:`${Math.min(w,3)}/3 madeiras • ${Math.min(r,2)}/2 pedras`};}
-    if(job.id==='crystals'){const n=Math.max(0,state.inventory.crystals-(start.crystals||0));return{percent:clamp(n/3*100,0,100),label:`${Math.min(n,3)}/3 cristais`};}
-    if(job.id==='builder'){const n=Math.max(0,state.builds.length-(start.builds||0));return{percent:clamp(n/2*100,0,100),label:`${Math.min(n,2)}/2 construções`};}
-    return{percent:0,label:'Em andamento'};
+    if(job.id==='crystals'){const n=Math.max(0,state.inventory.crystals-(start.crystals||0));return{percent:clamp(n/3*100,0,100),label:`${Math.min(n,3)}/3 cristais`};}if(job.id==='builder'){const n=Math.max(0,state.builds.length-(start.builds||0));return{percent:clamp(n/2*100,0,100),label:`${Math.min(n,2)}/2 construções`};}return{percent:0,label:'Em andamento'};
   }
   function openJobCenter(){
     const active=state.career.activeJob,progress=active?activeJobProgress(active):null;
@@ -56,15 +54,13 @@
     });
   }
   function startJob(job,options={}){
-    if(!job||state.career.activeJob){toast('Cancele ou conclua o trabalho atual antes de trocar.','warn');return false;}
-    const inv=state.inventory,schoolId=Math.random()>.5?'school':'school-east',instanceId=`job-${job.id}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-    state.career.activeJob={...job,instanceId,missionState:MISSION_STATES.ACCEPTED,missionStateAt:Date.now(),schoolId,previousUniform:state.avatar.uniform||'none',previousPackage:Number(inv.package||0),rewardClaimed:false,startedAt:Date.now(),progress:0,start:{wood:inv.wood,stone:inv.stone,crystals:inv.crystals,builds:state.builds.length}};
-    equipJobUniform(job.id);setMissionState(state.career.activeJob,MISSION_STATES.PREPARING,'uniform-ready');
-    if(job.id==='delivery'){state.flags.deliveryActive=true;state.flags.deliveryDone=false;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}
-    else if(job.id==='police'){state.career.activeJob.route=['village','school','fire-station'];state.career.activeJob.progress=0;}
-    else if(job.id==='firefighter')ensureActiveFire(true);
-    if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();
-    setMissionState(state.career.activeJob,MISSION_STATES.TRAVELLING,'route-created');saveState(true);updateMissionHUD();if(options.focus!==false)focusActiveJob();return true;
+    if(!job||state.career.activeJob){toast('Cancele ou conclua o trabalho atual antes de trocar.','warn');return false;}const inv=state.inventory,schoolId=Math.random()>.5?'school':'school-east',instanceId=`job-${job.id}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
+    state.career.activeJob={...job,instanceId,missionState:MISSION_STATES.ACCEPTED,missionStateAt:Date.now(),schoolId,previousUniform:state.avatar.uniform||'none',previousPackage:Number(inv.package||0),rewardClaimed:false,startedAt:Date.now(),progress:0,serviceVehicleId:'',serviceVehicleKind:serviceKindForJob(job),serviceVehicleBoarded:false,serviceVehicleArrived:false,sceneTaskCompleted:false,emergencyIncidentId:'',start:{wood:inv.wood,stone:inv.stone,crystals:inv.crystals,builds:state.builds.length}};
+    equipJobUniform(job.id);setMissionState(state.career.activeJob,MISSION_STATES.PREPARING,'uniform-ready');if(job.id==='delivery'){state.flags.deliveryActive=true;state.flags.deliveryDone=false;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}
+    else if(job.id==='police'){state.career.activeJob.route=['village','school','fire-station'];state.career.activeJob.progress=0;reserveMissionServiceVehicle(state.career.activeJob,{waypoint:true});}
+    else if(job.id==='firefighter'){ensureActiveFire(true);reserveMissionServiceVehicle(state.career.activeJob,{waypoint:true});}
+    else if(job.id==='paramedic'){const incident=ensureActiveTrafficIncident(true);if(incident)state.career.activeJob.emergencyIncidentId=incident.id;reserveMissionServiceVehicle(state.career.activeJob,{waypoint:true});}
+    if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();saveState(true);updateMissionHUD();if(options.focus!==false)focusActiveJob();return true;
   }
   function completeActiveJob(){
     const job=state.career.activeJob;if(!job||job.missionState===MISSION_STATES.COMPLETING||job.missionState===MISSION_STATES.COMPLETED)return false;
@@ -74,10 +70,10 @@
     state.profile.coins+=Number(job.reward||0);state.profile.reputation+=Number(job.rep||0);state.career.completed++;state.stats.jobsCompleted=(state.stats.jobsCompleted||0)+1;
     if(job.id==='delivery'){state.flags.deliveryActive=false;state.inventory.package=Number(job.previousPackage||0);state.flags.deliveryDone=true;state.flags.completedDeliveryJob=true;state.cityServices.deliveries++;}
     if(job.id==='police'){state.flags.completedPoliceJob=true;state.cityServices.policePatrols++;state.stats.patrols++;}
-    if(job.id==='firefighter'){state.flags.completedFirefighterJob=true;state.cityServices.rescuesCompleted=(state.cityServices.rescuesCompleted||0)+1;}
+    if(job.id==='firefighter'){state.flags.completedFirefighterJob=true;state.cityServices.rescuesCompleted=(state.cityServices.rescuesCompleted||0)+1;}if(job.id==='paramedic'){state.flags.completedParamedicJob=true;state.cityServices.paramedicRescues=(state.cityServices.paramedicRescues||0)+1;state.stats.paramedicCalls=(state.stats.paramedicCalls||0)+1;}
     if(job.id==='teacher'){state.flags.completedTeacherJob=true;state.cityServices.lessonsTaught++;state.stats.classesTaught++;}
     state.career.xp+=100;state.career.level=Math.floor(state.career.xp/300)+1;state.career.title=state.career.level>=4?'Profissional da Vila':state.career.level>=2?'Ajudante da Vila':'Morador da Vila';
-    job.uniformLocked=false;state.avatar.uniform=job.previousUniform||'none';setMissionState(job,MISSION_STATES.COMPLETED,'reward-committed');job.completedAt=Date.now();state.career.lastMission={...job};state.objectives.history.push({id:token,type:'job',jobId:job.id,title:job.title,completedAt:job.completedAt,reward:Number(job.reward||0),rep:Number(job.rep||0)});if(state.objectives.history.length>80)state.objectives.history.splice(0,state.objectives.history.length-80);
+    job.uniformLocked=false;releaseMissionServiceVehicle(job);state.avatar.uniform=job.previousUniform||'none';setMissionState(job,MISSION_STATES.COMPLETED,'reward-committed');job.completedAt=Date.now();state.career.lastMission={...job};state.objectives.history.push({id:token,type:'job',jobId:job.id,title:job.title,completedAt:job.completedAt,reward:Number(job.reward||0),rep:Number(job.rep||0)});if(state.objectives.history.length>80)state.objectives.history.splice(0,state.objectives.history.length-80);
     state.career.activeJob=null;state.waypoint=null;world.routePath=[];updateWaypointMarker();applyAvatarCustomization();setFlag('completedJob');evaluateMissions();updateMissionHUD();updateHUD();saveState(true);toast(`Trabalho concluído! +${job.reward} moedas`,'good',2600);return true;
   }
   function checkActiveJob(){
@@ -89,18 +85,19 @@
   }
 
   function restoreActiveJobRuntime(){
-    const job=state.career?.activeJob;if(!job)return;job.uniform=JOB_UNIFORMS[job.id]||job.uniform||'none';job.uniformLocked=true;if(job.id==='delivery'){state.flags.deliveryActive=true;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}if(job.id==='firefighter')ensureActiveFire(true);applyAvatarCustomization();updateMissionHUD();
+    const job=state.career?.activeJob;if(!job)return;job.uniform=JOB_UNIFORMS[job.id]||job.uniform||'none';job.uniformLocked=true;if(job.id==='delivery'){state.flags.deliveryActive=true;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}if(job.id==='firefighter')ensureActiveFire(true);if(job.id==='paramedic'&&!world.activeIncident){const incident=ensureActiveTrafficIncident(true);if(incident)job.emergencyIncidentId=incident.id;}if(serviceKindForJob(job))reserveMissionServiceVehicle(job,{waypoint:false});applyAvatarCustomization();updateMissionHUD();
   }
   function updateCareerMissions(){
-    const job=state.career.activeJob;if(!job)return;const now=performance.now();if(now-Number(updateCareerMissions.lastAt||0)<180)return;updateCareerMissions.lastAt=now;
-    let signature='';
-    if(job.id==='police'){
-      const route=job.route||[],targetId=route[Number(job.progress||0)],loc=MAP_LOCATIONS.find(x=>x.id===targetId);if(loc){const distance=Math.hypot(player.x-(loc.navX??loc.x),player.z-(loc.navZ??loc.z));setMissionState(job,distance<5?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,distance<5?'checkpoint':'route');if(distance<5&&!job.lastCheckpointAt){job.lastCheckpointAt=Date.now();job.progress=(job.progress||0)+1;toast(`Patrulha: ${loc.name} verificado com segurança.`,'good',1900);beep(720,70);if(job.progress>=route.length){completeActiveJob();state.waypoint=null;updateWaypointMarker();}else setWaypoint(route[job.progress]);saveState(true);}if(job.lastCheckpointAt&&Date.now()-job.lastCheckpointAt>1600)job.lastCheckpointAt=0;}
+    const job=state.career.activeJob;if(!job)return;const now=performance.now();if(now-Number(updateCareerMissions.lastAt||0)<180)return;updateCareerMissions.lastAt=now;let signature='',serviceKind=serviceKindForJob(job);
+    if(serviceKind&&!job.serviceVehicleBoarded){reserveMissionServiceVehicle(job,{waypoint:false});setMissionState(job,MISSION_STATES.PREPARING,'need-service-vehicle');}
+    else if(job.emergencyIncidentId){const incident=world.activeIncident?.id===job.emergencyIncidentId?world.activeIncident:null;if(!incident&&job.sceneTaskCompleted)completeActiveJob();else if(incident)setMissionState(job,job.sceneTaskCompleted?MISSION_STATES.RETURNING:job.serviceVehicleArrived?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,job.sceneTaskCompleted?'scene-complete':job.serviceVehicleArrived?'assist-scene':'respond-incident');}
+    else if(job.id==='police'){
+      const route=job.route||[],targetId=route[Number(job.progress||0)],loc=MAP_LOCATIONS.find(x=>x.id===targetId);if(loc){const distance=Math.hypot(player.x-(loc.navX??loc.x),player.z-(loc.navZ??loc.z)),correctVehicle=isDrivingServiceVehicle('police');setMissionState(job,!correctVehicle?MISSION_STATES.PREPARING:distance<5?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,!correctVehicle?'need-police-car':distance<5?'checkpoint':'route');if(correctVehicle&&distance<5&&!job.lastCheckpointAt){job.lastCheckpointAt=Date.now();job.progress=(job.progress||0)+1;toast(`Patrulha: ${loc.name} verificado com a viatura.`,'good',1900);beep(720,70);if(job.progress>=route.length){completeActiveJob();state.waypoint=null;updateWaypointMarker();}else setWaypoint(route[job.progress]);saveState(true);}if(job.lastCheckpointAt&&Date.now()-job.lastCheckpointAt>1600)job.lastCheckpointAt=0;}
     }else if(job.id==='delivery'){const d=Math.hypot(player.x-65,player.z-54);setMissionState(job,d<5?MISSION_STATES.ACTION_REQUIRED:player.vehicle?MISSION_STATES.TRAVELLING:MISSION_STATES.PREPARING,d<5?'deliver-to-maya':player.vehicle?'driving':'need-vehicle');}
     else if(job.id==='teacher'){const atSchool=!!currentHouse?.id?.startsWith('school');setMissionState(job,atSchool?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,atSchool?'teach':'go-school');}
-    else if(job.id==='firefighter'){const fire=world.fires.find(f=>f.active);setMissionState(job,fire&&Math.hypot(player.x-fire.x,player.z-fire.z)<5?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,fire?'respond':'await-call');}
-    else setMissionState(job,MISSION_STATES.ACTION_REQUIRED,'collect-or-build');
-    checkActiveJob();signature=`${job.id}|${job.missionState}|${activeJobProgress(job).label}`;if(signature!==updateCareerMissions.signature){updateCareerMissions.signature=signature;updateMissionHUD();}
+    else if(job.id==='firefighter'){const fire=world.fires.find(f=>f.active),distance=fire?Math.hypot(player.x-fire.navX,player.z-fire.navZ):Infinity;if(isDrivingServiceVehicle('firefighter')&&distance<6&&!job.serviceVehicleArrived){job.serviceVehicleArrived=true;toast('Caminhão posicionado. Estacione, saia e use a mangueira.','good',2500);saveState(true);}setMissionState(job,job.serviceVehicleArrived?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,fire?'respond':'await-call');}
+    else if(job.id==='paramedic'){const incident=ensureActiveTrafficIncident(true);if(incident&&!job.emergencyIncidentId)job.emergencyIncidentId=incident.id;}
+    else setMissionState(job,MISSION_STATES.ACTION_REQUIRED,'collect-or-build');checkActiveJob();signature=`${job.id}|${job.missionState}|${activeJobProgress(job).label}`;if(signature!==updateCareerMissions.signature){updateCareerMissions.signature=signature;updateMissionHUD();}
   }
   function openTeacherJobLesson(house){
     const questions=[['Qual atitude ajuda toda a turma?',['Ouvir e respeitar','Gritar com os colegas','Esconder os materiais'],0],['O que fazemos antes de atravessar?',['Corremos sem olhar','Olhamos para os dois lados','Fechamos os olhos'],1],['Como cuidamos da escola?',['Organizamos e ajudamos','Quebramos objetos','Jogamos lixo no chão'],0]],q=questions[(state.cityServices.lessonsTaught||0)%questions.length];

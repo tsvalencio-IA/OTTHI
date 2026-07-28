@@ -240,22 +240,37 @@
     avatarLayer.name = 'OTTHOS_AVATAR_ACCESSORIES';
     playerGroup?.add(avatarLayer);
   }
+  function addUniformPatch(parent,text,color='#ffffff',background='#17243a',x=0,y=1.7,z=.426,rotationY=0,width=.72,height=.22){
+    const patch=new THREE.Mesh(new THREE.PlaneGeometry(width,height),new THREE.MeshStandardMaterial({map:signTexture(text,background,color),transparent:true,roughness:.58,side:THREE.DoubleSide}));
+    patch.position.set(x,y,z);patch.rotation.y=rotationY;parent.add(patch);return patch;
+  }
+  function addUniformLimb(parent,x,y,z,w,h,d,color,reflective=0){
+    box(w,h,d,color,x,y,z,parent);if(reflective)box(w+.025,.09,d+.025,reflective,x,y-h*.18,z,parent);
+  }
   function applyAvatarCustomization() {
     if (!playerGroup || !window.THREE) return;
     clearAvatarLayer();
     const outfit = state.avatar?.outfit || 'classic', hat = state.avatar?.hat || 'none', accessory = state.avatar?.accessory || 'none', uniform = effectiveAvatarUniform();
     const outfitColors = { blue:0x2477d4, red:0xd93645, explorer:0x3f9b4b };
-    const uniformColors = { firefighter:0xd93d35, police:0x245da8, teacher:0x4a9b65, delivery:0xe59a2f, mechanic:0x315f91, miner:0xc68b24, builder:0xe9782b };
+    const uniformColors = { firefighter:0x8f342d, police:0x183d70, paramedic:0xf2f5f7, teacher:0x4a9b65, delivery:0xe59a2f, mechanic:0x315f91, miner:0xc68b24, builder:0xe9782b };
     if (uniform !== 'none') {
-      const uniformVest=box(1.08,1.14,.79,uniformColors[uniform]||0x2477d4,0,1.55,0,avatarLayer);uniformVest.material.transparent=true;uniformVest.material.opacity=.94;
-      box(.86,.18,.82,uniform==='firefighter'?0xffd548:0xf4f6f8,0,1.88,.02,avatarLayer);
-      if(uniform==='firefighter'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xffcf35,{metalness:.06}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.72,.12,.2,0xd83b35,0,3.14,.51,avatarLayer);}
-      else if(uniform==='police'){box(1.0,.2,1.0,0x245da8,0,3.28,0,avatarLayer);box(.5,.09,.55,0x245da8,0,3.18,.58,avatarLayer);box(.2,.22,.06,0xffd84d,.28,1.62,.42,avatarLayer);}
-      else if(uniform==='teacher'){box(.18,.7,.08,0x6e4a2f,.48,1.55,.48,avatarLayer);box(.42,.28,.08,0xf7f1d0,.48,1.87,.48,avatarLayer);}
-      else if(uniform==='delivery'){box(.82,.95,.42,0x8b5a2b,0,1.62,-.58,avatarLayer);box(.68,.18,.08,0xffffff,0,1.72,.43,avatarLayer);}
-      else if(uniform==='mechanic'){box(.78,.2,.08,0xdce8f2,0,1.83,.43,avatarLayer);box(.22,.32,.1,0xf3bd37,.34,1.52,.43,avatarLayer);box(.9,.16,.85,0x26384e,0,3.25,0,avatarLayer);}
-      else if(uniform==='miner'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xf0bb2d,{metalness:.08}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.22,.22,.08,0xf8f4c6,0,3.17,.58,avatarLayer);box(.75,.18,.08,0x3b2c1b,0,1.75,.43,avatarLayer);}
-      else if(uniform==='builder'){box(1.14,.2,.82,0xf8d54a,0,3.24,0,avatarLayer);box(.72,.15,.85,0xf8d54a,0,3.15,.5,avatarLayer);box(.12,1.02,.08,0xfff2a1,-.33,1.55,.43,avatarLayer);box(.12,1.02,.08,0xfff2a1,.33,1.55,.43,avatarLayer);}
+      const primary=uniformColors[uniform]||0x2477d4,reflective=uniform==='firefighter'?0xf8dc4b:uniform==='paramedic'?0xe54b4b:uniform==='police'?0xb9d7ef:0xf4f6f8;
+      const uniformVest=box(1.12,1.2,.82,primary,0,1.55,0,avatarLayer);uniformVest.material.transparent=true;uniformVest.material.opacity=.98;
+      addUniformLimb(avatarLayer,-.67,1.58,0,.3,.92,.38,primary,reflective);addUniformLimb(avatarLayer,.67,1.58,0,.3,.92,.38,primary,reflective);
+      addUniformLimb(avatarLayer,-.28,.72,0,.43,1.06,.5,uniform==='paramedic'?0x24384c:uniform==='police'?0x142b4e:0x26384e,reflective);addUniformLimb(avatarLayer,.28,.72,0,.43,1.06,.5,uniform==='paramedic'?0x24384c:uniform==='police'?0x142b4e:0x26384e,reflective);
+      box(.46,.2,.62,0x111722,-.28,.16,.05,avatarLayer);box(.46,.2,.62,0x111722,.28,.16,.05,avatarLayer);
+      box(1.14,.1,.84,reflective,0,1.88,.01,avatarLayer);box(1.14,.09,.84,reflective,0,1.22,.01,avatarLayer);
+      if(uniform==='firefighter'){
+        const helm=new THREE.Mesh(new THREE.SphereGeometry(.67,16,10,0,Math.PI*2,0,Math.PI*.64),mat(0xf0c735,{metalness:.1,roughness:.38}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.88,.13,.23,0xcf332e,0,3.14,.52,avatarLayer);box(.7,.85,.28,0x26384e,0,1.58,-.54,avatarLayer);addUniformPatch(avatarLayer,'BOMBEIROS','#ffffff','#b52d2a',0,1.62,.43,0,.86,.2);
+      }else if(uniform==='police'){
+        box(1.02,.21,1.0,0x183d70,0,3.28,0,avatarLayer);box(.54,.09,.58,0x183d70,0,3.18,.58,avatarLayer);box(.26,.28,.08,0xffd84d,.3,1.61,.44,avatarLayer);box(.84,.72,.16,0x101a27,0,1.58,.48,avatarLayer);addUniformPatch(avatarLayer,'POLÍCIA','#ffffff','#153c70',0,1.72,.495,0,.76,.2);addUniformPatch(avatarLayer,'POLÍCIA','#ffffff','#153c70',0,1.72,-.425,Math.PI,.82,.2);
+      }else if(uniform==='paramedic'){
+        box(1.0,.2,1.0,0xf2f5f7,0,3.27,0,avatarLayer);box(.52,.09,.58,0xe54b4b,0,3.18,.58,avatarLayer);box(.14,.62,.08,0xe54b4b,0,1.62,.44,avatarLayer);box(.62,.14,.08,0xe54b4b,0,1.62,.445,avatarLayer);box(.72,.82,.32,0x1d4c45,0,1.58,-.52,avatarLayer);addUniformPatch(avatarLayer,'RESGATE','#ffffff','#d83e42',0,1.93,.44,0,.78,.2);
+      }else if(uniform==='teacher'){box(.18,.7,.08,0x6e4a2f,.48,1.55,.48,avatarLayer);box(.42,.28,.08,0xf7f1d0,.48,1.87,.48,avatarLayer);addUniformPatch(avatarLayer,'PROFESSOR','#ffffff','#397a51',0,1.72,.44,0,.82,.2);
+      }else if(uniform==='delivery'){box(.82,.95,.42,0x8b5a2b,0,1.62,-.58,avatarLayer);box(.68,.18,.08,0xffffff,0,1.72,.43,avatarLayer);addUniformPatch(avatarLayer,'ENTREGA','#ffffff','#b86d13',0,1.72,.44,0,.75,.2);
+      }else if(uniform==='mechanic'){box(.78,.2,.08,0xdce8f2,0,1.83,.43,avatarLayer);box(.22,.32,.1,0xf3bd37,.34,1.52,.43,avatarLayer);box(.9,.16,.85,0x26384e,0,3.25,0,avatarLayer);addUniformPatch(avatarLayer,'OFICINA','#ffffff','#274d75',0,1.72,.44,0,.75,.2);
+      }else if(uniform==='miner'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xf0bb2d,{metalness:.08}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.22,.22,.08,0xf8f4c6,0,3.17,.58,avatarLayer);box(.75,.18,.08,0x3b2c1b,0,1.75,.43,avatarLayer);
+      }else if(uniform==='builder'){box(1.14,.2,.82,0xf8d54a,0,3.24,0,avatarLayer);box(.72,.15,.85,0xf8d54a,0,3.15,.5,avatarLayer);box(.12,1.02,.08,0xfff2a1,-.33,1.55,.43,avatarLayer);box(.12,1.02,.08,0xfff2a1,.33,1.55,.43,avatarLayer);}
     } else if (outfit !== 'classic') {
       const vest = box(1.02,1.08,.76,outfitColors[outfit]||0x2477d4,0,1.55,0,avatarLayer);
       vest.material.transparent = true; vest.material.opacity = .86;

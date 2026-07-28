@@ -134,7 +134,7 @@
     tools: { owned: ['axe','pickaxe','bucket'], equipped: 'axe', harvested: { wood:0, stone:0, gold:0, water:0 } },
     account: { linked:false, accountId:'', username:'', lastCloudSync:0 },
     safety: { incidents:0, safeStops:0, lessons:0, lastIncident:0 },
-    cityServices: { firesExtinguished:0, policePatrols:0, lessonsTaught:0, deliveries:0, emergencyCalls:0, accidentsResolved:0, rescuesCompleted:0, lastFireAt:0 },
+    cityServices: { firesExtinguished:0, policePatrols:0, lessonsTaught:0, deliveries:0, emergencyCalls:0, accidentsResolved:0, rescuesCompleted:0, paramedicRescues:0, lastFireAt:0 },
     races: { wins: 0, losses: 0, coinWins: 0, houseWins: 0, bestTime: 0 },
     waypoint: null,
     ui: { quickOpen: false, needsOpen: false, missionOpen: false, skillsOpen: false },
@@ -148,7 +148,7 @@
     settings: { sound: true, quality: 'auto', autoTier: 'balanced', vibration: true, cameraZoom: 0, joystickNatural: true },
     guardian: { multiplayerEnabled:true, communicationEnabled:false, sessionLimitMinutes:0, updatedAt:0 },
     usage: { totalSeconds:0, sessionSeconds:0, sessionStartedAt:0, lastPlayedAt:0, sessionLockedAt:0 },
-    stats: { walked:0, driven:0, jumps:0, collected:0, talks:0, cooked:0, races:0, actions:0, metroTrips:0, busStops:0, skillCombos:0, jobsCompleted:0, firesHelped:0, classesTaught:0, patrols:0, accidentsHelped:0 },
+    stats: { walked:0, driven:0, jumps:0, collected:0, talks:0, cooked:0, races:0, actions:0, metroTrips:0, busStops:0, skillCombos:0, jobsCompleted:0, firesHelped:0, classesTaught:0, patrols:0, accidentsHelped:0, paramedicCalls:0 },
     daily: { date:'', streak:0, lastDate:'', quests:[] },
     learning: { crowns:0, totalCorrect:0, lessons:{}, lastLesson:'', perfectLessons:0, subjectXP:{math:0,portuguese:0,english:0}, multiplayerWins:0, multiplayerPlayed:0, matchHistory:[] },
     multiplayer: { enabled:true, room:normalizeRoomId(window.OTTHI_CONFIG?.defaultRoom), displayName:'', cloudUid:'', cloudReady:false },
@@ -842,7 +842,7 @@
       ['none','Sem acessório','🚫'], ['backpack','Mochila','🎒'], ['glasses','Óculos','🕶️'], ['cape','Capa','🦸']
     ],
     uniform: [
-      ['none','Roupa livre','👕'], ['firefighter','Bombeiro Kids','🚒'], ['police','Patrulha Kids','👮'], ['teacher','Professor','🧑‍🏫'], ['delivery','Entregador','📦'], ['mechanic','Mecânico Kids','🔧'], ['miner','Minerador Kids','⛏️'], ['builder','Construtor Kids','🦺']
+      ['none','Roupa livre','👕'], ['firefighter','Bombeiro Kids','🚒'], ['police','Patrulha Kids','👮'], ['paramedic','Socorrista Kids','🚑'], ['teacher','Professor','🧑‍🏫'], ['delivery','Entregador','📦'], ['mechanic','Mecânico Kids','🔧'], ['miner','Minerador Kids','⛏️'], ['builder','Construtor Kids','🦺']
     ]
   };
 
@@ -850,7 +850,7 @@
   function effectiveAvatarUniform(){
     const job=state.career?.activeJob,terminal=['COMPLETED','CANCELLED','FAILED_SAFE'];
     if(job&&!terminal.includes(String(job.missionState||''))){
-      const uniforms={delivery:'delivery',police:'police',firefighter:'firefighter',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
+      const uniforms={delivery:'delivery',police:'police',firefighter:'firefighter',paramedic:'paramedic',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
       return uniforms[job.id]||job.uniform||state.avatar?.uniform||'none';
     }
     return state.avatar?.uniform||'none';
@@ -1150,37 +1150,35 @@
     const now=performance.now();
     if(world.trafficSnapshot&&now-(world.trafficSnapshotAt||0)<12)return world.trafficSnapshot;
     const actors=[];
-    for(const bus of world.buses||[])if(bus.group?.visible)actors.push({id:`bus-${bus.id}`,type:'bus',group:bus.group,radius:2.65,speed:Math.abs(bus.currentSpeed||0),ref:bus});
-    for(const car of world.policeCars||[])if(car.group?.visible)actors.push({id:`police-${car.id}`,type:'police',group:car.group,radius:1.65,speed:Math.abs(car.currentSpeed||car.speed||0),ref:car});
-    for(const truck of world.fireTrucks||[])if(truck.group?.visible)actors.push({id:`fire-${truck.id}`,type:'fire',group:truck.group,radius:2.25,speed:Math.abs(truck.currentSpeed||truck.speed||0),ref:truck});
-    for(const ambulance of world.ambulances||[])if(ambulance.group?.visible)actors.push({id:`ambulance-${ambulance.id}`,type:'ambulance',group:ambulance.group,radius:1.9,speed:Math.abs(ambulance.currentSpeed||ambulance.speed||0),ref:ambulance});
+    for(const bus of world.buses||[])if(bus.group?.visible)actors.push({id:`bus-${bus.id}`,type:'bus',group:bus.group,radius:3.05,speed:Math.abs(bus.currentSpeed||0),ref:bus});
+    for(const car of world.policeCars||[])if(car.group?.visible)actors.push({id:`police-${car.id}`,type:'police',group:car.group,radius:1.8,speed:Math.abs(car.currentSpeed||car.speed||0),ref:car});
+    for(const truck of world.fireTrucks||[])if(truck.group?.visible)actors.push({id:`fire-${truck.id}`,type:'fire',group:truck.group,radius:2.5,speed:Math.abs(truck.currentSpeed||truck.speed||0),ref:truck});
+    for(const ambulance of world.ambulances||[])if(ambulance.group?.visible)actors.push({id:`ambulance-${ambulance.id}`,type:'ambulance',group:ambulance.group,radius:2.1,speed:Math.abs(ambulance.currentSpeed||ambulance.speed||0),ref:ambulance});
     for(const npc of world.npcs||[])if(npc.mobility?.group?.visible&&npc.mobility.type!=='walk')actors.push({id:`npc-${npc.id}`,type:npc.mobility.type,group:npc.mobility.group,radius:npc.mobility.radius||1.25,speed:Math.abs(npc.mobility.currentSpeed||npc.mobility.speed||0),ref:npc.mobility});
     world.trafficSnapshot=actors;world.trafficSnapshotAt=now;return actors;
   }
 
   function trafficPriority(actor){if(actor?.incidentTargetId||actor?.targetFireId)return 50;let type=actor?.route?.schoolBus?'school':actor?.route?'bus':actor?.type||actor?.kind||actor?.trafficType||'';if(!type&&world.ambulances?.includes(actor))type='ambulance';else if(!type&&world.fireTrucks?.includes(actor))type='fire';else if(!type&&world.policeCars?.includes(actor))type='police';return({ambulance:45,fire:44,police:43,school:28,bus:22,car:16,moto:14,bike:10,skate:8})[type]||18;}
   function trafficSpeedFactor(actor,heading,lookAhead=7){
-    if(!actor?.group)return 1;const now=performance.now();if(now<Number(actor.incidentUntil||0))return 0;
-    const ax=actor.group.position.x,az=actor.group.position.z,fx=Math.sin(heading),fz=Math.cos(heading),rx=Math.cos(heading),rz=-Math.sin(heading),actorSpeed=Math.max(.4,Math.abs(actor.currentSpeed||actor.speed||0));let factor=1;
-    for(const other of trafficActorList()){if(other.ref===actor||other.id===actor.id)continue;const dx=other.group.position.x-ax,dz=other.group.position.z-az,forward=dx*fx+dz*fz,side=Math.abs(dx*rx+dz*rz),gap=(actor.radius||1.5)+(other.radius||1.5)+.38;
-      if(forward>-.25&&forward<lookAhead+gap&&side<gap*.86)factor=Math.min(factor,clamp((forward-gap*.92)/Math.max(1,lookAhead),0,1));
-      const otherHeading=Number(other.group.rotation?.y||0),horizon=clamp(1.0+gap/Math.max(2,actorSpeed+other.speed),.75,1.75),futureAx=ax+fx*actorSpeed*horizon,futureAz=az+fz*actorSpeed*horizon,futureBx=other.group.position.x+Math.sin(otherHeading)*other.speed*horizon,futureBz=other.group.position.z+Math.cos(otherHeading)*other.speed*horizon,futureGap=Math.hypot(futureBx-futureAx,futureBz-futureAz);
-      if(futureGap<gap*1.18&&Math.hypot(dx,dz)<lookAhead+gap+4){const myPriority=trafficPriority(actor),otherPriority=trafficPriority(other);if(myPriority<=otherPriority)factor=Math.min(factor,clamp((futureGap-gap*.65)/(gap*.8),0,.58));}
-    }return factor;
+    if(!actor?.group)return 1;const now=performance.now();if(actor.incidentLocked||now<Number(actor.incidentUntil||0)||now<Number(actor.trafficHoldUntil||0))return 0;
+    const ax=actor.group.position.x,az=actor.group.position.z,fx=Math.sin(heading),fz=Math.cos(heading),rx=Math.cos(heading),rz=-Math.sin(heading),actorSpeed=Math.max(.15,Math.abs(actor.currentSpeed||actor.speed||0)),actorRadius=Number(actor.radius||(actor.route?3.05:1.55));let factor=1;
+    for(const other of trafficActorList()){if(other.ref===actor||other.id===actor.id)continue;const dx=other.group.position.x-ax,dz=other.group.position.z-az,forward=dx*fx+dz*fz,side=Math.abs(dx*rx+dz*rz),gap=actorRadius+Number(other.radius||1.5)+.75;
+      if(forward>-.15&&forward<lookAhead+gap&&side<gap*.9){const clearance=forward-gap;if(other.ref?.incidentLocked||other.ref?.incidentUntil===Number.MAX_SAFE_INTEGER||clearance<=.22)factor=0;else factor=Math.min(factor,clamp(clearance/Math.max(1.2,lookAhead*.72),0,1));}
+      const otherHeading=Number(other.group.rotation?.y||0),horizon=clamp(.8+gap/Math.max(2,actorSpeed+other.speed),.65,1.65),futureAx=ax+fx*actorSpeed*horizon,futureAz=az+fz*actorSpeed*horizon,futureBx=other.group.position.x+Math.sin(otherHeading)*other.speed*horizon,futureBz=other.group.position.z+Math.cos(otherHeading)*other.speed*horizon,futureGap=Math.hypot(futureBx-futureAx,futureBz-futureAz);
+      if(futureGap<gap*1.28&&Math.hypot(dx,dz)<lookAhead+gap+5){const myPriority=trafficPriority(actor),otherPriority=trafficPriority(other);if(myPriority<=otherPriority)factor=Math.min(factor,clamp((futureGap-gap*.82)/(gap*.65),0,.48));}
+    }return clamp(factor,0,1);
   }
 
-  function captureTrafficPositions(){const before=new Map();world.trafficSnapshot=null;for(const actor of trafficActorList())before.set(actor.id,{x:actor.group.position.x,z:actor.group.position.z});return before;}
+  function captureTrafficPositions(){const before=new Map();world.trafficSnapshot=null;for(const actor of trafficActorList())before.set(actor.id,{x:actor.group.position.x,z:actor.group.position.z,heading:Number(actor.group.rotation?.y||0)});return before;}
   function resolveTrafficOverlaps(before){
-    world.trafficSnapshot=null;const actors=trafficActorList();
-    for(const actor of actors)if(!pointOnRoad(actor.group.position.x,actor.group.position.z,.5))snapTrafficToRoad(actor.group,before?.get(actor.id));
-    for(let i=0;i<actors.length;i++)for(let j=i+1;j<actors.length;j++){
-      const a=actors[i],b=actors[j];if(a.ref?.incidentUntil||b.ref?.incidentUntil)continue;const dx=b.group.position.x-a.group.position.x,dz=b.group.position.z-a.group.position.z,d=Math.hypot(dx,dz),gap=(a.radius+b.radius)*.78;if(d>=gap)continue;
-      const aEmergency=!!a.ref?.incidentTargetId||!!a.ref?.targetFireId,bEmergency=!!b.ref?.incidentTargetId||!!b.ref?.targetFireId;
-      let yieldActor;if(aEmergency!==bEmergency)yieldActor=aEmergency?b:a;else if(Math.abs(a.speed-b.speed)>.25)yieldActor=a.speed>b.speed?a:b;else yieldActor=a.id>b.id?a:b;
-      const old=before?.get(yieldActor.id);if(old){yieldActor.group.position.x=old.x;yieldActor.group.position.z=old.z;snapTrafficToRoad(yieldActor.group,old);}yieldActor.ref.currentSpeed=0;yieldActor.ref.trafficHoldUntil=performance.now()+450;
-      const remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);if(remain<gap*.82){const other=yieldActor===a?b:a,otherOld=before?.get(other.id);if(otherOld){other.group.position.x=otherOld.x;other.group.position.z=otherOld.z;snapTrafficToRoad(other.group,otherOld);}other.ref.currentSpeed=0;other.ref.trafficHoldUntil=performance.now()+240;const nx=(b.group.position.x-a.group.position.x)/(remain||1),nz=(b.group.position.z-a.group.position.z)/(remain||1),push=(gap-remain)*.52;yieldActor.group.position.x-=nx*push;yieldActor.group.position.z-=nz*push;snapTrafficToRoad(yieldActor.group,old);}
-    }
-    world.trafficSnapshot=null;
+    world.trafficSnapshot=null;const actors=trafficActorList();for(const actor of actors)if(!pointOnRoad(actor.group.position.x,actor.group.position.z,.5))snapTrafficToRoad(actor.group,before?.get(actor.id));
+    for(let pass=0;pass<2;pass++)for(let i=0;i<actors.length;i++)for(let j=i+1;j<actors.length;j++){
+      const a=actors[i],b=actors[j],dx=b.group.position.x-a.group.position.x,dz=b.group.position.z-a.group.position.z,d=Math.hypot(dx,dz),gap=(a.radius+b.radius)*.94+.25;if(d>=gap)continue;if(a.ref?.incidentLocked&&b.ref?.incidentLocked)continue;
+      const aEmergency=!!a.ref?.incidentTargetId||!!a.ref?.targetFireId,bEmergency=!!b.ref?.incidentTargetId||!!b.ref?.targetFireId;let yieldActor;if(aEmergency!==bEmergency)yieldActor=aEmergency?b:a;else{const pa=trafficPriority(a),pb=trafficPriority(b);yieldActor=pa===pb?(a.id>b.id?a:b):(pa<pb?a:b);}const other=yieldActor===a?b:a,old=before?.get(yieldActor.id),otherOld=before?.get(other.id);
+      if(old){yieldActor.group.position.x=old.x;yieldActor.group.position.z=old.z;snapTrafficToRoad(yieldActor.group,old);}yieldActor.ref.currentSpeed=0;yieldActor.ref.trafficHoldUntil=performance.now()+950;
+      let remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);if(remain<gap*.9&&otherOld&&!other.ref?.incidentLocked){other.group.position.x=otherOld.x;other.group.position.z=otherOld.z;snapTrafficToRoad(other.group,otherOld);other.ref.currentSpeed=0;other.ref.trafficHoldUntil=performance.now()+620;remain=Math.hypot(b.group.position.x-a.group.position.x,b.group.position.z-a.group.position.z);}
+      if(remain<gap*.82){const nx=(b.group.position.x-a.group.position.x)/(remain||1),nz=(b.group.position.z-a.group.position.z)/(remain||1),push=(gap-remain)*.56;yieldActor.group.position.x-=nx*push;yieldActor.group.position.z-=nz*push;snapTrafficToRoad(yieldActor.group,old);}
+    }world.trafficSnapshot=null;
   }
 
   function graphAdd(adj,a,b,w){if(!adj.has(a))adj.set(a,[]);if(!adj.has(b))adj.set(b,[]);adj.get(a).push({id:b,w});adj.get(b).push({id:a,w});}
@@ -2032,22 +2030,37 @@
     avatarLayer.name = 'OTTHOS_AVATAR_ACCESSORIES';
     playerGroup?.add(avatarLayer);
   }
+  function addUniformPatch(parent,text,color='#ffffff',background='#17243a',x=0,y=1.7,z=.426,rotationY=0,width=.72,height=.22){
+    const patch=new THREE.Mesh(new THREE.PlaneGeometry(width,height),new THREE.MeshStandardMaterial({map:signTexture(text,background,color),transparent:true,roughness:.58,side:THREE.DoubleSide}));
+    patch.position.set(x,y,z);patch.rotation.y=rotationY;parent.add(patch);return patch;
+  }
+  function addUniformLimb(parent,x,y,z,w,h,d,color,reflective=0){
+    box(w,h,d,color,x,y,z,parent);if(reflective)box(w+.025,.09,d+.025,reflective,x,y-h*.18,z,parent);
+  }
   function applyAvatarCustomization() {
     if (!playerGroup || !window.THREE) return;
     clearAvatarLayer();
     const outfit = state.avatar?.outfit || 'classic', hat = state.avatar?.hat || 'none', accessory = state.avatar?.accessory || 'none', uniform = effectiveAvatarUniform();
     const outfitColors = { blue:0x2477d4, red:0xd93645, explorer:0x3f9b4b };
-    const uniformColors = { firefighter:0xd93d35, police:0x245da8, teacher:0x4a9b65, delivery:0xe59a2f, mechanic:0x315f91, miner:0xc68b24, builder:0xe9782b };
+    const uniformColors = { firefighter:0x8f342d, police:0x183d70, paramedic:0xf2f5f7, teacher:0x4a9b65, delivery:0xe59a2f, mechanic:0x315f91, miner:0xc68b24, builder:0xe9782b };
     if (uniform !== 'none') {
-      const uniformVest=box(1.08,1.14,.79,uniformColors[uniform]||0x2477d4,0,1.55,0,avatarLayer);uniformVest.material.transparent=true;uniformVest.material.opacity=.94;
-      box(.86,.18,.82,uniform==='firefighter'?0xffd548:0xf4f6f8,0,1.88,.02,avatarLayer);
-      if(uniform==='firefighter'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xffcf35,{metalness:.06}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.72,.12,.2,0xd83b35,0,3.14,.51,avatarLayer);}
-      else if(uniform==='police'){box(1.0,.2,1.0,0x245da8,0,3.28,0,avatarLayer);box(.5,.09,.55,0x245da8,0,3.18,.58,avatarLayer);box(.2,.22,.06,0xffd84d,.28,1.62,.42,avatarLayer);}
-      else if(uniform==='teacher'){box(.18,.7,.08,0x6e4a2f,.48,1.55,.48,avatarLayer);box(.42,.28,.08,0xf7f1d0,.48,1.87,.48,avatarLayer);}
-      else if(uniform==='delivery'){box(.82,.95,.42,0x8b5a2b,0,1.62,-.58,avatarLayer);box(.68,.18,.08,0xffffff,0,1.72,.43,avatarLayer);}
-      else if(uniform==='mechanic'){box(.78,.2,.08,0xdce8f2,0,1.83,.43,avatarLayer);box(.22,.32,.1,0xf3bd37,.34,1.52,.43,avatarLayer);box(.9,.16,.85,0x26384e,0,3.25,0,avatarLayer);}
-      else if(uniform==='miner'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xf0bb2d,{metalness:.08}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.22,.22,.08,0xf8f4c6,0,3.17,.58,avatarLayer);box(.75,.18,.08,0x3b2c1b,0,1.75,.43,avatarLayer);}
-      else if(uniform==='builder'){box(1.14,.2,.82,0xf8d54a,0,3.24,0,avatarLayer);box(.72,.15,.85,0xf8d54a,0,3.15,.5,avatarLayer);box(.12,1.02,.08,0xfff2a1,-.33,1.55,.43,avatarLayer);box(.12,1.02,.08,0xfff2a1,.33,1.55,.43,avatarLayer);}
+      const primary=uniformColors[uniform]||0x2477d4,reflective=uniform==='firefighter'?0xf8dc4b:uniform==='paramedic'?0xe54b4b:uniform==='police'?0xb9d7ef:0xf4f6f8;
+      const uniformVest=box(1.12,1.2,.82,primary,0,1.55,0,avatarLayer);uniformVest.material.transparent=true;uniformVest.material.opacity=.98;
+      addUniformLimb(avatarLayer,-.67,1.58,0,.3,.92,.38,primary,reflective);addUniformLimb(avatarLayer,.67,1.58,0,.3,.92,.38,primary,reflective);
+      addUniformLimb(avatarLayer,-.28,.72,0,.43,1.06,.5,uniform==='paramedic'?0x24384c:uniform==='police'?0x142b4e:0x26384e,reflective);addUniformLimb(avatarLayer,.28,.72,0,.43,1.06,.5,uniform==='paramedic'?0x24384c:uniform==='police'?0x142b4e:0x26384e,reflective);
+      box(.46,.2,.62,0x111722,-.28,.16,.05,avatarLayer);box(.46,.2,.62,0x111722,.28,.16,.05,avatarLayer);
+      box(1.14,.1,.84,reflective,0,1.88,.01,avatarLayer);box(1.14,.09,.84,reflective,0,1.22,.01,avatarLayer);
+      if(uniform==='firefighter'){
+        const helm=new THREE.Mesh(new THREE.SphereGeometry(.67,16,10,0,Math.PI*2,0,Math.PI*.64),mat(0xf0c735,{metalness:.1,roughness:.38}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.88,.13,.23,0xcf332e,0,3.14,.52,avatarLayer);box(.7,.85,.28,0x26384e,0,1.58,-.54,avatarLayer);addUniformPatch(avatarLayer,'BOMBEIROS','#ffffff','#b52d2a',0,1.62,.43,0,.86,.2);
+      }else if(uniform==='police'){
+        box(1.02,.21,1.0,0x183d70,0,3.28,0,avatarLayer);box(.54,.09,.58,0x183d70,0,3.18,.58,avatarLayer);box(.26,.28,.08,0xffd84d,.3,1.61,.44,avatarLayer);box(.84,.72,.16,0x101a27,0,1.58,.48,avatarLayer);addUniformPatch(avatarLayer,'POLÍCIA','#ffffff','#153c70',0,1.72,.495,0,.76,.2);addUniformPatch(avatarLayer,'POLÍCIA','#ffffff','#153c70',0,1.72,-.425,Math.PI,.82,.2);
+      }else if(uniform==='paramedic'){
+        box(1.0,.2,1.0,0xf2f5f7,0,3.27,0,avatarLayer);box(.52,.09,.58,0xe54b4b,0,3.18,.58,avatarLayer);box(.14,.62,.08,0xe54b4b,0,1.62,.44,avatarLayer);box(.62,.14,.08,0xe54b4b,0,1.62,.445,avatarLayer);box(.72,.82,.32,0x1d4c45,0,1.58,-.52,avatarLayer);addUniformPatch(avatarLayer,'RESGATE','#ffffff','#d83e42',0,1.93,.44,0,.78,.2);
+      }else if(uniform==='teacher'){box(.18,.7,.08,0x6e4a2f,.48,1.55,.48,avatarLayer);box(.42,.28,.08,0xf7f1d0,.48,1.87,.48,avatarLayer);addUniformPatch(avatarLayer,'PROFESSOR','#ffffff','#397a51',0,1.72,.44,0,.82,.2);
+      }else if(uniform==='delivery'){box(.82,.95,.42,0x8b5a2b,0,1.62,-.58,avatarLayer);box(.68,.18,.08,0xffffff,0,1.72,.43,avatarLayer);addUniformPatch(avatarLayer,'ENTREGA','#ffffff','#b86d13',0,1.72,.44,0,.75,.2);
+      }else if(uniform==='mechanic'){box(.78,.2,.08,0xdce8f2,0,1.83,.43,avatarLayer);box(.22,.32,.1,0xf3bd37,.34,1.52,.43,avatarLayer);box(.9,.16,.85,0x26384e,0,3.25,0,avatarLayer);addUniformPatch(avatarLayer,'OFICINA','#ffffff','#274d75',0,1.72,.44,0,.75,.2);
+      }else if(uniform==='miner'){const helm=new THREE.Mesh(new THREE.SphereGeometry(.64,12,8,0,Math.PI*2,0,Math.PI*.62),mat(0xf0bb2d,{metalness:.08}));helm.position.set(0,3.08,0);avatarLayer.add(helm);box(.22,.22,.08,0xf8f4c6,0,3.17,.58,avatarLayer);box(.75,.18,.08,0x3b2c1b,0,1.75,.43,avatarLayer);
+      }else if(uniform==='builder'){box(1.14,.2,.82,0xf8d54a,0,3.24,0,avatarLayer);box(.72,.15,.85,0xf8d54a,0,3.15,.5,avatarLayer);box(.12,1.02,.08,0xfff2a1,-.33,1.55,.43,avatarLayer);box(.12,1.02,.08,0xfff2a1,.33,1.55,.43,avatarLayer);}
     } else if (outfit !== 'classic') {
       const vest = box(1.02,1.08,.76,outfitColors[outfit]||0x2477d4,0,1.55,0,avatarLayer);
       vest.material.transparent = true; vest.material.opacity = .86;
@@ -2454,6 +2467,7 @@
   function applyVehicleAppearance(vehicle){
     const a=vehicle?.appearance||{},m=vehicleVisual?.userData?.appearanceMaterials;if(!m)return;
     m.chassis.color.setHex(Number(a.chassis??0x26384e));m.primary.color.setHex(Number(a.primary??0xf28a22));m.primaryDark.color.setHex(Number(a.primaryDark??a.primary??0xc85b16));m.secondary.color.setHex(Number(a.secondary??0x0aa7b8));m.glass.color.setHex(Number(a.glass??0x102338));
+    if(typeof applyServiceVehicleVisual==='function')applyServiceVehicleVisual(vehicle);
   }
   function persistParkedVehicle(vehicle){
     if(!vehicle||!state.vehicles)return;state.vehicles.parked[vehicle.id]={x:+vehicle.group.position.x.toFixed(2),z:+vehicle.group.position.z.toFixed(2),heading:+vehicle.group.rotation.y.toFixed(3)};state.vehicles.lastUsedId=vehicle.id;
@@ -2467,7 +2481,7 @@
     const headlight=renderMat(0xfff1a8,{emissive:0xffd75b,emissiveIntensity:.9,roughness:.2});box(.3,.17,.08,headlight,-.58,.5,1.27,group);box(.3,.17,.08,headlight,.58,.5,1.27,group);
     for(const p of [[-.84,.24,-.79],[.84,.24,-.79],[-.84,.24,.79],[.84,.24,.79]]){const wheel=cylinder(.34,.28,0x10151d,p[0],p[1],p[2],group,14);wheel.rotation.z=Math.PI/2;const hub=cylinder(.12,.3,0xf5a623,p[0],p[1],p[2],group,10);hub.rotation.z=Math.PI/2;}
     group.traverse(o=>{if(o.isMesh)addVoxelOutline(o,0x14243a,.28);});
-    const vehicle={id,x:group.position.x,z:group.position.z,heading,group,label:options.label||'Carro da cidade',appearance,occupied:false};world.vehicles.push(vehicle);if(!world.vehicle)world.vehicle=vehicle;
+    const vehicle={id,x:group.position.x,z:group.position.z,heading,group,label:options.label||'Carro da cidade',kind:options.kind||'car',serviceType:options.serviceType||'',appearance,occupied:false,radius:Number(options.radius||1.55)};world.vehicles.push(vehicle);if(!world.vehicle)world.vehicle=vehicle;
     registerInteractable({id:`vehicle-${id}`,type:'vehicle',icon:'🚗',label:`Entrar: ${vehicle.label}`,radius:2.5,priority:155,getPos:()=>({x:vehicle.group.position.x,z:vehicle.group.position.z}),available:()=>!vehicle.occupied&&vehicle.group.visible,action:()=>enterVehicle(vehicle)});return vehicle;
   }
 
@@ -2731,7 +2745,7 @@
     premiumBox(.68,1.9,.08,renderMat(0x98e7ff,{transparent:true,opacity:.22,roughness:.08}),1.54,1.7,2.52,g);premiumBox(.12,2.08,.12,rail,1.5,1.78,1.84,g);
     const wheels=[];for(const p of [[-1.48,.47,-2.3],[1.48,.47,-2.3],[-1.48,.47,2.25],[1.48,.47,2.25]]){const wheel=premiumCylinder(.48,.28,0x111720,p[0],p[1],p[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}
     const passengerColors=[0xffd84d,0xff72b6,0x54c7ff];for(let i=0;i<3;i++){const pg=new THREE.Group();pg.position.set(i%2?-.72:.72,1.2,-1.6+i*1.35);g.add(pg);premiumBox(.42,.52,.38,passengerColors[i],0,.25,0,pg);premiumBox(.36,.36,.36,0xffc997,0,.68,0,pg);}
-    const runtimePoints=buildBusRoadPath(route),copies=Math.max(1,Number(route.copies||1)),preferredOffset=Math.floor(((copy/copies)+(routeOrder/Math.max(1,BUS_ROUTES.length)))*runtimePoints.length)%runtimePoints.length;let routeOffset=busSpawnIndex(runtimePoints,preferredOffset);const start=runtimePoints[routeOffset],now=performance.now(),bus={id:`bus-${route.id}-${copy+1}`,route,runtimePoints,group:g,pointIndex:(routeOffset+1)%runtimePoints.length,stopUntil:start.stopId?now+1200:0,lastStopId:start.stopId||'',lastStopName:start.stopName||'',wheels,speed:route.speed,currentSpeed:0,targetSpeed:0,seatOffset:new THREE.Vector3(-.72,.94,.55),interiorSeats:8,doorsOpen:!!start.stopId,state:start.stopId?BUS_STATES.DOORS_OPEN:BUS_STATES.SPAWNING,stateSince:now,stateHistory:[],lastProgressAt:now,lastProgressX:start.x,lastProgressZ:start.z,lastRecoveryAt:0,offerStopId:'',openAt:0,closeUntil:0};g.position.set(start.x,.02,start.z);g.userData.roadPath=runtimePoints;g.userData.busId=bus.id;worldGroup.add(g);world.buses.push(bus);
+    const runtimePoints=buildBusRoadPath(route),copies=Math.max(1,Number(route.copies||1)),preferredOffset=Math.floor(((copy/copies)+(routeOrder/Math.max(1,BUS_ROUTES.length)))*runtimePoints.length)%runtimePoints.length;let routeOffset=busSpawnIndex(runtimePoints,preferredOffset);const start=runtimePoints[routeOffset],now=performance.now(),bus={id:`bus-${route.id}-${copy+1}`,route,runtimePoints,group:g,pointIndex:(routeOffset+1)%runtimePoints.length,stopUntil:start.stopId?now+1200:0,lastStopId:start.stopId||'',lastStopName:start.stopName||'',wheels,speed:route.speed,currentSpeed:0,targetSpeed:0,seatOffset:new THREE.Vector3(-.72,.94,.55),interiorSeats:8,doorsOpen:!!start.stopId,state:start.stopId?BUS_STATES.DOORS_OPEN:BUS_STATES.SPAWNING,stateSince:now,stateHistory:[],lastProgressAt:now,lastProgressX:start.x,lastProgressZ:start.z,lastRecoveryAt:0,offerStopId:'',openAt:0,closeUntil:0,radius:3.05,incidentLocked:false};g.position.set(start.x,.02,start.z);g.userData.roadPath=runtimePoints;g.userData.busId=bus.id;worldGroup.add(g);world.buses.push(bus);
     registerInteractable({id:`board-${bus.id}`,type:'bus',icon:'🚌',label:`Embarcar • ${route.number} ${route.name}`,radius:4.6,priority:210,getPos:()=>({x:bus.group.position.x,z:bus.group.position.z}),action:()=>enterBus(bus)});
     for(const point of runtimePoints)if(point.stopId)ensureBusStop(route,point);return bus;
   }
@@ -2826,7 +2840,7 @@
         else if(approaching&&d<6)setBusState(bus,BUS_STATES.BRAKING,'approach-stop');
         else if(approaching)setBusState(bus,BUS_STATES.APPROACHING_STOP,'approach-stop');
         else if(bus.state!==BUS_STATES.LEAVING_STOP)setBusState(bus,BUS_STATES.MOVING,'route');
-        bus.currentSpeed=lerp(Number(bus.currentSpeed||0),bus.targetSpeed,Math.min(1,dt*(trafficFactor<.1?8:3.8)));
+        if(trafficFactor<.035){bus.currentSpeed=0;bus.trafficHoldUntil=Math.max(Number(bus.trafficHoldUntil||0),now+420);}else bus.currentSpeed=lerp(Number(bus.currentSpeed||0),bus.targetSpeed,Math.min(1,dt*(trafficFactor<.1?10:4.4)));
         const move=Math.min(d,Math.max(0,bus.currentSpeed)*dt),previous={x:bus.group.position.x,z:bus.group.position.z};
         if(move>.0001){bus.group.position.x+=dx/d*move;bus.group.position.z+=dz/d*move;if(!pointOnRoad(bus.group.position.x,bus.group.position.z,.03)){bus.group.position.x=previous.x;bus.group.position.z=previous.z;recoverBusRoute(bus,'left-road');}bus.group.rotation.y=lerpAngle(bus.group.rotation.y,heading,Math.min(1,dt*(approaching?3.6:4.4)));for(const wheel of bus.wheels)wheel.rotation.x-=move*2.2;}
         const movedFromProgress=Math.hypot(bus.group.position.x-Number(bus.lastProgressX||0),bus.group.position.z-Number(bus.lastProgressZ||0));
@@ -2859,6 +2873,35 @@
     {id:'farm',name:'Fogueira fora de controle na Fazenda',x:52,z:34,navX:55,navZ:34},
     {id:'castle',name:'Tocha do Castelo acesa demais',x:79,z:52,navX:55,navZ:52}
   ];
+  const SERVICE_JOB_KIND=Object.freeze({police:'police',firefighter:'firefighter',paramedic:'paramedic'});
+  const SERVICE_DEPOTS=Object.freeze({
+    police:[{x:68,z:-12,heading:Math.PI},{x:-55,z:20,heading:0}],
+    firefighter:[{x:55,z:-70,heading:0},{x:55,z:-62,heading:0}],
+    paramedic:[{x:55,z:-52,heading:0},{x:55,z:-44,heading:0}]
+  });
+  const TRAINING_INCIDENT_SITES=Object.freeze([{x:23,z:0},{x:-28,z:0},{x:55,z:24},{x:0,z:-42}]);
+  function serviceKindForJob(jobOrId){const id=typeof jobOrId==='string'?jobOrId:jobOrId?.id;return SERVICE_JOB_KIND[id]||'';}
+  function serviceVehiclePools(kind=''){if(kind==='police')return world.policeCars||[];if(kind==='firefighter')return world.fireTrucks||[];if(kind==='paramedic')return world.ambulances||[];return[...(world.policeCars||[]),...(world.fireTrucks||[]),...(world.ambulances||[])];}
+  function serviceVehicleById(id=''){return serviceVehiclePools().find(vehicle=>vehicle.id===id)||null;}
+  function serviceVehicleAvailable(vehicle,job=null){if(!vehicle||vehicle.occupied||vehicle.incidentTargetId||vehicle.targetFireId||vehicle.group?.visible===false)return false;const token=job?.instanceId||state.career?.activeJob?.instanceId||'';return!vehicle.missionReservedFor||vehicle.missionReservedFor===token;}
+  function serviceVehicleAppearance(kind){if(kind==='police')return{chassis:0x26384e,primary:0xf4f7fb,primaryDark:0x183d70,secondary:0x215ea8,glass:0x13253a};if(kind==='firefighter')return{chassis:0x263746,primary:0xc93431,primaryDark:0x982622,secondary:0xf2d84d,glass:0x183448};return{chassis:0x263746,primary:0xf6f8fa,primaryDark:0xd83e42,secondary:0xe34848,glass:0x164055};}
+  function safeServiceDepot(kind,index=0){const list=SERVICE_DEPOTS[kind]||SERVICE_DEPOTS.police,base=list[index%list.length]||list[0],projection=nearestRoadProjection(base),point=projection?.point||base;let candidate={x:point.x,z:point.z,heading:base.heading||0};for(let step=0;step<8;step++){world.trafficSnapshot=null;const conflict=trafficActorList().some(actor=>actor.group&&Math.hypot(actor.group.position.x-candidate.x,actor.group.position.z-candidate.z)<Number(actor.radius||1.5)+3.2);if(!conflict)break;candidate={...candidate,z:clamp(candidate.z+(step%2?1:-1)*(4+step),-108,108)};const snapped=nearestRoadProjection(candidate)?.point;if(snapped)candidate={...candidate,x:snapped.x,z:snapped.z};}return candidate;}
+  function registerServiceVehicle(vehicle,kind,index=0){
+    vehicle.kind=kind;vehicle.serviceType=kind;vehicle.label=kind==='police'?'Viatura da Polícia':kind==='firefighter'?'Caminhão dos Bombeiros':'Ambulância de Resgate';vehicle.appearance=serviceVehicleAppearance(kind);vehicle.occupied=false;vehicle.missionReservedFor='';vehicle.radius=kind==='firefighter'?2.45:kind==='paramedic'?2.05:1.75;vehicle.home=safeServiceDepot(kind,index);vehicle.group.position.set(vehicle.home.x,.02,vehicle.home.z);vehicle.group.rotation.y=vehicle.home.heading||0;vehicle.group.userData.serviceVehicleId=vehicle.id;vehicle.group.userData.roadPath=vehicle.patrol||vehicle.route||[];
+    registerInteractable({id:`service-vehicle-${vehicle.id}`,type:'serviceVehicle',icon:kind==='police'?'🚓':kind==='firefighter'?'🚒':'🚑',label:`Entrar: ${vehicle.label}`,radius:kind==='firefighter'?3.5:3.0,priority:238,getPos:()=>({x:vehicle.group.position.x,z:vehicle.group.position.z}),available:()=>serviceVehicleAvailable(vehicle,state.career?.activeJob),action:()=>enterServiceVehicle(vehicle)});return vehicle;
+  }
+  function enterServiceVehicle(vehicle){
+    const job=state.career?.activeJob,required=serviceKindForJob(job),kind=String(vehicle?.serviceType||'');if(required&&required!==kind){toast(`Esta missão exige ${required==='police'?'uma viatura':required==='firefighter'?'um caminhão dos bombeiros':'uma ambulância'}.`,'warn',2400);return false;}if(job?.serviceVehicleId&&job.serviceVehicleId!==vehicle?.id){const assigned=serviceMissionVehicle(job);toast(`Use ${assigned?.label||'o veículo indicado'} marcado no GPS para esta missão.`,'warn',2500);return false;}if(!serviceVehicleAvailable(vehicle,job)){toast('Este veículo está atendendo outra ocorrência.','warn');return false;}return enterVehicle(vehicle);
+  }
+  function serviceMissionVehicle(job=state.career?.activeJob){return job?.serviceVehicleId?serviceVehicleById(job.serviceVehicleId):null;}
+  function reserveMissionServiceVehicle(job=state.career?.activeJob,options={}){
+    const kind=serviceKindForJob(job);if(!job||!kind)return null;let vehicle=serviceMissionVehicle(job);if(!vehicle||(!serviceVehicleAvailable(vehicle,job)&&activeVehicleRef!==vehicle))vehicle=serviceVehiclePools(kind).find(v=>serviceVehicleAvailable(v,job));if(!vehicle){toast('Todos os veículos desta equipe estão em atendimento. Aguarde a liberação.','warn',2600);return null;}vehicle.missionReservedFor=job.instanceId;job.serviceVehicleId=vehicle.id;job.serviceVehicleKind=kind;job.serviceVehicleBoarded=!!job.serviceVehicleBoarded;job.serviceVehicleArrived=!!job.serviceVehicleArrived;if(options.waypoint!==false&&!job.serviceVehicleBoarded){state.waypoint={id:`service-${vehicle.id}`,name:vehicle.label,x:vehicle.group.position.x,z:vehicle.group.position.z,navX:vehicle.group.position.x,navZ:vehicle.group.position.z,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();updateNavigation(0,true);setMissionState(job,MISSION_STATES.PREPARING,'board-service-vehicle');}return vehicle;
+  }
+  function releaseMissionServiceVehicle(job){const vehicle=serviceMissionVehicle(job);if(vehicle&&vehicle.missionReservedFor===job?.instanceId)vehicle.missionReservedFor='';if(job){job.serviceVehicleId='';job.serviceVehicleKind='';}}
+  function isDrivingServiceVehicle(kind){return!!(player.vehicle&&!player.car.passengerOf&&String(player.car.kind||'')===kind);}
+  function onServiceVehicleBoarded(vehicle){const job=state.career?.activeJob,kind=String(vehicle?.serviceType||'');if(!job||serviceKindForJob(job)!==kind)return;job.serviceVehicleId=vehicle.id;job.serviceVehicleBoarded=true;job.serviceVehicleArrived=false;setMissionState(job,MISSION_STATES.TRAVELLING,'service-vehicle-boarded');focusActiveJob();saveState(true);}
+  function onServiceVehicleExited(vehicle){const job=state.career?.activeJob;if(!job||job.serviceVehicleId!==vehicle?.id)return;job.lastVehicleExitAt=Date.now();saveState();}
+  function returnServiceVehicleHome(vehicle,dt){if(!vehicle?.home||vehicle.occupied)return;const distance=moveServiceVehicle(vehicle,vehicle.home,dt);if(distance<.8){vehicle.group.position.set(vehicle.home.x,.02,vehicle.home.z);vehicle.group.rotation.y=vehicle.home.heading||vehicle.group.rotation.y;vehicle.currentSpeed=0;vehicle.serviceRoute=[];vehicle.serviceRouteIndex=0;}}
   function createFireIncidentSite(site){
     const group=new THREE.Group();group.position.set(site.x,0,site.z);group.visible=false;worldGroup.add(group);const flames=[];
     for(let i=0;i<6;i++){const flame=new THREE.Mesh(new THREE.ConeGeometry(.32+i%2*.1,.8+i%3*.18,7),renderMat(i%2?0xffcf3d:0xff5b35,{emissive:i%2?0xff8a00:0xc31b08,emissiveIntensity:1.5,roughness:.18}));flame.position.set((i%3-1)*.38,.45+Math.floor(i/3)*.2,(i<3?-.22:.22));group.add(flame);flames.push(flame);}const smoke=[];for(let i=0;i<4;i++){const puff=new THREE.Mesh(new THREE.DodecahedronGeometry(.32+i*.07,0),renderMat(0x66717d,{transparent:true,opacity:.34,roughness:1}));puff.position.set((i%2?-.18:.18),1.2+i*.35,0);group.add(puff);smoke.push(puff);}const fire={...site,group,flames,smoke,active:false,startedAt:0,playerHelping:false,truckHelping:false};world.fires.push(fire);registerInteractable({id:`fire-${site.id}`,type:'fire',icon:'🧯',label:`Ajudar: ${site.name}`,radius:4.2,priority:245,getPos:()=>({x:site.x,z:site.z}),action:()=>helpExtinguishFire(fire)});return fire;
@@ -2867,19 +2910,26 @@
     const g=new THREE.Group(),red=materials.emergencyMetal||renderMat(0xd63832,{roughness:.38,metalness:.25}),white=renderMat(0xf5f6f4,{roughness:.42}),glass=materials.cityGlass||renderMat(0x8ddcff,{transparent:true,opacity:.5});
     premiumBox(2.35,.48,4.7,0x263746,0,.4,0,g);premiumBox(2.25,1.2,2.55,red,0,1.1,-.75,g);premiumBox(2.18,1.42,1.75,white,0,1.2,1.45,g);premiumBox(1.8,.72,.08,glass,0,1.65,2.34,g);premiumBox(2.08,.18,4.35,white,0,2.02,-.15,g);
     for(const z of [-1.7,-.75,.2])premiumBox(1.85,.12,.12,0xe8edf0,0,1.45,z,g);premiumCylinder(.58,.95,0xcfd8df,0,1.22,-.2,g,16);premiumBox(.22,.22,3.75,0xe8edf0,0,2.35,-.15,g);for(let z=-1.7;z<=1.4;z+=.52)premiumBox(1.25,.08,.08,0xe8edf0,0,2.36,z,g);
-    const lightA=premiumBox(.58,.18,.32,renderMat(0xff3a42,{emissive:0xb80011,emissiveIntensity:1.2}),-.34,2.28,1.45,g),lightB=premiumBox(.58,.18,.32,renderMat(0x42bfff,{emissive:0x087db4,emissiveIntensity:1.2}),.34,2.28,1.45,g);const wheels=[];for(const p of [[-1.1,.38,-1.45],[1.1,.38,-1.45],[-1.1,.38,1.45],[1.1,.38,1.45]]){const wheel=premiumCylinder(.46,.28,0x111722,p[0],p[1],p[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}g.position.set(55,.02,-68-copy*5);worldGroup.add(g);const truck={id,group:g,wheels,lightA,lightB,speed:8.8,targetFireId:'',route:[],routeIndex:0,arrivedAt:0,patrol:[[55,-68],[55,-18],[0,-18],[0,0],[55,0],[55,-68]],patrolIndex:copy%3};world.fireTrucks.push(truck);return truck;
+    const lightA=premiumBox(.58,.18,.32,renderMat(0xff3a42,{emissive:0xb80011,emissiveIntensity:1.2}),-.34,2.28,1.45,g),lightB=premiumBox(.58,.18,.32,renderMat(0x42bfff,{emissive:0x087db4,emissiveIntensity:1.2}),.34,2.28,1.45,g);const wheels=[];for(const p of [[-1.1,.38,-1.45],[1.1,.38,-1.45],[-1.1,.38,1.45],[1.1,.38,1.45]]){const wheel=premiumCylinder(.46,.28,0x111722,p[0],p[1],p[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}worldGroup.add(g);const truck={id,group:g,wheels,lightA,lightB,speed:8.8,currentSpeed:0,targetFireId:'',route:[],routeIndex:0,arrivedAt:0,incidentTargetId:'',responseRoute:[],responseIndex:0};world.fireTrucks.push(truck);return registerServiceVehicle(truck,'firefighter',copy);
   }
   function createFireServiceWorld(){FIRE_SITES.forEach(createFireIncidentSite);createFireTruck('fire-01',0);createFireTruck('fire-02',1);world.nextFireAt=performance.now()+22000;}
   function activateFireIncident(siteId='',forced=false){if(world.fires.some(f=>f.active))return world.fires.find(f=>f.active);const available=world.fires.filter(f=>!f.active),fire=available.find(f=>f.id===siteId)||available[Math.floor(Math.random()*available.length)];if(!fire)return null;fire.active=true;fire.group.visible=true;fire.startedAt=performance.now();fire.playerHelping=false;fire.truckHelping=false;state.cityServices.emergencyCalls=(state.cityServices.emergencyCalls||0)+1;state.cityServices.lastFireAt=Date.now();world.nextFireAt=performance.now()+(forced?90000:65000+Math.random()*45000);toast(`🚨 Chamado dos bombeiros: ${fire.name}`,'warn',2600);saveState();return fire;}
   function ensureActiveFire(force=false){return world.fires.find(f=>f.active)||(force?activateFireIncident('',true):null);}
-  function helpExtinguishFire(fire){if(!fire?.active){toast('A ocorrência já foi resolvida.','good');return;}if(Math.hypot(player.x-fire.x,player.z-fire.z)>5){toast('Chegue mais perto da área segura demarcada.','warn');return;}fire.playerHelping=true;player.sitUntil=performance.now()+2400;toast('Mangueira ativada. Mantenha distância segura!','good',1800);for(let i=0;i<8;i++)setTimeout(()=>spawnDust(lerp(player.x,fire.x,(i+1)/9),lerp(player.z,fire.z,(i+1)/9),0x70dcff),i*90);setTimeout(()=>{if(fire.active)extinguishFireIncident(fire,true);},2300);}
-  function extinguishFireIncident(fire,byPlayer=false){if(!fire?.active)return;fire.active=false;fire.group.visible=false;fire.playerHelping=false;fire.truckHelping=false;state.cityServices.firesExtinguished=(state.cityServices.firesExtinguished||0)+1;if(byPlayer)state.stats.firesHelped=(state.stats.firesHelped||0)+1;for(const truck of world.fireTrucks)if(truck.targetFireId===fire.id){truck.targetFireId='';truck.route=[];truck.routeIndex=0;truck.arrivedAt=0;}if(state.career.activeJob?.id==='firefighter'){state.career.activeJob.completed=true;completeActiveJob();}if(state.waypoint?.id===`fire-${fire.id}`){state.waypoint=null;updateWaypointMarker();updateNavigation(0,true);}addXP(byPlayer?65:20);toast(byPlayer?'Emergência resolvida em equipe!':'Os bombeiros controlaram a ocorrência.','good',2400);saveState(true);}
-  function serviceVehicleRoute(vehicle,target){if(!vehicle.route.length){vehicle.route=buildRoutePoints({x:vehicle.group.position.x,z:vehicle.group.position.z},target);vehicle.routeIndex=1;}return vehicle.route;}
-  function moveServiceVehicle(vehicle,target,dt){if(performance.now()<Number(vehicle.trafficHoldUntil||0)){vehicle.currentSpeed=0;return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}const route=serviceVehicleRoute(vehicle,target),point=route[vehicle.routeIndex];if(!point)return 0;const dx=point.x-vehicle.group.position.x,dz=point.z-vehicle.group.position.z,d=Math.hypot(dx,dz);if(d<.45){vehicle.routeIndex++;if(vehicle.routeIndex>=route.length)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);return moveServiceVehicle(vehicle,target,dt);}const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(vehicle,heading,8),targetSpeed=vehicle.speed*factor;vehicle.currentSpeed=lerp(Number(vehicle.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const move=Math.min(d,vehicle.currentSpeed*dt),previous={x:vehicle.group.position.x,z:vehicle.group.position.z};if(move>.0001){vehicle.group.position.x+=dx/d*move;vehicle.group.position.z+=dz/d*move;snapTrafficToRoad(vehicle.group,previous);vehicle.group.rotation.y=lerpAngle(vehicle.group.rotation.y,heading,Math.min(1,dt*6));for(const wheel of vehicle.wheels)wheel.rotation.x-=move*2.1;}return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}
+  function helpExtinguishFire(fire){if(!fire?.active){toast('A ocorrência já foi resolvida.','good');return;}const job=state.career?.activeJob;if(job?.id==='firefighter'&&!job.serviceVehicleBoarded){toast('Primeiro vista o uniforme e leve o caminhão dos bombeiros até a ocorrência.','warn',2600);return;}if(job?.id==='firefighter'&&!job.serviceVehicleArrived){toast('A missão só libera a mangueira depois que o caminhão chegar à ocorrência.','warn',2600);return;}if(player.vehicle){toast('Estacione o caminhão, saia e use AÇÃO junto à área segura.','warn',2200);return;}if(Math.hypot(player.x-fire.x,player.z-fire.z)>5){toast('Chegue mais perto da área segura demarcada.','warn');return;}if(job?.id==='firefighter'){job.sceneTaskCompleted=true;setMissionState(job,MISSION_STATES.ACTION_REQUIRED,'hose-active');}fire.playerHelping=true;player.sitUntil=performance.now()+2400;toast('Mangueira ativada. Mantenha distância segura!','good',1800);for(let i=0;i<8;i++)setTimeout(()=>spawnDust(lerp(player.x,fire.x,(i+1)/9),lerp(player.z,fire.z,(i+1)/9),0x70dcff),i*90);setTimeout(()=>{if(fire.active)extinguishFireIncident(fire,true);},2300);}
+  function extinguishFireIncident(fire,byPlayer=false){if(!fire?.active)return;fire.active=false;fire.group.visible=false;fire.playerHelping=false;fire.truckHelping=false;state.cityServices.firesExtinguished=(state.cityServices.firesExtinguished||0)+1;if(byPlayer)state.stats.firesHelped=(state.stats.firesHelped||0)+1;for(const truck of world.fireTrucks)if(truck.targetFireId===fire.id){truck.targetFireId='';truck.serviceRoute=[];truck.serviceRouteIndex=0;truck.arrivedAt=0;}if(state.career.activeJob?.id==='firefighter'){state.career.activeJob.completed=true;completeActiveJob();}if(state.waypoint?.id===`fire-${fire.id}`){state.waypoint=null;updateWaypointMarker();updateNavigation(0,true);}addXP(byPlayer?65:20);toast(byPlayer?'Emergência resolvida em equipe!':'Os bombeiros controlaram a ocorrência.','good',2400);saveState(true);}
+  function serviceVehicleRoute(vehicle,target){if(!vehicle.serviceRoute?.length){vehicle.serviceRoute=buildRoutePoints({x:vehicle.group.position.x,z:vehicle.group.position.z},target);vehicle.serviceRouteIndex=1;}return vehicle.serviceRoute;}
+  function moveServiceVehicle(vehicle,target,dt){if(performance.now()<Number(vehicle.trafficHoldUntil||0)){vehicle.currentSpeed=0;return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}const route=serviceVehicleRoute(vehicle,target),point=route[vehicle.serviceRouteIndex];if(!point)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);const dx=point.x-vehicle.group.position.x,dz=point.z-vehicle.group.position.z,d=Math.hypot(dx,dz);if(d<.45){vehicle.serviceRouteIndex++;if(vehicle.serviceRouteIndex>=route.length)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);return moveServiceVehicle(vehicle,target,dt);}const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(vehicle,heading,8.5),targetSpeed=vehicle.speed*factor;vehicle.currentSpeed=factor<.035?0:lerp(Number(vehicle.currentSpeed||0),targetSpeed,Math.min(1,dt*4.8));const move=Math.min(d,vehicle.currentSpeed*dt),previous={x:vehicle.group.position.x,z:vehicle.group.position.z};if(move>.0001){vehicle.group.position.x+=dx/d*move;vehicle.group.position.z+=dz/d*move;snapTrafficToRoad(vehicle.group,previous);vehicle.group.rotation.y=lerpAngle(vehicle.group.rotation.y,heading,Math.min(1,dt*6));for(const wheel of vehicle.wheels)wheel.rotation.x-=move*2.1;}return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}
+
   function updateFireService(dt){
     const now=performance.now();if(!world.fires.length)return;if(!world.fires.some(f=>f.active)&&now>world.nextFireAt&&!currentHouse)activateFireIncident();
     for(const fire of world.fires){if(!fire.active)continue;fire.flames.forEach((flame,i)=>{flame.scale.y=.82+Math.sin(now*.008+i)*.22;flame.rotation.y+=dt*(.7+i*.08);});fire.smoke.forEach((puff,i)=>{puff.position.y=1.25+i*.35+Math.sin(now*.002+i)*.14;puff.rotation.y+=dt*.35;});}
-    const active=world.fires.find(f=>f.active);for(const truck of world.fireTrucks){truck.lightA.visible=Math.floor(now/230)%2===0;truck.lightB.visible=!truck.lightA.visible;if(truck.incidentTargetId)continue;if(active&&!truck.targetFireId){truck.targetFireId=active.id;truck.route=[];truck.routeIndex=0;}if(truck.targetFireId){const fire=world.fires.find(f=>f.id===truck.targetFireId&&f.active);if(!fire){truck.targetFireId='';truck.route=[];continue;}const distance=moveServiceVehicle(truck,{x:fire.navX,z:fire.navZ},dt);if(distance<5.5){if(!truck.arrivedAt)truck.arrivedAt=now;fire.truckHelping=true;truck.sprayAcc=(truck.sprayAcc||0)+dt;if(truck.sprayAcc>.1){truck.sprayAcc=0;spawnDust(lerp(truck.group.position.x,fire.x,.7),lerp(truck.group.position.z,fire.z,.7),0x69d8ff);}if(now-truck.arrivedAt>5200&&state.career.activeJob?.id!=='firefighter')extinguishFireIncident(fire,false);}}else{const patrol=truck.patrol[truck.patrolIndex];if(moveServiceVehicle(truck,{x:patrol[0],z:patrol[1]},dt)<1){truck.patrolIndex=(truck.patrolIndex+1)%truck.patrol.length;truck.route=[];truck.routeIndex=0;}}}
+    const active=world.fires.find(f=>f.active);
+    for(const truck of world.fireTrucks){
+      const fireResponding=!!(truck.targetFireId||truck.incidentTargetId);truck.lightA.visible=fireResponding&&Math.floor(now/230)%2===0;truck.lightB.visible=fireResponding&&!truck.lightA.visible;if(truck.occupied)continue;if(truck.incidentTargetId)continue;
+      const reserved=!!truck.missionReservedFor;if(active&&!truck.targetFireId&&!reserved){truck.targetFireId=active.id;truck.serviceRoute=[];truck.serviceRouteIndex=0;}
+      if(truck.targetFireId){const fire=world.fires.find(f=>f.id===truck.targetFireId&&f.active);if(!fire){truck.targetFireId='';truck.serviceRoute=[];continue;}const distance=moveServiceVehicle(truck,{x:fire.navX,z:fire.navZ},dt);if(distance<5.5){if(!truck.arrivedAt)truck.arrivedAt=now;fire.truckHelping=true;truck.sprayAcc=(truck.sprayAcc||0)+dt;if(truck.sprayAcc>.1){truck.sprayAcc=0;spawnDust(lerp(truck.group.position.x,fire.x,.7),lerp(truck.group.position.z,fire.z,.7),0x69d8ff);}if(now-truck.arrivedAt>5200&&state.career.activeJob?.id!=='firefighter')extinguishFireIncident(fire,false);}}
+      else returnServiceVehicleHome(truck,dt);
+    }
   }
 
   function createPoliceCar(id,route,routeIndex=0){
@@ -2889,19 +2939,19 @@
     const lightBar=new THREE.Group();lightBar.position.set(0,1.36,-.2);g.add(lightBar);const red=premiumBox(.62,.18,.34,renderMat(0xe9404a,{emissive:0xb10e22,emissiveIntensity:.9}),-.34,0,0,lightBar),cyan=premiumBox(.62,.18,.34,renderMat(0x35bfff,{emissive:0x087db4,emissiveIntensity:.9}),.34,0,0,lightBar);
     const sign=new THREE.Mesh(new THREE.PlaneGeometry(.72,.72),new THREE.MeshStandardMaterial({map:iconTexture('★','#ffffff','#215ea8'),transparent:true,side:THREE.DoubleSide}));sign.position.set(1.02,.72,.2);sign.rotation.y=Math.PI/2;g.add(sign);
     const wheels=[];for(const p of [[-.94,.28,-.88],[.94,.28,-.88],[-.94,.28,.88],[.94,.28,.88]]){const wheel=premiumCylinder(.36,.25,0x10151d,p[0],p[1],p[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}
-    g.traverse(o=>{if(o.isMesh)addVoxelOutline(o,0x132238,.22);});const start=route[routeIndex%route.length],car={id,group:g,route,routeIndex:(routeIndex+1)%route.length,speed:8.1,currentSpeed:0,wheels,red,cyan,npcTarget:'',npcChaseUntil:0,incidentTargetId:'',responseRoute:[],responseIndex:0};g.position.set(start.x,.02,start.z);worldGroup.add(g);world.policeCars.push(car);return car;
+    g.traverse(o=>{if(o.isMesh)addVoxelOutline(o,0x132238,.22);});const car={id,group:g,route,routeIndex:(routeIndex+1)%route.length,speed:8.1,currentSpeed:0,wheels,red,cyan,npcTarget:'',npcChaseUntil:0,incidentTargetId:'',responseRoute:[],responseIndex:0};worldGroup.add(g);world.policeCars.push(car);return registerServiceVehicle(car,'police',world.policeCars.length-1);
   }
   function createAmbulance(id='ambulance-1'){
     const g=new THREE.Group(),white=renderMat(0xf6f8fa,{roughness:.4,metalness:.12}),red=renderMat(0xe34848,{roughness:.36,metalness:.2}),glass=materials.cityGlass||renderMat(0x85d9f2,{transparent:true,opacity:.62});
     premiumBox(2.2,.46,3.7,0x263746,0,.38,0,g);premiumBox(2.08,1.38,2.45,white,0,1.14,-.35,g);premiumBox(2.0,1.12,1.1,white,0,1.0,1.45,g);premiumBox(1.65,.58,.08,glass,0,1.46,2.03,g);premiumBox(2.12,.22,.22,red,0,1.2,-1.55,g);premiumBox(.22,1.0,.08,red,0,1.32,-1.67,g);premiumBox(1.0,.22,.08,red,0,1.32,-1.67,g);
     const lightA=premiumBox(.55,.16,.3,renderMat(0xff3a42,{emissive:0xb80011,emissiveIntensity:1}),-.3,2.02,.65,g),lightB=premiumBox(.55,.16,.3,renderMat(0x42bfff,{emissive:0x087db4,emissiveIntensity:1}),.3,2.02,.65,g),wheels=[];
     for(const q of [[-1.0,.38,-1.15],[1.0,.38,-1.15],[-1.0,.38,1.15],[1.0,.38,1.15]]){const wheel=premiumCylinder(.43,.26,0x111722,q[0],q[1],q[2],g,14);wheel.rotation.z=Math.PI/2;wheels.push(wheel);}
-    g.position.set(55,.02,-58);worldGroup.add(g);const ambulance={id,group:g,wheels,lightA,lightB,speed:9,currentSpeed:0,incidentTargetId:'',responseRoute:[],responseIndex:0};world.ambulances.push(ambulance);return ambulance;
+    worldGroup.add(g);const ambulance={id,group:g,wheels,lightA,lightB,speed:9,currentSpeed:0,incidentTargetId:'',responseRoute:[],responseIndex:0};world.ambulances.push(ambulance);return registerServiceVehicle(ambulance,'paramedic',world.ambulances.length-1);
   }
   function createPoliceSystem(){
     createPoliceCar('patrol-1',[{x:68,z:-12},{x:68,z:0},{x:100,z:0},{x:0,z:0},{x:-100,z:0},{x:0,z:0},{x:68,z:0}],0);
     createPoliceCar('patrol-2',[{x:55,z:0},{x:55,z:88},{x:55,z:0},{x:0,z:0},{x:0,z:-94},{x:0,z:0}],2);
-    createAmbulance();
+    createAmbulance('ambulance-1');createAmbulance('ambulance-2');
   }
   function movePoliceToward(car,target,dt,speed=car.speed){
     if(performance.now()<Number(car.trafficHoldUntil||0)){car.currentSpeed=0;return Math.hypot(car.group.position.x-target.x,car.group.position.z-target.z);}
@@ -2935,24 +2985,14 @@
   function updatePoliceSystem(dt){
     const now=performance.now(),alert=world.policeAlert,alertCar=alert&&world.policeCars.find(car=>car.id===alert.carId);
     for(const car of world.policeCars){
-      const active=alert&&car===alertCar;
-      car.red.material.emissiveIntensity=(active||car.npcTarget||car.incidentTargetId)?(.45+Math.sin(now*.018)*.45):.16;car.cyan.material.emissiveIntensity=(active||car.npcTarget||car.incidentTargetId)?(.45+Math.sin(now*.018+Math.PI)*.45):.16;
-      if(car.incidentTargetId)continue;
-      if(active){
-        const distance=movePoliceToward(car,player,dt,12.8);const stopped=Math.abs(player.car.speed)<1.15;
-        alert.slowSince=stopped?(alert.slowSince||now):0;updateSafetyPanel(stopped?'Muito bem • aguarde a patrulha':'Encoste com calma • solte o acelerador');
-        if(!player.vehicle||distance<2.15||(alert.slowSince&&now-alert.slowSince>1100)||now-alert.startedAt>15000)finishSafetyStop();
-      }else if(car.npcTarget){
-        const npc=world.npcs.find(item=>item.id===car.npcTarget);if(!npc||now>car.npcChaseUntil){if(npc)npcSpeech(npc,'Vou reduzir a velocidade e dirigir com cuidado.');car.npcTarget='';}
-        else if(movePoliceToward(car,npc.group.position,dt,10.2)<2.25){npc.policeCooldown=now+45000;npcSpeech(npc,'Entendi, patrulha! Segurança primeiro.');car.npcTarget='';}
-      }else updatePolicePatrol(car,dt);
+      const active=alert&&car===alertCar;car.red.material.emissiveIntensity=(active||car.npcTarget||car.incidentTargetId)?(.45+Math.sin(now*.018)*.45):.16;car.cyan.material.emissiveIntensity=(active||car.npcTarget||car.incidentTargetId)?(.45+Math.sin(now*.018+Math.PI)*.45):.16;
+      if(car.occupied)continue;if(car.incidentTargetId)continue;if(car.missionReservedFor){returnServiceVehicleHome(car,dt);continue;}
+      if(active){const distance=movePoliceToward(car,player,dt,12.8),stopped=Math.abs(player.car.speed)<1.15;alert.slowSince=stopped?(alert.slowSince||now):0;updateSafetyPanel(stopped?'Muito bem • aguarde a patrulha':'Encoste com calma • solte o acelerador');if(!player.vehicle||distance<2.15||(alert.slowSince&&now-alert.slowSince>1100)||now-alert.startedAt>15000)finishSafetyStop();}
+      else if(car.npcTarget){const npc=world.npcs.find(item=>item.id===car.npcTarget);if(!npc||now>car.npcChaseUntil){if(npc)npcSpeech(npc,'Vou reduzir a velocidade e dirigir com cuidado.');car.npcTarget='';}else if(movePoliceToward(car,npc.group.position,dt,10.2)<2.25){npc.policeCooldown=now+45000;npcSpeech(npc,'Entendi, patrulha! Segurança primeiro.');car.npcTarget='';}}
+      else updatePolicePatrol(car,dt);
     }
-    if(!alert&&player.vehicle&&!player.car.passengerOf&&Math.abs(player.car.speed)>1.4){
-      const hit=world.policeCars.find(car=>Math.hypot(player.x-car.group.position.x,player.z-car.group.position.z)<2.45);if(hit)startPoliceAlert(hit);
-    }
-    if(!alert){
-      for(const car of world.policeCars){if(car.npcTarget)continue;const npc=world.npcs.find(item=>item.mobility&&['car','moto'].includes(item.mobility.type)&&now>Number(item.policeCooldown||0)&&Math.hypot(item.group.position.x-car.group.position.x,item.group.position.z-car.group.position.z)<2.0);if(npc){car.npcTarget=npc.id;car.npcChaseUntil=now+6500;npc.policeCooldown=now+45000;break;}}
-    }
+    if(!alert&&player.vehicle&&!player.car.passengerOf&&Math.abs(player.car.speed)>1.4&&!['police','firefighter','paramedic'].includes(player.car.kind)){const hit=world.policeCars.find(car=>!car.occupied&&Math.hypot(player.x-car.group.position.x,player.z-car.group.position.z)<2.45);if(hit)startPoliceAlert(hit);}
+    if(!alert){for(const car of world.policeCars){if(car.occupied||car.missionReservedFor||car.npcTarget||car.incidentTargetId)continue;const npc=world.npcs.find(item=>item.mobility&&['car','moto'].includes(item.mobility.type)&&now>Number(item.policeCooldown||0)&&Math.hypot(item.group.position.x-car.group.position.x,item.group.position.z-car.group.position.z)<2.0);if(npc){car.npcTarget=npc.id;car.npcChaseUntil=now+6500;npc.policeCooldown=now+45000;break;}}}
   }
   function moveIncidentResponder(vehicle,target,dt){if(performance.now()<Number(vehicle.trafficHoldUntil||0)){vehicle.currentSpeed=0;return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);}
     if(!vehicle.responseRoute?.length){vehicle.responseRoute=buildRoutePoints({x:vehicle.group.position.x,z:vehicle.group.position.z},target);vehicle.responseIndex=1;}
@@ -2960,28 +3000,43 @@
     const dx=point.x-vehicle.group.position.x,dz=point.z-vehicle.group.position.z,d=Math.hypot(dx,dz);if(d<.45){vehicle.responseIndex++;if(vehicle.responseIndex>=vehicle.responseRoute.length)return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);return moveIncidentResponder(vehicle,target,dt);}
     const heading=Math.atan2(dx,dz),factor=trafficSpeedFactor(vehicle,heading,8),targetSpeed=vehicle.speed*factor;vehicle.currentSpeed=lerp(Number(vehicle.currentSpeed||0),targetSpeed,Math.min(1,dt*4));const move=Math.min(d,vehicle.currentSpeed*dt),previous={x:vehicle.group.position.x,z:vehicle.group.position.z};if(move>.0001){vehicle.group.position.x+=dx/d*move;vehicle.group.position.z+=dz/d*move;snapTrafficToRoad(vehicle.group,previous);vehicle.group.rotation.y=lerpAngle(vehicle.group.rotation.y,heading,Math.min(1,dt*6));for(const wheel of vehicle.wheels||[])wheel.rotation.x-=move*2.3;}return Math.hypot(vehicle.group.position.x-target.x,vehicle.group.position.z-target.z);
   }
-  function createTrafficIncident(a,b,severity='minor'){
-    if(world.activeIncident||currentHouse)return null;const now=performance.now(),ax=a.group.position.x,az=a.group.position.z,bx=b.group.position.x,bz=b.group.position.z,x=(ax+bx)/2,z=(az+bz)/2,fire=severity==='fire';
-    const group=new THREE.Group();group.position.set(x,0,z);worldGroup.add(group);for(const ox of [-1.3,0,1.3]){premiumCylinder(.18,.7,0xf47b20,ox,.35,.8,group,8);premiumBox(.5,.1,.5,0xffffff,ox,.16,.8,group);}if(fire){for(const ox of [-.4,.4]){const flame=new THREE.Mesh(new THREE.ConeGeometry(.3,.85,7),renderMat(0xff6a2f,{emissive:0xd83b12,emissiveIntensity:1.3}));flame.position.set(ox,.48,0);group.add(flame);}}
-    const incident={id:`incident-${++world.emergencySeq}`,x,z,navX:nearestRoadProjection({x,z})?.point.x??x,navZ:nearestRoadProjection({x,z})?.point.z??z,group,fire,startedAt:now,resolved:false,policeArrived:false,ambulanceArrived:false,fireArrived:!fire,actors:[a.ref,b.ref]};world.activeIncident=incident;world.trafficIncidents.push(incident);for(const actor of incident.actors){if(actor)actor.incidentUntil=now+9000;}if(a.id==='player-car'||b.id==='player-car'){player.car.speed=0;state.stats.accidentsHelped=(state.stats.accidentsHelped||0)+1;}
-    const police=world.policeCars.find(c=>!c.incidentTargetId),ambulance=world.ambulances.find(c=>!c.incidentTargetId),truck=fire?world.fireTrucks.find(c=>!c.incidentTargetId&&!c.targetFireId):null;
-    if(police){police.incidentTargetId=incident.id;police.responseRoute=[];police.responseIndex=0;}if(ambulance){ambulance.incidentTargetId=incident.id;ambulance.responseRoute=[];ambulance.responseIndex=0;}if(truck){truck.incidentTargetId=incident.id;truck.responseRoute=[];truck.responseIndex=0;}
-    state.cityServices.emergencyCalls=(state.cityServices.emergencyCalls||0)+1;toast(fire?'🚨 Acidente com princípio de incêndio: polícia, ambulância e bombeiros foram chamados.':'🚨 Acidente simulado: polícia e ambulância foram chamadas.','warn',3200);saveState();return incident;
+  function incidentServiceLabel(kind){return kind==='police'?'Polícia':kind==='firefighter'?'Bombeiros':'Resgate';}
+  function lockIncidentActor(record,incident){const ref=record?.ref;if(!ref)return;incident.actorStates.push({ref,incidentUntil:ref.incidentUntil||0,currentSpeed:Number(ref.currentSpeed||0),state:ref.state||''});ref.incidentLocked=true;ref.incidentUntil=Number.MAX_SAFE_INTEGER;ref.currentSpeed=0;if(ref===player.car){player.car.speed=0;player.vx=0;player.vz=0;}if(ref.route&&typeof setBusState==='function'&&String(record.type)==='bus')setBusState(ref,BUS_STATES.ACCIDENT,'traffic-incident');}
+  function separateIncidentActors(a,b){if(!a?.group||!b?.group)return;let dx=b.group.position.x-a.group.position.x,dz=b.group.position.z-a.group.position.z,d=Math.hypot(dx,dz);if(d<.05){dx=1;dz=0;d=1;}const gap=(Number(a.radius||1.5)+Number(b.radius||1.5))*.92,push=Math.max(0,(gap-d)/2+.35),nx=dx/d,nz=dz/d;const move=(record,sign)=>{if(record.id==='player-car'){player.x=clamp(player.x+nx*push*sign,-115,115);player.z=clamp(player.z+nz*push*sign,-115,115);return;}record.group.position.x+=nx*push*sign;record.group.position.z+=nz*push*sign;snapTrafficToRoad(record.group);};move(a,-1);move(b,1);}
+  function createIncidentVisual(x,z,fire=false){const group=new THREE.Group();group.position.set(x,0,z);worldGroup.add(group);for(const ox of [-1.55,-.52,.52,1.55]){premiumCylinder(.18,.72,0xf47b20,ox,.36,.95,group,8);premiumBox(.52,.1,.52,0xffffff,ox,.16,.95,group);}premiumBox(3.8,.08,.14,0xf5c542,0,.72,.95,group);if(fire){for(const ox of [-.4,.4]){const flame=new THREE.Mesh(new THREE.ConeGeometry(.3,.85,7),renderMat(0xff6a2f,{emissive:0xd83b12,emissiveIntensity:1.3}));flame.position.set(ox,.48,0);group.add(flame);}}const beacon=new THREE.Mesh(new THREE.TorusGeometry(2.35,.07,8,40),renderMat(0xffc928,{emissive:0xc07800,emissiveIntensity:.55,transparent:true,opacity:.8}));beacon.rotation.x=Math.PI/2;beacon.position.y=.08;group.add(beacon);return group;}
+  function createTrafficIncidentAt(x,z,severity='minor',actors=[]){
+    if(world.activeIncident||currentHouse)return null;const now=performance.now(),fire=severity==='fire',projection=nearestRoadProjection({x,z})?.point||{x,z},group=createIncidentVisual(x,z,fire),incident={id:`incident-${++world.emergencySeq}`,x,z,navX:projection.x,navZ:projection.z,group,fire,startedAt:now,resolved:false,required:{police:true,paramedic:true,firefighter:true},arrived:{police:false,paramedic:false,firefighter:false},tasks:{police:false,paramedic:false,firefighter:false},playerAssigned:{},responders:{},actorStates:[],actors:actors.map(item=>item.ref).filter(Boolean),readyAt:0};world.activeIncident=incident;world.trafficIncidents.push(incident);if(actors.length>=2)separateIncidentActors(actors[0],actors[1]);for(const actor of actors)lockIncidentActor(actor,incident);if(actors.some(actor=>actor.id==='player-car')){player.car.speed=0;state.stats.accidentsHelped=(state.stats.accidentsHelped||0)+1;}
+    registerInteractable({id:`assist-${incident.id}`,type:'trafficIncident',icon:fire?'🔥':'🚑',label:fire?'Atender acidente e princípio de incêndio':'Atender acidente com segurança',radius:5.4,priority:252,getPos:()=>({x:incident.x,z:incident.z}),available:()=>world.activeIncident===incident&&!incident.resolved,action:()=>assistTrafficIncident(incident)});
+    dispatchIncidentResponders(incident);state.cityServices.emergencyCalls=(state.cityServices.emergencyCalls||0)+1;toast(fire?'🚨 Acidente com princípio de incêndio: polícia, resgate e bombeiros acionados.':'🚨 Acidente: veículos parados; polícia, resgate e bombeiros acionados.','warn',3400);saveState();return incident;
   }
+  function createTrafficIncident(a,b,severity='minor'){if(!a||!b)return null;const x=(a.group.position.x+b.group.position.x)/2,z=(a.group.position.z+b.group.position.z)/2;return createTrafficIncidentAt(x,z,severity,[a,b]);}
+  function ensureActiveTrafficIncident(force=false){if(world.activeIncident)return world.activeIncident;if(!force)return null;const site=TRAINING_INCIDENT_SITES[world.emergencySeq%TRAINING_INCIDENT_SITES.length],projection=nearestRoadProjection(site)?.point||site;return createTrafficIncidentAt(projection.x,projection.z,'minor',[]);}
+  function dispatchIncidentResponder(incident,kind){
+    const job=state.career?.activeJob;if(job&&serviceKindForJob(job)===kind){incident.playerAssigned[kind]=true;job.emergencyIncidentId=incident.id;job.serviceVehicleArrived=false;job.sceneTaskCompleted=false;reserveMissionServiceVehicle(job,{waypoint:true});return null;}
+    const vehicle=serviceVehiclePools(kind).find(v=>serviceVehicleAvailable(v,null));if(!vehicle)return null;vehicle.incidentTargetId=incident.id;vehicle.responseRoute=[];vehicle.responseIndex=0;incident.responders[kind]=vehicle.id;return vehicle;
+  }
+  function dispatchIncidentResponders(incident){dispatchIncidentResponder(incident,'police');dispatchIncidentResponder(incident,'paramedic');dispatchIncidentResponder(incident,'firefighter');}
+  function assistTrafficIncident(incident){
+    if(!incident||incident.resolved||world.activeIncident!==incident){toast('A ocorrência já foi encerrada.','good');return false;}const job=state.career?.activeJob,kind=serviceKindForJob(job);if(!kind||job.emergencyIncidentId!==incident.id){toast('A área está isolada. Aceite uma missão de emergência para ajudar.','warn',2400);return false;}if(!job.serviceVehicleArrived){toast(`Chegue com ${kind==='police'?'a viatura':kind==='firefighter'?'o caminhão dos bombeiros':'a ambulância'} antes de iniciar o atendimento.`,'warn',2500);return false;}if(player.vehicle){toast('Estacione, saia do veículo e use AÇÃO junto à ocorrência.','warn',2200);return false;}if(Math.hypot(player.x-incident.x,player.z-incident.z)>5.5){toast('Aproxime-se da área sinalizada.','warn');return false;}incident.tasks[kind]=true;job.sceneTaskCompleted=true;setMissionState(job,MISSION_STATES.RETURNING,'scene-secured');player.sitUntil=performance.now()+1800;for(let i=0;i<7;i++)setTimeout(()=>spawnDust(incident.x+(Math.random()-.5)*2.5,incident.z+(Math.random()-.5)*2.5,kind==='firefighter'?0x68d8ff:kind==='paramedic'?0xe9f5ff:0xf6d148),i*100);toast(kind==='police'?'Área isolada e trânsito protegido.':kind==='firefighter'?(incident.fire?'Princípio de incêndio controlado.':'Risco de incêndio verificado e área protegida.'):'Primeiros socorros concluídos com segurança.','good',2300);saveState(true);return true;
+  }
+  function markPlayerIncidentArrival(incident){const job=state.career?.activeJob,kind=serviceKindForJob(job);if(!job||!kind||job.emergencyIncidentId!==incident.id||!isDrivingServiceVehicle(kind))return false;const distance=Math.hypot(player.x-incident.navX,player.z-incident.navZ);if(distance>5.2)return false;if(!incident.arrived[kind]){incident.arrived[kind]=true;job.serviceVehicleArrived=true;setMissionState(job,MISSION_STATES.ACTION_REQUIRED,'assist-incident');state.waypoint={id:`assist-${incident.id}`,name:'Área do acidente',x:incident.x,z:incident.z,navX:incident.navX,navZ:incident.navZ,arrived:true};updateWaypointMarker();updateNavigation(0,true);toast('Veículo posicionado. Estacione, saia e use AÇÃO na área sinalizada.','good',3000);saveState(true);}return true;}
+  function releaseIncidentActorStates(incident){for(const saved of incident.actorStates||[]){const ref=saved.ref;if(!ref)continue;ref.incidentLocked=false;ref.incidentUntil=0;ref.currentSpeed=0;if(saved.state===BUS_STATES.ACCIDENT||ref.state===BUS_STATES.ACCIDENT)setBusState(ref,BUS_STATES.MOVING,'incident-cleared');}}
   function resolveTrafficIncident(incident){
-    if(!incident||incident.resolved)return;incident.resolved=true;incident.group.visible=false;for(const actor of incident.actors||[]){if(actor)actor.incidentUntil=0;}for(const car of world.policeCars){if(car.incidentTargetId===incident.id){car.incidentTargetId='';car.responseRoute=[];}}for(const ambulance of world.ambulances){if(ambulance.incidentTargetId===incident.id){ambulance.incidentTargetId='';ambulance.responseRoute=[];}}for(const truck of world.fireTrucks){if(truck.incidentTargetId===incident.id){truck.incidentTargetId='';truck.responseRoute=[];}}state.cityServices.accidentsResolved=(state.cityServices.accidentsResolved||0)+1;state.cityServices.rescuesCompleted=(state.cityServices.rescuesCompleted||0)+1;world.activeIncident=null;toast('Atendimento concluído. Todos estão bem e a rua foi liberada.','good',2600);saveState(true);
+    if(!incident||incident.resolved)return;incident.resolved=true;incident.group.visible=false;releaseIncidentActorStates(incident);for(const car of world.policeCars){if(car.incidentTargetId===incident.id){car.incidentTargetId='';car.responseRoute=[];car.responseIndex=0;}}for(const ambulance of world.ambulances){if(ambulance.incidentTargetId===incident.id){ambulance.incidentTargetId='';ambulance.responseRoute=[];ambulance.responseIndex=0;}}for(const truck of world.fireTrucks){if(truck.incidentTargetId===incident.id){truck.incidentTargetId='';truck.responseRoute=[];truck.responseIndex=0;}}
+    const job=state.career?.activeJob,kind=serviceKindForJob(job);if(job&&job.emergencyIncidentId===incident.id&&incident.tasks[kind])completeActiveJob();
+    state.cityServices.accidentsResolved=(state.cityServices.accidentsResolved||0)+1;state.cityServices.rescuesCompleted=(state.cityServices.rescuesCompleted||0)+1;world.activeIncident=null;setTimeout(()=>{worldGroup.remove(incident.group);},1200);toast('Atendimento concluído. A rua foi liberada com segurança.','good',2800);saveState(true);
   }
   function updateTrafficIncidents(dt){
-    const now=performance.now(),incident=world.activeIncident;
-    for(const ambulance of world.ambulances){ambulance.lightA.visible=Math.floor(now/220)%2===0;ambulance.lightB.visible=!ambulance.lightA.visible;}
+    const now=performance.now(),incident=world.activeIncident;for(const ambulance of world.ambulances){const responding=!!ambulance.incidentTargetId;ambulance.lightA.visible=responding&&Math.floor(now/220)%2===0;ambulance.lightB.visible=responding&&!ambulance.lightA.visible;if(!incident&&!ambulance.occupied&&!ambulance.missionReservedFor)returnServiceVehicleHome(ambulance,dt);}
     if(incident){
-      const target={x:incident.navX,z:incident.navZ};for(const car of world.policeCars.filter(c=>c.incidentTargetId===incident.id)){if(moveIncidentResponder(car,target,dt)<3.5)incident.policeArrived=true;}
-      for(const ambulance of world.ambulances.filter(c=>c.incidentTargetId===incident.id)){if(moveIncidentResponder(c,target,dt)<3.5)incident.ambulanceArrived=true;}
-      for(const truck of world.fireTrucks.filter(c=>c.incidentTargetId===incident.id)){if(moveIncidentResponder(truck,target,dt)<4.2)incident.fireArrived=true;}
-      if((incident.policeArrived&&incident.ambulanceArrived&&incident.fireArrived&&now-incident.startedAt>4200)||now-incident.startedAt>15000)resolveTrafficIncident(incident);return;
+      markPlayerIncidentArrival(incident);const target={x:incident.navX,z:incident.navZ};
+      for(const car of world.policeCars.filter(c=>c.incidentTargetId===incident.id&&!c.occupied)){if(moveIncidentResponder(car,target,dt)<3.7){incident.arrived.police=true;if(!incident.playerAssigned.police&&now-incident.startedAt>1800)incident.tasks.police=true;}}
+      for(const ambulance of world.ambulances.filter(c=>c.incidentTargetId===incident.id&&!c.occupied)){if(moveIncidentResponder(ambulance,target,dt)<3.9){incident.arrived.paramedic=true;if(!incident.playerAssigned.paramedic&&now-incident.startedAt>1800)incident.tasks.paramedic=true;}}
+      for(const truck of world.fireTrucks.filter(c=>c.incidentTargetId===incident.id&&!c.occupied)){if(moveIncidentResponder(truck,target,dt)<4.4){incident.arrived.firefighter=true;if(!incident.playerAssigned.firefighter&&now-incident.startedAt>1800)incident.tasks.firefighter=true;}}
+      const required=Object.keys(incident.required).filter(kind=>incident.required[kind]),complete=required.every(kind=>incident.arrived[kind]&&incident.tasks[kind]);if(complete){incident.readyAt=incident.readyAt||now;if(now-incident.readyAt>1900)resolveTrafficIncident(incident);}else incident.readyAt=0;return;
     }
-    updateTrafficIncidents.acc=(updateTrafficIncidents.acc||0)+dt;if(updateTrafficIncidents.acc<.18)return;updateTrafficIncidents.acc=0;const actors=trafficActorList().filter(a=>a.speed>1.4&&!a.ref?.incidentUntil);if(player.vehicle&&!player.car.passengerOf&&Math.abs(player.car.speed)>1.4)actors.push({id:'player-car',type:'player',group:{position:{x:player.x,z:player.z}},radius:1.55,speed:Math.abs(player.car.speed),ref:player.car,isPlayer:true});
-    for(let i=0;i<actors.length;i++)for(let j=i+1;j<actors.length;j++){const a=actors[i],b=actors[j],distance=Math.hypot(a.group.position.x-b.group.position.x,a.group.position.z-b.group.position.z),limit=(a.radius+b.radius)*.58;if(distance<limit&&a.speed+b.speed>5){createTrafficIncident(a,b,a.speed+b.speed>13&&Math.random()<.35?'fire':'minor');return;}}
+    updateTrafficIncidents.acc=(updateTrafficIncidents.acc||0)+dt;if(updateTrafficIncidents.acc<.18)return;updateTrafficIncidents.acc=0;const actors=trafficActorList().filter(a=>a.speed>1.4&&!a.ref?.incidentUntil&&!a.ref?.incidentLocked);if(player.vehicle&&!player.car.passengerOf&&Math.abs(player.car.speed)>1.4)actors.push({id:'player-car',type:'player',group:{position:{x:player.x,z:player.z}},radius:1.7,speed:Math.abs(player.car.speed),ref:player.car,isPlayer:true});
+    for(let i=0;i<actors.length;i++)for(let j=i+1;j<actors.length;j++){const a=actors[i],b=actors[j],distance=Math.hypot(a.group.position.x-b.group.position.x,a.group.position.z-b.group.position.z),limit=(a.radius+b.radius)*.62;if(distance<limit&&a.speed+b.speed>5.4){createTrafficIncident(a,b,a.speed+b.speed>13&&Math.random()<.35?'fire':'minor');return;}}
   }
 
   function openTransitGuide(){
@@ -3562,14 +3617,15 @@
   const JOBS = [
     {id:'delivery',title:'Entregador da Vila',icon:'📦',reward:120,rep:30,description:'Pegue o carrinho e entregue o pacote para Maya.'},
     {id:'police',title:'Patrulha Educativa',icon:'👮',reward:160,rep:38,description:'Visite três pontos da cidade e oriente o trânsito com segurança.'},
-    {id:'firefighter',title:'Bombeiro Kids',icon:'🚒',reward:180,rep:42,description:'Atenda uma emergência controlada e ajude a equipe a apagar o fogo.'},
+    {id:'firefighter',title:'Bombeiro Kids',icon:'🚒',reward:180,rep:42,description:'Vista o uniforme, dirija o caminhão dos bombeiros e atenda uma emergência controlada.'},
+    {id:'paramedic',title:'Socorrista da Vila',icon:'🚑',reward:175,rep:40,description:'Vista o uniforme, dirija a ambulância e responda a um acidente com segurança.'},
     {id:'teacher',title:'Professor por um Dia',icon:'🧑‍🏫',reward:150,rep:34,description:'Vá a uma escola e conduza uma atividade educativa.'},
     {id:'gather',title:'Ajudante da Oficina',icon:'🪵',reward:90,rep:18,description:'Colete 3 madeiras e 2 pedras.',target:{wood:3,stone:2}},
     {id:'crystals',title:'Explorador de Cristais',icon:'💎',reward:140,rep:24,description:'Colete 3 novos cristais.',target:{crystals:3}},
     {id:'builder',title:'Decorador do Bairro',icon:'🧱',reward:110,rep:20,description:'Construa 2 objetos perto de uma casa.',target:{builds:2}}
   ];
   const MISSION_STATES=Object.freeze({LOCKED:'LOCKED',AVAILABLE:'AVAILABLE',ACCEPTED:'ACCEPTED',PREPARING:'PREPARING',TRAVELLING:'TRAVELLING',AT_LOCATION:'AT_LOCATION',ACTION_REQUIRED:'ACTION_REQUIRED',RETURNING:'RETURNING',COMPLETING:'COMPLETING',COMPLETED:'COMPLETED',CANCELLED:'CANCELLED',FAILED_SAFE:'FAILED_SAFE'});
-  const JOB_UNIFORMS={delivery:'delivery',police:'police',firefighter:'firefighter',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
+  const JOB_UNIFORMS={delivery:'delivery',police:'police',firefighter:'firefighter',paramedic:'paramedic',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
 
   // ===== MODULE: 22-careers-jobs-uniforms.js =====
   function setMissionState(job,next,reason=''){if(!job)return false;const changed=job.missionState!==next||job.missionReason!==reason;if(!changed)return false;job.missionState=next;job.missionStateAt=Date.now();job.missionReason=reason;return true;}
@@ -3579,15 +3635,14 @@
     state.avatar.uniform=uniform;applyAvatarCustomization();saveState(true);return uniform;
   }
   function focusActiveJob(){
-    const job=state.career.activeJob;if(!job){toast('Nenhum trabalho ativo.','warn');return false;}
-    if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();
-    if(job.id==='delivery')setWaypoint('garage');
+    const job=state.career.activeJob;if(!job){toast('Nenhum trabalho ativo.','warn');return false;}if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();const serviceKind=serviceKindForJob(job);
+    if(serviceKind&&!job.serviceVehicleBoarded){const vehicle=reserveMissionServiceVehicle(job,{waypoint:true});if(!vehicle)return false;closeModal();updateMissionHUD();toast(`Primeiro passo: vista o uniforme e entre em ${serviceKind==='police'?'uma viatura':serviceKind==='firefighter'?'um caminhão dos bombeiros':'uma ambulância'}.`,'good',2600);return true;}
+    if(job.emergencyIncidentId){const incident=world.activeIncident?.id===job.emergencyIncidentId?world.activeIncident:null;if(incident){state.waypoint={id:`assist-${incident.id}`,name:'Área do acidente',x:incident.x,z:incident.z,navX:incident.navX,navZ:incident.navZ,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();updateNavigation(0,true);}}
+    else if(job.id==='delivery')setWaypoint('garage');
     else if(job.id==='police'){const id=(job.route||[])[Number(job.progress||0)]||'police';setWaypoint(id);}
     else if(job.id==='firefighter'){const fire=ensureActiveFire(true);if(fire){state.waypoint={id:`fire-${fire.id}`,name:fire.name,x:fire.x,z:fire.z,navX:fire.navX,navZ:fire.navZ,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();updateNavigation(0,true);}}
-    else if(job.id==='teacher')setWaypoint(job.schoolId||'school');
-    else if(job.id==='gather')setWaypoint('forest');
-    else if(job.id==='crystals')setWaypoint('crystal');
-    else if(job.id==='builder')setWaypoint('home-extension');
+    else if(job.id==='paramedic'){const incident=ensureActiveTrafficIncident(true);if(incident){job.emergencyIncidentId=incident.id;focusActiveJob();return true;}}
+    else if(job.id==='teacher')setWaypoint(job.schoolId||'school');else if(job.id==='gather')setWaypoint('forest');else if(job.id==='crystals')setWaypoint('crystal');else if(job.id==='builder')setWaypoint('home-extension');
     closeModal();updateMissionHUD();toast(`Missão ativa: ${job.title}. Siga a rota azul.`,'good',2300);return true;
   }
   async function cancelActiveJob(){
@@ -3595,20 +3650,19 @@
     const ok=await confirmModal('Cancelar trabalho',`Deseja encerrar "${job.title}"? Suas moedas, itens e conquistas continuam salvos.`,'Cancelar trabalho','Continuar missão');if(!ok)return false;
     setMissionState(job,MISSION_STATES.CANCELLED,'player-cancel');job.uniformLocked=false;
     if(job.id==='delivery'){state.flags.deliveryActive=false;state.inventory.package=Number(job.previousPackage||0);}
-    state.avatar.uniform=job.previousUniform||'none';state.career.lastMission={...job,endedAt:Date.now()};state.career.activeJob=null;state.waypoint=null;world.routePath=[];updateWaypointMarker();applyAvatarCustomization();updateMissionHUD();saveState(true);closeModal();toast('Trabalho cancelado. Você pode escolher outro.','good',1900);return true;
+    releaseMissionServiceVehicle(job);state.avatar.uniform=job.previousUniform||'none';state.career.lastMission={...job,endedAt:Date.now()};state.career.activeJob=null;state.waypoint=null;world.routePath=[];updateWaypointMarker();applyAvatarCustomization();updateMissionHUD();saveState(true);closeModal();toast('Trabalho cancelado. Você pode escolher outro.','good',1900);return true;
   }
 
   function activeJobProgress(job){
-    if(!job)return{percent:0,label:'0%'};
-    const start=job.start||{};
+    if(!job)return{percent:0,label:'0%'};const start=job.start||{},serviceKind=serviceKindForJob(job);
+    if(serviceKind&&!job.serviceVehicleBoarded)return{percent:18,label:`Entre ${serviceKind==='police'?'na viatura':serviceKind==='firefighter'?'no caminhão dos bombeiros':'na ambulância'}`};
     if(job.id==='delivery')return{percent:state.flags.deliveryDone?100:(player.vehicle?55:25),label:state.flags.deliveryDone?'concluído':player.vehicle?'Leve o pacote até Maya':'Pegue o carrinho'};
-    if(job.id==='police'){const done=Number(job.progress||0),total=(job.route||[]).length||3;return{percent:clamp(done/total*100,0,100),label:`${done}/${total} pontos patrulhados`};}
-    if(job.id==='firefighter'){const fire=world.fires.find(f=>f.active);return{percent:job.completed?100:(fire?.playerHelping?70:fire?35:15),label:job.completed?'emergência concluída':fire?.playerHelping?'Ajudando com a mangueira':fire?'Siga até a ocorrência':'Aguardando chamado'};}
+    if(job.id==='police'){if(job.emergencyIncidentId)return{percent:job.sceneTaskCompleted?90:job.serviceVehicleArrived?72:42,label:job.sceneTaskCompleted?'Área protegida; aguarde conclusão':job.serviceVehicleArrived?'Saia da viatura e use AÇÃO':'Dirija a viatura até o acidente'};const done=Number(job.progress||0),total=(job.route||[]).length||3;return{percent:clamp(24+done/total*76,0,100),label:`${done}/${total} pontos patrulhados com a viatura`};}
+    if(job.id==='firefighter'){if(job.emergencyIncidentId)return{percent:job.sceneTaskCompleted?90:job.serviceVehicleArrived?72:42,label:job.sceneTaskCompleted?'Incêndio controlado':job.serviceVehicleArrived?'Saia do caminhão e use AÇÃO':'Dirija o caminhão até o acidente'};const fire=world.fires.find(f=>f.active);return{percent:job.completed?100:(fire?.playerHelping?88:job.serviceVehicleArrived?68:fire?42:25),label:job.completed?'emergência concluída':fire?.playerHelping?'Mangueira em operação':job.serviceVehicleArrived?'Estacione e ajude com a mangueira':fire?'Dirija até a ocorrência':'Aguardando chamado'};}
+    if(job.id==='paramedic')return{percent:job.sceneTaskCompleted?90:job.serviceVehicleArrived?70:42,label:job.sceneTaskCompleted?'Atendimento realizado; aguarde liberação':job.serviceVehicleArrived?'Saia da ambulância e use AÇÃO':'Dirija a ambulância até o acidente'};
     if(job.id==='teacher')return{percent:job.completed?100:(currentHouse?.id?.startsWith('school')?55:20),label:job.completed?'aula concluída':'Vá até uma escola e use o quadro'};
     if(job.id==='gather'){const w=Math.max(0,state.inventory.wood-(start.wood||0)),r=Math.max(0,state.inventory.stone-(start.stone||0));return{percent:clamp((w/3+r/2)*50,0,100),label:`${Math.min(w,3)}/3 madeiras • ${Math.min(r,2)}/2 pedras`};}
-    if(job.id==='crystals'){const n=Math.max(0,state.inventory.crystals-(start.crystals||0));return{percent:clamp(n/3*100,0,100),label:`${Math.min(n,3)}/3 cristais`};}
-    if(job.id==='builder'){const n=Math.max(0,state.builds.length-(start.builds||0));return{percent:clamp(n/2*100,0,100),label:`${Math.min(n,2)}/2 construções`};}
-    return{percent:0,label:'Em andamento'};
+    if(job.id==='crystals'){const n=Math.max(0,state.inventory.crystals-(start.crystals||0));return{percent:clamp(n/3*100,0,100),label:`${Math.min(n,3)}/3 cristais`};}if(job.id==='builder'){const n=Math.max(0,state.builds.length-(start.builds||0));return{percent:clamp(n/2*100,0,100),label:`${Math.min(n,2)}/2 construções`};}return{percent:0,label:'Em andamento'};
   }
   function openJobCenter(){
     const active=state.career.activeJob,progress=active?activeJobProgress(active):null;
@@ -3620,15 +3674,13 @@
     });
   }
   function startJob(job,options={}){
-    if(!job||state.career.activeJob){toast('Cancele ou conclua o trabalho atual antes de trocar.','warn');return false;}
-    const inv=state.inventory,schoolId=Math.random()>.5?'school':'school-east',instanceId=`job-${job.id}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-    state.career.activeJob={...job,instanceId,missionState:MISSION_STATES.ACCEPTED,missionStateAt:Date.now(),schoolId,previousUniform:state.avatar.uniform||'none',previousPackage:Number(inv.package||0),rewardClaimed:false,startedAt:Date.now(),progress:0,start:{wood:inv.wood,stone:inv.stone,crystals:inv.crystals,builds:state.builds.length}};
-    equipJobUniform(job.id);setMissionState(state.career.activeJob,MISSION_STATES.PREPARING,'uniform-ready');
-    if(job.id==='delivery'){state.flags.deliveryActive=true;state.flags.deliveryDone=false;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}
-    else if(job.id==='police'){state.career.activeJob.route=['village','school','fire-station'];state.career.activeJob.progress=0;}
-    else if(job.id==='firefighter')ensureActiveFire(true);
-    if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();
-    setMissionState(state.career.activeJob,MISSION_STATES.TRAVELLING,'route-created');saveState(true);updateMissionHUD();if(options.focus!==false)focusActiveJob();return true;
+    if(!job||state.career.activeJob){toast('Cancele ou conclua o trabalho atual antes de trocar.','warn');return false;}const inv=state.inventory,schoolId=Math.random()>.5?'school':'school-east',instanceId=`job-${job.id}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
+    state.career.activeJob={...job,instanceId,missionState:MISSION_STATES.ACCEPTED,missionStateAt:Date.now(),schoolId,previousUniform:state.avatar.uniform||'none',previousPackage:Number(inv.package||0),rewardClaimed:false,startedAt:Date.now(),progress:0,serviceVehicleId:'',serviceVehicleKind:serviceKindForJob(job),serviceVehicleBoarded:false,serviceVehicleArrived:false,sceneTaskCompleted:false,emergencyIncidentId:'',start:{wood:inv.wood,stone:inv.stone,crystals:inv.crystals,builds:state.builds.length}};
+    equipJobUniform(job.id);setMissionState(state.career.activeJob,MISSION_STATES.PREPARING,'uniform-ready');if(job.id==='delivery'){state.flags.deliveryActive=true;state.flags.deliveryDone=false;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}
+    else if(job.id==='police'){state.career.activeJob.route=['village','school','fire-station'];state.career.activeJob.progress=0;reserveMissionServiceVehicle(state.career.activeJob,{waypoint:true});}
+    else if(job.id==='firefighter'){ensureActiveFire(true);reserveMissionServiceVehicle(state.career.activeJob,{waypoint:true});}
+    else if(job.id==='paramedic'){const incident=ensureActiveTrafficIncident(true);if(incident)state.career.activeJob.emergencyIncidentId=incident.id;reserveMissionServiceVehicle(state.career.activeJob,{waypoint:true});}
+    if(currentHouse&&!(job.id==='teacher'&&currentHouse.id.startsWith('school')))exitHouse();saveState(true);updateMissionHUD();if(options.focus!==false)focusActiveJob();return true;
   }
   function completeActiveJob(){
     const job=state.career.activeJob;if(!job||job.missionState===MISSION_STATES.COMPLETING||job.missionState===MISSION_STATES.COMPLETED)return false;
@@ -3638,10 +3690,10 @@
     state.profile.coins+=Number(job.reward||0);state.profile.reputation+=Number(job.rep||0);state.career.completed++;state.stats.jobsCompleted=(state.stats.jobsCompleted||0)+1;
     if(job.id==='delivery'){state.flags.deliveryActive=false;state.inventory.package=Number(job.previousPackage||0);state.flags.deliveryDone=true;state.flags.completedDeliveryJob=true;state.cityServices.deliveries++;}
     if(job.id==='police'){state.flags.completedPoliceJob=true;state.cityServices.policePatrols++;state.stats.patrols++;}
-    if(job.id==='firefighter'){state.flags.completedFirefighterJob=true;state.cityServices.rescuesCompleted=(state.cityServices.rescuesCompleted||0)+1;}
+    if(job.id==='firefighter'){state.flags.completedFirefighterJob=true;state.cityServices.rescuesCompleted=(state.cityServices.rescuesCompleted||0)+1;}if(job.id==='paramedic'){state.flags.completedParamedicJob=true;state.cityServices.paramedicRescues=(state.cityServices.paramedicRescues||0)+1;state.stats.paramedicCalls=(state.stats.paramedicCalls||0)+1;}
     if(job.id==='teacher'){state.flags.completedTeacherJob=true;state.cityServices.lessonsTaught++;state.stats.classesTaught++;}
     state.career.xp+=100;state.career.level=Math.floor(state.career.xp/300)+1;state.career.title=state.career.level>=4?'Profissional da Vila':state.career.level>=2?'Ajudante da Vila':'Morador da Vila';
-    job.uniformLocked=false;state.avatar.uniform=job.previousUniform||'none';setMissionState(job,MISSION_STATES.COMPLETED,'reward-committed');job.completedAt=Date.now();state.career.lastMission={...job};state.objectives.history.push({id:token,type:'job',jobId:job.id,title:job.title,completedAt:job.completedAt,reward:Number(job.reward||0),rep:Number(job.rep||0)});if(state.objectives.history.length>80)state.objectives.history.splice(0,state.objectives.history.length-80);
+    job.uniformLocked=false;releaseMissionServiceVehicle(job);state.avatar.uniform=job.previousUniform||'none';setMissionState(job,MISSION_STATES.COMPLETED,'reward-committed');job.completedAt=Date.now();state.career.lastMission={...job};state.objectives.history.push({id:token,type:'job',jobId:job.id,title:job.title,completedAt:job.completedAt,reward:Number(job.reward||0),rep:Number(job.rep||0)});if(state.objectives.history.length>80)state.objectives.history.splice(0,state.objectives.history.length-80);
     state.career.activeJob=null;state.waypoint=null;world.routePath=[];updateWaypointMarker();applyAvatarCustomization();setFlag('completedJob');evaluateMissions();updateMissionHUD();updateHUD();saveState(true);toast(`Trabalho concluído! +${job.reward} moedas`,'good',2600);return true;
   }
   function checkActiveJob(){
@@ -3653,18 +3705,19 @@
   }
 
   function restoreActiveJobRuntime(){
-    const job=state.career?.activeJob;if(!job)return;job.uniform=JOB_UNIFORMS[job.id]||job.uniform||'none';job.uniformLocked=true;if(job.id==='delivery'){state.flags.deliveryActive=true;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}if(job.id==='firefighter')ensureActiveFire(true);applyAvatarCustomization();updateMissionHUD();
+    const job=state.career?.activeJob;if(!job)return;job.uniform=JOB_UNIFORMS[job.id]||job.uniform||'none';job.uniformLocked=true;if(job.id==='delivery'){state.flags.deliveryActive=true;state.inventory.package=Math.max(1,Number(state.inventory.package||0));}if(job.id==='firefighter')ensureActiveFire(true);if(job.id==='paramedic'&&!world.activeIncident){const incident=ensureActiveTrafficIncident(true);if(incident)job.emergencyIncidentId=incident.id;}if(serviceKindForJob(job))reserveMissionServiceVehicle(job,{waypoint:false});applyAvatarCustomization();updateMissionHUD();
   }
   function updateCareerMissions(){
-    const job=state.career.activeJob;if(!job)return;const now=performance.now();if(now-Number(updateCareerMissions.lastAt||0)<180)return;updateCareerMissions.lastAt=now;
-    let signature='';
-    if(job.id==='police'){
-      const route=job.route||[],targetId=route[Number(job.progress||0)],loc=MAP_LOCATIONS.find(x=>x.id===targetId);if(loc){const distance=Math.hypot(player.x-(loc.navX??loc.x),player.z-(loc.navZ??loc.z));setMissionState(job,distance<5?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,distance<5?'checkpoint':'route');if(distance<5&&!job.lastCheckpointAt){job.lastCheckpointAt=Date.now();job.progress=(job.progress||0)+1;toast(`Patrulha: ${loc.name} verificado com segurança.`,'good',1900);beep(720,70);if(job.progress>=route.length){completeActiveJob();state.waypoint=null;updateWaypointMarker();}else setWaypoint(route[job.progress]);saveState(true);}if(job.lastCheckpointAt&&Date.now()-job.lastCheckpointAt>1600)job.lastCheckpointAt=0;}
+    const job=state.career.activeJob;if(!job)return;const now=performance.now();if(now-Number(updateCareerMissions.lastAt||0)<180)return;updateCareerMissions.lastAt=now;let signature='',serviceKind=serviceKindForJob(job);
+    if(serviceKind&&!job.serviceVehicleBoarded){reserveMissionServiceVehicle(job,{waypoint:false});setMissionState(job,MISSION_STATES.PREPARING,'need-service-vehicle');}
+    else if(job.emergencyIncidentId){const incident=world.activeIncident?.id===job.emergencyIncidentId?world.activeIncident:null;if(!incident&&job.sceneTaskCompleted)completeActiveJob();else if(incident)setMissionState(job,job.sceneTaskCompleted?MISSION_STATES.RETURNING:job.serviceVehicleArrived?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,job.sceneTaskCompleted?'scene-complete':job.serviceVehicleArrived?'assist-scene':'respond-incident');}
+    else if(job.id==='police'){
+      const route=job.route||[],targetId=route[Number(job.progress||0)],loc=MAP_LOCATIONS.find(x=>x.id===targetId);if(loc){const distance=Math.hypot(player.x-(loc.navX??loc.x),player.z-(loc.navZ??loc.z)),correctVehicle=isDrivingServiceVehicle('police');setMissionState(job,!correctVehicle?MISSION_STATES.PREPARING:distance<5?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,!correctVehicle?'need-police-car':distance<5?'checkpoint':'route');if(correctVehicle&&distance<5&&!job.lastCheckpointAt){job.lastCheckpointAt=Date.now();job.progress=(job.progress||0)+1;toast(`Patrulha: ${loc.name} verificado com a viatura.`,'good',1900);beep(720,70);if(job.progress>=route.length){completeActiveJob();state.waypoint=null;updateWaypointMarker();}else setWaypoint(route[job.progress]);saveState(true);}if(job.lastCheckpointAt&&Date.now()-job.lastCheckpointAt>1600)job.lastCheckpointAt=0;}
     }else if(job.id==='delivery'){const d=Math.hypot(player.x-65,player.z-54);setMissionState(job,d<5?MISSION_STATES.ACTION_REQUIRED:player.vehicle?MISSION_STATES.TRAVELLING:MISSION_STATES.PREPARING,d<5?'deliver-to-maya':player.vehicle?'driving':'need-vehicle');}
     else if(job.id==='teacher'){const atSchool=!!currentHouse?.id?.startsWith('school');setMissionState(job,atSchool?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,atSchool?'teach':'go-school');}
-    else if(job.id==='firefighter'){const fire=world.fires.find(f=>f.active);setMissionState(job,fire&&Math.hypot(player.x-fire.x,player.z-fire.z)<5?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,fire?'respond':'await-call');}
-    else setMissionState(job,MISSION_STATES.ACTION_REQUIRED,'collect-or-build');
-    checkActiveJob();signature=`${job.id}|${job.missionState}|${activeJobProgress(job).label}`;if(signature!==updateCareerMissions.signature){updateCareerMissions.signature=signature;updateMissionHUD();}
+    else if(job.id==='firefighter'){const fire=world.fires.find(f=>f.active),distance=fire?Math.hypot(player.x-fire.navX,player.z-fire.navZ):Infinity;if(isDrivingServiceVehicle('firefighter')&&distance<6&&!job.serviceVehicleArrived){job.serviceVehicleArrived=true;toast('Caminhão posicionado. Estacione, saia e use a mangueira.','good',2500);saveState(true);}setMissionState(job,job.serviceVehicleArrived?MISSION_STATES.ACTION_REQUIRED:MISSION_STATES.TRAVELLING,fire?'respond':'await-call');}
+    else if(job.id==='paramedic'){const incident=ensureActiveTrafficIncident(true);if(incident&&!job.emergencyIncidentId)job.emergencyIncidentId=incident.id;}
+    else setMissionState(job,MISSION_STATES.ACTION_REQUIRED,'collect-or-build');checkActiveJob();signature=`${job.id}|${job.missionState}|${activeJobProgress(job).label}`;if(signature!==updateCareerMissions.signature){updateCareerMissions.signature=signature;updateMissionHUD();}
   }
   function openTeacherJobLesson(house){
     const questions=[['Qual atitude ajuda toda a turma?',['Ouvir e respeitar','Gritar com os colegas','Esconder os materiais'],0],['O que fazemos antes de atravessar?',['Corremos sem olhar','Olhamos para os dois lados','Fechamos os olhos'],1],['Como cuidamos da escola?',['Organizamos e ajudamos','Quebramos objetos','Jogamos lixo no chão'],0]],q=questions[(state.cityServices.lessonsTaught||0)%questions.length];
@@ -3689,6 +3742,24 @@
   const FX_MAX_PARTICLES=40;
 
   // ===== MODULE: 23-vehicle-effects-driving.js =====
+  function clearServiceVehicleVisual(){
+    const layer=vehicleVisual?.userData?.serviceLayer;if(layer){vehicleVisual.remove(layer);layer.traverse(o=>{if(o.isMesh){o.geometry?.dispose?.();const materials=Array.isArray(o.material)?o.material:[o.material];for(const material of materials){material?.map?.dispose?.();material?.dispose?.();}}});}
+    if(vehicleVisual){vehicleVisual.userData.serviceLayer=null;vehicleVisual.userData.serviceLights=[];vehicleVisual.scale.set(1,1,1);}
+  }
+  function serviceVehicleIcon(kind='car'){return({police:'🚓',firefighter:'🚒',paramedic:'🚑',ambulance:'🚑',fire:'🚒'})[kind]||'🚗';}
+  function applyServiceVehicleVisual(vehicle={}){
+    if(!vehicleVisual)return;clearServiceVehicleVisual();const kind=String(vehicle.serviceType||vehicle.kind||'car');if(!['police','firefighter','fire','paramedic','ambulance'].includes(kind))return;
+    const layer=new THREE.Group();layer.name=`OTTHI_SERVICE_${kind.toUpperCase()}`;vehicleVisual.add(layer);vehicleVisual.userData.serviceLayer=layer;vehicleVisual.userData.serviceLights=[];
+    const addLight=(x,color,emissive)=>{const mesh=box(.46,.16,.3,renderMat(color,{emissive,emissiveIntensity:.95,roughness:.2}),x,1.39,-.1,layer);vehicleVisual.userData.serviceLights.push(mesh);return mesh;};
+    if(kind==='police'){
+      vehicleVisual.scale.set(1.04,1.04,1.08);box(1.86,.3,1.25,0xf3f6fa,0,.7,.15,layer);box(1.9,.22,.3,0x193f72,0,.62,.86,layer);box(.12,.36,2.25,0x193f72,-.94,.58,0,layer);box(.12,.36,2.25,0x193f72,.94,.58,0,layer);addLight(-.27,0xe53945,0xa50018);addLight(.27,0x42bfff,0x087db4);const patch=new THREE.Mesh(new THREE.PlaneGeometry(.78,.22),new THREE.MeshStandardMaterial({map:signTexture('POLÍCIA','#173d70','#ffffff'),transparent:true,side:THREE.DoubleSide}));patch.position.set(0,.77,1.31);layer.add(patch);
+    }else if(kind==='paramedic'||kind==='ambulance'){
+      vehicleVisual.scale.set(1.08,1.12,1.22);box(1.78,.9,1.45,0xf5f7f8,0,1.02,-.55,layer);box(1.82,.14,1.5,0xe34848,0,1.12,-.54,layer);box(.15,.58,.06,0xe34848,0,1.03,1.31,layer);box(.58,.15,.06,0xe34848,0,1.03,1.315,layer);addLight(-.27,0xe53945,0xa50018);addLight(.27,0x42bfff,0x087db4);const patch=new THREE.Mesh(new THREE.PlaneGeometry(.82,.23),new THREE.MeshStandardMaterial({map:signTexture('RESGATE','#ffffff','#d83e42'),transparent:true,side:THREE.DoubleSide}));patch.position.set(0,1.43,-1.3);patch.rotation.y=Math.PI;layer.add(patch);
+    }else{
+      vehicleVisual.scale.set(1.18,1.2,1.42);box(1.92,.88,1.65,0xc93431,0,1.02,-.58,layer);box(1.86,.14,2.15,0xf2d84d,0,.76,-.2,layer);box(.22,.22,2.5,0xe8edf0,-.45,1.62,-.2,layer);box(.22,.22,2.5,0xe8edf0,.45,1.62,-.2,layer);for(let z=-1.15;z<=.95;z+=.42)box(.95,.07,.07,0xe8edf0,0,1.64,z,layer);addLight(-.27,0xe53945,0xa50018);addLight(.27,0x42bfff,0x087db4);const patch=new THREE.Mesh(new THREE.PlaneGeometry(.92,.24),new THREE.MeshStandardMaterial({map:signTexture('BOMBEIROS','#b52d2a','#ffffff'),transparent:true,side:THREE.DoubleSide}));patch.position.set(0,1.28,1.31);layer.add(patch);
+    }
+    layer.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;addVoxelOutline(o,0x152235,.2);}});
+  }
   function spawnDust(x,z,color=0xcfc6a8){
     if(fxParticles.length>=FX_MAX_PARTICLES){const oldest=fxParticles.shift();worldGroup.remove(oldest.mesh);oldest.mesh.geometry.dispose();oldest.mesh.material.dispose();}
     const mesh=new THREE.Mesh(new THREE.CircleGeometry(.2+Math.random()*.12,8),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.5,depthWrite:false}));
@@ -3723,7 +3794,7 @@
   }
   function updateVehicleFX(dt){
     if(!player.vehicle){if(engineAudio)stopEngineSound();return;}
-    if(player.car.passengerOf){if(engineAudio)stopEngineSound();if(els.vehicleBadge)els.vehicleBadge.textContent='🚗 Passageiro — AÇÃO para sair';return;}
+    if(player.car.passengerOf){if(engineAudio)stopEngineSound();if(els.vehicleBadge)els.vehicleBadge.textContent=`${serviceVehicleIcon(player.car.kind)} Passageiro — AÇÃO para sair`;return;}
     const car=player.car,wheels=vehicleVisual.userData.wheels,fronts=vehicleVisual.userData.frontWheels;
     const spin=car.speed*dt*3.4;
     wheels.forEach(w=>w.rotation.x-=spin);
@@ -3737,7 +3808,7 @@
       if(updateVehicleFX.acc>.045){updateVehicleFX.acc=0;spawnDust(player.x-Math.sin(car.heading)*1.05,player.z-Math.cos(car.heading)*1.05);}
       driftSoundCooldown-=dt;if(driftSoundCooldown<=0){driftSoundCooldown=.5;beep(180,55,'sawtooth');}
     }
-    if(els.vehicleBadge)els.vehicleBadge.textContent=`🚗 ${Math.round(Math.abs(car.speed)*6)} km/h${sprintRequested()?' • TURBO':''} — AÇÃO para sair`;
+    const serviceKind=String(car.kind||'car'),serviceIcon=serviceVehicleIcon(serviceKind);for(const [index,light] of (vehicleVisual.userData.serviceLights||[]).entries())light.material.emissiveIntensity=.32+(Math.floor(performance.now()/210)+index)%2*.9;if(els.vehicleBadge)els.vehicleBadge.textContent=`${serviceIcon} ${car.label||'Veículo'} • ${Math.round(Math.abs(car.speed)*6)} km/h${sprintRequested()?' • TURBO':''} — AÇÃO para sair`;
     if(!state.settings.sound&&engineAudio)stopEngineSound();
     else if(state.settings.sound&&!engineAudio)startEngineSound();
     else if(state.settings.sound&&engineAudio){
@@ -3769,10 +3840,10 @@
   function enterVehicle(vehicle=world.vehicle){
     if(player.vehicle||player.boating||player.transit.mode||!vehicle||vehicle.occupied||!canEnterMobility(PLAYER_MODES.VEHICLE_DRIVER))return false;
     activeVehicleRef=vehicle;world.activeVehicle=vehicle;player.preVehicleAbilities={scaleMode:player.scaleMode,crouched:player.crouched};player.sitUntil=0;player.attackUntil=0;player.spinUntil=0;player.jumpBuffer=0;player.vy=0;player.grounded=true;clearMovementInputs();
-    input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=true;player.car.id=vehicle.id;player.car.label=vehicle.label;player.car.passengerOf='';player.car.passengerUid='';player.car.passengerBotId='';player.car.heading=vehicle.group.rotation.y||player.facing;player.car.speed=0;player.car.steerVisual=0;player.car.drift=0;player.car._prevSpeed=0;player.x=vehicle.group.position.x;player.z=vehicle.group.position.z;player.y=groundHeightAt(player.x,player.z);player.facing=player.car.heading;vehicle.occupied=true;
-    player.scaleMode='normal';player.crouched=false;syncPlayerRootScale();updateAbilityUI();if(playerModel)playerModel.visible=false;if(avatarLayer)avatarLayer.visible=false;applyVehicleAppearance(vehicle);vehicleVisual.visible=true;vehicleVisual.scale.set(1,1,1);vehicleVisual.rotation.set(0,0,0);vehicle.group.visible=false;els.vehicleBadge.hidden=false;updateVehicleControlsUI();updateRunUI();setFlag('gotVehicle');state.vehicles.lastUsedId=vehicle.id;
+    input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=true;player.car.id=vehicle.id;player.car.kind=vehicle.serviceType||vehicle.kind||'car';player.car.label=vehicle.label||'Veículo';player.car.passengerOf='';player.car.passengerUid='';player.car.passengerBotId='';player.car.heading=vehicle.group.rotation.y||player.facing;player.car.speed=0;player.car.steerVisual=0;player.car.drift=0;player.car._prevSpeed=0;player.x=vehicle.group.position.x;player.z=vehicle.group.position.z;player.y=groundHeightAt(player.x,player.z);player.facing=player.car.heading;vehicle.occupied=true;
+    player.scaleMode='normal';player.crouched=false;syncPlayerRootScale();updateAbilityUI();if(playerModel)playerModel.visible=false;if(avatarLayer)avatarLayer.visible=false;applyVehicleAppearance(vehicle);vehicleVisual.visible=true;vehicleVisual.scale.set(1,1,1);vehicleVisual.rotation.set(0,0,0);vehicle.group.visible=false;els.vehicleBadge.hidden=false;updateVehicleControlsUI();updateRunUI();setFlag('gotVehicle');state.vehicles.lastUsedId=vehicle.id;if(typeof onServiceVehicleBoarded==='function')onServiceVehicleBoarded(vehicle);
     if(state.career.activeJob?.id==='delivery'){setMissionState(state.career.activeJob,MISSION_STATES.TRAVELLING,'vehicle-boarded');state.waypoint={id:'delivery-maya',name:'Entregar para Maya',x:65,z:54,navX:55,navZ:48,arrived:false};world.routePath=buildRoutePoints(player,state.waypoint);updateWaypointMarker();}
-    const companion=nearestRideCompanion();if(companion)boardNpcPassenger(companion,'car');toast(`${vehicle.label} ligado! Use o manche para dirigir.`,'good');startEngineSound();saveState(true);return true;
+    const companion=nearestRideCompanion();if(companion)boardNpcPassenger(companion,'car');toast(`${serviceVehicleIcon(player.car.kind)} ${vehicle.label||'Veículo'} ligado! Use o manche para dirigir.`,'good');startEngineSound();saveState(true);return true;
   }
   function enterVehicleAsPassenger(hostUid,vehicleId=''){
     const ghost=world.ghosts.get(hostUid),target=ghost?.userData?.target;
@@ -3790,7 +3861,7 @@
     releaseNpcPassenger('car');input.mobilityAccelerate=false;input.mobilityBrake=false;player.vehicle=false;player.vx=0;player.vz=0;player.car.speed=0;player.car._prevSpeed=0;player.car.passengerOf='';player.car.passengerUid='';player.car.hostMissingAt=0;clearMovementInputs();
     const prior=player.preVehicleAbilities||state.abilities||{scaleMode:'normal',crouched:false};player.scaleMode=['mini','normal','giant'].includes(prior.scaleMode)?prior.scaleMode:'normal';player.crouched=!!prior.crouched;player.preVehicleAbilities=null;syncPlayerRootScale();if(playerModel)playerModel.visible=true;if(avatarLayer)avatarLayer.visible=true;vehicleVisual.visible=false;vehicleVisual.rotation.set(0,0,0);els.vehicleBadge.hidden=true;updateVehicleControlsUI();updateRunUI();updateAbilityUI();stopEngineSound();
     if(drivenVehicle&&!wasPassenger){drivenVehicle.occupied=false;drivenVehicle.group.visible=true;drivenVehicle.group.position.set(parkX,groundHeightAt(parkX,parkZ),parkZ);drivenVehicle.group.rotation.y=parkHeading;drivenVehicle.x=parkX;drivenVehicle.z=parkZ;drivenVehicle.heading=parkHeading;persistParkedVehicle(drivenVehicle);}
-    activeVehicleRef=null;world.activeVehicle=null;player.x=exitPoint.x;player.z=exitPoint.z;player.y=exitPoint.y;player.vx=player.vy=player.vz=0;player.grounded=true;player.car.id='';player.car.kind='car';rememberSafePlayerPosition(true);auditPlayerMode('exit-vehicle');if(!silent)toast('Saiu do veículo em local seguro.','good');saveState(true);return true;
+    if(typeof onServiceVehicleExited==='function')onServiceVehicleExited(drivenVehicle);clearServiceVehicleVisual();activeVehicleRef=null;world.activeVehicle=null;player.x=exitPoint.x;player.z=exitPoint.z;player.y=exitPoint.y;player.vx=player.vy=player.vz=0;player.grounded=true;player.car.id='';player.car.kind='car';rememberSafePlayerPosition(true);auditPlayerMode('exit-vehicle');if(!silent)toast('Saiu do veículo em local seguro.','good');saveState(true);return true;
   }
   function repairBridge(){
     if(state.flags.bridgeFixed){toast('A ponte já está consertada.','good');return;}
@@ -4513,11 +4584,20 @@
   function multiplayerNameTexture(name){const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='rgba(5,18,34,.88)';ctx.strokeStyle='rgba(255,255,255,.92)';ctx.lineWidth=8;const r=30;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(8,8,c.width-16,c.height-16,r);else ctx.rect(8,8,c.width-16,c.height-16);ctx.fill();ctx.stroke();ctx.fillStyle='#fff';ctx.font='900 48px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(sanitizePlayerName(name)||'Jogador',c.width/2,c.height/2+2);const tex=new THREE.CanvasTexture(c);tex.minFilter=THREE.LinearFilter;tex.magFilter=THREE.LinearFilter;tex.generateMipmaps=false;return tex;}
   function updateLocalPlayerNameLabel(){if(!playerGroup?.userData?.nameLabel)return;const clean=playerDisplayName();if(playerGroup.userData.displayName===clean)return;const label=playerGroup.userData.nameLabel,old=label.material.map;label.material.map=multiplayerNameTexture(clean);label.material.needsUpdate=true;old?.dispose?.();playerGroup.userData.displayName=clean;}
   function updateGhostName(ghost,name){const clean=sanitizePlayerName(name)||'Jogador';if(ghost.userData.displayName===clean)return;ghost.userData.displayName=clean;if(ghost.userData.nameLabel){const old=ghost.userData.nameLabel.material.map;ghost.userData.nameLabel.material.map=multiplayerNameTexture(clean);ghost.userData.nameLabel.material.needsUpdate=true;old?.dispose?.();}}
+  function ghostVehicleKind(vehicleId=''){const id=String(vehicleId||'').toLowerCase();if(id.includes('patrol')||id.includes('police'))return'police';if(id.includes('fire'))return'firefighter';if(id.includes('ambulance')||id.includes('rescue')||id.includes('paramedic'))return'paramedic';return'car';}
+  function styleGhostVehicle(ghost,vehicleId=''){
+    const kind=ghostVehicleKind(vehicleId);if(ghost.userData.vehicleKind===kind)return;ghost.userData.vehicleKind=kind;const style=ghost.userData.carStyle||{},layers=ghost.userData.carServiceLayers||{};for(const layer of Object.values(layers))layer.visible=false;ghost.userData.carVisual.scale.set(1,1,1);
+    if(kind==='police'){style.body?.material?.color?.setHex(0xf4f7fb);style.cabin?.material?.color?.setHex(0x183d70);layers.police.visible=true;ghost.userData.carVisual.scale.set(1.04,1.04,1.08);}
+    else if(kind==='firefighter'){style.body?.material?.color?.setHex(0xc93431);style.cabin?.material?.color?.setHex(0xf2d84d);layers.firefighter.visible=true;ghost.userData.carVisual.scale.set(1.18,1.2,1.42);}
+    else if(kind==='paramedic'){style.body?.material?.color?.setHex(0xf6f8fa);style.cabin?.material?.color?.setHex(0xe34848);layers.paramedic.visible=true;ghost.userData.carVisual.scale.set(1.08,1.12,1.22);}
+    else{style.body?.material?.color?.setHex(Number(style.baseColor||0x5ad8ff));style.cabin?.material?.color?.setHex(0x173149);}
+  }
   function createGhost(color,name='Jogador'){
     const g=new THREE.Group(),avatar=new THREE.Group();g.add(avatar);box(.82,1.18,.58,color,0,1.25,0,avatar);box(.72,.72,.72,0x111217,0,2.24,0,avatar);const leftArm=box(.22,1,.25,0xff9a24,-.58,1.28,0,avatar),rightArm=box(.22,1,.25,0xff9a24,.58,1.28,0,avatar),leftLeg=box(.25,1,.28,0x20242b,-.22,.34,0,avatar),rightLeg=box(.25,1,.28,0x20242b,.22,.34,0,avatar);box(.12,.1,.04,0xff3344,-.14,2.27,.38,avatar);box(.12,.1,.04,0xff3344,.14,2.27,.38,avatar);
-    const car=new THREE.Group();car.visible=false;g.add(car);box(1.9,.42,2.8,0x26384e,0,.35,0,car);box(1.72,.6,1.45,color,0,.7,.25,car);box(1.46,.45,.9,0x173149,0,.92,-.48,car);for(const p of [[-.9,.3,-.85],[.9,.3,-.85],[-.9,.3,.85],[.9,.3,.85]]){const wheel=cylinder(.34,.24,0x10151d,p[0],p[1],p[2],car,10);wheel.rotation.z=Math.PI/2;}
+    const car=new THREE.Group();car.visible=false;g.add(car);const carBase=box(1.9,.42,2.8,0x26384e,0,.35,0,car),carBody=box(1.72,.6,1.45,color,0,.7,.25,car),carCabin=box(1.46,.45,.9,0x173149,0,.92,-.48,car);for(const p of [[-.9,.3,-.85],[.9,.3,-.85],[-.9,.3,.85],[.9,.3,.85]]){const wheel=cylinder(.34,.24,0x10151d,p[0],p[1],p[2],car,10);wheel.rotation.z=Math.PI/2;}
+    const policeLayer=new THREE.Group(),fireLayer=new THREE.Group(),paramedicLayer=new THREE.Group();car.add(policeLayer,fireLayer,paramedicLayer);policeLayer.visible=fireLayer.visible=paramedicLayer.visible=false;box(.5,.16,.28,0xe53945,-.28,1.35,-.1,policeLayer);box(.5,.16,.28,0x42bfff,.28,1.35,-.1,policeLayer);box(1.82,.18,.28,0x183d70,0,.62,.88,policeLayer);box(1.9,.82,1.5,0xc93431,0,1.0,-.55,fireLayer);box(.22,.2,2.35,0xe8edf0,-.4,1.58,-.2,fireLayer);box(.22,.2,2.35,0xe8edf0,.4,1.58,-.2,fireLayer);box(1.8,.82,1.42,0xf6f8fa,0,1.0,-.52,paramedicLayer);box(.15,.58,.06,0xe34848,0,1.03,1.31,paramedicLayer);box(.58,.15,.06,0xe34848,0,1.03,1.315,paramedicLayer);
     const boat=new THREE.Group();boat.visible=false;boat.position.y=-.68;g.add(boat);box(2.4,.42,4.4,0x7b3f20,0,.38,0,boat);box(2.72,.24,3.82,0xe3ad55,0,.67,0,boat);box(1.85,.23,3.15,0x2d6f8d,0,.83,0,boat);box(1.75,.25,.55,0x374151,0,1.02,-.65,boat);box(1.75,.25,.55,0x374151,0,1.02,.72,boat);
-    const label=new THREE.Sprite(new THREE.SpriteMaterial({map:multiplayerNameTexture(name),transparent:true,depthWrite:false,depthTest:false}));label.position.set(0,3.05,0);label.scale.set(2.75,.69,1);label.renderOrder=999;g.add(label);g.userData.nameLabel=label;g.userData.displayName=sanitizePlayerName(name)||'Jogador';g.userData.avatar=avatar;g.userData.carVisual=car;g.userData.boatVisual=boat;g.userData.limbs={leftArm,rightArm,leftLeg,rightLeg};g.userData.phase=Math.random()*6.28;scene.add(g);return g;
+    const label=new THREE.Sprite(new THREE.SpriteMaterial({map:multiplayerNameTexture(name),transparent:true,depthWrite:false,depthTest:false}));label.position.set(0,3.05,0);label.scale.set(2.75,.69,1);label.renderOrder=999;g.add(label);g.userData.nameLabel=label;g.userData.displayName=sanitizePlayerName(name)||'Jogador';g.userData.avatar=avatar;g.userData.carVisual=car;g.userData.carStyle={body:carBody,cabin:carCabin,base:carBase,baseColor:color};g.userData.carServiceLayers={police:policeLayer,firefighter:fireLayer,paramedic:paramedicLayer};g.userData.vehicleKind='car';g.userData.boatVisual=boat;g.userData.limbs={leftArm,rightArm,leftLeg,rightLeg};g.userData.phase=Math.random()*6.28;scene.add(g);return g;
   }
   function updateMultiplayer(dt){
     if(!guardianMultiplayerAllowed())return;
@@ -4527,7 +4607,7 @@
     for(const ghost of world.ghosts.values()){
       const t=ghost.userData.target;if(!t)continue;const beforeX=ghost.position.x,beforeZ=ghost.position.z;ghost.position.x=lerp(ghost.position.x,Number(t.x||0),Math.min(1,dt*8));ghost.position.y=lerp(ghost.position.y,Number(t.y||0),Math.min(1,dt*8));ghost.position.z=lerp(ghost.position.z,Number(t.z||0),Math.min(1,dt*8));ghost.rotation.y=lerpAngle(ghost.rotation.y,Number(t.r||0),Math.min(1,dt*8));
       if(Number(t.emoteSeq||0)!==Number(ghost.userData.lastEmoteSeq||0)){ghost.userData.lastEmoteSeq=Number(t.emoteSeq||0);ghost.userData.emoteType=t.emoteType||'';ghost.userData.emoteUntil=performance.now()+2600;}
-      const carDriver=!!t.vehicle&&t.vehicleRole!=='passenger',boatDriver=!!t.boating&&t.boatRole!=='passenger',avatar=ghost.userData.avatar;avatar.visible=!carDriver&&!boatDriver&&t.transitMode!=='metro';ghost.userData.carVisual.visible=carDriver;ghost.userData.boatVisual.visible=boatDriver;avatar.scale.setScalar(t.scaleMode==='mini'?.58:t.scaleMode==='giant'?1.42:1);ghost.userData.nameLabel.position.y=carDriver?3.15:boatDriver?3.45:3.05;
+      const carDriver=!!t.vehicle&&t.vehicleRole!=='passenger',boatDriver=!!t.boating&&t.boatRole!=='passenger',avatar=ghost.userData.avatar;avatar.visible=!carDriver&&!boatDriver&&t.transitMode!=='metro';ghost.userData.carVisual.visible=carDriver;if(carDriver)styleGhostVehicle(ghost,t.vehicleId||'');ghost.userData.boatVisual.visible=boatDriver;avatar.scale.setScalar(t.scaleMode==='mini'?.58:t.scaleMode==='giant'?1.42:1);ghost.userData.nameLabel.position.y=carDriver?3.15:boatDriver?3.45:3.05;
       const moving=Math.hypot(ghost.position.x-beforeX,ghost.position.z-beforeZ)>.01,walk=moving?Math.sin(animTime*9+ghost.userData.phase)*.45:0,emote=performance.now()<Number(ghost.userData.emoteUntil||0)?ghost.userData.emoteType:'';if(ghost.userData.limbs){const l=ghost.userData.limbs;l.leftArm.rotation.x=emote==='dance'?-1.35:emote==='play'?-1.9:emote==='hug'?-1.45:walk;l.rightArm.rotation.x=emote==='wave'?-2.2:emote==='highfive'?-2.5:emote==='dance'?-1.35:emote==='play'?-1.9:emote==='hug'?-1.45:-walk;l.leftArm.rotation.z=emote==='dance'?1.0:emote==='play'?.55:emote==='hug'?-.48:0;l.rightArm.rotation.z=emote==='dance'?-1.0:emote==='play'?-.55:emote==='hug'?.48:0;l.leftLeg.rotation.x=-walk*.75;l.rightLeg.rotation.x=walk*.75;}
     }
   }

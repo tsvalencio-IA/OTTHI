@@ -11,7 +11,7 @@
   function effectiveAvatarUniform(){
     const job=state.career?.activeJob,terminal=['COMPLETED','CANCELLED','FAILED_SAFE'];
     if(job&&!terminal.includes(String(job.missionState||''))){
-      const uniforms={delivery:'delivery',police:'police',firefighter:'firefighter',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
+      const uniforms={delivery:'delivery',police:'police',firefighter:'firefighter',paramedic:'paramedic',teacher:'teacher',gather:'mechanic',crystals:'miner',builder:'builder'};
       return uniforms[job.id]||job.uniform||state.avatar?.uniform||'none';
     }
     return state.avatar?.uniform||'none';

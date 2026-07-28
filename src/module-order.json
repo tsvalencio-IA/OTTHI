@@ -14,7 +14,7 @@
       "startLine": 27,
       "endLine": 142,
       "description": "Normalização, merge, tombstones e persistência das construções",
-      "sha256Body": "3f8afdb26389a7c545cbab59f4e7eb01656746e2fe5cb08e762edf157f7ef423"
+      "sha256Body": "2b4ce7bd60bce95399df230b36adc3f74ab4fdbeca3fbbcc93d1945cd32e99d4"
     },
     {
       "file": "src/modules/02-state-save-cloud-account.js",
@@ -35,14 +35,14 @@
       "startLine": 659,
       "endLine": 786,
       "description": "Desafios diários, educação, quiz e coleção",
-      "sha256Body": "1a38dbb5c27e706404a947dfebdf75e44802a4a5b4b87178471a2b56ce139552"
+      "sha256Body": "28bfae12189a8bfd6118d93fdeb881fff8c23a4fc4bccd32bfa8dd9cebd2baba"
     },
     {
       "file": "src/modules/05-avatar-life-customization.js",
       "startLine": 787,
       "endLine": 927,
       "description": "Avatar, roupas, uniformes, vida, moldes e ajuda",
-      "sha256Body": "f68c393dc399e90248cc05e7f7f4648887e110692dc895a8751d2cc79b85cbbd"
+      "sha256Body": "567d66e8535f1f5195f6c0b60984dff2934d70f2f643c12412bbad10e8e0acb9"
     },
     {
       "file": "src/modules/06-missions-profile-hud-inventory-tools.js",
@@ -56,7 +56,7 @@
       "startLine": 1064,
       "endLine": 1200,
       "description": "Rotas, trânsito, grafo, GPS e minimapa",
-      "sha256Body": "98f5d0625adf5b3358d39bf12232f959fc833aca9fd192303b8ced982baead89"
+      "sha256Body": "5f7fb72abc5427798bf92ba67078845c75c5419e47581e89ca413e168a662735"
     },
     {
       "file": "src/modules/08-map-parent-settings.js",
@@ -84,7 +84,7 @@
       "startLine": 1692,
       "endLine": 1962,
       "description": "Texturas, materiais, geometria, personagem e avatar 3D",
-      "sha256Body": "1a0fc2dbb2b04d575b9cd2f6c6c074d0ad2c1ebe44f8271bfff9d18ed66e9ae0"
+      "sha256Body": "898ea4f08122408c58fbc799db0a0c756d820ba0b8963ef84aef6297b724cb3e"
     },
     {
       "file": "src/modules/12-world-resources-nature.js",
@@ -98,7 +98,7 @@
       "startLine": 2185,
       "endLine": 2417,
       "description": "Casas, interiores, NPCs, inimigos, cristais, veículos e academia",
-      "sha256Body": "b76987c777209cadf887d91a20ee63808f7eb5b7837fd7b82eb6c76d15e5a130"
+      "sha256Body": "a6ef906435a7d86e4c6827d4ec7876619a5b2f3a0d9d904865755c1e6774d972"
     },
     {
       "file": "src/modules/14-world-district-decoration.js",
@@ -112,14 +112,14 @@
       "startLine": 2506,
       "endLine": 2722,
       "description": "Ônibus, rotas viárias, paradas, metrô e painel de transporte",
-      "sha256Body": "f6dc9c996a8890ecb69dfd1f9a0fffff77f0c104705d0938d01f9d8c0f0d7a24"
+      "sha256Body": "a275b556563cdd0b64b1f65924b8f2ba758e1f112cca7007d2643c97a460e4a3"
     },
     {
       "file": "src/modules/16-emergency-services.js",
       "startLine": 2723,
       "endLine": 2864,
       "description": "Bombeiros, incêndios, polícia, ambulância, segurança e incidentes",
-      "sha256Body": "a63672fa39f90f92ab0bac4c52f45299070d25703a17ad63e3016a9f85281131"
+      "sha256Body": "9d0e3633e86cc6eeaadf989d2dc124798ed8542aa5fdf8d0e49c811b0ff57409"
     },
     {
       "file": "src/modules/17-adventures-learning-world.js",
@@ -154,21 +154,21 @@
       "startLine": 3241,
       "endLine": 3415,
       "description": "Atividades, mercado, oficina, amizades, NPCs e corridas",
-      "sha256Body": "81cc2cd71a8af274e37e1a8c0fd85c5ff4291844c006f966adf130f2e761fd0a"
+      "sha256Body": "8350f48f0306b34a20fa2a13eec7e48e88724dd06524117896d97dfe64176b8e"
     },
     {
       "file": "src/modules/22-careers-jobs-uniforms.js",
       "startLine": 3416,
       "endLine": 3530,
       "description": "Carreiras, estados de missão, uniformes, professor, bombeiro e entrega",
-      "sha256Body": "667247a91e2c369bf16ad5e8f18c1b3397b76ebecfe73462240817eb56ece968"
+      "sha256Body": "ef5a63dfcb9d19f444bce6d0447c85a0eaf4c0277f7884319a4103432e44c989"
     },
     {
       "file": "src/modules/23-vehicle-effects-driving.js",
       "startLine": 3531,
       "endLine": 3644,
       "description": "Poeira, som, efeitos, controles, direção, passageiros e ponte",
-      "sha256Body": "726d74d554be3cf4023e3558bb0b569a238895131bd41c5987571740b57574da"
+      "sha256Body": "443fd48443692b0fe44b8e5b67b9e6aba094cd829c031bf59ee857fb9d820a01"
     },
     {
       "file": "src/modules/24-construction-system.js",
@@ -203,7 +203,7 @@
       "startLine": 4158,
       "endLine": 4304,
       "description": "Desafios online, social, chat, presença, fantasmas e sincronização",
-      "sha256Body": "2ce2739711d08c603a4a6b50bf59609b4e533c4c00d2488999fab94eb8592647"
+      "sha256Body": "7c9e5875497011838b55b59c81bb9a146c235622412e292955eb0e6de233a393"
     },
     {
       "file": "src/modules/29-game-loop-controls-gamepad.js",

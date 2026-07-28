@@ -133,6 +133,6 @@
       ['none','Sem acessório','🚫'], ['backpack','Mochila','🎒'], ['glasses','Óculos','🕶️'], ['cape','Capa','🦸']
     ],
     uniform: [
-      ['none','Roupa livre','👕'], ['firefighter','Bombeiro Kids','🚒'], ['police','Patrulha Kids','👮'], ['teacher','Professor','🧑‍🏫'], ['delivery','Entregador','📦'], ['mechanic','Mecânico Kids','🔧'], ['miner','Minerador Kids','⛏️'], ['builder','Construtor Kids','🦺']
+      ['none','Roupa livre','👕'], ['firefighter','Bombeiro Kids','🚒'], ['police','Patrulha Kids','👮'], ['paramedic','Socorrista Kids','🚑'], ['teacher','Professor','🧑‍🏫'], ['delivery','Entregador','📦'], ['mechanic','Mecânico Kids','🔧'], ['miner','Minerador Kids','⛏️'], ['builder','Construtor Kids','🦺']
     ]
   };
