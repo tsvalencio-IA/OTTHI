@@ -28,6 +28,7 @@ jobs:
           node tools/test_v643_mobility.js
           python tools/test_v643_world_systems.py
           python tools/test_v644_neighborhoods.py
+          python tools/test_v646_professional_services.py
           node tools/test_v646_runtime.js
           python tools/test_v646_release.py
           python tools/validate_project.py
