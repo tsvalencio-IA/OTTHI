@@ -1,22 +1,22 @@
 {
-  "version": 645,
-  "build": "645.0-consolidated-neighborhood-world",
+  "version": 646,
+  "build": "646.0-safe-rooms-atomic-pwa",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
   "styleBundle": "style.css",
   "changes": [
-    "bairros completos em um único pacote consolidado",
-    "cinco bairros físicos e multiplayer",
-    "dez vagas fixas por bairro com transação",
-    "bloqueio real de bairro lotado",
-    "limpeza do bairro anterior",
-    "transporte seguro para a entrada do novo bairro",
-    "jogadores, casas, barcos e objetos separados por bairro",
-    "mapa completo e minimapa com escala X/Z coerente",
-    "responsividade automática em retrato e paisagem",
-    "regras Firebase publicáveis sem numChildren",
-    "preservação das correções V643 e V643.1"
+    "versão e build unificadas em todas as superfícies",
+    "cinco bairros com sala coerente entre interface e Firebase",
+    "dez vagas por bairro com reserva única, heartbeat e recuperação",
+    "chat infantil restrito a frases aprovadas no cliente e nas regras",
+    "bloqueio, denúncia e controles parentais protegidos",
+    "cache PWA transacional validado por SHA-256",
+    "revisão de cache derivada do conteúdo para impedir releases presas",
+    "Three.js local incluído no shell obrigatório e disponível offline",
+    "tela de carregamento e falha amigável sem apagar o save",
+    "validação portátil em Windows e GitHub Actions",
+    "preservação integral de mobilidade, mapa, construção e educação"
   ],
   "preserves": [
     "roupas",
@@ -40,11 +40,12 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "645.0",
+  "hotfix": "646.0",
   "notes": [
-    "Pacote completo e independente; não depende de instalar V644 ou V644.1 antes.",
-    "Regras usam apenas slot-01 a slot-10.",
-    "O mapa mantém a mesma escala nos eixos X e Z.",
-    "Firebase Realtime Database mantido."
+    "Pacote completo e independente; migra automaticamente o save V645.",
+    "Regras Firebase mudaram e precisam ser publicadas manualmente.",
+    "O service worker só ativa depois de validar o shell completo.",
+    "O workflow apenas valida bundles já sincronizados e não publica commit corretivo parcial.",
+    "Teste físico de dois celulares, AR e APK continua exigindo aparelho real."
   ]
 }

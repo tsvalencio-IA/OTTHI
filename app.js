@@ -4,9 +4,15 @@
   'use strict';
 
   const OTTHI_GAME_LIVE_BASE = new URL('./', window.location.href).href;
-  const OTTHI_GAME_WEB_BUILD = '645.0-consolidated-neighborhood-world';
-  window.OTTHI_GAME_VERSION = 645;
+  const OTTHI_GAME_WEB_BUILD = '646.0-safe-rooms-atomic-pwa';
+  window.OTTHI_GAME_VERSION = 646;
   window.OTTHI_GAME_BUILD = OTTHI_GAME_WEB_BUILD;
+  const OTTHI_INDEX_BUILD = document.documentElement?.dataset?.otthiBuild || '';
+  const OTTHI_RELEASE_REVISION = document.documentElement?.dataset?.otthiRevision || '';
+  window.OTTHI_RELEASE_REVISION = OTTHI_RELEASE_REVISION;
+  const OTTHI_CONFIG_BUILD = window.OTTHI_CONFIG?.build || '';
+  window.OTTHI_RELEASE_COHERENT = OTTHI_INDEX_BUILD === OTTHI_GAME_WEB_BUILD
+    && OTTHI_CONFIG_BUILD === OTTHI_GAME_WEB_BUILD;
 
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
@@ -18,12 +24,25 @@
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : `p-${Date.now()}-${Math.random().toString(16).slice(2)}`);
   const safePointerCapture=(element,pointerId)=>{try{if(element?.setPointerCapture&&Number.isInteger(pointerId))element.setPointerCapture(pointerId);return true;}catch{return false;}};
   const safePointerRelease=(element,pointerId)=>{try{if(element?.hasPointerCapture?.(pointerId))element.releasePointerCapture(pointerId);return true;}catch{return false;}};
-  const APP_VERSION = 645;
-  const STORAGE_KEY = 'otthos_life_world_roleplay_v645';
-  const LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v644','otthos_life_world_roleplay_v643','otthos_life_world_roleplay_v642','otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v624','otthos_life_world_roleplay_v623','otthos_life_world_roleplay_v622','otthos_life_world_roleplay_v621','otthos_life_world_roleplay_v620','otthos_life_world_roleplay_v619','otthos_life_world_roleplay_v618','otthos_life_world_roleplay_v617','otthos_life_world_roleplay_v616','otthos_life_world_roleplay_v615','otthos_life_world_roleplay_v614','otthos_life_world_roleplay_v613','otthos_life_world_roleplay_v612','otthos_life_world_roleplay_v611','otthos_life_world_roleplay_v610','otthos_life_world_roleplay_v609','otthos_life_world_roleplay_v608','otthos_life_world_roleplay_v607','otthos_life_world_roleplay_v606','otthos_life_world_roleplay_v605','otthos_life_world_roleplay_v604','otthos_life_world_roleplay_v603','otthos_life_world_roleplay_v602','otthos_life_world_roleplay_v601','otthos_life_world_complete_v600'];
+  const APP_VERSION = 646;
+  const STORAGE_KEY = 'otthos_life_world_roleplay_v646';
+  const LEGACY_STORAGE_KEYS = ['otthos_life_world_roleplay_v645','otthos_life_world_roleplay_v644','otthos_life_world_roleplay_v643','otthos_life_world_roleplay_v642','otthos_life_world_roleplay_v641','otthos_life_world_roleplay_v640','otthos_life_world_roleplay_v639','otthos_life_world_roleplay_v638','otthos_life_world_roleplay_v637','otthos_life_world_roleplay_v636','otthos_life_world_roleplay_v635','otthos_life_world_roleplay_v634','otthos_life_world_roleplay_v633','otthos_life_world_roleplay_v632','otthos_life_world_roleplay_v631','otthos_life_world_roleplay_v630','otthos_life_world_roleplay_v629','otthos_life_world_roleplay_v628','otthos_life_world_roleplay_v627','otthos_life_world_roleplay_v626','otthos_life_world_roleplay_v625','otthos_life_world_roleplay_v624','otthos_life_world_roleplay_v623','otthos_life_world_roleplay_v622','otthos_life_world_roleplay_v621','otthos_life_world_roleplay_v620','otthos_life_world_roleplay_v619','otthos_life_world_roleplay_v618','otthos_life_world_roleplay_v617','otthos_life_world_roleplay_v616','otthos_life_world_roleplay_v615','otthos_life_world_roleplay_v614','otthos_life_world_roleplay_v613','otthos_life_world_roleplay_v612','otthos_life_world_roleplay_v611','otthos_life_world_roleplay_v610','otthos_life_world_roleplay_v609','otthos_life_world_roleplay_v608','otthos_life_world_roleplay_v607','otthos_life_world_roleplay_v606','otthos_life_world_roleplay_v605','otthos_life_world_roleplay_v604','otthos_life_world_roleplay_v603','otthos_life_world_roleplay_v602','otthos_life_world_roleplay_v601','otthos_life_world_complete_v600'];
   const safeLocalGet = key => { try { return window.localStorage?.getItem(key) ?? null; } catch { return null; } };
   const safeLocalSet = (key, value) => { try { window.localStorage?.setItem(key, value); return true; } catch { return false; } };
   const safeLocalRemove = key => { try { window.localStorage?.removeItem(key); return true; } catch { return false; } };
+  const configuredRoomIds = () => (window.OTTHI_CONFIG?.rooms || []).map(item => item.id);
+  const normalizeRoomId = value => {
+    const candidate = String(value || '').trim();
+    const allowed = configuredRoomIds();
+    const configuredDefault = String(window.OTTHI_CONFIG?.defaultRoom || '').trim();
+    return allowed.includes(candidate)
+      ? candidate
+      : (allowed.includes(configuredDefault) ? configuredDefault : (allowed[0] || 'bairro-central'));
+  };
+  const roomDisplayName = value => {
+    const id = normalizeRoomId(value);
+    return window.OTTHI_CONFIG?.rooms?.find(item => item.id === id)?.name || 'Bairro Central';
+  };
 
 
   // V638: construções são entidades persistentes. Um save remoto antigo nunca pode apagar o save local.
@@ -127,10 +146,12 @@
     defeated: 0,
     position: { x: 0, y: 0, z: 8, yaw: 0 },
     settings: { sound: true, quality: 'auto', autoTier: 'balanced', vibration: true, cameraZoom: 0, joystickNatural: true },
+    guardian: { multiplayerEnabled:true, communicationEnabled:false, sessionLimitMinutes:0, updatedAt:0 },
+    usage: { totalSeconds:0, sessionSeconds:0, sessionStartedAt:0, lastPlayedAt:0, sessionLockedAt:0 },
     stats: { walked:0, driven:0, jumps:0, collected:0, talks:0, cooked:0, races:0, actions:0, metroTrips:0, busStops:0, skillCombos:0, jobsCompleted:0, firesHelped:0, classesTaught:0, patrols:0, accidentsHelped:0 },
     daily: { date:'', streak:0, lastDate:'', quests:[] },
     learning: { crowns:0, totalCorrect:0, lessons:{}, lastLesson:'', perfectLessons:0, subjectXP:{math:0,portuguese:0,english:0}, multiplayerWins:0, multiplayerPlayed:0, matchHistory:[] },
-    multiplayer: { enabled:true, room:'bairro-central', displayName:'', cloudUid:'', cloudReady:false },
+    multiplayer: { enabled:true, room:normalizeRoomId(window.OTTHI_CONFIG?.defaultRoom), displayName:'', cloudUid:'', cloudReady:false },
     fishing: { catches: [], species: {}, lastAttempt: 0, cooperativeRewards: [] },
     campfires: [],
     boats: { activeBoatId: '', passengerOf: '', lastPosition: { x:-38, z:52, heading:0 } },
@@ -144,7 +165,6 @@
     npcSociety: { lastEvent:0, houses:{}, friendships:{}, moods:{} },
     lastSaved: Date.now()
   });
-
 
   // ===== MODULE: 02-state-save-cloud-account.js =====
   function normalizeState(saved = {}) {
@@ -169,10 +189,12 @@
       friendship,
       flags,
       settings: { ...fresh.settings, ...(saved.settings || {}), quality: Number(saved.version||0)<615 && (saved.settings?.quality||'high')==='high' ? 'auto' : ((saved.settings?.quality)||fresh.settings.quality) },
+      guardian: { ...fresh.guardian, ...(saved.guardian || {}), communicationEnabled:Number(saved.version||0)>=646&&saved.guardian?.communicationEnabled===true },
+      usage: { ...fresh.usage, ...(saved.usage || {}) },
       stats: { ...fresh.stats, ...(saved.stats || {}) },
       daily: { ...fresh.daily, ...(saved.daily || {}), quests:Array.isArray(saved.daily?.quests)?saved.daily.quests:[] },
       learning: { ...fresh.learning, ...(saved.learning || {}), subjectXP:{...fresh.learning.subjectXP,...(saved.learning?.subjectXP||{})}, lessons:{...fresh.learning.lessons,...(saved.learning?.lessons||{})}, matchHistory:Array.isArray(saved.learning?.matchHistory)?saved.learning.matchHistory:[] },
-      multiplayer: { ...fresh.multiplayer, ...(saved.multiplayer || {}), room:'mundo-publico' },
+      multiplayer: { ...fresh.multiplayer, ...(saved.multiplayer || {}), room:normalizeRoomId(saved.multiplayer?.room || fresh.multiplayer.room) },
       fishing: { ...fresh.fishing, ...(saved.fishing || {}), catches:Array.isArray(saved.fishing?.catches)?saved.fishing.catches:[], species:{...fresh.fishing.species,...(saved.fishing?.species||{})}, cooperativeRewards:Array.isArray(saved.fishing?.cooperativeRewards)?saved.fishing.cooperativeRewards:[] },
       campfires: Array.isArray(saved.campfires) ? saved.campfires : [],
       boats: { ...fresh.boats, ...(saved.boats || {}), lastPosition:{...fresh.boats.lastPosition,...(saved.boats?.lastPosition||{})} },
@@ -231,7 +253,7 @@
     if(legacyName&&legacyName.toLowerCase()!=='otthos'){state.profile.name=legacyName;state.profile.nameConfirmed=true;}
     else{state.profile.name='';state.profile.nameConfirmed=false;}
   }
-  state.multiplayer.displayName=state.profile.name||'';state.multiplayer.room='mundo-publico';
+  state.multiplayer.displayName=state.profile.name||'';state.multiplayer.room=normalizeRoomId(state.multiplayer.room);
   let dbReady = Promise.resolve();
   if (window.OTTHOS_DB) {
     dbReady = window.OTTHOS_DB.load().then(saved => {
@@ -304,7 +326,7 @@
       stats:{...state.stats,...(remote.achievements?.stats||{})},daily:{...state.daily,...(remote.achievements?.daily||{})},learning:{...state.learning,...(remote.achievements?.learning||{}),subjectXP:{...state.learning.subjectXP,...(remote.achievements?.learning?.subjectXP||{})},lessons:{...state.learning.lessons,...(remote.achievements?.learning?.lessons||{})}},
       position:{...state.position,...(remote.position||{})},lastSaved:remoteSaved,version: APP_VERSION
     };
-    state=normalizeState(merged);state.profile.nameConfirmed=true;state.multiplayer.room='mundo-publico';
+    state=normalizeState(merged);state.profile.nameConfirmed=true;state.multiplayer.room=normalizeRoomId(state.multiplayer.room);
     safeLocalSet(STORAGE_KEY,JSON.stringify(state));window.OTTHOS_DB?.save?.(state).catch(()=>{});if(worldGroup&&world?.builds)reconcileWorldBuilds();updatePlayerNameUI();updateHUD();updateLobbyStats();toast('Progresso recuperado do Firebase sem apagar construções locais.','good',2300);return true;
   }
 
@@ -325,7 +347,7 @@
     const backend=await waitForAccountBackend();
     if(!backend?.configured)return{ok:false,error:'A nuvem do jogo ainda não está configurada.'};
     if(backend.connected?.())return{ok:true,backend};
-    const ok=await backend.connect?.({name:state.profile.name||'Jogador'});
+    const ok=await backend.connect?.({name:publicPlayerName()});
     return ok?{ok:true,backend}:{ok:false,error:'Sem conexão. O progresso local continua protegido neste aparelho.'};
   }
   function syncGameAccount(force=false){
@@ -375,12 +397,13 @@
     accountSession=window.OTTHOS_ACCOUNT.rememberSession(credentials);
     state=normalizeState(recovered);state.account={...(state.account||{}),linked:true,accountId:credentials.accountId,username:credentials.username,lastCloudSync:Date.now()};
     state.profile.nameConfirmed=!!sanitizePlayerName(state.profile.name);
-    safeLocalSet(STORAGE_KEY,JSON.stringify(state));await window.OTTHOS_DB?.save?.(state);window.OTTHOS_RTDB?.setDisplayName?.(state.profile.name||'Jogador');
+    safeLocalSet(STORAGE_KEY,JSON.stringify(state));await window.OTTHOS_DB?.save?.(state);window.OTTHOS_RTDB?.setDisplayName?.(publicPlayerName());
     updatePlayerNameUI();updateHUD();updateLobbyStats();return true;
   }
-  async function unlinkGameAccount(){
-    await window.OTTHOS_RTDB?.signOutPlayerAccount?.().catch?.(()=>{});
+  async function unlinkGameAccount(password=''){
+    const result=await window.OTTHOS_RTDB?.signOutPlayerAccount?.(password);if(!result?.ok)return result||{ok:false,error:'Não foi possível confirmar a saída.'};
     window.OTTHOS_ACCOUNT?.clearSession?.();accountSession=null;state.account={linked:false,accountId:'',username:'',lastCloudSync:0};saveState(true);updatePlayerNameUI();
+    return{ok:true};
   }
   function openAccountForm(mode='create',required=false,onReady=null){
     const creating=mode==='create';
@@ -396,11 +419,17 @@
     openModal(linked?'Minha conta':'Proteja seu progresso',linked?`<div class="account-card linked"><span>✓</span><div><b>${escapeHtml(state.account.username||accountSession.username)}</b><small>Progresso criptografado • última cópia ${lastText}</small></div></div><div class="modal-actions"><button class="btn primary" data-account-sync>Sincronizar agora</button><button class="btn" data-account-logout>Sair da conta neste aparelho</button></div>`:`<div class="account-intro"><span>☁️</span><h3>Continue em qualquer celular</h3><p>Crie uma conta do jogo ou entre com a combinação cadastrada. Não informe telefone, endereço, escola ou nome completo.</p></div><div class="choice-grid"><button class="choice" data-account-create><b>🔐 Criar conta</b><span>Protege o progresso atual</span></button><button class="choice" data-account-login><b>🔑 Entrar</b><span>Recupera conquistas antigas</span></button>${required?'<button class="choice muted" data-account-offline><b>📱 Jogar neste aparelho</b><span>O progresso continuará salvo localmente</span></button>':''}</div>`,root=>{
       $('[data-account-create]',root)?.addEventListener('click',()=>openAccountForm('create',required,onReady));$('[data-account-login]',root)?.addEventListener('click',()=>openAccountForm('login',required,onReady));
       $('[data-account-sync]',root)?.addEventListener('click',async e=>{e.currentTarget.disabled=true;e.currentTarget.textContent='Sincronizando...';const ok=await syncGameAccount(true);closeModal();toast(ok?'Progresso sincronizado.':'Sem conexão agora; a cópia local foi preservada.',ok?'good':'warn',2400);});
-      $('[data-account-logout]',root)?.addEventListener('click',async()=>{if(await confirmModal('Sair da conta','O progresso continuará neste aparelho e na cópia protegida.','Sair','Cancelar')){await unlinkGameAccount();toast('Conta desconectada deste aparelho.','good');}});
+      $('[data-account-logout]',root)?.addEventListener('click',()=>openAccountLogoutGate(required,onReady));
       $('[data-account-offline]',root)?.addEventListener('click',()=>openPlayerNameModal(true,()=>{state.flags.accountPromptedV635=true;saveState(true);if(typeof onReady==='function')onReady();}));
     });
   }
-
+  function openAccountLogoutGate(required=false,onReady=null){
+    openModal('Confirme a saída',`<div class="account-form"><div class="account-shield">🛡️</div><p>A senha do responsável é obrigatória para impedir que os controles de segurança sejam burlados.</p><label class="field"><span>Senha atual</span><input data-account-logout-password type="password" maxlength="64" autocomplete="current-password"></label><p class="account-error" data-account-logout-error hidden></p><button class="btn primary xl" data-account-logout-confirm>Sair desta conta</button><button class="btn" data-account-logout-back>Cancelar</button></div>`,root=>{
+      const input=$('[data-account-logout-password]',root),error=$('[data-account-logout-error]',root),button=$('[data-account-logout-confirm]',root);
+      const submit=async()=>{error.hidden=true;button.disabled=true;button.textContent='Confirmando...';const result=await unlinkGameAccount(input.value);if(!result?.ok){error.textContent=result?.error||'Senha incorreta.';error.hidden=false;button.disabled=false;button.textContent='Sair desta conta';input.select();return;}closeModal();toast('Conta desconectada. As restrições de segurança foram preservadas.','good',2800);};
+      button.onclick=submit;$('[data-account-logout-back]',root).onclick=()=>openAccountCenter(required,onReady);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();submit();}};setTimeout(()=>input.focus(),80);
+    });
+  }
 
   // ===== MODULE: 03-ui-modal-install-pwa.js =====
   function addXP(amount) {
@@ -557,6 +586,7 @@
   const OTTHI_UPDATE_INTERVAL_MS = 5 * 60 * 1000;
   let otthiUpdateReloading = false;
   let otthiLastUpdateCheck = 0;
+  let otthiServiceWorkerRegistration = null;
 
   function isOfficialOtthiGameAddress() {
     try {
@@ -590,15 +620,23 @@
     if (!force && now - otthiLastUpdateCheck < OTTHI_UPDATE_INTERVAL_MS) return false;
     otthiLastUpdateCheck = now;
     try {
-      const probe = new URL('app.js', OTTHI_GAME_LIVE_BASE);
+      const probe = new URL('release-manifest.json', OTTHI_GAME_LIVE_BASE);
       probe.searchParams.set('otthi_probe', String(now));
       const response = await fetch(probe.href, { cache:'no-store', credentials:'same-origin' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const source = await response.text();
-      const match = source.match(/const\s+OTTHI_GAME_WEB_BUILD\s*=\s*['\"]([^'\"]+)['\"]/);
-      const remoteBuild = match?.[1] || '';
-      if (remoteBuild && remoteBuild !== OTTHI_GAME_WEB_BUILD) {
-        await reloadForOtthiUpdate(remoteBuild);
+      const release = await response.json();
+      const remoteBuild = String(release?.build || '');
+      const remoteRevision = String(release?.revision || '');
+      if ((remoteBuild && remoteBuild !== OTTHI_GAME_WEB_BUILD)
+        || (remoteRevision && remoteRevision !== OTTHI_RELEASE_REVISION)) {
+        if (!otthiServiceWorkerRegistration) {
+          return reloadForOtthiUpdate(remoteRevision || remoteBuild);
+        }
+        await otthiServiceWorkerRegistration?.update?.().catch(() => {});
+        if (otthiServiceWorkerRegistration?.waiting) {
+          otthiServiceWorkerRegistration.waiting.postMessage({ type:'SKIP_WAITING' });
+        }
+        toast('Atualização encontrada. Ela será aplicada quando todos os arquivos forem validados.','good',3200);
         return true;
       }
     } catch (error) {
@@ -621,6 +659,7 @@
         scope: './',
         updateViaCache: 'none'
       });
+      otthiServiceWorkerRegistration = registration;
       if (registration.waiting) registration.waiting.postMessage({ type:'SKIP_WAITING' });
       registration.addEventListener('updatefound', () => {
         const worker = registration.installing;
@@ -645,12 +684,23 @@
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', registerOtthiGameUpdates, { once:true });
   }
-  window.addEventListener('online', () => probeOtthiGameUpdate(true), { passive:true });
+  window.addEventListener('offline', () => toast('Sem internet. O progresso continua salvo neste aparelho.','warn',3200), { passive:true });
+  window.addEventListener('online', () => {
+    toast('Conexão restabelecida. Sincronizando com segurança.','good',2600);
+    probeOtthiGameUpdate(true);
+  }, { passive:true });
   window.addEventListener('pageshow', () => probeOtthiGameUpdate(false), { passive:true });
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) probeOtthiGameUpdate(false);
   });
   updateInstallUI();
+  if (!window.OTTHI_RELEASE_COHERENT) {
+    setTimeout(() => openModal('Atualização incompleta',`<div class="parent-gate"><span>🧩</span><h3>Os arquivos publicados pertencem a versões diferentes</h3><p>Seu progresso está preservado. Termine de enviar todos os arquivos V646 e toque em verificar novamente.</p><button class="btn primary xl" data-coherence-reload>Verificar novamente</button></div>`,root=>{
+      $('[data-coherence-reload]',root).onclick=()=>reloadForOtthiUpdate(`coherence-${Date.now()}`);
+    }), 0);
+  } else if (!navigator.onLine) {
+    setTimeout(() => toast('Modo offline ativo. Seu progresso será sincronizado quando a internet voltar.','warn',3200), 400);
+  }
 
 
   const DAILY_QUEST_POOL=[
@@ -1005,7 +1055,7 @@
   function playerDisplayName(){return hasValidPlayerName()?sanitizePlayerName(state.profile.name):'Jogador';}
   function playerText(value=''){return String(value).replaceAll('Casa do Otthos',`Casa de ${playerDisplayName()}`).replaceAll('do Otthos',`de ${playerDisplayName()}`).replaceAll('o Otthos',playerDisplayName()).replaceAll('Otthos',playerDisplayName());}
   function updatePlayerNameUI(){const name=hasValidPlayerName()?state.profile.name:'Escolher nome';if(els.lobbyPlayerName)els.lobbyPlayerName.textContent=name;if(els.hudPlayerName)els.hudPlayerName.textContent=hasValidPlayerName()?state.profile.name:'Jogador';if(els.accountStatusLabel)els.accountStatusLabel.textContent=accountStatusText();const menu=$('#avatarMenuName'),quick=$('#avatarQuickName');if(menu)menu.textContent=`Meu ${playerDisplayName()}`;if(quick)quick.textContent=playerDisplayName();const homeLoc=MAP_LOCATIONS?.find?.(x=>x.id==='home');if(homeLoc)homeLoc.name=`Casa de ${playerDisplayName()}`;const homeHouse=world?.houses?.find?.(x=>x.id==='home');if(homeHouse)homeHouse.name=`Casa de ${playerDisplayName()}`;updateLocalPlayerNameLabel?.();}
-  function applyPlayerName(name){const clean=sanitizePlayerName(name);if(clean.length<3){toast('Digite um nome com pelo menos 3 caracteres.','warn',2200);return false;}state.profile.name=clean;state.profile.nameConfirmed=true;state.multiplayer.displayName=clean;updatePlayerNameUI();saveState(true);window.OTTHOS_RTDB?.setDisplayName?.(clean);if(running)window.OTTHOS_RTDB?.publish?.({name:clean,x:player.x,y:player.y,z:player.z,r:player.facing,vehicle:!!player.vehicle,vehicleId:player.car.id||'',vehicleRole:player.vehicle?(player.car.passengerOf?'passenger':'driver'):'',vehiclePassengerOf:player.car.passengerOf||'',vehiclePassengerUid:player.car.passengerUid||'',vehiclePassengerBotId:player.car.passengerBotId||'',boating:!!player.boating,boatId:state.boats.activeBoatId||'',boatRole:player.boating?(player.boat.passengerOf?'passenger':'driver'):'',passengerOf:player.boat.passengerOf||'',boatPassengerUid:player.boat.passengerUid||'',boatPassengerBotId:player.boat.passengerBotId||'',scaleMode:player.scaleMode,crouched:!!player.crouched,color:0x5ad8ff},true);return true;}
+  function applyPlayerName(name){const clean=sanitizePlayerName(name);if(clean.length<3){toast('Digite um apelido com pelo menos 3 caracteres.','warn',2200);return false;}state.profile.name=clean;state.profile.nameConfirmed=true;state.multiplayer.displayName=clean;updatePlayerNameUI();saveState(true);const publicName=publicPlayerName(clean);window.OTTHOS_RTDB?.setDisplayName?.(publicName);if(running)window.OTTHOS_RTDB?.publish?.({name:publicName,x:player.x,y:player.y,z:player.z,r:player.facing,vehicle:!!player.vehicle,vehicleId:player.car.id||'',vehicleRole:player.vehicle?(player.car.passengerOf?'passenger':'driver'):'',vehiclePassengerOf:player.car.passengerOf||'',vehiclePassengerUid:player.car.passengerUid||'',vehiclePassengerBotId:player.car.passengerBotId||'',boating:!!player.boating,boatId:state.boats.activeBoatId||'',boatRole:player.boating?(player.boat.passengerOf?'passenger':'driver'):'',passengerOf:player.boat.passengerOf||'',boatPassengerUid:player.boat.passengerUid||'',boatPassengerBotId:player.boat.passengerBotId||'',scaleMode:player.scaleMode,crouched:!!player.crouched,color:0x5ad8ff},true);return true;}
   function openPlayerNameModal(required=false,onSaved=null){
     const current=hasValidPlayerName()?state.profile.name:'';
     openModal(required?'Escolha seu nome de jogador':'Nome do jogador',`<div class="player-name-modal"><div class="player-name-icon">👤</div><p>${required?'Antes de entrar, escolha o nome que aparecerá para os outros jogadores.':'Este nome aparece sobre seu personagem no multiplayer.'}</p><label class="field"><span>Nome público</span><input id="playerNameInput" maxlength="18" autocomplete="nickname" inputmode="text" value="${current.replace(/"/g,'&quot;')}" placeholder="Ex.: Thiago"></label><small>De 3 a 18 caracteres. Não use telefone, endereço ou informação pessoal sensível.</small><button class="btn primary xl" data-save-player-name>Salvar nome</button></div>`,root=>{const input=$('#playerNameInput',root),save=$('[data-save-player-name]',root);setTimeout(()=>input?.focus(),80);const submit=()=>{if(!applyPlayerName(input?.value))return;closeModal();toast(`Nome definido: ${state.profile.name}`,'good',1600);if(typeof onSaved==='function')onSaved();};save.onclick=submit;input?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submit();}});});
@@ -1320,8 +1370,29 @@
       $('[data-reset-confirm]',root).onclick=confirm;$('[data-reset-cancel]',root).onclick=()=>openParentTools(inGame);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();confirm();}};setTimeout(()=>input.focus(),80);
     });
   }
-  function openParentTools(inGame=false){
-    openModal('Área dos responsáveis',`<div class="parent-area"><div class="parent-area-heading"><span>🛡️</span><div><b>Backup e dados do jogo</b><small>Área protegida e fora da interface infantil.</small></div></div><div class="choice-grid"><button class="choice" data-parent-export><b>📤 Exportar backup</b><span>Baixar uma cópia do progresso</span></button><button class="choice" data-parent-import><b>📥 Importar backup</b><span>Substitui os dados deste aparelho</span></button><button class="choice danger-zone" data-parent-reset><b>🗑️ Recomeçar neste aparelho</b><span>Exige senha, palavra APAGAR e confirmação final</span></button></div><input data-parent-import-file type="file" accept="application/json" hidden><div class="modal-actions"><button class="btn" data-parent-back>Voltar às configurações</button></div></div>`,root=>{
+  function formatPlayTime(seconds=0){const minutes=Math.max(0,Math.floor(Number(seconds||0)/60)),hours=Math.floor(minutes/60),rest=minutes%60;return hours?`${hours}h ${rest}min`:`${rest} min`;}
+  async function openParentTools(inGame=false){
+    let guardian={multiplayerEnabled:true,communicationEnabled:false,sessionLimitMinutes:0,updatedAt:0,...(state.guardian||{})},blocked={};
+    if(accountLinked()){
+      try{const remote=await window.OTTHOS_RTDB?.getGuardianSettings?.();if(remote&&typeof remote==='object')guardian={...guardian,...(remote.settings||remote)};}catch{}
+      try{blocked=await window.OTTHOS_RTDB?.getBlockedPlayers?.()||{};}catch{}
+      state.guardian=guardian;
+    }
+    const linked=accountLinked(),blockedEntries=Object.entries(blocked||{});
+    const sessionLimitSeconds=Math.max(0,Number(guardian.sessionLimitMinutes||0))*60,sessionLocked=Number(state.usage?.sessionLockedAt||0)>0||(sessionLimitSeconds>0&&Number(state.usage?.sessionSeconds||0)>=sessionLimitSeconds);
+    const sessionUnlockHtml=sessionLocked?`<div class="online-status-card"><b>⏰ Sessão bloqueada pelo limite</b><span>Somente esta área protegida pode liberar uma nova sessão.</span><button class="btn primary" data-parent-new-session>Liberar nova sessão</button></div>`:'';
+    const onlineControls=linked?`<div class="settings-list">
+      <div class="settings-row"><div><b>Multiplayer</b><small>Permitir presença e entrada nos bairros online</small></div><button class="toggle ${guardian.multiplayerEnabled!==false?'on':''}" data-guardian-toggle="multiplayerEnabled"><i></i></button></div>
+      <div class="settings-row"><div><b>Comunicação e convites</b><small>Chat seguro, presentes, desafios e interações</small></div><button class="toggle ${guardian.communicationEnabled!==false?'on':''}" data-guardian-toggle="communicationEnabled"><i></i></button></div>
+      <div class="settings-row"><div><b>Limite por sessão</b><small>O jogo volta ao menu quando o tempo termina</small></div><select data-session-limit><option value="0">Sem limite</option><option value="15">15 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option></select></div>
+    </div><div class="modal-actions"><button class="btn primary" data-save-guardian>Salvar controles online</button></div>`:`<div class="online-status-card"><b>Controles online ainda não protegidos</b><span>Vincule uma conta do jogo para que multiplayer, comunicação e limite de tempo só possam ser alterados após a senha.</span></div>`;
+    const blockedHtml=linked?`<div class="social-tabs"><b>Jogadores bloqueados</b><small>${blockedEntries.length}</small></div>${blockedEntries.length?blockedEntries.map(([uid,data])=>`<div class="settings-row"><div><b>${escapeHtml(data?.name||'Jogador bloqueado')}</b><small>${escapeHtml(uid.slice(0,12))}</small></div><button class="btn compact" data-unblock-player="${escapeHtml(uid)}">Desbloquear</button></div>`).join(''):'<p class="empty-online">Nenhum jogador bloqueado.</p>'}`:'';
+    openModal('Área dos responsáveis',`<div class="parent-area"><div class="parent-area-heading"><span>🛡️</span><div><b>Progresso e segurança</b><small>Área protegida e fora da interface infantil.</small></div></div><div class="settings-list"><div class="settings-row"><div><b>Tempo total neste aparelho</b><small>Sessão atual: ${formatPlayTime(state.usage?.sessionSeconds)}</small></div><span class="db-status">${formatPlayTime(state.usage?.totalSeconds)}</span></div><div class="settings-row"><div><b>Aprendizado</b><small>${Number(state.learning?.totalCorrect||0)} respostas corretas • ${Object.keys(state.learning?.lessons||{}).length} lições</small></div><span class="db-status">Nível ${Number(state.profile?.level||1)}</span></div><div class="settings-row"><div><b>Atividade</b><small>${Number(state.stats?.walked||0).toFixed(0)} m a pé • ${Number(state.stats?.driven||0).toFixed(0)} m dirigindo</small></div><span class="db-status">${Number(state.medals?.length||0)} medalhas</span></div></div>${sessionUnlockHtml}${onlineControls}${blockedHtml}<div class="social-tabs"><b>Backup e dados</b><small>somente este aparelho</small></div><div class="choice-grid"><button class="choice" data-parent-export><b>📤 Exportar backup</b><span>Baixar uma cópia do progresso</span></button><button class="choice" data-parent-import><b>📥 Importar backup</b><span>Substitui os dados deste aparelho</span></button><button class="choice danger-zone" data-parent-reset><b>🗑️ Recomeçar neste aparelho</b><span>Exige senha, palavra APAGAR e confirmação final</span></button></div><input data-parent-import-file type="file" accept="application/json" hidden><div class="modal-actions"><button class="btn" data-parent-back>Voltar às configurações</button></div></div>`,root=>{
+      const draft={...guardian};$$('[data-guardian-toggle]',root).forEach(btn=>btn.onclick=()=>{const key=btn.dataset.guardianToggle;draft[key]=!draft[key];btn.classList.toggle('on',draft[key]);});
+      const limit=$('[data-session-limit]',root);if(limit)limit.value=String(Math.max(0,Number(guardian.sessionLimitMinutes||0)));
+      $('[data-save-guardian]',root)?.addEventListener('click',async e=>{const btn=e.currentTarget;draft.sessionLimitMinutes=Math.max(0,Number(limit?.value||0));btn.disabled=true;btn.textContent='Salvando...';const saveGuardian=window.OTTHOS_RTDB?.saveGuardianSettings;const result=saveGuardian?await saveGuardian(draft):{ok:false,error:'Firebase ainda não está pronto.'};if(result?.ok===false||result===false){btn.disabled=false;btn.textContent='Salvar controles online';toast(result?.error||'Não foi possível salvar. Confirme a senha novamente.','warn',3000);return;}state.guardian={...draft,updatedAt:Date.now()};saveState(true);if(draft.multiplayerEnabled===false)window.OTTHOS_RTDB?.disconnect?.();else window.OTTHOS_RTDB?.connect?.({name:publicPlayerName()});toast('Controles dos responsáveis salvos.','good',2600);openParentTools(inGame);});
+      $$('[data-unblock-player]',root).forEach(btn=>btn.onclick=async()=>{const result=await window.OTTHOS_RTDB?.unblockPlayer?.(btn.dataset.unblockPlayer);if(result?.ok===false||result===false){toast(result?.error||'Não foi possível desbloquear.','warn');return;}toast('Jogador desbloqueado.','good');openParentTools(inGame);});
+      $('[data-parent-new-session]',root)?.addEventListener('click',()=>{state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{}),sessionSeconds:0,sessionStartedAt:Date.now(),sessionLockedAt:0};saveState(true);toast('Nova sessão liberada pelo responsável.','good',2400);openParentTools(inGame);});
       $('[data-parent-export]',root).onclick=()=>window.OTTHOS_DB?.exportFile(state);
       const fileInput=$('[data-parent-import-file]',root);$('[data-parent-import]',root).onclick=()=>fileInput.click();
       fileInput.onchange=async()=>{const file=fileInput.files?.[0];if(!file)return;try{const imported=normalizeState(await window.OTTHOS_DB.importFile(file));if(!(await confirmModal('Importar backup','O progresso atual deste aparelho será substituído pelo arquivo escolhido. Continuar?','Importar','Cancelar')))return;state=imported;await window.OTTHOS_DB.save(state);safeLocalSet(STORAGE_KEY,JSON.stringify(state));location.reload();}catch(error){toast(error.message||'Backup inválido.','bad');}};
@@ -1330,13 +1401,13 @@
   }
   function openParentGate(inGame=false){
     if(accountLinked()){
-      openModal('Acesso de responsável',`<div class="parent-gate"><span>🛡️</span><h3>Confirme a senha da conta</h3><p>Esta área contém backup e reinício do aparelho.</p><label class="field"><span>Senha da conta</span><input data-parent-password type="password" maxlength="64" autocomplete="current-password"></label><p data-parent-gate-error class="account-error" hidden></p><button class="btn primary xl" data-parent-unlock>Continuar</button><button class="btn" data-parent-cancel>Cancelar</button></div>`,root=>{
+      openModal('Acesso de responsável',`<div class="parent-gate"><span>🛡️</span><h3>Confirme a senha da conta</h3><p>Esta área contém progresso, controles online, bloqueios, backup e reinício.</p><label class="field"><span>Senha da conta</span><input data-parent-password type="password" maxlength="64" autocomplete="current-password"></label><p data-parent-gate-error class="account-error" hidden></p><button class="btn primary xl" data-parent-unlock>Continuar</button><button class="btn" data-parent-cancel>Cancelar</button></div>`,root=>{
         const input=$('[data-parent-password]',root),error=$('[data-parent-gate-error]',root),unlock=async()=>{const btn=$('[data-parent-unlock]',root);btn.disabled=true;btn.textContent='Confirmando...';const result=await window.OTTHOS_RTDB?.reauthenticateAccount?.(input.value);if(!result?.ok){error.textContent=result?.error||'Senha incorreta.';error.hidden=false;btn.disabled=false;btn.textContent='Continuar';input.select();return;}openParentTools(inGame);};
         $('[data-parent-unlock]',root).onclick=unlock;$('[data-parent-cancel]',root).onclick=()=>openSettings(inGame);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();unlock();}};setTimeout(()=>input.focus(),80);
       });return;
     }
     const a=7+Math.floor(Math.random()*5),b=5+Math.floor(Math.random()*4),answer=a*b;
-    openModal('Acesso de responsável',`<div class="parent-gate"><span>🛡️</span><h3>Peça ajuda a um adulto</h3><p>Para abrir backup e reinício, responda:</p><label class="field"><span>Quanto é ${a} × ${b}?</span><input data-parent-answer inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off"></label><p data-parent-gate-error class="account-error" hidden>Resposta incorreta.</p><button class="btn primary xl" data-parent-unlock>Continuar</button><button class="btn" data-parent-cancel>Cancelar</button></div>`,root=>{const input=$('[data-parent-answer]',root),unlock=()=>{if(Number(input.value)!==answer){$('[data-parent-gate-error]',root).hidden=false;input.select();return;}openParentTools(inGame);};$('[data-parent-unlock]',root).onclick=unlock;$('[data-parent-cancel]',root).onclick=()=>openSettings(inGame);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();unlock();}};setTimeout(()=>input.focus(),80);});
+    openModal('Acesso de responsável',`<div class="parent-gate"><span>🛡️</span><h3>Peça ajuda a um adulto</h3><p>Sem uma conta vinculada, esta verificação libera apenas progresso e backup local. Para controles online protegidos por senha, vincule a conta. Responda:</p><label class="field"><span>Quanto é ${a} × ${b}?</span><input data-parent-answer inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off"></label><p data-parent-gate-error class="account-error" hidden>Resposta incorreta.</p><button class="btn primary xl" data-parent-unlock>Continuar</button><button class="btn" data-parent-cancel>Cancelar</button></div>`,root=>{const input=$('[data-parent-answer]',root),unlock=()=>{if(Number(input.value)!==answer){$('[data-parent-gate-error]',root).hidden=false;input.select();return;}openParentTools(inGame);};$('[data-parent-unlock]',root).onclick=unlock;$('[data-parent-cancel]',root).onclick=()=>openSettings(inGame);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();unlock();}};setTimeout(()=>input.focus(),80);});
   }
   let deferredSettingsRefresh = null;
   function openSettings(inGame = false) {
@@ -3267,7 +3338,7 @@
   }
   async function claimHouseOnline(house){
     if(!window.OTTHOS_RTDB?.connected?.()){toast('Conecte ao Firebase para comprar uma casa exclusiva.','warn',2600);return false;}
-    const result=await window.OTTHOS_RTDB.claimHouse(house.id,{name:house.name,price:house.price,ownerName:state.profile.name||'Jogador',x:house.x,z:house.z});
+    const result=await window.OTTHOS_RTDB.claimHouse(house.id,{name:house.name,price:house.price,ownerName:publicPlayerName(),x:house.x,z:house.z});
     if(!result?.ok){toast(result?.ownerName?`Esta casa já pertence a ${result.ownerName}.`:'Não foi possível comprar a casa.','warn',2600);return false;}
     state.houses[house.id]={...(state.houses[house.id]||{}),owned:true,locked:false,ownerUid:window.OTTHOS_RTDB.uid,ownerName:state.profile.name,price:house.price};return true;
   }
@@ -3322,7 +3393,6 @@
       $$('[data-take]',root).forEach(btn=>btn.onclick=()=>{const key=btn.dataset.take;if((state.homeStorage[key]||0)<=0){toast('O baú não tem esse item.','warn');return;}state.homeStorage[key]--;state.inventory[key]=(state.inventory[key]||0)+1;saveState(true);openHomeChest();});
     });
   }
-
 
   // ===== MODULE: 21-interactions-shop-social-races.js =====
   function useActivity(type,house){
@@ -3889,6 +3959,10 @@
     document.body.classList.toggle('ui-landscape',landscape);document.body.classList.toggle('ui-portrait',portrait);document.body.classList.toggle('ui-short',short);document.body.classList.toggle('ui-ultra-short',ultraShort);document.body.classList.toggle('ui-narrow',narrow);document.body.classList.toggle('ui-tiny',tiny);document.body.classList.toggle('ui-compact',compact);document.body.classList.toggle('ui-keyboard',metrics.keyboard);document.body.dataset.orientation=landscape?'landscape':'portrait';syncMobilePanels();
   }
   function scheduleStableResize(delay=120,force=false){clearTimeout(perf.resizeTimer);perf.resizeTimer=setTimeout(()=>resize(force),delay);}
+  function ensureViewportCoherence(){
+    const metrics=viewportMetrics(),classLandscape=document.body.classList.contains('ui-landscape'),bufferMismatch=Math.abs(metrics.w-Number(perf.lastRenderW||0))>2||Math.abs(metrics.h-Number(perf.lastRenderH||0))>2;
+    if(classLandscape!==metrics.landscape||bufferMismatch){window.OTTHI_VIEWPORT?.measure?.();resize(true);return true;}return false;
+  }
   function refreshOrientationLayout(){
     resize(true);requestAnimationFrame(()=>resize(true));[60,160,320,620,1000].forEach(delay=>setTimeout(()=>resize(true),delay));
   }
@@ -4276,24 +4350,40 @@
 
   let localChannel=null,lastPublish=0,lastPublishSnapshot=null,lastPublishHeartbeat=0;
 
-  let multiplayerState={mode:'solo',connected:false,count:0,room:'mundo-publico',error:'',players:[]};const remotePresence=new Map();let pendingCloudCampfires={},pendingCloudExtensions={};
+  let multiplayerState={mode:'solo',connected:false,count:0,room:normalizeRoomId(window.OTTHI_CONFIG?.defaultRoom),error:'',players:[]};const remotePresence=new Map();let pendingCloudCampfires={},pendingCloudExtensions={};
   const cloudHouses=new Map(),cloudChat=[],incomingChallenges=new Map(),incomingSocialRequests=new Map(),gameSessions=new Map(),shownChallengeToasts=new Set(),shownSocialToasts=new Set(),shownGameResults=new Set();let activeMultiplayerGameId='',promptChallengeId='',promptSessionId='',promptSocialRequestId='';
 
   // ===== MODULE: 28-multiplayer-social-online.js =====
   function multiplayerGameLabel(type){return type==='portuguese'?'Português Kids':type==='english'?'English Kids':'Matemática Kids';}
+  function guardianMultiplayerAllowed(){return state.guardian?.multiplayerEnabled!==false;}
+  function guardianCommunicationAllowed(){return guardianMultiplayerAllowed()&&state.guardian?.communicationEnabled!==false;}
+  function publicPlayerName(){
+    const source=window.OTTHOS_RTDB?.uid||state.profile.playerId||'0000',suffix=String(source).replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');
+    return`Jogador ${suffix}`;
+  }
+  function remotePlayerName(value,uid=''){
+    const suffix=String(uid||'0000').replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');return`Jogador ${suffix}`;
+  }
+  function sanitizeRemoteSession(value={}){
+    const clean={...value,fromName:remotePlayerName(value.fromName,value.fromUid),toName:remotePlayerName(value.toName,value.toUid)},players={};
+    for(const[uid,entry]of Object.entries(value.players||{}))players[uid]={...entry,name:remotePlayerName(entry?.name,uid)};
+    clean.players=players;if(value.result){const winnerUid=String(value.result.winnerUid||''),loserUid=String(value.result.loserUid||'');clean.result={...value.result,winnerName:value.result.draw?'Empate':remotePlayerName(players[winnerUid]?.name,winnerUid),loserName:value.result.draw?'':remotePlayerName(players[loserUid]?.name,loserUid)};}return clean;
+  }
   function pendingChallenges(){return [...incomingChallenges.values()].filter(c=>c.status==='pending');}
   function readyGameSessions(){const uid=window.OTTHOS_RTDB?.uid;return [...gameSessions.values()].filter(s=>(s.fromUid===uid||s.toUid===uid)&&s.status==='active');}
   function closeChallengePrompt(){if(!els.challengePrompt)return;document.body.classList.remove('social-prompt-open');els.challengePrompt.hidden=true;els.challengePrompt.classList.remove('ready','incoming','social');promptChallengeId='';promptSessionId='';promptSocialRequestId='';els.challengePromptAccept.disabled=false;els.challengePromptDecline.disabled=false;}
-  function showIncomingChallengePrompt(c){if(!c||c.status!=='pending'||!els.challengePrompt)return;document.body.classList.add('social-prompt-open');promptChallengeId=c.id;promptSessionId='';els.challengePrompt.classList.add('incoming');els.challengePrompt.classList.remove('ready','social');els.challengePromptKicker.textContent='NOVO DESAFIO';els.challengePromptTitle.textContent=`${c.fromName||'Jogador'} desafiou você`;els.challengePromptText.textContent=`${multiplayerGameLabel(c.type)} • toque em Aceitar e jogar`;els.challengePromptAccept.textContent='Aceitar e jogar';els.challengePromptDecline.textContent='Recusar';els.challengePrompt.hidden=false;}
-  function showReadySessionPrompt(s){if(!s||s.status!=='active'||!els.challengePrompt)return;document.body.classList.add('social-prompt-open');const uid=window.OTTHOS_RTDB?.uid,mine=s.players?.[uid];if(mine?.finished)return;promptSessionId=s.id;promptChallengeId='';els.challengePrompt.classList.add('ready');els.challengePrompt.classList.remove('incoming','social');els.challengePromptKicker.textContent='PARTIDA PRONTA';els.challengePromptTitle.textContent=`Duelo de ${multiplayerGameLabel(s.type)}`;els.challengePromptText.textContent=`Contra ${sessionOpponentName(s)} • os dois jogarão as mesmas 5 atividades`;els.challengePromptAccept.textContent='Jogar agora';els.challengePromptDecline.textContent='Depois';els.challengePrompt.hidden=false;}
+  function showIncomingChallengePrompt(c){if(!guardianCommunicationAllowed()||!c||c.status!=='pending'||!els.challengePrompt)return;document.body.classList.add('social-prompt-open');promptChallengeId=c.id;promptSessionId='';els.challengePrompt.classList.add('incoming');els.challengePrompt.classList.remove('ready','social');els.challengePromptKicker.textContent='NOVO DESAFIO';els.challengePromptTitle.textContent=`${c.fromName||'Jogador'} desafiou você`;els.challengePromptText.textContent=`${multiplayerGameLabel(c.type)} • toque em Aceitar e jogar`;els.challengePromptAccept.textContent='Aceitar e jogar';els.challengePromptDecline.textContent='Recusar';els.challengePrompt.hidden=false;}
+  function showReadySessionPrompt(s){if(!guardianCommunicationAllowed()||!s||s.status!=='active'||!els.challengePrompt)return;document.body.classList.add('social-prompt-open');const uid=window.OTTHOS_RTDB?.uid,mine=s.players?.[uid];if(mine?.finished)return;promptSessionId=s.id;promptChallengeId='';els.challengePrompt.classList.add('ready');els.challengePrompt.classList.remove('incoming','social');els.challengePromptKicker.textContent='PARTIDA PRONTA';els.challengePromptTitle.textContent=`Duelo de ${multiplayerGameLabel(s.type)}`;els.challengePromptText.textContent=`Contra ${sessionOpponentName(s)} • os dois jogarão as mesmas 5 atividades`;els.challengePromptAccept.textContent='Jogar agora';els.challengePromptDecline.textContent='Depois';els.challengePrompt.hidden=false;}
   const SOCIAL_ACTION_LABELS={dance:'dançar',play:'brincar',highfive:'fazer toca aqui',hug:'dar um abraço',selfie:'tirar uma selfie',vehiclePassenger:'entrar no carro como passageiro',boatPassenger:'entrar no barco como passageiro',fishTogether:'pescar junto',campfireJoin:'participar da fogueira',huntTogether:'rastrear animais junto'};
   function socialActionLabel(type){return SOCIAL_ACTION_LABELS[type]||'interagir';}
   function socialRequestPending(){return[...incomingSocialRequests.values()].filter(r=>r.status==='pending'&&Number(r.expiresAt||0)>Date.now());}
-  function showIncomingSocialRequest(request){document.body.classList.add('social-prompt-open');
-    if(!request||request.status!=='pending'||Number(request.expiresAt||0)<=Date.now()||!els.challengePrompt)return;
+  function showIncomingSocialRequest(request){
+    if(!guardianCommunicationAllowed()||!request||request.status!=='pending'||Number(request.expiresAt||0)<=Date.now()||!els.challengePrompt)return;
+    document.body.classList.add('social-prompt-open');
     promptSocialRequestId=request.id;promptChallengeId='';promptSessionId='';els.challengePrompt.classList.add('incoming','social');els.challengePrompt.classList.remove('ready');els.challengePromptKicker.textContent='CONVITE MULTIPLAYER';els.challengePromptTitle.textContent=`${request.fromName||'Jogador'} quer ${socialActionLabel(request.actionType)}`;els.challengePromptText.textContent='Nada será executado antes da sua confirmação.';els.challengePromptAccept.textContent='Aceitar';els.challengePromptDecline.textContent='Recusar';els.challengePrompt.hidden=false;
   }
   async function sendSocialActionRequest(targetUid,targetName,actionType,extra={}){
+    if(!guardianCommunicationAllowed()){toast('A comunicação online foi desativada na Área dos responsáveis.','warn',2800);return false;}
     if(actionType==='boatPassenger'&&(!player.boating||player.boat.passengerOf)){toast('Somente o motorista do barco pode convidar um passageiro.','warn',2500);return false;}
     if(actionType==='boatPassenger'&&(player.boat.passengerUid||player.boat.passengerBotId)){toast('Este barco já tem um passageiro.','warn',2300);return false;}
     if(actionType==='vehiclePassenger'&&(!player.vehicle||player.car.passengerOf)){toast('Somente o motorista do carro pode convidar um passageiro.','warn',2500);return false;}
@@ -4318,7 +4408,7 @@
     const request=incomingSocialRequests.get(id);els.challengePromptAccept.disabled=true;els.challengePromptDecline.disabled=true;const result=await window.OTTHOS_RTDB?.respondSocialRequest?.(id,'declined');closeChallengePrompt();toast(request?`Convite de ${request.fromName||'Jogador'} recusado.`:(result?.error||'Convite recusado.'),'warn',1900);
   }
   async function launchSessionWithCountdown(session){if(!session)return;closeChallengePrompt();closeModal();let count=3;const draw=()=>openModal(`Duelo: ${multiplayerGameLabel(session.type)}`,`<div class="duel-countdown"><small>Contra ${escapeHtml(sessionOpponentName(session))}</small><b>${count}</b><span>Prepare-se!</span></div>`,root=>{});draw();const timer=setInterval(()=>{count--;if(count<=0){clearInterval(timer);closeModal();startMultiplayerEducationGame(session);}else draw();},620);}
-  function updateOnlineAttention(){const count=pendingChallenges().length+socialRequestPending().length+readyGameSessions().filter(s=>!s.players?.[window.OTTHOS_RTDB?.uid]?.finished).length;els.onlineBtn?.classList.toggle('attention',count>0);if(els.onlineBtn){const span=$('span',els.onlineBtn);if(span)span.textContent=count?`Online ${count}`:'Online';}}
+  function updateOnlineAttention(){const count=guardianCommunicationAllowed()?pendingChallenges().length+socialRequestPending().length+readyGameSessions().filter(s=>!s.players?.[window.OTTHOS_RTDB?.uid]?.finished).length:0;els.onlineBtn?.classList.toggle('attention',count>0);if(els.onlineBtn){const span=$('span',els.onlineBtn);if(span)span.textContent=count?`Online ${count}`:'Online';}}
   function challengeInboxHtml(){const list=pendingChallenges();return list.length?`<div class="challenge-inbox">${list.map(c=>`<article class="challenge-card"><div><b>⚔️ ${escapeHtml(c.fromName||'Jogador')}</b><span>Desafio: ${multiplayerGameLabel(c.type)}</span></div><div><button class="accept" data-accept-challenge="${c.id}">Aceitar e jogar</button><button data-decline-challenge="${c.id}">Recusar</button></div></article>`).join('')}</div>`:'<p class="empty-online">Nenhum convite educativo pendente.</p>';}
   function socialRequestInboxHtml(){const list=socialRequestPending();return list.length?`<div class="challenge-inbox social-inbox">${list.map(r=>`<article class="challenge-card social"><div><b>🤝 ${escapeHtml(r.fromName||'Jogador')}</b><span>Quer ${escapeHtml(socialActionLabel(r.actionType))}</span></div><div><button class="accept" data-accept-social="${r.id}">Aceitar</button><button data-decline-social="${r.id}">Recusar</button></div></article>`).join('')}</div>`:'<p class="empty-online">Nenhuma solicitação social pendente.</p>';}
   function completedGameSessions(){const uid=window.OTTHOS_RTDB?.uid;return [...gameSessions.values()].filter(s=>s.status==='completed'&&s.result&&(s.fromUid===uid||s.toUid===uid)).sort((a,b)=>Number(b.completedAt||b.result?.completedAt||0)-Number(a.completedAt||a.result?.completedAt||0)).slice(0,20);}
@@ -4330,32 +4420,45 @@
   async function declineIncomingChallenge(id){const c=incomingChallenges.get(id);if(!c)return;els.challengePromptAccept.disabled=true;els.challengePromptDecline.disabled=true;await window.OTTHOS_RTDB?.respondGameChallenge?.(id,false);c.status='declined';incomingChallenges.set(id,c);closeChallengePrompt();refreshOpenSocialHub();updateOnlineAttention();}
   function highestUnlockedLevel(subject){let value=1;for(let level=2;level<=6;level++){if(subjectUnlocked(subject,level))value=level;}return value;}
   function openChallengePicker(uid,name){openModal(`Desafiar ${name}`,`<p>Escolha o jogo. O outro jogador receberá um cartão na tela com <b>Aceitar e jogar</b>.</p><div class="challenge-picker"><button data-challenge-type="math"><span>🔢</span><b>Matemática Kids</b><small>Contagem, soma e lógica</small></button><button data-challenge-type="portuguese"><span>📚</span><b>Português Kids</b><small>Letras, sílabas e palavras</small></button><button data-challenge-type="english"><span>🌎</span><b>English Kids</b><small>Imagens, sons e palavras</small></button></div>`,root=>{$$('[data-challenge-type]',root).forEach(btn=>btn.onclick=async()=>{btn.disabled=true;btn.classList.add('sending');const result=await window.OTTHOS_RTDB?.sendGameChallenge?.(uid,btn.dataset.challengeType,highestUnlockedLevel(btn.dataset.challengeType),name);if(result?.ok){toast(`Convite enviado para ${name}. Aguardando resposta.`,'good',2600);closeModal();}else{btn.disabled=false;btn.classList.remove('sending');toast(result?.error||'Falha ao enviar desafio.','warn');}});});}
-  function sessionOpponentName(session){const uid=window.OTTHOS_RTDB?.uid;return session.fromUid===uid?(remotePresence.get(session.toUid)?.name||session.toName||'Adversário'):(session.fromName||'Adversário');}
+  function sessionOpponentName(session){const uid=window.OTTHOS_RTDB?.uid,otherUid=session.fromUid===uid?session.toUid:session.fromUid,raw=session.fromUid===uid?(remotePresence.get(session.toUid)?.name||session.toName):(session.fromName);return remotePlayerName(raw,otherUid);}
   function startMultiplayerEducationGame(session){if(!session||session.status!=='active'){toast('Esta partida ainda não está pronta.','warn');return;}if(activeMultiplayerGameId&&activeMultiplayerGameId!==session.id){toast('Termine a partida atual.','warn');return;}activeMultiplayerGameId=session.id;closeChallengePrompt();runEducationGame({subject:session.type,level:Number(session.level||1),seed:Number(session.seed)||Date.now(),rounds:Number(session.rounds||5),multiplayer:true,opponent:sessionOpponentName(session),onFinish:async result=>{state.learning.multiplayerPlayed=(state.learning.multiplayerPlayed||0)+1;const ok=await window.OTTHOS_RTDB?.submitGameResult?.(session.id,result);saveState(true);openModal(ok?'Resultado enviado':'Resultado salvo no aparelho',`<div class="lesson-result"><div>${ok?'⏳':'⚠️'}</div><h3>${result.score}/${result.total}</h3><p>${ok?`Aguardando ${escapeHtml(sessionOpponentName(session))} terminar.`:'A conexão caiu. Abra Online para reenviar ou jogar novamente.'}</p><button class="btn primary" data-open-online>Ver partidas online</button></div>`,root=>$('[data-open-online]',root).onclick=openSocialHub);activeMultiplayerGameId='';}});}
   function maybeShowMultiplayerResult(session){const players=Object.values(session.players||{}),uid=window.OTTHOS_RTDB?.uid;if(players.length<2||!players.every(p=>p.finished))return;if(!session.result){window.OTTHOS_RTDB?.finalizeGameSession?.(session.id);return;}const mine=session.players?.[uid],other=Object.entries(session.players||{}).find(([id])=>id!==uid)?.[1],entry=rememberMatchResult(session),won=!session.result.draw&&session.result.winnerUid===uid,draw=!!session.result.draw;if(entry&&!entry.rewarded&&won){entry.rewarded=true;state.learning.multiplayerWins=(state.learning.multiplayerWins||0)+1;addCoins(80);addXP(60);}saveState(true);if(shownGameResults.has(session.id))return;shownGameResults.add(session.id);openModal(draw?'Empate!':won?'Você venceu!':`${session.result.winnerName||'Adversário'} venceu`,`<div class="duel-result"><div>${draw?'🤝':won?'🏆':'🎮'}</div><h3>${mine?.score||0} × ${other?.score||0}</h3><p><b>Vencedor registrado:</b> ${escapeHtml(draw?'Empate':session.result.winnerName||'Jogador')}</p><small>${won?'Você ganhou 80 moedas e 60 XP.':'O resultado ficou salvo no histórico de duelos.'}</small><button class="btn primary" data-duel-close>Continuar no mundo</button><button class="btn" data-duel-history>Ver histórico</button></div>`,root=>{$('[data-duel-close]',root).onclick=closeModal;$('[data-duel-history]',root).onclick=openSocialHub;});}
-  function multiplayerStatusText(){if(multiplayerState.connected)return`Mundo público • ${multiplayerState.count||1} online`;if(window.OTTHOS_RTDB?.configured)return multiplayerState.error?`Offline: ${multiplayerState.error}`:'Conectando ao mundo público...';return'Firebase indisponível';}
+  function currentOnlineRoom(){return normalizeRoomId(multiplayerState.room||window.OTTHOS_RTDB?.getRoom?.()||state.multiplayer.room);}
+  function multiplayerStatusText(){const roomName=roomDisplayName(currentOnlineRoom());if(multiplayerState.connected)return`${roomName} • ${multiplayerState.count||1} online`;if(window.OTTHOS_RTDB?.configured)return multiplayerState.error?`Offline: ${multiplayerState.error}`:`Conectando ao ${roomName}...`;return'Firebase indisponível';}
   function updateMultiplayerBadge(){if(!els.multiplayerBadge)return;els.multiplayerBadge.classList.toggle('online',multiplayerState.connected);els.multiplayerBadge.classList.toggle('offline',!multiplayerState.connected);const label=$('span',els.multiplayerBadge);if(label)label.textContent=multiplayerState.connected?`${multiplayerState.count||1} online`:'Offline';}
-  function onlinePlayers(){return [...remotePresence.entries()].map(([uid,data])=>{const ghost=world.ghosts.get(uid);return{uid,name:data.name||ghost?.userData?.displayName||'Jogador',distance:ghost?Math.hypot(player.x-ghost.position.x,player.z-ghost.position.z):Math.hypot(player.x-(data.x||0),player.z-(data.z||0))}}).sort((a,b)=>a.distance-b.distance);}
+  function onlinePlayers(){return [...remotePresence.entries()].map(([uid,data])=>{const ghost=world.ghosts.get(uid);return{uid,name:remotePlayerName(data.name||ghost?.userData?.displayName,uid),distance:ghost?Math.hypot(player.x-ghost.position.x,player.z-ghost.position.z):Math.hypot(player.x-(data.x||0),player.z-(data.z||0))}}).sort((a,b)=>a.distance-b.distance);}
   function onlinePlayerListHtml(players=onlinePlayers()){return players.length?players.map(p=>`<button class="online-player-card" data-online-player="${p.uid}"><span>👤</span><b>${escapeHtml(p.name)}</b><small>${Math.round(p.distance)} m</small></button>`).join(''):'<p>Nenhum outro jogador apareceu ainda. Abra o jogo em outro celular usando o mesmo Firebase.</p>';}
   function bindOnlinePlayerCards(root=els.modalBody){$$('[data-online-player]',root).forEach(btn=>btn.onclick=()=>{const uid=btn.dataset.onlinePlayer,ghost=world.ghosts.get(uid);if(ghost)openRemotePlayerActions(uid,ghost);});}
   function refreshOpenSocialHub(){updateOnlineAttention();if(els.modal.hidden||els.modalTitle.textContent!=='Mundo Online')return;const players=onlinePlayers(),status=$('#onlineStatusText',els.modalBody),count=$('#onlineCount',els.modalBody),list=$('#onlinePlayerList',els.modalBody),chat=$('#worldChatList',els.modalBody),socialInvites=$('#socialRequestInbox',els.modalBody),invites=$('#challengeInbox',els.modalBody),sessions=$('#activeGameSessions',els.modalBody),history=$('#duelHistory',els.modalBody);if(status)status.textContent=multiplayerStatusText();if(count)count.textContent=`${players.length} além de você`;if(list){list.innerHTML=onlinePlayerListHtml(players);bindOnlinePlayerCards(els.modalBody);}if(socialInvites){socialInvites.innerHTML=socialRequestInboxHtml();bindChallengeCards(els.modalBody);}if(invites){invites.innerHTML=challengeInboxHtml();bindChallengeCards(els.modalBody);}if(sessions){sessions.innerHTML=activeSessionsHtml();bindChallengeCards(els.modalBody);}if(history)history.innerHTML=duelHistoryHtml();if(chat){chat.innerHTML=cloudChat.slice(-30).map(m=>chatMessageHtml(m)).join('')||'<p>Envie a primeira mensagem.</p>';chat.scrollTop=chat.scrollHeight;}}
+  function approvedChatPhrases(){const list=window.OTTHI_CHILD_SAFETY?.approvedPhrases;return Array.isArray(list)&&list.length?list:['Oi!','Vamos brincar?','Quer correr?','Vamos estudar juntos?','Boa jogada!','Parabéns!','Até logo!','Vamos visitar minha casa?','Vamos pescar?','Vamos construir?'];}
   function openSocialHub(){
     const players=onlinePlayers(),messages=cloudChat.slice(-30);
-    openModal('Mundo Online',`<div class="online-status-card"><b id="onlineStatusText">${multiplayerStatusText()}</b><span>Todos entram automaticamente no mesmo mundo, sem escolher sala e sem senha.</span></div><div class="social-tabs"><b>Solicitações sociais</b><small>${socialRequestPending().length} pendente(s)</small></div><div id="socialRequestInbox">${socialRequestInboxHtml()}</div><div class="social-tabs"><b>Convites de jogos</b><small>${pendingChallenges().length} pendente(s)</small></div><div id="challengeInbox">${challengeInboxHtml()}</div><div id="activeGameSessions">${activeSessionsHtml()}</div><div class="social-tabs"><b>Histórico de duelos</b><small>vencedores registrados</small></div><div id="duelHistory">${duelHistoryHtml()}</div><div class="social-tabs"><b>Jogadores</b><small id="onlineCount">${players.length} além de você</small></div><div id="onlinePlayerList" class="online-player-list">${onlinePlayerListHtml(players)}</div><div class="social-tabs chat-title-row"><b>Chat do mundo</b><small>texto em tempo real</small></div><div id="worldChatList" class="world-chat-list">${messages.map(m=>chatMessageHtml(m)).join('')||'<p>Envie a primeira mensagem.</p>'}</div><div class="chat-compose"><input id="worldChatInput" maxlength="180" placeholder="Escreva uma mensagem..."><button data-send-world-chat>Enviar</button></div><div class="chat-history-actions"><button data-clear-local-chat>Ocultar conversa neste aparelho</button></div>`,root=>{
+    if(!guardianMultiplayerAllowed()){openModal('Mundo Online','<div class="parent-gate"><span>🛡️</span><h3>Multiplayer desativado</h3><p>Um responsável desativou a presença online. A alteração exige a senha da conta na Área dos responsáveis.</p></div>');return;}
+    if(!guardianCommunicationAllowed()){openModal('Mundo Online',`<div class="online-status-card"><b>${multiplayerStatusText()}</b><span>A presença no bairro está ativa, mas comunicação, convites e interações foram desativados por um responsável.</span></div><div class="social-tabs"><b>Jogadores no bairro</b><small>${players.length} além de você</small></div><div class="online-player-list">${players.map(p=>`<div class="online-player-card"><span>👤</span><b>${escapeHtml(p.name)}</b><small>${Math.round(p.distance)} m</small></div>`).join('')||'<p>Nenhum outro jogador apareceu.</p>'}</div>`);return;}
+    const phraseButtons=approvedChatPhrases().map(text=>`<button class="btn compact" data-approved-chat="${escapeHtml(text)}">${escapeHtml(text)}</button>`).join('');
+    openModal('Mundo Online',`<div class="online-status-card"><b id="onlineStatusText">${multiplayerStatusText()}</b><span>Você vê apenas jogadores do bairro atual. A entrada respeita o limite de 10 vagas.</span></div><div class="social-tabs"><b>Solicitações sociais</b><small>${socialRequestPending().length} pendente(s)</small></div><div id="socialRequestInbox">${socialRequestInboxHtml()}</div><div class="social-tabs"><b>Convites de jogos</b><small>${pendingChallenges().length} pendente(s)</small></div><div id="challengeInbox">${challengeInboxHtml()}</div><div id="activeGameSessions">${activeSessionsHtml()}</div><div class="social-tabs"><b>Histórico de duelos</b><small>vencedores registrados</small></div><div id="duelHistory">${duelHistoryHtml()}</div><div class="social-tabs"><b>Jogadores</b><small id="onlineCount">${players.length} além de você</small></div><div id="onlinePlayerList" class="online-player-list">${onlinePlayerListHtml(players)}</div><div class="social-tabs chat-title-row"><b>Chat seguro</b><small>somente frases aprovadas</small></div><div id="worldChatList" class="world-chat-list">${messages.map(m=>chatMessageHtml(m)).join('')||'<p>Escolha uma frase aprovada.</p>'}</div><div class="choice-grid">${phraseButtons}</div><div class="chat-history-actions"><button data-clear-local-chat>Ocultar conversa neste aparelho</button></div>`,root=>{
       bindOnlinePlayerCards(root);bindChallengeCards(root);
-      const send=()=>{const input=$('#worldChatInput',root),text=(input?.value||'').trim();if(!text)return;window.OTTHOS_RTDB?.sendChat?.(text);input.value='';};$('[data-send-world-chat]',root).onclick=send;$('#worldChatInput',root)?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();send();}});
+      $$('[data-approved-chat]',root).forEach(btn=>btn.onclick=async()=>{btn.disabled=true;const result=await window.OTTHOS_RTDB?.sendChat?.(btn.dataset.approvedChat);btn.disabled=false;if(result===false||result?.ok===false)toast(result?.error||'A frase não pôde ser enviada.','warn');});
       $('[data-clear-local-chat]',root).onclick=()=>{state.social.chatHiddenBefore=Date.now();cloudChat.length=0;saveState(true);refreshOpenSocialHub();toast('Histórico ocultado neste aparelho.','good');};
     });
   }
   function escapeHtml(value=''){return String(value).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
   function chatMessageHtml(m){return`<article class="world-chat-message"><b>${escapeHtml(m.name||'Jogador')}</b><span>${escapeHtml(m.text||'')}</span></article>`;}
+  function openReportPlayer(uid,name){
+    const reasons={language:'Linguagem inadequada',privacy:'Tentativa de pedir dados pessoais',bullying:'Comportamento agressivo',other:'Outro comportamento inseguro'};
+    openModal(`Denunciar ${name}`,`<p>A denúncia vai para a área de moderação e não é mostrada ao outro jogador.</p><div class="choice-grid">${Object.entries(reasons).map(([id,label])=>`<button class="choice" data-report-reason="${id}"><b>⚠️ ${label}</b><span>Enviar registro seguro</span></button>`).join('')}</div><button class="btn" data-report-cancel>Cancelar</button>`,root=>{
+      $$('[data-report-reason]',root).forEach(btn=>btn.onclick=async()=>{btn.disabled=true;const result=await window.OTTHOS_RTDB?.reportPlayer?.(uid,btn.dataset.reportReason);if(result?.ok===false||result===false){btn.disabled=false;toast(result?.error||'Não foi possível enviar a denúncia.','warn');return;}closeModal();toast('Denúncia registrada. Um responsável pode também bloquear esse jogador.','good',3000);});
+      $('[data-report-cancel]',root).onclick=closeModal;
+    });
+  }
   function openRemotePlayerActions(uid,ghost){
+    if(!guardianCommunicationAllowed()){toast('As interações foram desativadas por um responsável.','warn');return;}
     const name=ghost.userData.displayName||'Jogador',nearLake=isNearFishingArea()||player.boating,nearCamp=nearestActiveCampfire(8),nearHunt=Math.hypot(player.x+96,player.z+72)<25;
     const cooperative=`${player.vehicle&&!player.car.passengerOf&&!player.car.passengerUid&&!player.car.passengerBotId?'<button class="choice" data-player-action="vehiclePassenger"><b>🚗 Passageiro</b><span>Convidar para o seu carro</span></button>':''}${player.boating&&!player.boat.passengerOf&&!player.boat.passengerUid&&!player.boat.passengerBotId?'<button class="choice" data-player-action="boatPassenger"><b>🛶 Passageiro</b><span>Convidar para o seu barco</span></button>':''}${nearLake?'<button class="choice" data-player-action="fishTogether"><b>🎣 Pescar juntos</b><span>Cada jogador recebe o próprio peixe</span></button>':''}${nearCamp?'<button class="choice" data-player-action="campfireJoin"><b>🔥 Fogueira</b><span>Convidar para sentar e cozinhar</span></button>':''}${nearHunt?'<button class="choice" data-player-action="huntTogether"><b>🐾 Rastrear juntos</b><span>Atividade infantil sem violência</span></button>':''}`;
-    openModal(name,`<p>Interaja com este jogador em tempo real. Ações conjuntas só começam depois que ele aceitar.</p><div class="choice-grid remote-social-grid"><button class="choice" data-player-action="wave"><b>👋 Acenar</b><span>Saudação imediata</span></button><button class="choice" data-player-action="dance"><b>🕺 Dançar juntos</b><span>Requer aceite</span></button><button class="choice" data-player-action="play"><b>🎈 Brincar</b><span>Requer aceite</span></button><button class="choice" data-player-action="highfive"><b>🙌 Toca aqui</b><span>Requer aceite</span></button><button class="choice" data-player-action="hug"><b>🤗 Abraçar</b><span>Requer aceite</span></button><button class="choice" data-player-action="selfie"><b>📸 Selfie</b><span>Requer aceite</span></button>${cooperative}<button class="choice" data-player-action="giftCoins"><b>🪙 Dar 10 moedas</b><span>Presente online</span></button><button class="choice" data-player-action="giftCrystal"><b>💎 Dar cristal</b><span>Usa 1 cristal</span></button><button class="choice" data-player-action="challenge"><b>⚔️ Desafiar</b><span>Matemática, Português ou English</span></button><button class="choice" data-player-action="message"><b>💬 Mencionar no chat</b><span>Abrir conversa pública</span></button></div>`,root=>{$$('[data-player-action]',root).forEach(btn=>btn.onclick=async()=>{
-      const action=btn.dataset.playerAction;if(action==='message'){closeModal();openSocialHub();setTimeout(()=>{const input=$('#worldChatInput');if(input){input.value=`@${name} `;input.focus();}},100);return;}
-      if(action==='giftCoins'){if(state.profile.coins<10){toast('Você não tem 10 moedas.','warn');return;}const ok=await window.OTTHOS_RTDB?.sendGift?.(uid,{type:'coins',amount:10});if(ok){addCoins(-10);toast(`Você presenteou ${name}.`,'good');}}
-      else if(action==='giftCrystal'){if(state.inventory.crystals<1){toast('Você não tem cristal.','warn');return;}const ok=await window.OTTHOS_RTDB?.sendGift?.(uid,{type:'crystal',amount:1});if(ok){state.inventory.crystals--;saveState(true);toast(`Cristal enviado para ${name}.`,'good');}}
+    openModal(name,`<p>Interaja com este jogador em tempo real. Ações conjuntas só começam depois que ele aceitar.</p><div class="choice-grid remote-social-grid"><button class="choice" data-player-action="wave"><b>👋 Acenar</b><span>Saudação imediata</span></button><button class="choice" data-player-action="dance"><b>🕺 Dançar juntos</b><span>Requer aceite</span></button><button class="choice" data-player-action="play"><b>🎈 Brincar</b><span>Requer aceite</span></button><button class="choice" data-player-action="highfive"><b>🙌 Toca aqui</b><span>Requer aceite</span></button><button class="choice" data-player-action="hug"><b>🤗 Abraçar</b><span>Requer aceite</span></button><button class="choice" data-player-action="selfie"><b>📸 Selfie</b><span>Requer aceite</span></button>${cooperative}<button class="choice" data-player-action="giftCoins"><b>🪙 Símbolo de moedas</b><span>Gesto simbólico, sem transferir saldo</span></button><button class="choice" data-player-action="giftCrystal"><b>💎 Símbolo de cristal</b><span>Gesto simbólico, sem usar inventário</span></button><button class="choice" data-player-action="challenge"><b>⚔️ Desafiar</b><span>Matemática, Português ou English</span></button><button class="choice" data-player-action="message"><b>💬 Enviar frase</b><span>Abrir o chat seguro</span></button><button class="choice danger-zone" data-player-action="report"><b>⚠️ Denunciar</b><span>Registrar para moderação</span></button><button class="choice danger-zone" data-player-action="block"><b>🚫 Bloquear</b><span>Ocultar e impedir novos contatos</span></button></div>`,root=>{$$('[data-player-action]',root).forEach(btn=>btn.onclick=async()=>{
+      const action=btn.dataset.playerAction;if(action==='message'){closeModal();openSocialHub();return;}if(action==='report'){openReportPlayer(uid,name);return;}if(action==='block'){if(!(await confirmModal('Bloquear jogador',`Bloquear ${name} e ocultar seus contatos?`,'Bloquear','Cancelar')))return;const result=await window.OTTHOS_RTDB?.blockPlayer?.(uid);if(result?.ok===false||result===false){toast(result?.error||'Não foi possível bloquear.','warn');return;}remotePresence.delete(uid);const blockedGhost=world.ghosts.get(uid);if(blockedGhost){scene?.remove(blockedGhost);world.ghosts.delete(uid);}closeModal();toast(`${name} foi bloqueado.`,'good');return;}
+      if(action==='giftCoins'){const ok=await window.OTTHOS_RTDB?.sendGift?.(uid,{type:'coins',amount:10});if(ok)toast(`Símbolo de moedas enviado para ${name}.`,'good');}
+      else if(action==='giftCrystal'){const ok=await window.OTTHOS_RTDB?.sendGift?.(uid,{type:'crystal',amount:1});if(ok)toast(`Símbolo de cristal enviado para ${name}.`,'good');}
       else if(action==='challenge'){openChallengePicker(uid,name);return;}
       else if(action==='wave'){const ok=await window.OTTHOS_RTDB?.sendInteraction?.(uid,{type:'wave'});if(ok){triggerEmote('wave');toast(`Você acenou para ${name}.`,'good');}}
       else{await sendSocialActionRequest(uid,name,action,{boatId:state.boats.activeBoatId||'',vehicleId:player.car.id||'',campfireId:nearCamp?.data?.id||''});}
@@ -4371,40 +4474,41 @@
     const extensionItems=[];for(const[ownerUid,items]of Object.entries(pendingCloudExtensions||{}))if(ownerUid!==me)for(const item of Object.values(items||{}))if(item)extensionItems.push({...item,ownerUid});
     const extensionKeys=new Set(extensionItems.map(x=>x.id));for(const e of [...world.houseExtensions])if(e.data.remote&&!extensionKeys.has(e.data.id)){worldGroup.remove(e.group);world.houseExtensions=world.houseExtensions.filter(x=>x!==e);const it=world.interactables.find(x=>x.id===`extension-${e.data.id}`);if(it)it.disabled=true;}extensionItems.forEach(item=>spawnHouseExtension(item,true));
   }
-  function remotePlayerEvent(data){if(!data||data.uid===window.OTTHOS_RTDB?.uid)return;remotePresence.set(data.uid,data);let ghost=world.ghosts.get(data.uid);if(scene&&!ghost){ghost=createGhost(data.color||0x5ad8ff,data.name||'Jogador');world.ghosts.set(data.uid,ghost);}if(ghost){updateGhostName(ghost,data.name);ghost.userData.target=data;}refreshOpenSocialHub();}
-  window.addEventListener('otthos:mp-status',e=>{multiplayerState={...multiplayerState,...e.detail};state.multiplayer.cloudReady=!!multiplayerState.connected;if(e.detail?.uid)state.multiplayer.cloudUid=e.detail.uid;if(Array.isArray(e.detail?.players)){remotePresence.clear();e.detail.players.filter(p=>p.uid!==window.OTTHOS_RTDB?.uid).forEach(p=>remotePresence.set(p.uid,p));}updateMultiplayerBadge();refreshOpenSocialHub();});
+  function remotePlayerEvent(data){if(!guardianMultiplayerAllowed()||!data||data.uid===window.OTTHOS_RTDB?.uid||window.OTTHOS_RTDB?.isPlayerBlocked?.(data.uid))return;const safeData={...data,name:remotePlayerName(data.name,data.uid)};remotePresence.set(data.uid,safeData);let ghost=world.ghosts.get(data.uid);if(scene&&!ghost){ghost=createGhost(data.color||0x5ad8ff,safeData.name);world.ghosts.set(data.uid,ghost);}if(ghost){updateGhostName(ghost,safeData.name);ghost.userData.target=safeData;}refreshOpenSocialHub();}
+  window.addEventListener('otthos:mp-status',e=>{multiplayerState={...multiplayerState,...e.detail};state.multiplayer.cloudReady=!!multiplayerState.connected;if(e.detail?.uid)state.multiplayer.cloudUid=e.detail.uid;if(e.detail?.room)state.multiplayer.room=normalizeRoomId(e.detail.room);if(Array.isArray(e.detail?.players)){remotePresence.clear();e.detail.players.filter(p=>p.uid!==window.OTTHOS_RTDB?.uid&&!window.OTTHOS_RTDB?.isPlayerBlocked?.(p.uid)).forEach(p=>remotePresence.set(p.uid,{...p,name:remotePlayerName(p.name,p.uid)}));}updateMultiplayerBadge();refreshOpenSocialHub();});
+  window.addEventListener('otthi:guardian-settings',e=>{state.guardian={...state.guardian,...(e.detail||{})};if(!guardianCommunicationAllowed())closeChallengePrompt();if(!guardianMultiplayerAllowed()){for(const ghost of world.ghosts.values())scene?.remove(ghost);world.ghosts.clear();remotePresence.clear();}saveState();updateOnlineAttention();updateMultiplayerBadge();refreshOpenSocialHub();});
   window.addEventListener('otthos:mp-player',e=>remotePlayerEvent(e.detail));
   window.addEventListener('otthos:mp-leave',e=>{const id=e.detail?.uid;remotePresence.delete(id);if(player.boat.passengerUid===id)player.boat.passengerUid='';if(player.car.passengerUid===id)player.car.passengerUid='';const ghost=world.ghosts.get(id);if(ghost){scene?.remove(ghost);world.ghosts.delete(id);}multiplayerState.count=Math.max(1,remotePresence.size+1);updateMultiplayerBadge();refreshOpenSocialHub();});
   window.addEventListener('otthos:cloud-profile',e=>mergeCloudProgress(e.detail?.progress));
   window.addEventListener('otthos:campfires-cloud',e=>{pendingCloudCampfires=e.detail||{};applyCloudWorldObjects();});
   window.addEventListener('otthos:extensions-cloud',e=>{pendingCloudExtensions=e.detail||{};applyCloudWorldObjects();});
   window.addEventListener('otthos:houses',e=>{cloudHouses.clear();for(const [id,data] of Object.entries(e.detail||{}))cloudHouses.set(id,data);reconcileCloudHouses();});
-  window.addEventListener('otthos:chat',e=>{const m=e.detail;if(!m||Number(m.createdAt||0)<=Number(state.social.chatHiddenBefore||0))return;const existing=cloudChat.findIndex(x=>x.id===m.id);if(existing>=0)cloudChat[existing]=m;else cloudChat.push(m);cloudChat.sort((a,b)=>Number(a.createdAt||0)-Number(b.createdAt||0));while(cloudChat.length>60)cloudChat.shift();refreshOpenSocialHub();if(m.senderUid!==window.OTTHOS_RTDB?.uid)toast(`${m.name}: ${m.text}`,'good',2200);});
+  window.addEventListener('otthos:chat',e=>{const incoming=e.detail;if(!guardianCommunicationAllowed()||!incoming||window.OTTHOS_RTDB?.isPlayerBlocked?.(incoming.senderUid)||Number(incoming.createdAt||0)<=Number(state.social.chatHiddenBefore||0))return;const m={...incoming,name:remotePlayerName(incoming.name,incoming.senderUid)};const existing=cloudChat.findIndex(x=>x.id===m.id);if(existing>=0)cloudChat[existing]=m;else cloudChat.push(m);cloudChat.sort((a,b)=>Number(a.createdAt||0)-Number(b.createdAt||0));while(cloudChat.length>60)cloudChat.shift();refreshOpenSocialHub();if(m.senderUid!==window.OTTHOS_RTDB?.uid)toast(`${m.name}: ${m.text}`,'good',2200);});
   window.addEventListener('otthos:chat-removed',e=>{const id=e.detail?.id,index=cloudChat.findIndex(m=>m.id===id);if(index>=0)cloudChat.splice(index,1);refreshOpenSocialHub();});
-  window.addEventListener('otthos:gift',e=>{const gift=e.detail;if(!gift)return;if(gift.type==='coins'){state.profile.coins+=Number(gift.amount||0);}else if(gift.type==='crystal'){state.inventory.crystals=(state.inventory.crystals||0)+Number(gift.amount||1);}saveState(true);toast(`🎁 ${gift.senderName||'Jogador'} enviou um presente!`,'good',2600);});
-  window.addEventListener('otthos:interaction',e=>{const it=e.detail;if(!it)return;const sender=it.senderName||'Jogador';
-    if(it.type==='boatPassengerLeft'){player.boat.passengerUid='';toast(`${sender} saiu do barco.`,'warn',1900);}
+  window.addEventListener('otthos:gift',e=>{const gift=e.detail;if(!guardianCommunicationAllowed()||!gift)return;if(!((gift.type==='coins'&&Number(gift.amount)===10)||(gift.type==='crystal'&&Number(gift.amount)===1)))return;toast('🎁 Você recebeu um presente simbólico!','good',2600);});
+  window.addEventListener('otthos:interaction',e=>{const it=e.detail;if(!guardianCommunicationAllowed()||!it)return;const sender='Outro jogador';
+    if(it.type==='boatPassengerLeft'){if(player.boat.passengerUid!==it.senderUid)return;player.boat.passengerUid='';toast(`${sender} saiu do barco.`,'warn',1900);}
     else if(it.type==='boatEnded'){if(player.boating&&player.boat.passengerOf===it.senderUid)exitBoat(true);toast('O motorista encerrou o passeio de barco.','warn',2300);}
-    else if(it.type==='vehiclePassengerLeft'){player.car.passengerUid='';toast(`${sender} saiu do carro.`,'warn',1900);}
+    else if(it.type==='vehiclePassengerLeft'){if(player.car.passengerUid!==it.senderUid)return;player.car.passengerUid='';toast(`${sender} saiu do carro.`,'warn',1900);}
     else if(it.type==='vehicleEnded'){if(player.vehicle&&player.car.passengerOf===it.senderUid)exitVehicle(true);toast('O motorista encerrou o passeio de carro.','warn',2300);}
     else if(it.type==='challengeAccepted')toast(`🎮 ${sender} aceitou seu desafio! Abra Online para jogar.`,'good',3400);
     else if(it.type==='challengeDeclined')toast(`${sender} recusou o desafio.`,'warn',2400);
     else if(it.type==='socialRequestResult'){
-      const status=it.status||'',action=it.actionType||'';if(status==='accepted'){toast(`✅ ${sender} aceitou ${socialActionLabel(action)}.`,'good',2600);applyAcceptedSocialAction(action,{requestId:it.requestId,partnerName:sender,partnerUid:it.senderUid,role:'host'});}else if(status==='declined')toast(`${sender} recusou o convite.`,'warn',2300);else toast(it.extra?.reason||'O convite foi cancelado ou expirou.','warn',2500);
+      const status=it.status||'',action=it.actionType||'';if(status==='accepted'){toast(`✅ ${sender} aceitou ${socialActionLabel(action)}.`,'good',2600);applyAcceptedSocialAction(action,{requestId:it.requestId,partnerName:sender,partnerUid:it.senderUid,role:'host'});}else if(status==='declined')toast(`${sender} recusou o convite.`,'warn',2300);else toast('O convite foi cancelado ou expirou.','warn',2500);
     }else{const social=it.type==='wave'?'wave':'wave';triggerEmote(social);toast(`👋 ${sender} acenou para você.`,'good',2200);}
   });
-  window.addEventListener('otthos:social-request',e=>{const r=e.detail;if(!r)return;incomingSocialRequests.set(r.id,r);updateOnlineAttention();refreshOpenSocialHub();if(r.status==='pending'&&Number(r.expiresAt||0)>Date.now()){showIncomingSocialRequest(r);if(!shownSocialToasts.has(r.id)){shownSocialToasts.add(r.id);toast(`🤝 ${r.fromName||'Jogador'} quer ${socialActionLabel(r.actionType)}.`,'good',3000);}}else if(promptSocialRequestId===r.id)closeChallengePrompt();});
+  window.addEventListener('otthos:social-request',e=>{const incoming=e.detail;if(!guardianCommunicationAllowed()||!incoming)return;const r={...incoming,fromName:remotePlayerName(incoming.fromName,incoming.fromUid),toName:remotePlayerName(incoming.toName,incoming.toUid)};incomingSocialRequests.set(r.id,r);updateOnlineAttention();refreshOpenSocialHub();if(r.status==='pending'&&Number(r.expiresAt||0)>Date.now()){showIncomingSocialRequest(r);if(!shownSocialToasts.has(r.id)){shownSocialToasts.add(r.id);toast(`🤝 ${r.fromName} quer ${socialActionLabel(r.actionType)}.`,'good',3000);}}else if(promptSocialRequestId===r.id)closeChallengePrompt();});
   window.addEventListener('otthos:social-request-removed',e=>{incomingSocialRequests.delete(e.detail?.id);if(promptSocialRequestId===e.detail?.id)closeChallengePrompt();updateOnlineAttention();refreshOpenSocialHub();});
   setInterval(()=>window.OTTHOS_RTDB?.expireSocialRequests?.(),10000);
-  window.addEventListener('otthos:challenge',e=>{const c=e.detail;if(!c)return;incomingChallenges.set(c.id,c);updateOnlineAttention();refreshOpenSocialHub();if(c.status==='pending'){showIncomingChallengePrompt(c);if(!shownChallengeToasts.has(c.id)){shownChallengeToasts.add(c.id);toast(`⚔️ ${c.fromName||'Jogador'} enviou ${multiplayerGameLabel(c.type)}!`,'good',3400);}}});
+  window.addEventListener('otthos:challenge',e=>{const incoming=e.detail;if(!guardianCommunicationAllowed()||!incoming)return;const c={...incoming,fromName:remotePlayerName(incoming.fromName,incoming.fromUid),toName:remotePlayerName(incoming.toName,incoming.toUid)};incomingChallenges.set(c.id,c);updateOnlineAttention();refreshOpenSocialHub();if(c.status==='pending'){showIncomingChallengePrompt(c);if(!shownChallengeToasts.has(c.id)){shownChallengeToasts.add(c.id);toast(`⚔️ ${c.fromName} enviou ${multiplayerGameLabel(c.type)}!`,'good',3400);}}});
   window.addEventListener('otthos:challenge-removed',e=>{incomingChallenges.delete(e.detail?.id);updateOnlineAttention();refreshOpenSocialHub();});
-  window.addEventListener('otthos:game-session',e=>{const s=e.detail;if(!s)return;gameSessions.set(s.id,s);updateOnlineAttention();refreshOpenSocialHub();if(s.status==='active'){const mine=s.players?.[window.OTTHOS_RTDB?.uid];if(!mine?.finished&&!activeMultiplayerGameId)showReadySessionPrompt(s);}if(s.status==='active'||s.status==='completed')maybeShowMultiplayerResult(s);});
+  window.addEventListener('otthos:game-session',e=>{const incoming=e.detail;if(!guardianCommunicationAllowed()||!incoming)return;const s=sanitizeRemoteSession(incoming);gameSessions.set(s.id,s);updateOnlineAttention();refreshOpenSocialHub();if(s.status==='active'){const mine=s.players?.[window.OTTHOS_RTDB?.uid];if(!mine?.finished&&!activeMultiplayerGameId)showReadySessionPrompt(s);}if(s.status==='active'||s.status==='completed')maybeShowMultiplayerResult(s);});
   window.addEventListener('otthos:game-session-removed',e=>{gameSessions.delete(e.detail?.id);updateOnlineAttention();refreshOpenSocialHub();});
-  window.addEventListener('otthos:rtdb-ready',async()=>{if(running||hasValidPlayerName()){const ok=await window.OTTHOS_RTDB?.connect?.({name:state.profile.name||'Jogador'});if(ok){window.OTTHOS_RTDB?.syncCampfires?.(state.campfires);window.OTTHOS_RTDB?.syncHouseExtensions?.(state.houseExtensions);}}});
+  window.addEventListener('otthos:rtdb-ready',async()=>{try{const guardian=await window.OTTHOS_RTDB?.getGuardianSettings?.();if(guardian&&typeof guardian==='object')state.guardian={...state.guardian,...(guardian.settings||guardian)};}catch{}if(!guardianMultiplayerAllowed()){window.OTTHOS_RTDB?.disconnect?.();return;}if(running||hasValidPlayerName()){const ok=await window.OTTHOS_RTDB?.connect?.({name:publicPlayerName()});if(ok){window.OTTHOS_RTDB?.syncCampfires?.(state.campfires);window.OTTHOS_RTDB?.syncHouseExtensions?.(state.houseExtensions);}}});
 
   function initLocalMultiplayer(){
     if(typeof BroadcastChannel==='function'){localChannel=new BroadcastChannel('otthos-life-world-v636');localChannel.onmessage=e=>{const data=e.data;if(!data||data.id===state.profile.playerId)return;if(data.type==='leave'){const ghost=world.ghosts.get(data.id);if(ghost){scene.remove(ghost);world.ghosts.delete(data.id);}return;}remotePlayerEvent({...data,uid:data.id});};window.addEventListener('beforeunload',()=>localChannel?.postMessage({type:'leave',id:state.profile.playerId}));}
-    window.OTTHOS_MULTIPLAYER={version:7,playerId:state.profile.playerId,mode:window.OTTHOS_RTDB?.configured?'firebase-public-world':'local-preview',connect:()=>window.OTTHOS_RTDB?.connect?.({name:state.profile.name||'Jogador'})||true,publish:payload=>{localChannel?.postMessage(payload);window.OTTHOS_RTDB?.publish?.(payload);},adapter:window.OTTHOS_RTDB?.configured?'Firebase Realtime Database':'BroadcastChannel'};updateMultiplayerBadge();if(window.OTTHOS_RTDB?.configured&&hasValidPlayerName())window.OTTHOS_RTDB.connect({name:state.profile.name||'Jogador'});
+    window.OTTHOS_MULTIPLAYER={version:8,playerId:state.profile.playerId,mode:window.OTTHOS_RTDB?.configured?'firebase-neighborhoods':'local-preview',connect:()=>guardianMultiplayerAllowed()?(window.OTTHOS_RTDB?.connect?.({name:publicPlayerName()})||true):false,publish:payload=>{if(!guardianMultiplayerAllowed())return false;localChannel?.postMessage(payload);window.OTTHOS_RTDB?.publish?.(payload);return true;},adapter:window.OTTHOS_RTDB?.configured?'Firebase Realtime Database':'BroadcastChannel'};updateMultiplayerBadge();if(guardianMultiplayerAllowed()&&window.OTTHOS_RTDB?.configured&&hasValidPlayerName())window.OTTHOS_RTDB.connect({name:publicPlayerName()});
   }
   function multiplayerNameTexture(name){const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='rgba(5,18,34,.88)';ctx.strokeStyle='rgba(255,255,255,.92)';ctx.lineWidth=8;const r=30;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(8,8,c.width-16,c.height-16,r);else ctx.rect(8,8,c.width-16,c.height-16);ctx.fill();ctx.stroke();ctx.fillStyle='#fff';ctx.font='900 48px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(sanitizePlayerName(name)||'Jogador',c.width/2,c.height/2+2);const tex=new THREE.CanvasTexture(c);tex.minFilter=THREE.LinearFilter;tex.magFilter=THREE.LinearFilter;tex.generateMipmaps=false;return tex;}
   function updateLocalPlayerNameLabel(){if(!playerGroup?.userData?.nameLabel)return;const clean=playerDisplayName();if(playerGroup.userData.displayName===clean)return;const label=playerGroup.userData.nameLabel,old=label.material.map;label.material.map=multiplayerNameTexture(clean);label.material.needsUpdate=true;old?.dispose?.();playerGroup.userData.displayName=clean;}
@@ -4416,7 +4520,8 @@
     const label=new THREE.Sprite(new THREE.SpriteMaterial({map:multiplayerNameTexture(name),transparent:true,depthWrite:false,depthTest:false}));label.position.set(0,3.05,0);label.scale.set(2.75,.69,1);label.renderOrder=999;g.add(label);g.userData.nameLabel=label;g.userData.displayName=sanitizePlayerName(name)||'Jogador';g.userData.avatar=avatar;g.userData.carVisual=car;g.userData.boatVisual=boat;g.userData.limbs={leftArm,rightArm,leftLeg,rightLeg};g.userData.phase=Math.random()*6.28;scene.add(g);return g;
   }
   function updateMultiplayer(dt){
-    const now=performance.now(),payload={type:'position',id:state.profile.playerId,name:state.profile.name||'Jogador',x:+player.x.toFixed(2),y:+player.y.toFixed(2),z:+player.z.toFixed(2),r:+player.facing.toFixed(3),vehicle:!!player.vehicle,vehicleId:player.car.id||'',vehicleRole:player.vehicle?(player.car.passengerOf?'passenger':'driver'):'',vehiclePassengerOf:player.car.passengerOf||'',vehiclePassengerUid:player.car.passengerUid||'',vehiclePassengerBotId:player.car.passengerBotId||'',boating:!!player.boating,boatId:state.boats.activeBoatId||'',boatRole:player.boating?(player.boat.passengerOf?'passenger':'driver'):'',passengerOf:player.boat.passengerOf||'',boatPassengerUid:player.boat.passengerUid||'',boatPassengerBotId:player.boat.passengerBotId||'',transitMode:player.transit.mode||'',scaleMode:player.scaleMode,crouched:!!player.crouched,emoteType:player.emoteType||'',emoteSeq:Number(player.emoteSeq||0),color:0x5ad8ff};
+    if(!guardianMultiplayerAllowed())return;
+    const now=performance.now(),publicName=publicPlayerName(),payload={type:'position',id:state.profile.playerId,name:publicName,x:+player.x.toFixed(2),y:+player.y.toFixed(2),z:+player.z.toFixed(2),r:+player.facing.toFixed(3),vehicle:!!player.vehicle,vehicleId:player.car.id||'',vehicleRole:player.vehicle?(player.car.passengerOf?'passenger':'driver'):'',vehiclePassengerOf:player.car.passengerOf||'',vehiclePassengerUid:player.car.passengerUid||'',vehiclePassengerBotId:player.car.passengerBotId||'',boating:!!player.boating,boatId:state.boats.activeBoatId||'',boatRole:player.boating?(player.boat.passengerOf?'passenger':'driver'):'',passengerOf:player.boat.passengerOf||'',boatPassengerUid:player.boat.passengerUid||'',boatPassengerBotId:player.boat.passengerBotId||'',transitMode:player.transit.mode||'',scaleMode:player.scaleMode,crouched:!!player.crouched,emoteType:player.emoteType||'',emoteSeq:Number(player.emoteSeq||0),color:0x5ad8ff};
     const changed=!lastPublishSnapshot||Math.hypot(payload.x-lastPublishSnapshot.x,payload.z-lastPublishSnapshot.z)>.06||Math.abs(payload.r-lastPublishSnapshot.r)>.025||payload.vehicle!==lastPublishSnapshot.vehicle||payload.vehicleRole!==lastPublishSnapshot.vehicleRole||payload.vehiclePassengerUid!==lastPublishSnapshot.vehiclePassengerUid||payload.boating!==lastPublishSnapshot.boating||payload.boatRole!==lastPublishSnapshot.boatRole||payload.boatPassengerUid!==lastPublishSnapshot.boatPassengerUid||payload.transitMode!==lastPublishSnapshot.transitMode||payload.scaleMode!==lastPublishSnapshot.scaleMode||payload.crouched!==lastPublishSnapshot.crouched||payload.emoteSeq!==lastPublishSnapshot.emoteSeq;
     if((changed&&now-lastPublish>240)||now-lastPublishHeartbeat>2200){lastPublish=now;lastPublishHeartbeat=now;lastPublishSnapshot=payload;localChannel?.postMessage(payload);window.OTTHOS_RTDB?.publish?.(payload);}
     for(const ghost of world.ghosts.values()){
@@ -4427,10 +4532,42 @@
     }
   }
 
-
   // ===== MODULE: 29-game-loop-controls-gamepad.js =====
+  let usageLastTickAt=Date.now(),usageLastSaveAt=Date.now(),sessionLimitHandled=false,worldInitializationReady=false;
+  function updatePlayUsage(){
+    const now=Date.now(),elapsed=clamp((now-usageLastTickAt)/1000,0,5);usageLastTickAt=now;
+    if(!running||paused||document.hidden)return;
+    state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{})};
+    state.usage.totalSeconds=Number(state.usage.totalSeconds||0)+elapsed;
+    state.usage.sessionSeconds=Number(state.usage.sessionSeconds||0)+elapsed;
+    state.usage.lastPlayedAt=now;
+    if(now-usageLastSaveAt>=30000){usageLastSaveAt=now;saveState();}
+    const limit=Math.max(0,Number(state.guardian?.sessionLimitMinutes||0))*60;
+    if(limit>0&&state.usage.sessionSeconds>=limit&&!sessionLimitHandled){
+      sessionLimitHandled=true;state.usage.sessionLockedAt=now;saveState(true);stopGame();
+      openModal('Tempo de jogo concluído','<div class="parent-gate"><span>⏰</span><h3>Hora de fazer uma pausa</h3><p>O limite definido na Área dos responsáveis foi alcançado. Um responsável pode alterar esse tempo usando a senha da conta.</p><button class="btn primary xl" data-session-close>Voltar ao menu</button></div>',root=>{
+        $('[data-session-close]',root).onclick=closeModal;
+      });
+    }
+  }
+  document.addEventListener('visibilitychange',()=>{usageLastTickAt=Date.now();},{passive:true});
+  const nextPaint=()=>new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+  function showWorldLoading(progress,label){
+    const value=clamp(Math.round(Number(progress)||0),0,100);
+    openModal('Preparando o mundo',`<div class="parent-gate"><span>🌎</span><h3>${label}</h3><p>Seu progresso já está protegido neste aparelho.</p><div class="mission-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${value}"><i style="width:${value}%"></i></div><small>${value}%</small></div>`);
+    if(els.modalClose)els.modalClose.hidden=true;
+  }
+  function showWorldLoadFailure(error,resetPosition){
+    console.error('[OTTHI START] Falha ao preparar o mundo:',error);
+    running=false;showScreen('lobby');if(els.modalClose)els.modalClose.hidden=false;
+    openModal('Não foi possível abrir o mundo',`<div class="parent-gate"><span>🛠️</span><h3>O progresso não foi apagado</h3><p>${escapeHtml(error?.message||'Falha ao carregar o ambiente 3D. Verifique a conexão e tente novamente.')}</p><button class="btn primary xl" data-retry-world>Recarregar e tentar novamente</button><button class="btn" data-close-world-error>Ficar no menu</button></div>`,root=>{
+      $('[data-retry-world]',root).onclick=async()=>{await persistBeforeOtthiReload();location.reload();};
+      $('[data-close-world-error]',root).onclick=closeModal;
+    });
+  }
   function gameLoop(){
     if(!running)return;raf=requestAnimationFrame(gameLoop);const dt=Math.min(.033,clock.getDelta());samplePerformance(dt);
+    updatePlayUsage();
     if(!paused){
       const tier=qualityTier();pollGamepad();
       // Movimento e câmera permanecem em todo quadro; sistemas pesados usam orçamento próprio.
@@ -4454,7 +4591,7 @@
       perf.lodAcc+=dt;const lodRate=tier==='high'?1/10:tier==='balanced'?1/6:1/4;
       if(perf.lodAcc>=lodRate){const step=perf.lodAcc;perf.lodAcc=0;updateVisualLOD(step);}
       perf.cloudAcc+=dt;const cloudRate=tier==='high'?1/12:tier==='balanced'?1/8:1/5;if(perf.cloudAcc>=cloudRate){const step=perf.cloudAcc;perf.cloudAcc=0;updateClouds(step);}
-      perf.modeAuditAcc+=dt;if(perf.modeAuditAcc>=.75){perf.modeAuditAcc=0;auditPlayerMode('loop');}
+      perf.modeAuditAcc+=dt;if(perf.modeAuditAcc>=.75){perf.modeAuditAcc=0;ensureViewportCoherence();auditPlayerMode('loop');}
       perf.panelAcc+=dt;if(perf.panelAcc>=1){perf.panelAcc=0;refreshTechnicalPanel();}
     }
     const renderW=Math.max(1,perf.lastRenderW||els.stage?.clientWidth||innerWidth),renderH=Math.max(1,perf.lastRenderH||els.stage?.clientHeight||innerHeight);renderer.setScissorTest(false);renderer.setViewport(0,0,renderW,renderH);renderer.autoClear=true;renderer.render(scene,camera);
@@ -4499,12 +4636,16 @@
 
   async function startGame(resetPosition=false){
     await dbReady;
+    if(!window.OTTHI_RELEASE_COHERENT){openModal('Atualização incompleta','<p>Os arquivos do jogo pertencem a versões diferentes. Termine o envio da V646 e atualize a página; seu progresso está preservado.</p>');return;}
+    state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{})};const sessionLimitSeconds=Math.max(0,Number(state.guardian?.sessionLimitMinutes||0))*60;
+    if(sessionLimitSeconds>0&&(Number(state.usage.sessionLockedAt||0)>0||Number(state.usage.sessionSeconds||0)>=sessionLimitSeconds)){state.usage.sessionLockedAt=Number(state.usage.sessionLockedAt||Date.now());saveState(true);openModal('Tempo de jogo concluído','<div class="parent-gate"><span>⏰</span><h3>Nova sessão exige um responsável</h3><p>O limite continua bloqueado mesmo ao voltar ao menu. Um responsável pode liberar outra sessão usando a senha da conta.</p><button class="btn primary xl" data-session-parent>Área dos responsáveis</button><button class="btn" data-session-back>Ficar no menu</button></div>',root=>{$('[data-session-parent]',root).onclick=()=>openParentGate(false);$('[data-session-back]',root).onclick=closeModal;});return;}
     if((!hasValidPlayerName()||!accountLinked())&&!(accountPromptWasHandled())){openAccountCenter(true,()=>{state.flags.accountPromptedV635=true;saveState(true);startGame(resetPosition);});return;}
     if(!hasValidPlayerName()){openPlayerNameModal(true,()=>startGame(resetPosition));return;}
-    closeModal();showScreen('game');
-    state.ui.quickOpen=false;state.ui.skillsOpen=false;state.ui.needsOpen=false;state.ui.missionOpen=false;syncMobilePanels();els.game.classList.remove('needs-expanded');els.missionCard.classList.remove('expanded');if(!scene){if(!initThree()){showScreen('lobby');return;}setupControls();}else{applyAvatarCustomization();}
+    await saveState(true);showWorldLoading(12,'Protegendo o progresso...');await nextPaint();showScreen('game');showWorldLoading(28,'Organizando o bairro...');await nextPaint();
+    state.ui.quickOpen=false;state.ui.skillsOpen=false;state.ui.needsOpen=false;state.ui.missionOpen=false;syncMobilePanels();els.game.classList.remove('needs-expanded');els.missionCard.classList.remove('expanded');
+    try{if(!worldInitializationReady){if(scene||renderer)throw new Error('A inicialização 3D anterior ficou incompleta. Recarregue com segurança para tentar novamente.');showWorldLoading(42,'Construindo ruas, casas e transportes...');await nextPaint();if(!initThree())throw new Error('O navegador não conseguiu iniciar o ambiente 3D.');setupControls();worldInitializationReady=true;showWorldLoading(88,'Ativando controles e personagens...');await nextPaint();}else{applyAvatarCustomization();showWorldLoading(88,'Restaurando seu personagem...');await nextPaint();}}catch(error){worldInitializationReady=false;showWorldLoadFailure(error,resetPosition);return;}
     if(els.toolsBtn){els.toolsBtn.firstChild.textContent=equippedTool().icon;$('span',els.toolsBtn).textContent=equippedTool().name;}
-    if(resetPosition){player.x=0;player.z=8;player.y=0;}else restorePosition();player.scaleMode=state.abilities?.scaleMode||'normal';player.crouched=!!state.abilities?.crouched;updateAbilityUI();running=true;paused=false;window.OTTHI_ROOM_WORLD?.apply?.(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central',{toast:false,teleport:state.multiplayer.room!==(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central')});clock.start();evaluateMissions();updateHUD();updateContext(true);updateNavigation(0,true);resize(true);cancelAnimationFrame(raf);gameLoop();toast('Bem-vindo à Vila do Sol!','good',2200);
+    if(resetPosition){player.x=0;player.z=8;player.y=0;}else restorePosition();player.scaleMode=state.abilities?.scaleMode||'normal';player.crouched=!!state.abilities?.crouched;updateAbilityUI();state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{}),sessionStartedAt:Number(state.usage?.sessionStartedAt||Date.now()),lastPlayedAt:Date.now()};sessionLimitHandled=false;usageLastTickAt=Date.now();running=true;paused=false;window.OTTHI_ROOM_WORLD?.apply?.(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central',{toast:false,teleport:state.multiplayer.room!==(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central')});clock.start();evaluateMissions();updateHUD();updateContext(true);updateNavigation(0,true);resize(true);if(els.modalClose)els.modalClose.hidden=false;closeModal();cancelAnimationFrame(raf);gameLoop();toast('Bem-vindo à Vila do Sol!','good',2200);
   }
 
   // ===== MODULE: 30-pause-tests-public-api-bootstrap.js =====

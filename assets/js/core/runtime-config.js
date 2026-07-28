@@ -2,10 +2,16 @@
   'use strict';
   const repo = 'OTTHI';
   const baseUrl = new URL('./', location.href).href;
-  const savedRoom = (() => { try { return localStorage.getItem('otthi_selected_room_v1') || ''; } catch { return ''; } })();
+  const validRoomIds = ['bairro-central','bairro-floresta','bairro-lago','bairro-montanha','bairro-escola'];
+  const savedRoom = (() => {
+    try {
+      const value = localStorage.getItem('otthi_selected_room_v1') || '';
+      return validRoomIds.includes(value) ? value : '';
+    } catch { return ''; }
+  })();
   window.OTTHI_CONFIG = {
-    version: 645,
-    build: '645.0-consolidated-neighborhood-world',
+    version: 646,
+    build: '646.0-safe-rooms-atomic-pwa',
     repository: repo,
     baseUrl,
     firebaseRoot: 'otthosWorld',
@@ -20,6 +26,7 @@
     multiplayer: {
       publishIntervalMs: 250,
       heartbeatMs: 2200,
+      abandonedSlotMs: 30000,
       maxPlayersPerRoom: 10,
       interpolationMs: 180
     },
@@ -31,7 +38,7 @@
     },
     childSafety: {
       freeChatEnabled: false,
-      approvedPhrasesOnly: false,
+      approvedPhrasesOnly: true,
       hideRealNames: true
     }
   };

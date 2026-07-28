@@ -7,6 +7,8 @@
   let switching=false;
 
   function escapeText(value){return String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));}
+  function neutralPlayerName(uid=''){const suffix=String(uid||'0000').replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');return`Jogador ${suffix}`;}
+  function safeHouseName(id=''){return({home:'Casa inicial',blue:'Casa Azul',pink:'Casa Rosa',cabin:'Cabana da Floresta'})[String(id||'')]||'Casa online';}
   function roomInfo(id=selected){return rooms.find(room=>room.id===id)||rooms[0]||{id:'bairro-central',name:'Bairro Central',icon:'🏙️',capacity:10};}
   function roomCount(id){return Math.max(0,Number(counts[id]??window.OTTHOS_RTDB?.getRoomCounts?.()?.[id]??0));}
   function houses(){return Object.values(window.OTTHOS_RTDB?.getHouses?.()||{});}
@@ -29,7 +31,7 @@
       <div class="room-grid">${rooms.map(roomButton).join('')}</div>
       <div class="room-explanation"><b>O que muda ao entrar?</b><span>Você aparece na entrada real do bairro, o minimapa destaca a nova região, jogadores antigos saem da tela e entram somente as casas e crianças da nova sala.</span></div>
       <h3>Casas deste bairro</h3>
-      <div class="house-directory">${houseList.length?houseList.map(h=>`<div><span>🏠</span><b>${escapeText(h.name||`Casa de ${h.ownerName||'Jogador'}`)}</b><small>${escapeText(h.ownerName||'Morador')}</small></div>`).join(''):'<p>Nenhuma casa online registrada neste bairro ainda.</p>'}</div>
+      <div class="house-directory">${houseList.length?houseList.map(h=>`<div><span>🏠</span><b>${escapeText(safeHouseName(h.houseId))}</b><small>${escapeText(neutralPlayerName(h.ownerUid))}</small></div>`).join(''):'<p>Nenhuma casa online registrada neste bairro ainda.</p>'}</div>
     </section>`;
   }
 

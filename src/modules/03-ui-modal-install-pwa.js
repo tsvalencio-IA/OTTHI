@@ -162,6 +162,7 @@
   const OTTHI_UPDATE_INTERVAL_MS = 5 * 60 * 1000;
   let otthiUpdateReloading = false;
   let otthiLastUpdateCheck = 0;
+  let otthiServiceWorkerRegistration = null;
 
   function isOfficialOtthiGameAddress() {
     try {
@@ -195,15 +196,23 @@
     if (!force && now - otthiLastUpdateCheck < OTTHI_UPDATE_INTERVAL_MS) return false;
     otthiLastUpdateCheck = now;
     try {
-      const probe = new URL('app.js', OTTHI_GAME_LIVE_BASE);
+      const probe = new URL('release-manifest.json', OTTHI_GAME_LIVE_BASE);
       probe.searchParams.set('otthi_probe', String(now));
       const response = await fetch(probe.href, { cache:'no-store', credentials:'same-origin' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const source = await response.text();
-      const match = source.match(/const\s+OTTHI_GAME_WEB_BUILD\s*=\s*['\"]([^'\"]+)['\"]/);
-      const remoteBuild = match?.[1] || '';
-      if (remoteBuild && remoteBuild !== OTTHI_GAME_WEB_BUILD) {
-        await reloadForOtthiUpdate(remoteBuild);
+      const release = await response.json();
+      const remoteBuild = String(release?.build || '');
+      const remoteRevision = String(release?.revision || '');
+      if ((remoteBuild && remoteBuild !== OTTHI_GAME_WEB_BUILD)
+        || (remoteRevision && remoteRevision !== OTTHI_RELEASE_REVISION)) {
+        if (!otthiServiceWorkerRegistration) {
+          return reloadForOtthiUpdate(remoteRevision || remoteBuild);
+        }
+        await otthiServiceWorkerRegistration?.update?.().catch(() => {});
+        if (otthiServiceWorkerRegistration?.waiting) {
+          otthiServiceWorkerRegistration.waiting.postMessage({ type:'SKIP_WAITING' });
+        }
+        toast('Atualização encontrada. Ela será aplicada quando todos os arquivos forem validados.','good',3200);
         return true;
       }
     } catch (error) {
@@ -226,6 +235,7 @@
         scope: './',
         updateViaCache: 'none'
       });
+      otthiServiceWorkerRegistration = registration;
       if (registration.waiting) registration.waiting.postMessage({ type:'SKIP_WAITING' });
       registration.addEventListener('updatefound', () => {
         const worker = registration.installing;
@@ -250,12 +260,23 @@
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', registerOtthiGameUpdates, { once:true });
   }
-  window.addEventListener('online', () => probeOtthiGameUpdate(true), { passive:true });
+  window.addEventListener('offline', () => toast('Sem internet. O progresso continua salvo neste aparelho.','warn',3200), { passive:true });
+  window.addEventListener('online', () => {
+    toast('Conexão restabelecida. Sincronizando com segurança.','good',2600);
+    probeOtthiGameUpdate(true);
+  }, { passive:true });
   window.addEventListener('pageshow', () => probeOtthiGameUpdate(false), { passive:true });
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) probeOtthiGameUpdate(false);
   });
   updateInstallUI();
+  if (!window.OTTHI_RELEASE_COHERENT) {
+    setTimeout(() => openModal('Atualização incompleta',`<div class="parent-gate"><span>🧩</span><h3>Os arquivos publicados pertencem a versões diferentes</h3><p>Seu progresso está preservado. Termine de enviar todos os arquivos V646 e toque em verificar novamente.</p><button class="btn primary xl" data-coherence-reload>Verificar novamente</button></div>`,root=>{
+      $('[data-coherence-reload]',root).onclick=()=>reloadForOtthiUpdate(`coherence-${Date.now()}`);
+    }), 0);
+  } else if (!navigator.onLine) {
+    setTimeout(() => toast('Modo offline ativo. Seu progresso será sincronizado quando a internet voltar.','warn',3200), 400);
+  }
 
 
   const DAILY_QUEST_POOL=[

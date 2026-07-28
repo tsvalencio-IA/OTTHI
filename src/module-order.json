@@ -1,34 +1,34 @@
 {
-  "version": 643,
-  "build": "643.1-responsive-fullscreen-controls",
+  "version": 646,
+  "build": "646.0-safe-rooms-atomic-pwa",
   "javascript": [
     {
       "file": "src/modules/00-runtime-foundation.js",
       "startLine": 2,
       "endLine": 26,
       "description": "Runtime, utilitários, versão, storage e chaves de migração",
-      "sha256Body": "36bbd40a85b0832f3da3b96ec8300cb9e9db08bdea942bbbe75120d2459b5b35"
+      "sha256Body": "4962b13947cc5276304d121242c641003d8f3dd190b590464bd3c8b04ccd16e1"
     },
     {
       "file": "src/modules/01-build-persistence.js",
       "startLine": 27,
       "endLine": 142,
       "description": "Normalização, merge, tombstones e persistência das construções",
-      "sha256Body": "d73df03266f31264e6140b69e7022096be74b7e27145f065fbc896b659eb3264"
+      "sha256Body": "3f8afdb26389a7c545cbab59f4e7eb01656746e2fe5cb08e762edf157f7ef423"
     },
     {
       "file": "src/modules/02-state-save-cloud-account.js",
       "startLine": 143,
       "endLine": 396,
       "description": "Estado, save local, IndexedDB, nuvem e conta",
-      "sha256Body": "864e55a7f995c945c3d9057ba8d61e0147def25b1b55f1a72cf164e532cd37bf"
+      "sha256Body": "4d37d9e6079e014eccc90bf0cf46d072a34960228b7db8572de000b8c0ce3fcc"
     },
     {
       "file": "src/modules/03-ui-modal-install-pwa.js",
       "startLine": 397,
       "endLine": 658,
       "description": "Economia, flags, telas, modais, feedback, instalação e PWA",
-      "sha256Body": "09d8d7ae4da8643bfbad26c4b67dca190dbe9346e2f8d8365b663a8c61e8fa98"
+      "sha256Body": "d49232561be91aabe54e17ae6d1e18c9699c67ee5cf1848e731cbd811b8950ff"
     },
     {
       "file": "src/modules/04-education-daily-quiz.js",
@@ -49,7 +49,7 @@
       "startLine": 928,
       "endLine": 1063,
       "description": "Missões, objetivos, perfil, HUD, inventário e ferramentas",
-      "sha256Body": "f3b86ed2acae2d5f5e2be446fc80a8da2621a1853378f6e8459a429294c73404"
+      "sha256Body": "c4a5d532fe7e573e4bc5dec83b8c1e3b231ba492bae3af04f7c9cfe67955de34"
     },
     {
       "file": "src/modules/07-navigation-traffic-routes.js",
@@ -63,7 +63,7 @@
       "startLine": 1201,
       "endLine": 1359,
       "description": "Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",
-      "sha256Body": "bb545667e37ec3b02197583e302823f50faccd540492dfafe4725cf452835a37"
+      "sha256Body": "e7d047fb5a2e7a48508192e9e2ece88d4a5d2b680944744db392729fa8e26f58"
     },
     {
       "file": "src/modules/09-responsive-ar-quality-diagnostics.js",
@@ -147,7 +147,7 @@
       "startLine": 3097,
       "endLine": 3240,
       "description": "Construção do mundo, recursos, baús, casas em nuvem e interiores",
-      "sha256Body": "b7a424cb2956751b2f4a04b8da0eea0e41ce2be76dca124e05cfe119523f478f"
+      "sha256Body": "9fbfc0aef8b7e02388671063563ad0fd04f1381e3279c29759aa0d28fc5596d8"
     },
     {
       "file": "src/modules/21-interactions-shop-social-races.js",
@@ -182,7 +182,7 @@
       "startLine": 3755,
       "endLine": 3885,
       "description": "Three.js, qualidade, viewport, resize, posição segura e colisões",
-      "sha256Body": "187214936c536b14d6cb5b88bcf995eb239dc0251b6ce186e1cb32daf8c416d3"
+      "sha256Body": "530244db62e871e89f980499a3898a09034eac47ab606ad03877f1ee28542c12"
     },
     {
       "file": "src/modules/26-input-player-physics.js",
@@ -196,21 +196,21 @@
       "startLine": 4001,
       "endLine": 4157,
       "description": "Sociedade NPC, inimigos, combate, câmera, contexto, ação e necessidades",
-      "sha256Body": "f63005db9c6e4ab513050b258bca88a8470b1941eb888961682f2199ff42659c"
+      "sha256Body": "43d21ea8d076dbbace74c2fd7690661207e50cae040e25005a6fc2cde9e343df"
     },
     {
       "file": "src/modules/28-multiplayer-social-online.js",
       "startLine": 4158,
       "endLine": 4304,
       "description": "Desafios online, social, chat, presença, fantasmas e sincronização",
-      "sha256Body": "c5bfa2cdef965c984fb0fb26c47a3046e82456fbb6718e816998f669f2166910"
+      "sha256Body": "2ce2739711d08c603a4a6b50bf59609b4e533c4c00d2488999fab94eb8592647"
     },
     {
       "file": "src/modules/29-game-loop-controls-gamepad.js",
       "startLine": 4305,
       "endLine": 4377,
       "description": "Loop principal, controles, gamepad e início do jogo",
-      "sha256Body": "901b4ccf43ff5ddfba8cb563c10d92f4f8b4b58ef69864b5c72a1f5d9a2fb256"
+      "sha256Body": "8c10170bb54a4394eda513b1de7d18d548affb3ac1710562948660acc9b30b0a"
     },
     {
       "file": "src/modules/30-pause-tests-public-api-bootstrap.js",

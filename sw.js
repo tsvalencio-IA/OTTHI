@@ -1,26 +1,28 @@
-const CACHE = 'otthi-v645-1';
+const REVISION = '3849339b74c8828d';
+const CACHE = `otthi-v646-${REVISION}`;
 const CACHE_PREFIXES = ['otthi-','otthi-game-web-','otthos-life-world-main-'];
-const BUILD = '645.0-consolidated-neighborhood-world';
-const THREE_R128 = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+const BUILD = '646.0-safe-rooms-atomic-pwa';
+const VERSION = '646';
+const RELEASE_MANIFEST = './release-manifest.json?v=646';
 
 const REQUIRED_SHELL = [
-  './',
-  './index.html?v=645',
-  './style.css?v=645',
-  './assets/js/core/runtime-config.js?v=645',
-  './assets/js/core/safe-pointer.js?v=645',
-  './assets/js/core/viewport-manager.js?v=645',
-  './assets/js/save-db.js?v=645',
-  './firebase-config.js?v=645',
-  './assets/js/game-account.js?v=645',
-  './assets/js/multiplayer-rtdb.js?v=645',
-  './app.js?v=645',
-  './assets/js/ui/shared-modal.js?v=645',
-  './assets/js/core/performance-guardian.js?v=645',
-  './assets/js/multiplayer/room-manager.js?v=645',
-  './assets/js/education/adaptive-learning.js?v=645',
-  './assets/js/safety/child-safety.js?v=645',
-  './manifest.webmanifest?v=645'
+  './index.html?v=646',
+  './style.css?v=646',
+  './assets/vendor/three-r128.min.js?v=646',
+  './assets/js/core/runtime-config.js?v=646',
+  './assets/js/core/safe-pointer.js?v=646',
+  './assets/js/core/viewport-manager.js?v=646',
+  './assets/js/save-db.js?v=646',
+  './firebase-config.js?v=646',
+  './assets/js/game-account.js?v=646',
+  './assets/js/multiplayer-rtdb.js?v=646',
+  './app.js?v=646',
+  './assets/js/ui/shared-modal.js?v=646',
+  './assets/js/core/performance-guardian.js?v=646',
+  './assets/js/multiplayer/room-manager.js?v=646',
+  './assets/js/education/adaptive-learning.js?v=646',
+  './assets/js/safety/child-safety.js?v=646',
+  './manifest.webmanifest?v=646'
 ];
 
 const OPTIONAL_ASSETS = [
@@ -49,13 +51,12 @@ const OPTIONAL_ASSETS = [
   './assets/textures/emergency-metal-v632.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/favicon.png',
-  THREE_R128
+  './icons/favicon.png'
 ];
 
 function freshRequest(resource) {
   const source = typeof resource === 'string' ? resource : resource.url;
-  const external = /^https?:/i.test(source);
+  const external = /^https?:/i.test(source) && new URL(source).origin !== self.location.origin;
   return new Request(source, {
     cache: 'no-store',
     mode: external ? 'cors' : 'same-origin',
@@ -63,31 +64,85 @@ function freshRequest(resource) {
   });
 }
 
-async function fetchAndCache(cache, resource, required = false) {
+function releasePath(resource) {
+  const source = typeof resource === 'string' ? resource : resource.url;
+  const url = new URL(source, self.registration.scope);
+  const scope = new URL(self.registration.scope);
+  let path = decodeURIComponent(url.pathname);
+  if (path.startsWith(scope.pathname)) path = path.slice(scope.pathname.length);
+  path = path.replace(/^\.?\//, '');
+  return !path || path.endsWith('/') ? 'index.html' : path;
+}
+
+async function sha256(response) {
+  const bytes = await response.clone().arrayBuffer();
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, '0')).join('');
+}
+
+async function verifyResponse(response, resource, manifest) {
+  if (!response || !response.ok) throw new Error(`HTTP ${response?.status || 0}`);
+  const path = releasePath(resource);
+  const expected = manifest?.files?.[path];
+  if (!/^[a-f0-9]{64}$/.test(String(expected || ''))) {
+    throw new Error(`Hash ausente para ${path}`);
+  }
+  const actual = await sha256(response);
+  if (actual !== expected) throw new Error(`SHA-256 divergente em ${path}`);
+  return response;
+}
+
+async function fetchReleaseManifest() {
+  const response = await fetch(freshRequest(RELEASE_MANIFEST));
+  if (!response?.ok) throw new Error(`Manifesto da release: HTTP ${response?.status || 0}`);
+  const manifest = await response.clone().json();
+  if (String(manifest?.version) !== VERSION || manifest?.build !== BUILD
+    || manifest?.revision !== REVISION || manifest?.algorithm !== 'SHA-256') {
+    throw new Error('Manifesto e service worker pertencem a versões diferentes');
+  }
+  if (!manifest.files || typeof manifest.files !== 'object') throw new Error('Manifesto sem hashes');
+  return { manifest, response };
+}
+
+async function fetchAndCacheOptional(cache, resource) {
   try {
-    const request = freshRequest(resource);
-    const response = await fetch(request);
-    if (!response || (!response.ok && response.type !== 'opaque')) {
-      throw new Error(`HTTP ${response?.status || 0}`);
-    }
+    const response = await fetch(freshRequest(resource));
+    if (!response || (!response.ok && response.type !== 'opaque')) throw new Error(`HTTP ${response?.status || 0}`);
     await cache.put(resource, response.clone());
     return { resource, ok:true };
   } catch (error) {
-    if (required) throw new Error(`Falha no arquivo obrigatório ${resource}: ${error?.message || error}`);
     return { resource, ok:false, error:String(error?.message || error) };
   }
 }
 
 async function cacheApplicationShell() {
+  const { manifest, response:manifestResponse } = await fetchReleaseManifest();
+  const verified = [];
+  for (const resource of REQUIRED_SHELL) {
+    const response = await fetch(freshRequest(resource));
+    await verifyResponse(response, resource, manifest);
+    verified.push({ resource, response });
+  }
+  await caches.delete(CACHE);
   const cache = await caches.open(CACHE);
-  for (const resource of REQUIRED_SHELL) await fetchAndCache(cache, resource, true);
-  const optional = await Promise.all(OPTIONAL_ASSETS.map(resource => fetchAndCache(cache, resource, false)));
+  await cache.put(RELEASE_MANIFEST, manifestResponse.clone());
+  for (const { resource, response } of verified) {
+    await cache.put(resource, response.clone());
+    if (releasePath(resource) === 'index.html') await cache.put('./', response.clone());
+  }
+  const optional = await Promise.all(OPTIONAL_ASSETS.map(resource => fetchAndCacheOptional(cache, resource)));
   const failed = optional.filter(item => !item.ok);
   if (failed.length) console.warn('[OTTHI SW] Recursos opcionais não pré-cacheados:', failed);
 }
 
 self.addEventListener('install', event => {
-  event.waitUntil(cacheApplicationShell().then(() => self.skipWaiting()));
+  event.waitUntil(cacheApplicationShell()
+    .then(() => self.skipWaiting())
+    .catch(async error => {
+      await caches.delete(CACHE);
+      console.error('[OTTHI SW] Release incompleta; cache anterior preservado.', error);
+      throw error;
+    }));
 });
 
 self.addEventListener('activate', event => {
@@ -98,7 +153,7 @@ self.addEventListener('activate', event => {
       .map(name => caches.delete(name)));
     await self.clients.claim();
     const clients = await self.clients.matchAll({ type:'window', includeUncontrolled:true });
-    clients.forEach(client => client.postMessage({ type:'OTTHI_GAME_UPDATE_READY', build:BUILD, version:'645' }));
+    clients.forEach(client => client.postMessage({ type:'OTTHI_GAME_UPDATE_READY', build:BUILD, version:VERSION }));
   })());
 });
 
@@ -111,28 +166,66 @@ self.addEventListener('message', event => {
   }
 });
 
+async function activeReleaseManifest(cache) {
+  const response = await cache.match(RELEASE_MANIFEST);
+  if (!response) throw new Error('Manifesto da release ativa ausente');
+  const manifest = await response.json();
+  if (String(manifest?.version) !== VERSION || manifest?.build !== BUILD || manifest?.revision !== REVISION) {
+    throw new Error('Manifesto da release ativa inválido');
+  }
+  return manifest;
+}
+
+async function cachedFallback(cache, request, navigation) {
+  if (navigation) {
+    return await cache.match('./index.html?v=646') || await cache.match('./') || null;
+  }
+  return await cache.match(request, { ignoreSearch:false })
+    || await cache.match(new URL(request.url).pathname, { ignoreSearch:true })
+    || null;
+}
+
 async function networkFirst(request, navigation = false) {
   const cache = await caches.open(CACHE);
   const url = new URL(request.url);
   const probe = url.searchParams.has('otthi_probe');
+  if (probe) return fetch(request, { cache:'no-store' });
+  if (releasePath(request) === 'release-manifest.json') {
+    return await cache.match(RELEASE_MANIFEST) || fetch(request, { cache:'no-store' });
+  }
   try {
     const response = await fetch(request, { cache:'no-store' });
-    if (response && response.ok && !probe) await cache.put(request, response.clone());
+    if (!response?.ok) {
+      const cached = await cachedFallback(cache, request, navigation);
+      return cached || response;
+    }
+    const manifest = await activeReleaseManifest(cache);
+    const protectedFile = Object.prototype.hasOwnProperty.call(manifest.files || {}, releasePath(request));
+    if (protectedFile) {
+      try {
+        await verifyResponse(response, request, manifest);
+      } catch (error) {
+        const cached = await cachedFallback(cache, request, navigation);
+        if (cached) return cached;
+        throw error;
+      }
+    }
+    if (navigation) {
+      await cache.put('./', response.clone());
+    } else {
+      await cache.put(request, response.clone());
+    }
     return response;
   } catch (error) {
-    if (probe) throw error;
-    const cached = await cache.match(request, { ignoreSearch:false }) || await caches.match(request);
+    const cached = await cachedFallback(cache, request, navigation);
     if (cached) return cached;
-    if (navigation) {
-      return await cache.match('./index.html?v=645') || await cache.match('./') || Response.error();
-    }
     throw error;
   }
 }
 
 async function cacheFirst(request) {
   const cache = await caches.open(CACHE);
-  const cached = await cache.match(request, { ignoreSearch:false }) || await caches.match(request);
+  const cached = await cache.match(request, { ignoreSearch:false });
   if (cached) return cached;
   const response = await fetch(request);
   if (response && (response.ok || response.type === 'opaque')) await cache.put(request, response.clone());
@@ -143,16 +236,10 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   const sameOrigin = url.origin === self.location.origin;
-  const trustedExternal = event.request.url === THREE_R128;
-
-  if (trustedExternal) {
-    event.respondWith(cacheFirst(event.request));
-    return;
-  }
   if (!sameOrigin) return;
 
   const navigation = event.request.mode === 'navigate';
-  const code = /\.(?:js|css|html|webmanifest)$/.test(url.pathname) || url.pathname.endsWith('/');
+  const code = /\.(?:js|css|html|webmanifest|json)$/.test(url.pathname) || url.pathname.endsWith('/');
   if (navigation || code || url.searchParams.has('otthi_probe')) {
     event.respondWith(networkFirst(event.request, navigation));
     return;

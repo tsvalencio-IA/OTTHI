@@ -8,8 +8,41 @@
  * Não deve ser carregado diretamente por index.html.
  */
 // @otthi-module-body
+  let usageLastTickAt=Date.now(),usageLastSaveAt=Date.now(),sessionLimitHandled=false,worldInitializationReady=false;
+  function updatePlayUsage(){
+    const now=Date.now(),elapsed=clamp((now-usageLastTickAt)/1000,0,5);usageLastTickAt=now;
+    if(!running||paused||document.hidden)return;
+    state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{})};
+    state.usage.totalSeconds=Number(state.usage.totalSeconds||0)+elapsed;
+    state.usage.sessionSeconds=Number(state.usage.sessionSeconds||0)+elapsed;
+    state.usage.lastPlayedAt=now;
+    if(now-usageLastSaveAt>=30000){usageLastSaveAt=now;saveState();}
+    const limit=Math.max(0,Number(state.guardian?.sessionLimitMinutes||0))*60;
+    if(limit>0&&state.usage.sessionSeconds>=limit&&!sessionLimitHandled){
+      sessionLimitHandled=true;state.usage.sessionLockedAt=now;saveState(true);stopGame();
+      openModal('Tempo de jogo concluído','<div class="parent-gate"><span>⏰</span><h3>Hora de fazer uma pausa</h3><p>O limite definido na Área dos responsáveis foi alcançado. Um responsável pode alterar esse tempo usando a senha da conta.</p><button class="btn primary xl" data-session-close>Voltar ao menu</button></div>',root=>{
+        $('[data-session-close]',root).onclick=closeModal;
+      });
+    }
+  }
+  document.addEventListener('visibilitychange',()=>{usageLastTickAt=Date.now();},{passive:true});
+  const nextPaint=()=>new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+  function showWorldLoading(progress,label){
+    const value=clamp(Math.round(Number(progress)||0),0,100);
+    openModal('Preparando o mundo',`<div class="parent-gate"><span>🌎</span><h3>${label}</h3><p>Seu progresso já está protegido neste aparelho.</p><div class="mission-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${value}"><i style="width:${value}%"></i></div><small>${value}%</small></div>`);
+    if(els.modalClose)els.modalClose.hidden=true;
+  }
+  function showWorldLoadFailure(error,resetPosition){
+    console.error('[OTTHI START] Falha ao preparar o mundo:',error);
+    running=false;showScreen('lobby');if(els.modalClose)els.modalClose.hidden=false;
+    openModal('Não foi possível abrir o mundo',`<div class="parent-gate"><span>🛠️</span><h3>O progresso não foi apagado</h3><p>${escapeHtml(error?.message||'Falha ao carregar o ambiente 3D. Verifique a conexão e tente novamente.')}</p><button class="btn primary xl" data-retry-world>Recarregar e tentar novamente</button><button class="btn" data-close-world-error>Ficar no menu</button></div>`,root=>{
+      $('[data-retry-world]',root).onclick=async()=>{await persistBeforeOtthiReload();location.reload();};
+      $('[data-close-world-error]',root).onclick=closeModal;
+    });
+  }
   function gameLoop(){
     if(!running)return;raf=requestAnimationFrame(gameLoop);const dt=Math.min(.033,clock.getDelta());samplePerformance(dt);
+    updatePlayUsage();
     if(!paused){
       const tier=qualityTier();pollGamepad();
       // Movimento e câmera permanecem em todo quadro; sistemas pesados usam orçamento próprio.
@@ -33,7 +66,7 @@
       perf.lodAcc+=dt;const lodRate=tier==='high'?1/10:tier==='balanced'?1/6:1/4;
       if(perf.lodAcc>=lodRate){const step=perf.lodAcc;perf.lodAcc=0;updateVisualLOD(step);}
       perf.cloudAcc+=dt;const cloudRate=tier==='high'?1/12:tier==='balanced'?1/8:1/5;if(perf.cloudAcc>=cloudRate){const step=perf.cloudAcc;perf.cloudAcc=0;updateClouds(step);}
-      perf.modeAuditAcc+=dt;if(perf.modeAuditAcc>=.75){perf.modeAuditAcc=0;auditPlayerMode('loop');}
+      perf.modeAuditAcc+=dt;if(perf.modeAuditAcc>=.75){perf.modeAuditAcc=0;ensureViewportCoherence();auditPlayerMode('loop');}
       perf.panelAcc+=dt;if(perf.panelAcc>=1){perf.panelAcc=0;refreshTechnicalPanel();}
     }
     const renderW=Math.max(1,perf.lastRenderW||els.stage?.clientWidth||innerWidth),renderH=Math.max(1,perf.lastRenderH||els.stage?.clientHeight||innerHeight);renderer.setScissorTest(false);renderer.setViewport(0,0,renderW,renderH);renderer.autoClear=true;renderer.render(scene,camera);
@@ -78,10 +111,14 @@
 
   async function startGame(resetPosition=false){
     await dbReady;
+    if(!window.OTTHI_RELEASE_COHERENT){openModal('Atualização incompleta','<p>Os arquivos do jogo pertencem a versões diferentes. Termine o envio da V646 e atualize a página; seu progresso está preservado.</p>');return;}
+    state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{})};const sessionLimitSeconds=Math.max(0,Number(state.guardian?.sessionLimitMinutes||0))*60;
+    if(sessionLimitSeconds>0&&(Number(state.usage.sessionLockedAt||0)>0||Number(state.usage.sessionSeconds||0)>=sessionLimitSeconds)){state.usage.sessionLockedAt=Number(state.usage.sessionLockedAt||Date.now());saveState(true);openModal('Tempo de jogo concluído','<div class="parent-gate"><span>⏰</span><h3>Nova sessão exige um responsável</h3><p>O limite continua bloqueado mesmo ao voltar ao menu. Um responsável pode liberar outra sessão usando a senha da conta.</p><button class="btn primary xl" data-session-parent>Área dos responsáveis</button><button class="btn" data-session-back>Ficar no menu</button></div>',root=>{$('[data-session-parent]',root).onclick=()=>openParentGate(false);$('[data-session-back]',root).onclick=closeModal;});return;}
     if((!hasValidPlayerName()||!accountLinked())&&!(accountPromptWasHandled())){openAccountCenter(true,()=>{state.flags.accountPromptedV635=true;saveState(true);startGame(resetPosition);});return;}
     if(!hasValidPlayerName()){openPlayerNameModal(true,()=>startGame(resetPosition));return;}
-    closeModal();showScreen('game');
-    state.ui.quickOpen=false;state.ui.skillsOpen=false;state.ui.needsOpen=false;state.ui.missionOpen=false;syncMobilePanels();els.game.classList.remove('needs-expanded');els.missionCard.classList.remove('expanded');if(!scene){if(!initThree()){showScreen('lobby');return;}setupControls();}else{applyAvatarCustomization();}
+    await saveState(true);showWorldLoading(12,'Protegendo o progresso...');await nextPaint();showScreen('game');showWorldLoading(28,'Organizando o bairro...');await nextPaint();
+    state.ui.quickOpen=false;state.ui.skillsOpen=false;state.ui.needsOpen=false;state.ui.missionOpen=false;syncMobilePanels();els.game.classList.remove('needs-expanded');els.missionCard.classList.remove('expanded');
+    try{if(!worldInitializationReady){if(scene||renderer)throw new Error('A inicialização 3D anterior ficou incompleta. Recarregue com segurança para tentar novamente.');showWorldLoading(42,'Construindo ruas, casas e transportes...');await nextPaint();if(!initThree())throw new Error('O navegador não conseguiu iniciar o ambiente 3D.');setupControls();worldInitializationReady=true;showWorldLoading(88,'Ativando controles e personagens...');await nextPaint();}else{applyAvatarCustomization();showWorldLoading(88,'Restaurando seu personagem...');await nextPaint();}}catch(error){worldInitializationReady=false;showWorldLoadFailure(error,resetPosition);return;}
     if(els.toolsBtn){els.toolsBtn.firstChild.textContent=equippedTool().icon;$('span',els.toolsBtn).textContent=equippedTool().name;}
-    if(resetPosition){player.x=0;player.z=8;player.y=0;}else restorePosition();player.scaleMode=state.abilities?.scaleMode||'normal';player.crouched=!!state.abilities?.crouched;updateAbilityUI();running=true;paused=false;window.OTTHI_ROOM_WORLD?.apply?.(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central',{toast:false,teleport:state.multiplayer.room!==(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central')});clock.start();evaluateMissions();updateHUD();updateContext(true);updateNavigation(0,true);resize(true);cancelAnimationFrame(raf);gameLoop();toast('Bem-vindo à Vila do Sol!','good',2200);
+    if(resetPosition){player.x=0;player.z=8;player.y=0;}else restorePosition();player.scaleMode=state.abilities?.scaleMode||'normal';player.crouched=!!state.abilities?.crouched;updateAbilityUI();state.usage={totalSeconds:0,sessionSeconds:0,sessionStartedAt:0,lastPlayedAt:0,sessionLockedAt:0,...(state.usage||{}),sessionStartedAt:Number(state.usage?.sessionStartedAt||Date.now()),lastPlayedAt:Date.now()};sessionLimitHandled=false;usageLastTickAt=Date.now();running=true;paused=false;window.OTTHI_ROOM_WORLD?.apply?.(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central',{toast:false,teleport:state.multiplayer.room!==(window.OTTHOS_RTDB?.getRoom?.()||window.OTTHI_CONFIG?.defaultRoom||'bairro-central')});clock.start();evaluateMissions();updateHUD();updateContext(true);updateNavigation(0,true);resize(true);if(els.modalClose)els.modalClose.hidden=false;closeModal();cancelAnimationFrame(raf);gameLoop();toast('Bem-vindo à Vila do Sol!','good',2200);
   }

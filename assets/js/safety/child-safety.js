@@ -8,9 +8,10 @@
     return /(?:https?:\/\/|www\.|@[a-z0-9.-]+\.|\b\d{8,}\b|\(?\d{2}\)?\s*9?\d{4}[-\s]?\d{4})/i.test(value);
   }
   function safeNickname(value='Jogador'){
-    let name=String(value).trim().replace(/\s+/g,' ').slice(0,24);
+    let name=String(value||'Jogador').normalize('NFC').replace(/[\u0000-\u001f\u007f<>]/g,' ').replace(/\s+/g,' ').trim();
     if(containsPrivateData(name))name='Jogador';
-    return name||'Jogador';
+    name=name.replace(/[^\p{L}\p{N} ._-]/gu,'').replace(/\s+/g,' ').trim().slice(0,24);
+    return name.length>=3?name:'Jogador';
   }
   function install(){
     const api=window.OTTHOS_RTDB;if(!api||api.__childSafetyInstalled)return false;

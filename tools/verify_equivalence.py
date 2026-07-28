@@ -5,13 +5,16 @@ import hashlib,json,re,sys
 ROOT=Path(__file__).resolve().parents[1]; DOCS=ROOT/'docs'; DOCS.mkdir(exist_ok=True)
 BASELINE_PATH=DOCS/'BASELINE-V641-FUNCOES-E-ASSETS.json'
 APPROVED_MUTABLE_ASSETS={
+    '.nojekyll',
+    'firebase-config.js',
     'assets/js/multiplayer-rtdb.js',
     'assets/js/multiplayer/room-manager.js',
+    'assets/js/safety/child-safety.js',
     'firebase-database.rules.json',
 }
 
 def sha(path:Path): return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
-def function_order(text:str): return re.findall(r'^  function\s+([A-Za-z_$][\w$]*)\s*\(',text,re.M)
+def function_order(text:str): return re.findall(r'^  (?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(',text,re.M)
 
 def main():
     baseline=json.loads(BASELINE_PATH.read_text('utf-8'))
@@ -57,7 +60,7 @@ def main():
     approved_changes=[x for x in asset_results if x['approvedChange'] and not x['unchanged']]
     result={
       'baseline':'OTTHI World Edu V641 / fonte modular V642',
-      'candidate':'OTTHI World Edu V644 bairros, capacidade, mapa e responsividade',
+      'candidate':'OTTHI World Edu V646 consolidada, segura e com PWA atômica',
       'functionCountBaseline':len(expected),'functionCountActual':len(current),
       'baselineFunctionsPreserved':not missing,'baselineFunctionOrderPreserved':order_preserved,
       'missingFunctions':missing,'addedFunctions':added,

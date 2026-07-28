@@ -30,10 +30,12 @@
       friendship,
       flags,
       settings: { ...fresh.settings, ...(saved.settings || {}), quality: Number(saved.version||0)<615 && (saved.settings?.quality||'high')==='high' ? 'auto' : ((saved.settings?.quality)||fresh.settings.quality) },
+      guardian: { ...fresh.guardian, ...(saved.guardian || {}), communicationEnabled:Number(saved.version||0)>=646&&saved.guardian?.communicationEnabled===true },
+      usage: { ...fresh.usage, ...(saved.usage || {}) },
       stats: { ...fresh.stats, ...(saved.stats || {}) },
       daily: { ...fresh.daily, ...(saved.daily || {}), quests:Array.isArray(saved.daily?.quests)?saved.daily.quests:[] },
       learning: { ...fresh.learning, ...(saved.learning || {}), subjectXP:{...fresh.learning.subjectXP,...(saved.learning?.subjectXP||{})}, lessons:{...fresh.learning.lessons,...(saved.learning?.lessons||{})}, matchHistory:Array.isArray(saved.learning?.matchHistory)?saved.learning.matchHistory:[] },
-      multiplayer: { ...fresh.multiplayer, ...(saved.multiplayer || {}), room:'mundo-publico' },
+      multiplayer: { ...fresh.multiplayer, ...(saved.multiplayer || {}), room:normalizeRoomId(saved.multiplayer?.room || fresh.multiplayer.room) },
       fishing: { ...fresh.fishing, ...(saved.fishing || {}), catches:Array.isArray(saved.fishing?.catches)?saved.fishing.catches:[], species:{...fresh.fishing.species,...(saved.fishing?.species||{})}, cooperativeRewards:Array.isArray(saved.fishing?.cooperativeRewards)?saved.fishing.cooperativeRewards:[] },
       campfires: Array.isArray(saved.campfires) ? saved.campfires : [],
       boats: { ...fresh.boats, ...(saved.boats || {}), lastPosition:{...fresh.boats.lastPosition,...(saved.boats?.lastPosition||{})} },
@@ -92,7 +94,7 @@
     if(legacyName&&legacyName.toLowerCase()!=='otthos'){state.profile.name=legacyName;state.profile.nameConfirmed=true;}
     else{state.profile.name='';state.profile.nameConfirmed=false;}
   }
-  state.multiplayer.displayName=state.profile.name||'';state.multiplayer.room='mundo-publico';
+  state.multiplayer.displayName=state.profile.name||'';state.multiplayer.room=normalizeRoomId(state.multiplayer.room);
   let dbReady = Promise.resolve();
   if (window.OTTHOS_DB) {
     dbReady = window.OTTHOS_DB.load().then(saved => {
@@ -165,7 +167,7 @@
       stats:{...state.stats,...(remote.achievements?.stats||{})},daily:{...state.daily,...(remote.achievements?.daily||{})},learning:{...state.learning,...(remote.achievements?.learning||{}),subjectXP:{...state.learning.subjectXP,...(remote.achievements?.learning?.subjectXP||{})},lessons:{...state.learning.lessons,...(remote.achievements?.learning?.lessons||{})}},
       position:{...state.position,...(remote.position||{})},lastSaved:remoteSaved,version: APP_VERSION
     };
-    state=normalizeState(merged);state.profile.nameConfirmed=true;state.multiplayer.room='mundo-publico';
+    state=normalizeState(merged);state.profile.nameConfirmed=true;state.multiplayer.room=normalizeRoomId(state.multiplayer.room);
     safeLocalSet(STORAGE_KEY,JSON.stringify(state));window.OTTHOS_DB?.save?.(state).catch(()=>{});if(worldGroup&&world?.builds)reconcileWorldBuilds();updatePlayerNameUI();updateHUD();updateLobbyStats();toast('Progresso recuperado do Firebase sem apagar construções locais.','good',2300);return true;
   }
 
@@ -186,7 +188,7 @@
     const backend=await waitForAccountBackend();
     if(!backend?.configured)return{ok:false,error:'A nuvem do jogo ainda não está configurada.'};
     if(backend.connected?.())return{ok:true,backend};
-    const ok=await backend.connect?.({name:state.profile.name||'Jogador'});
+    const ok=await backend.connect?.({name:publicPlayerName()});
     return ok?{ok:true,backend}:{ok:false,error:'Sem conexão. O progresso local continua protegido neste aparelho.'};
   }
   function syncGameAccount(force=false){
@@ -236,12 +238,13 @@
     accountSession=window.OTTHOS_ACCOUNT.rememberSession(credentials);
     state=normalizeState(recovered);state.account={...(state.account||{}),linked:true,accountId:credentials.accountId,username:credentials.username,lastCloudSync:Date.now()};
     state.profile.nameConfirmed=!!sanitizePlayerName(state.profile.name);
-    safeLocalSet(STORAGE_KEY,JSON.stringify(state));await window.OTTHOS_DB?.save?.(state);window.OTTHOS_RTDB?.setDisplayName?.(state.profile.name||'Jogador');
+    safeLocalSet(STORAGE_KEY,JSON.stringify(state));await window.OTTHOS_DB?.save?.(state);window.OTTHOS_RTDB?.setDisplayName?.(publicPlayerName());
     updatePlayerNameUI();updateHUD();updateLobbyStats();return true;
   }
-  async function unlinkGameAccount(){
-    await window.OTTHOS_RTDB?.signOutPlayerAccount?.().catch?.(()=>{});
+  async function unlinkGameAccount(password=''){
+    const result=await window.OTTHOS_RTDB?.signOutPlayerAccount?.(password);if(!result?.ok)return result||{ok:false,error:'Não foi possível confirmar a saída.'};
     window.OTTHOS_ACCOUNT?.clearSession?.();accountSession=null;state.account={linked:false,accountId:'',username:'',lastCloudSync:0};saveState(true);updatePlayerNameUI();
+    return{ok:true};
   }
   function openAccountForm(mode='create',required=false,onReady=null){
     const creating=mode==='create';
@@ -257,8 +260,14 @@
     openModal(linked?'Minha conta':'Proteja seu progresso',linked?`<div class="account-card linked"><span>✓</span><div><b>${escapeHtml(state.account.username||accountSession.username)}</b><small>Progresso criptografado • última cópia ${lastText}</small></div></div><div class="modal-actions"><button class="btn primary" data-account-sync>Sincronizar agora</button><button class="btn" data-account-logout>Sair da conta neste aparelho</button></div>`:`<div class="account-intro"><span>☁️</span><h3>Continue em qualquer celular</h3><p>Crie uma conta do jogo ou entre com a combinação cadastrada. Não informe telefone, endereço, escola ou nome completo.</p></div><div class="choice-grid"><button class="choice" data-account-create><b>🔐 Criar conta</b><span>Protege o progresso atual</span></button><button class="choice" data-account-login><b>🔑 Entrar</b><span>Recupera conquistas antigas</span></button>${required?'<button class="choice muted" data-account-offline><b>📱 Jogar neste aparelho</b><span>O progresso continuará salvo localmente</span></button>':''}</div>`,root=>{
       $('[data-account-create]',root)?.addEventListener('click',()=>openAccountForm('create',required,onReady));$('[data-account-login]',root)?.addEventListener('click',()=>openAccountForm('login',required,onReady));
       $('[data-account-sync]',root)?.addEventListener('click',async e=>{e.currentTarget.disabled=true;e.currentTarget.textContent='Sincronizando...';const ok=await syncGameAccount(true);closeModal();toast(ok?'Progresso sincronizado.':'Sem conexão agora; a cópia local foi preservada.',ok?'good':'warn',2400);});
-      $('[data-account-logout]',root)?.addEventListener('click',async()=>{if(await confirmModal('Sair da conta','O progresso continuará neste aparelho e na cópia protegida.','Sair','Cancelar')){await unlinkGameAccount();toast('Conta desconectada deste aparelho.','good');}});
+      $('[data-account-logout]',root)?.addEventListener('click',()=>openAccountLogoutGate(required,onReady));
       $('[data-account-offline]',root)?.addEventListener('click',()=>openPlayerNameModal(true,()=>{state.flags.accountPromptedV635=true;saveState(true);if(typeof onReady==='function')onReady();}));
     });
   }
-
+  function openAccountLogoutGate(required=false,onReady=null){
+    openModal('Confirme a saída',`<div class="account-form"><div class="account-shield">🛡️</div><p>A senha do responsável é obrigatória para impedir que os controles de segurança sejam burlados.</p><label class="field"><span>Senha atual</span><input data-account-logout-password type="password" maxlength="64" autocomplete="current-password"></label><p class="account-error" data-account-logout-error hidden></p><button class="btn primary xl" data-account-logout-confirm>Sair desta conta</button><button class="btn" data-account-logout-back>Cancelar</button></div>`,root=>{
+      const input=$('[data-account-logout-password]',root),error=$('[data-account-logout-error]',root),button=$('[data-account-logout-confirm]',root);
+      const submit=async()=>{error.hidden=true;button.disabled=true;button.textContent='Confirmando...';const result=await unlinkGameAccount(input.value);if(!result?.ok){error.textContent=result?.error||'Senha incorreta.';error.hidden=false;button.disabled=false;button.textContent='Sair desta conta';input.select();return;}closeModal();toast('Conta desconectada. As restrições de segurança foram preservadas.','good',2800);};
+      button.onclick=submit;$('[data-account-logout-back]',root).onclick=()=>openAccountCenter(required,onReady);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();submit();}};setTimeout(()=>input.focus(),80);
+    });
+  }

@@ -106,10 +106,12 @@
     defeated: 0,
     position: { x: 0, y: 0, z: 8, yaw: 0 },
     settings: { sound: true, quality: 'auto', autoTier: 'balanced', vibration: true, cameraZoom: 0, joystickNatural: true },
+    guardian: { multiplayerEnabled:true, communicationEnabled:false, sessionLimitMinutes:0, updatedAt:0 },
+    usage: { totalSeconds:0, sessionSeconds:0, sessionStartedAt:0, lastPlayedAt:0, sessionLockedAt:0 },
     stats: { walked:0, driven:0, jumps:0, collected:0, talks:0, cooked:0, races:0, actions:0, metroTrips:0, busStops:0, skillCombos:0, jobsCompleted:0, firesHelped:0, classesTaught:0, patrols:0, accidentsHelped:0 },
     daily: { date:'', streak:0, lastDate:'', quests:[] },
     learning: { crowns:0, totalCorrect:0, lessons:{}, lastLesson:'', perfectLessons:0, subjectXP:{math:0,portuguese:0,english:0}, multiplayerWins:0, multiplayerPlayed:0, matchHistory:[] },
-    multiplayer: { enabled:true, room:'bairro-central', displayName:'', cloudUid:'', cloudReady:false },
+    multiplayer: { enabled:true, room:normalizeRoomId(window.OTTHI_CONFIG?.defaultRoom), displayName:'', cloudUid:'', cloudReady:false },
     fishing: { catches: [], species: {}, lastAttempt: 0, cooperativeRewards: [] },
     campfires: [],
     boats: { activeBoatId: '', passengerOf: '', lastPosition: { x:-38, z:52, heading:0 } },
@@ -123,4 +125,3 @@
     npcSociety: { lastEvent:0, houses:{}, friendships:{}, moods:{} },
     lastSaved: Date.now()
   });
-

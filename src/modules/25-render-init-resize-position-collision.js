@@ -46,6 +46,10 @@
     document.body.classList.toggle('ui-landscape',landscape);document.body.classList.toggle('ui-portrait',portrait);document.body.classList.toggle('ui-short',short);document.body.classList.toggle('ui-ultra-short',ultraShort);document.body.classList.toggle('ui-narrow',narrow);document.body.classList.toggle('ui-tiny',tiny);document.body.classList.toggle('ui-compact',compact);document.body.classList.toggle('ui-keyboard',metrics.keyboard);document.body.dataset.orientation=landscape?'landscape':'portrait';syncMobilePanels();
   }
   function scheduleStableResize(delay=120,force=false){clearTimeout(perf.resizeTimer);perf.resizeTimer=setTimeout(()=>resize(force),delay);}
+  function ensureViewportCoherence(){
+    const metrics=viewportMetrics(),classLandscape=document.body.classList.contains('ui-landscape'),bufferMismatch=Math.abs(metrics.w-Number(perf.lastRenderW||0))>2||Math.abs(metrics.h-Number(perf.lastRenderH||0))>2;
+    if(classLandscape!==metrics.landscape||bufferMismatch){window.OTTHI_VIEWPORT?.measure?.();resize(true);return true;}return false;
+  }
   function refreshOrientationLayout(){
     resize(true);requestAnimationFrame(()=>resize(true));[60,160,320,620,1000].forEach(delay=>setTimeout(()=>resize(true),delay));
   }
