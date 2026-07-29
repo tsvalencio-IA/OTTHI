@@ -27,7 +27,9 @@ navigation = read("src/modules/07-navigation-traffic-routes.js")
 map_source = read("src/modules/08-map-parent-settings.js")
 styles = read("src/styles/15-coop-map-responsive-v6463.css")
 rules_text = read("firebase-database.rules.json")
-json.loads(rules_text)
+rules = json.loads(rules_text)
+user_rules = rules["rules"]["otthosWorld"]["users"]["$uid"]
+room_rules = rules["rules"]["otthosWorld"]["rooms"]["$roomId"]
 
 check("Navegação aguarda worldGroup", "if(!worldGroup||!window.THREE)return false" in navigation)
 check("Reserva atômica de sala preservada", "reserveSlotSnapshot" in multiplayer)
@@ -38,10 +40,11 @@ check("Participante fica registrado ao desconectar", "armCoopParticipantDisconne
 check("Evento cooperativo idempotente", "if(existing&&(patch.reserveEvent||existing.uid===user.uid))return current" in multiplayer)
 check("Cancelamento pelo remetente", "cancelSocialRequest" in multiplayer)
 check("Modo competitivo sincronizado", "options.mode==='competitive'" in multiplayer and
-      "newData.child('mode').val() === 'competitive'" in rules_text)
-check("Regras aceitam transação pai e filho", '"slots": {' in rules_text and '"$slotId": {' in rules_text)
-check("Convite valida criação separada de resposta", "(!data.exists() && newData.child('status').val() === 'pending'" in rules_text and
-      "(data.exists() && newData.child('createdAt').val() === data.child('createdAt').val()" in rules_text)
+      room_rules["coopMissions"]["$missionId"][".write"] == "auth != null")
+check("Regras aceitam transação individual", '"slots": {' in rules_text and
+      room_rules["slots"]["$slotId"][".write"] == "auth != null" and ".write" not in room_rules["slots"])
+check("Convites autenticados sem bloqueio adicional",
+      user_rules["socialRequests"]["$requestId"][".write"] == "auth != null")
 
 for token in (
     "Controlar o fogo progressivamente",

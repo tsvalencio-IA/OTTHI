@@ -11,7 +11,7 @@
   'use strict';
 
   const OTTHI_GAME_LIVE_BASE = new URL('./', window.location.href).href;
-  const OTTHI_GAME_WEB_BUILD = '646.5-multiplayer-missions-recovery';
+  const OTTHI_GAME_WEB_BUILD = '646.6-authenticated-gameplay-open';
   window.OTTHI_GAME_VERSION = 646;
   window.OTTHI_GAME_BUILD = OTTHI_GAME_WEB_BUILD;
   const OTTHI_INDEX_BUILD = document.documentElement?.dataset?.otthiBuild || '';

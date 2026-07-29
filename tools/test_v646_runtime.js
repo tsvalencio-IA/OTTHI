@@ -196,7 +196,7 @@ async function testWorkerUsesCacheFor503() {
     cache,
   );
   const networkFirst = vm.runInContext('networkFirst', runtime);
-  const response = await networkFirst(new Request('https://example.test/app.js?v=646'), false);
+  const response = await networkFirst(new Request('https://example.test/app.js?v=6466'), false);
   assert.equal(await response.text(), 'cached-app');
   assert.ok(cacheReads > 0, 'o fallback precisa consultar o cache');
 }
@@ -207,7 +207,7 @@ async function testFailedInstallKeepsPreviousRevision() {
   assert.ok(revision, 'a revisão imutável deve ser gerada antes do teste');
   const manifest = {
     version: 646,
-    build: '646.5-multiplayer-missions-recovery',
+    build: '646.6-authenticated-gameplay-open',
     revision,
     algorithm: 'SHA-256',
     files: {},
@@ -229,7 +229,7 @@ async function testFailedInstallKeepsPreviousRevision() {
   listeners.install({ waitUntil(promise) { installPromise = promise; } });
   await assert.rejects(installPromise);
   assert.ok(fetchCount >= 2);
-  assert.ok(deletedCaches.includes(`otthi-v646-${revision}`));
+  assert.ok(deletedCaches.includes(`otthi-v6466-${revision}`));
   assert.ok(!deletedCaches.includes('otthi-v645-stable'));
 }
 
@@ -241,8 +241,8 @@ function testRevisionCoherence() {
   const workerRevision = sw.match(/const REVISION = '([a-f0-9]+)'/)?.[1];
   assert.equal(indexRevision, release.revision);
   assert.equal(workerRevision, release.revision);
-  assert.ok(sw.includes('const CACHE = `otthi-v646-${REVISION}`'));
-  assert.ok(index.includes('./assets/vendor/three-r128.min.js?v=646'));
+  assert.ok(sw.includes('const CACHE = `otthi-v6466-${REVISION}`'));
+  assert.ok(index.includes('./assets/vendor/three-r128.min.js?v=6466'));
   assert.ok(!index.includes('cdnjs.cloudflare.com/ajax/libs/three.js'));
 }
 

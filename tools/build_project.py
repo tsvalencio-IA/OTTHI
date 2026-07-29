@@ -159,7 +159,7 @@ def build_release_manifest(revision: str, overrides: dict[str, bytes]) -> dict:
 
 
 def validate_candidates(candidates: dict[str, bytes]) -> None:
-    with tempfile.TemporaryDirectory(prefix='otthi-v646-build-') as temporary:
+    with tempfile.TemporaryDirectory(prefix='otthi-v6466-build-') as temporary:
         temp_root = Path(temporary)
         app_candidate = temp_root / 'app.js'
         sw_candidate = temp_root / 'sw.js'

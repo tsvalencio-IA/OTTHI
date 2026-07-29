@@ -1,13 +1,13 @@
 {
   "version": 646,
-  "build": "646.5-multiplayer-missions-recovery",
+  "build": "646.6-authenticated-gameplay-open",
   "javascript": [
     {
       "file": "src/modules/00-runtime-foundation.js",
       "startLine": 2,
       "endLine": 26,
       "description": "Runtime, utilitários, versão, storage e chaves de migração",
-      "sha256Body": "fbc4c4dcad628ba44fa3ca05668a0ffbecce1d9c20a6afc2405be4307425f89b"
+      "sha256Body": "1048be12b243465f20ca91263af9e336c112f9e17fd1fc1d5a471e4ed55fe795"
     },
     {
       "file": "src/modules/01-build-persistence.js",
@@ -203,7 +203,7 @@
       "startLine": 4158,
       "endLine": 4304,
       "description": "Desafios online, social, chat, presença, fantasmas e sincronização",
-      "sha256Body": "7ff00c575b422c06475c61714b203b37c73bcc14bb53113929861eb7b13f8296"
+      "sha256Body": "56bb70539108bf68f94fd4f028da641d104dcea0c71c794edc6e7c5f0a7a6866"
     },
     {
       "file": "src/modules/29-game-loop-controls-gamepad.js",
@@ -231,7 +231,7 @@
       "startLine": 0,
       "endLine": 0,
       "description": "Missões cooperativas infantis, equipes online/solo, pesca, escola e corridas",
-      "sha256Body": "fa20a73a5bd43545d754bcaddd039a10e4f5bb8eb8d8af8c84079379b0f9c95e"
+      "sha256Body": "71dfedd7b855a95d8047d514c54f013fcb65de6de5e45cdb82f2a78fccf22a0f"
     }
   ],
   "styles": [

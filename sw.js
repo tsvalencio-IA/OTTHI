@@ -1,28 +1,28 @@
-const REVISION = 'bdc719d3897953e0';
-const CACHE = `otthi-v646-${REVISION}`;
+const REVISION = '148a3291a83a753a';
+const CACHE = `otthi-v6466-${REVISION}`;
 const CACHE_PREFIXES = ['otthi-','otthi-game-web-','otthos-life-world-main-'];
-const BUILD = '646.5-multiplayer-missions-recovery';
+const BUILD = '646.6-authenticated-gameplay-open';
 const VERSION = '646';
-const RELEASE_MANIFEST = './release-manifest.json?v=646';
+const RELEASE_MANIFEST = './release-manifest.json?v=6466';
 
 const REQUIRED_SHELL = [
-  './index.html?v=646',
-  './style.css?v=646',
-  './assets/vendor/three-r128.min.js?v=646',
-  './assets/js/core/runtime-config.js?v=646',
-  './assets/js/core/safe-pointer.js?v=646',
-  './assets/js/core/viewport-manager.js?v=646',
-  './assets/js/save-db.js?v=646',
-  './firebase-config.js?v=646',
-  './assets/js/game-account.js?v=646',
-  './assets/js/multiplayer-rtdb.js?v=646',
-  './app.js?v=646',
-  './assets/js/ui/shared-modal.js?v=646',
-  './assets/js/core/performance-guardian.js?v=646',
-  './assets/js/multiplayer/room-manager.js?v=646',
-  './assets/js/education/adaptive-learning.js?v=646',
-  './assets/js/safety/child-safety.js?v=646',
-  './manifest.webmanifest?v=646'
+  './index.html?v=6466',
+  './style.css?v=6466',
+  './assets/vendor/three-r128.min.js?v=6466',
+  './assets/js/core/runtime-config.js?v=6466',
+  './assets/js/core/safe-pointer.js?v=6466',
+  './assets/js/core/viewport-manager.js?v=6466',
+  './assets/js/save-db.js?v=6466',
+  './firebase-config.js?v=6466',
+  './assets/js/game-account.js?v=6466',
+  './assets/js/multiplayer-rtdb.js?v=6466',
+  './app.js?v=6466',
+  './assets/js/ui/shared-modal.js?v=6466',
+  './assets/js/core/performance-guardian.js?v=6466',
+  './assets/js/multiplayer/room-manager.js?v=6466',
+  './assets/js/education/adaptive-learning.js?v=6466',
+  './assets/js/safety/child-safety.js?v=6466',
+  './manifest.webmanifest?v=6466'
 ];
 
 const OPTIONAL_ASSETS = [
@@ -178,7 +178,7 @@ async function activeReleaseManifest(cache) {
 
 async function cachedFallback(cache, request, navigation) {
   if (navigation) {
-    return await cache.match('./index.html?v=646') || await cache.match('./') || null;
+    return await cache.match('./index.html?v=6466') || await cache.match('./') || null;
   }
   return await cache.match(request, { ignoreSearch:false })
     || await cache.match(new URL(request.url).pathname, { ignoreSearch:true })

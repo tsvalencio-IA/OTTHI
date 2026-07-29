@@ -38,12 +38,12 @@ class ReleaseV646Tests(unittest.TestCase):
         version = json.loads(text('VERSION.json'))
         module_order = json.loads(text('src/module-order.json'))
         self.assertEqual(version['version'], 646)
-        self.assertEqual(version['build'], '646.5-multiplayer-missions-recovery')
+        self.assertEqual(version['build'], '646.6-authenticated-gameplay-open')
         self.assertEqual(module_order['version'], 646)
         self.assertEqual(module_order['build'], version['build'])
-        self.assertIn('data-otthi-build="646.5-multiplayer-missions-recovery"', text('index.html'))
+        self.assertIn('data-otthi-build="646.6-authenticated-gameplay-open"', text('index.html'))
         self.assertRegex(text('index.html'), r'data-otthi-revision="[a-f0-9]{16}"')
-        self.assertGreaterEqual(text('index.html').count('?v=646'), 10)
+        self.assertGreaterEqual(text('index.html').count('?v=6466'), 10)
 
     def test_save_migration_is_explicit(self):
         source = text('src/modules/00-runtime-foundation.js')
@@ -82,29 +82,25 @@ class ReleaseV646Tests(unittest.TestCase):
             text=True,
         )
 
-    def test_child_safety_is_backend_enforced(self):
+    def test_child_safety_and_authenticated_gameplay_contract(self):
         config = text('assets/js/core/runtime-config.js')
         safety = text('assets/js/safety/child-safety.js')
-        rules = text('firebase-database.rules.json')
+        rules = json.loads(text('firebase-database.rules.json'))['rules']['otthosWorld']
         self.assertIn('freeChatEnabled: false', config)
         self.assertIn('approvedPhrasesOnly: true', config)
         for phrase in PHRASES:
             self.assertIn(phrase, safety)
-            self.assertIn(phrase, rules)
         for token in ['blocks', 'reports', 'guardianSettings']:
-            self.assertIn(token, rules)
-        for token in [
-            "child('communicationEnabled').val() === true",
-            "newData.child('type').val() === 'coins' && newData.child('amount').val() === 10",
-            "newData.child('type').val() === 'socialRequestResult'",
-            '"$other": {',
-            '".validate": false',
-        ]:
-            self.assertIn(token, rules)
+            self.assertIn(token, json.dumps(rules))
+        users = rules['users']['$uid']
+        room = rules['rooms']['$roomId']
+        self.assertEqual(users['interactions']['$eventId']['.write'], 'auth != null')
+        self.assertEqual(users['socialRequests']['$requestId']['.write'], 'auth != null')
+        self.assertEqual(room['chat']['$messageId']['.write'], 'auth != null')
+        self.assertEqual(rules['gameAccounts']['$uid']['.write'], 'auth != null && auth.uid === $uid')
+        self.assertIn('auth.token.auth_time', users['guardianSettings']['.write'])
         self.assertNotIn("extra:event.extra", text('assets/js/multiplayer-rtdb.js'))
         self.assertIn("const sender='Outro jogador'", text('src/modules/28-multiplayer-social-online.js'))
-        self.assertIn("matches(/^Jogador [A-Z0-9]{4}$/)", rules)
-        self.assertIn("child('socialRequests').child(newData.child('requestId').val())", rules)
         self.assertNotIn('state.profile.coins+=10', text('src/modules/28-multiplayer-social-online.js'))
         self.assertNotIn('addCoins(-10)', text('src/modules/28-multiplayer-social-online.js'))
         self.assertIn('Gesto simbólico, sem transferir saldo', text('src/modules/28-multiplayer-social-online.js'))
@@ -124,7 +120,9 @@ class ReleaseV646Tests(unittest.TestCase):
         self.assertNotIn("data-guardian-toggle", parent)
         self.assertNotIn("root.child('otthosWorld').child('users').child(auth.uid).child('guardianSettings')", rules)
         self.assertIn('"activityAudit"', rules)
-        self.assertIn("newData.child('multiplayerEnabled').val() === true", rules)
+        self.assertNotIn("newData.child('multiplayerEnabled').val() === true", rules)
+        self.assertNotIn("newData.child('communicationEnabled').val() === true", rules)
+        self.assertIn("newData.child('sessionLimitMinutes').val() === 60", rules)
         self.assertIn("const saved=result?.settings||result", parent)
 
     def test_parent_and_moderation_ui_are_present(self):
@@ -145,23 +143,22 @@ class ReleaseV646Tests(unittest.TestCase):
         self.assertIn('Nova sessão exige um responsável', usage)
         self.assertIn('data-parent-new-session', parent)
 
-    def test_presence_sessions_and_rotation_are_fail_closed(self):
-        rules = text('firebase-database.rules.json')
+    def test_presence_sessions_and_rotation_are_authenticated(self):
+        rules = json.loads(text('firebase-database.rules.json'))['rules']['otthosWorld']
         backend = text('assets/js/multiplayer-rtdb.js')
         resize = text('src/modules/25-render-init-resize-position-collision.js')
         loop = text('src/modules/29-game-loop-controls-gamepad.js')
-        self.assertIn("child('slots').child('slot-10').child('uid').val() === auth.uid", rules)
-        self.assertIn("child('slot-10').child('updatedAt').val() >= now - 30000", rules)
-        self.assertIn("query.orderByChild == 'fromUid'", rules)
-        self.assertIn("query.orderByChild == 'toUid'", rules)
-        self.assertIn("newData.child('winnerScore').val() === newData.parent().child('players')", rules)
+        room = rules['rooms']['$roomId']
+        self.assertEqual(room['slots']['$slotId']['.write'], 'auth != null')
+        self.assertNotIn('.write', room['slots'])
+        self.assertEqual(room['presence']['$uid']['.write'], 'auth != null')
+        self.assertEqual(room['gameSessions']['$sessionId']['.write'], 'auth != null')
         self.assertLess(
             backend.index('runTransaction(refs.slot'),
             backend.index('api.update(refs.presence'),
         )
         self.assertIn('presenceIsFresh', backend)
-        self.assertIn('"$other": {', rules)
-        self.assertIn("newData.child('houseId').val() === $houseId", rules)
+        self.assertIn('reserveRoomSlotIndividually', backend)
         self.assertIn('ensureViewportCoherence', resize)
         self.assertIn('ensureViewportCoherence();auditPlayerMode', loop)
 
@@ -202,7 +199,7 @@ class ReleaseV646Tests(unittest.TestCase):
         ]:
             self.assertIn(token, sw)
         self.assertNotIn('await caches.match(request)', sw)
-        self.assertIn('./assets/vendor/three-r128.min.js?v=646', sw)
+        self.assertIn('./assets/vendor/three-r128.min.js?v=6466', sw)
         self.assertNotIn('cdnjs.cloudflare.com/ajax/libs/three.js', text('index.html'))
 
     def test_loading_failure_preserves_save(self):

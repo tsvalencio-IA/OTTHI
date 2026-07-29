@@ -109,6 +109,8 @@ def main() -> int:
         'tools/build_project.py', 'tools/verify_equivalence.py', 'tools/validate_project.py',
         'tools/test_v643_mobility.js', 'tools/test_v643_world_systems.py',
         'tools/test_v644_neighborhoods.py', 'tools/test_v646_release.py',
+        'tools/test_v6466_permissions_buttons.js',
+        'tools/test_v647_multiplayer_missions.py',
         '.github/workflows/build-modular-app.yml', '.github/workflows/gerar-apk.yml',
         'android-app/app/build.gradle', 'assets/textures/water-ripples-v643.png',
         'src/modules/31-neighborhood-world-controller.js',
@@ -135,7 +137,7 @@ def main() -> int:
     add('Manifesto CSS completo', len(manifest.get('styles', [])) == len(css_modules) == 16)
     add('Ordem JS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('javascript', [])] == [path.name for path in js_modules])
     add('Ordem CSS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('styles', [])] == [path.name for path in css_modules])
-    add('Versões centrais unificadas', version.get('version') == 646 and version.get('build') == '646.5-multiplayer-missions-recovery' and manifest.get('version') == 646 and manifest.get('build') == version.get('build'))
+    add('Versões centrais unificadas', version.get('version') == 646 and version.get('build') == '646.6-authenticated-gameplay-open' and manifest.get('version') == 646 and manifest.get('build') == version.get('build'))
 
     run([NODE, '--check', 'app.js'], 'Sintaxe app.js')
     run([NODE, '--check', 'sw.js'], 'Sintaxe sw.js')
@@ -147,6 +149,8 @@ def main() -> int:
     run([PYTHON, 'tools/test_v643_world_systems.py'], '34 testes de mundo V643')
     run([PYTHON, 'tools/test_v644_neighborhoods.py'], 'Testes de bairros e mapa')
     run([NODE, 'tools/test_v646_runtime.js'], 'Harness real de slots e Service Worker V646')
+    run([NODE, 'tools/test_v6466_permissions_buttons.js'], 'Permissões autenticadas e botões V646.6')
+    run([PYTHON, 'tools/test_v647_multiplayer_missions.py'], 'Multiplayer, PWA e missões V646.6')
     run([PYTHON, 'tools/test_v646_release.py'], 'Testes de segurança e release V646')
     run([PYTHON, 'tools/test_v646_professional_services.py'], 'Serviços profissionais preservados')
     run([PYTHON, 'tools/test_v6462_commercial_polish.py'], 'Mapa, missões, móveis e roupas preservados')
@@ -159,11 +163,11 @@ def main() -> int:
     missing = sorted(value for value in html.local if not (ROOT / value).exists())
     add('IDs HTML únicos', not duplicates, duplicates)
     add('Referências locais existem', not missing, missing)
-    add('Versão 646 no index', index.count('?v=646') >= 10, index.count('?v=646'))
-    add('Build V646 no HTML', 'data-otthi-build="646.5-multiplayer-missions-recovery"' in index)
+    add('Versão 646.6 no index', index.count('?v=6466') >= 10, index.count('?v=6466'))
+    add('Build V646.6 no HTML', 'data-otthi-build="646.6-authenticated-gameplay-open"' in index)
     index_revision_match = re.search(r'data-otthi-revision="([a-f0-9]{16})"', index)
     add('Revisão imutável no HTML', bool(index_revision_match), index_revision_match.group(1) if index_revision_match else '')
-    add('Three.js local e versionado', './assets/vendor/three-r128.min.js?v=646' in index and 'cdnjs.cloudflare.com/ajax/libs/three.js' not in index)
+    add('Three.js local e versionado', './assets/vendor/three-r128.min.js?v=6466' in index and 'cdnjs.cloudflare.com/ajax/libs/three.js' not in index)
 
     app = (ROOT / 'app.js').read_text('utf-8')
     style = (ROOT / 'style.css').read_text('utf-8')
@@ -188,18 +192,20 @@ def main() -> int:
     add('Cinco bairros com 10 vagas', config.count('capacity:10') == 5 and 'maxPlayersPerRoom: 10' in config, config.count('capacity:10'))
     add('Segurança infantil padrão', 'freeChatEnabled: false' in config and 'approvedPhrasesOnly: true' in config)
     add('Sala padrão correta', "validRoomIds.includes(value)" in config and "defaultRoom: savedRoom || 'bairro-central'" in config)
-    add('Manifesto PWA V646', webmanifest.get('name') == 'OTTHI World Edu V646' and 'v=646' in webmanifest.get('start_url', ''))
+    add('Manifesto PWA V646.6', webmanifest.get('name') == 'OTTHI World Edu V646.6' and 'v=6466' in webmanifest.get('start_url', ''))
 
     rules_text = json.dumps(rules, ensure_ascii=False)
-    for token in ['bairro-central', 'bairro-floresta', 'bairro-lago', 'bairro-montanha', 'bairro-escola', 'slot-01', 'slot-10', 'guardianSettings', 'reports', 'blocks']:
+    for token in ['bairro-central', 'bairro-floresta', 'bairro-lago', 'bairro-montanha', 'bairro-escola', 'slots', 'coopMissions', 'guardianSettings', 'reports', 'blocks']:
         add(f'Regras Firebase contêm {token}', token in rules_text)
-    add('Regras contêm frases aprovadas', all(phrase in rules_text for phrase in ['Oi!', 'Vamos brincar?', 'Vamos estudar juntos?', 'Até logo!']))
+    add('Frases infantis permanecem no cliente', all(phrase in app for phrase in ['Oi!', 'Vamos brincar?', 'Vamos estudar juntos?', 'Até logo!']))
+    coop_rules = rules['rules']['otthosWorld']['rooms']['$roomId']['coopMissions']
+    add('Ações do jogo aceitam jogador autenticado', coop_rules.get('.read') == 'auth != null' and coop_rules.get('$missionId', {}).get('.write') == 'auth != null')
     add('Perfis não são públicos', '"profiles": {".read": "auth != null"' not in rules_text)
 
     sw = (ROOT / 'sw.js').read_text('utf-8')
     worker_revision_match = re.search(r"const REVISION = '([a-f0-9]{16})';", sw)
-    add('Service Worker V646', bool(worker_revision_match) and 'const CACHE = `otthi-v646-${REVISION}`' in sw and '646.5-multiplayer-missions-recovery' in sw)
-    add('Cache PWA validado por SHA-256', 'release-manifest.json?v=646' in sw and 'verifyResponse' in sw and "crypto.subtle.digest('SHA-256'" in sw)
+    add('Service Worker V646.6', bool(worker_revision_match) and 'const CACHE = `otthi-v6466-${REVISION}`' in sw and '646.6-authenticated-gameplay-open' in sw)
+    add('Cache PWA validado por SHA-256', 'release-manifest.json?v=6466' in sw and 'verifyResponse' in sw and "crypto.subtle.digest('SHA-256'" in sw)
     add('Fallback HTTP usa cache válido', 'return cached || response' in sw)
     bad_hashes = [
         relative for relative, digest in release.get('files', {}).items()

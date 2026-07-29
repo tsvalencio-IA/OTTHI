@@ -1,6 +1,6 @@
 {
   "version": 646,
-  "build": "646.5-multiplayer-missions-recovery",
+  "build": "646.6-authenticated-gameplay-open",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
@@ -9,7 +9,7 @@
     "versão e build unificadas em todas as superfícies",
     "cinco bairros com sala coerente entre interface e Firebase",
     "dez vagas por bairro com reserva única, heartbeat e recuperação",
-    "chat infantil restrito a frases aprovadas no cliente e nas regras",
+    "chat infantil guiado por frases aprovadas no cliente, sem bloquear a gravação autenticada no Firebase",
     "bloqueio, denúncia e controles parentais protegidos",
     "cache PWA transacional validado por SHA-256",
     "revisão de cache derivada do conteúdo para impedir releases presas",
@@ -22,12 +22,18 @@
     "funções sincronizadas para equipes de dois ou três jogadores com alternativa solo",
     "ginásio oval com atletas bots e progresso de voltas compartilhado",
     "uniforme esportivo e integração dos veículos de serviço com objetivos cooperativos",
-    "fallback de reserva Firebase por transação individual sem remover a transação atômica existente",
+    "reserva Firebase por transação atômica individual em cada vaga, sem escrita no nó pai",
     "retomada de participante após desconexão e continuação solo local sem apagar o progresso remoto",
     "bombeiros, resgate e patrulha com todas as etapas operacionais exigidas",
     "contadores individuais, classificação, tempo e modo competitivo nas corridas",
     "alunos reservados atomicamente para impedir convite ou entrega duplicada",
-    "marcadores individuais de participantes online integrados ao mapa e GPS"
+    "marcadores individuais de participantes online integrados ao mapa e GPS",
+    "ações de gameplay Firebase liberadas para qualquer sessão autenticada",
+    "conta, progresso privado e limite de tempo preservados por usuário",
+    "reserva de sala por transação individual sem tentativa bloqueada no nó pai",
+    "erros opcionais de interação não derrubam mais a sessão multiplayer",
+    "todos os botões cooperativos protegidos contra clique duplo e com retorno de falha",
+    "fallback solo automático quando o servidor ainda estiver usando regras antigas"
   ],
   "preserves": [
     "roupas",
@@ -51,11 +57,13 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "646.5",
+  "hotfix": "646.6",
   "notes": [
     "Multiplayer, chat seguro, convites, desafios e interações ficam liberados por padrão e não dependem de autorização parental.",
     "A Área dos Responsáveis controla o limite de tempo e exibe histórico privado das conversas e ações online.",
     "A reconexão de vaga e presença do hotfix anterior foi preservada.",
+    "Depois da autenticação, nenhuma missão, corrida, presente, convite, veículo ou interação exige autorização adicional.",
+    "Somente login, dados privados e alteração do limite de tempo continuam protegidos.",
     "As regras Firebase deste pacote precisam ser publicadas manualmente para que o cliente e o servidor usem a mesma política."
   ]
 }
