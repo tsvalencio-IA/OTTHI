@@ -135,7 +135,7 @@ def main() -> int:
     add('Manifesto CSS completo', len(manifest.get('styles', [])) == len(css_modules) == 16)
     add('Ordem JS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('javascript', [])] == [path.name for path in js_modules])
     add('Ordem CSS corresponde aos arquivos', [Path(item['file']).name for item in manifest.get('styles', [])] == [path.name for path in css_modules])
-    add('Versões centrais unificadas', version.get('version') == 646 and version.get('build') == '646.0-safe-rooms-atomic-pwa' and manifest.get('version') == 646 and manifest.get('build') == version.get('build'))
+    add('Versões centrais unificadas', version.get('version') == 646 and version.get('build') == '646.5-multiplayer-missions-recovery' and manifest.get('version') == 646 and manifest.get('build') == version.get('build'))
 
     run([NODE, '--check', 'app.js'], 'Sintaxe app.js')
     run([NODE, '--check', 'sw.js'], 'Sintaxe sw.js')
@@ -160,7 +160,7 @@ def main() -> int:
     add('IDs HTML únicos', not duplicates, duplicates)
     add('Referências locais existem', not missing, missing)
     add('Versão 646 no index', index.count('?v=646') >= 10, index.count('?v=646'))
-    add('Build V646 no HTML', 'data-otthi-build="646.0-safe-rooms-atomic-pwa"' in index)
+    add('Build V646 no HTML', 'data-otthi-build="646.5-multiplayer-missions-recovery"' in index)
     index_revision_match = re.search(r'data-otthi-revision="([a-f0-9]{16})"', index)
     add('Revisão imutável no HTML', bool(index_revision_match), index_revision_match.group(1) if index_revision_match else '')
     add('Three.js local e versionado', './assets/vendor/three-r128.min.js?v=646' in index and 'cdnjs.cloudflare.com/ajax/libs/three.js' not in index)
@@ -198,7 +198,7 @@ def main() -> int:
 
     sw = (ROOT / 'sw.js').read_text('utf-8')
     worker_revision_match = re.search(r"const REVISION = '([a-f0-9]{16})';", sw)
-    add('Service Worker V646', bool(worker_revision_match) and 'const CACHE = `otthi-v646-${REVISION}`' in sw and '646.0-safe-rooms-atomic-pwa' in sw)
+    add('Service Worker V646', bool(worker_revision_match) and 'const CACHE = `otthi-v646-${REVISION}`' in sw and '646.5-multiplayer-missions-recovery' in sw)
     add('Cache PWA validado por SHA-256', 'release-manifest.json?v=646' in sw and 'verifyResponse' in sw and "crypto.subtle.digest('SHA-256'" in sw)
     add('Fallback HTTP usa cache válido', 'return cached || response' in sw)
     bad_hashes = [

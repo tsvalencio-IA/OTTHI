@@ -106,6 +106,36 @@ function testProductionSlotUpdater() {
     'slot-01','slot-02','slot-03','slot-04','slot-05',
     'slot-06','slot-07','slot-08','slot-09','slot-10',
   ]);
+
+  const childReservation = api.reserveSlotRecord(null, {
+    slotKey: 'slot-01',
+    uid: 'child-user',
+    name: 'Jogador TEST',
+    room: 'bairro-central',
+    nowClient: 200000,
+    nowServer: 200000,
+    serverTimestamp: 200000,
+  });
+  assert.equal(childReservation.uid, 'child-user');
+  assert.equal(childReservation.slot, 'slot-01');
+  assert.equal(api.reserveSlotRecord({...childReservation,uid:'other-user',updatedAt:199999}, {
+    slotKey: 'slot-01',
+    uid: 'child-user',
+    name: 'Jogador TEST',
+    room: 'bairro-central',
+    nowClient: 200000,
+    nowServer: 200000,
+    serverTimestamp: 200000,
+  }), null, 'a reserva individual não pode tomar uma vaga recente');
+  assert.equal(api.reserveSlotRecord({...childReservation,uid:'stale-user',updatedAt:1}, {
+    slotKey: 'slot-01',
+    uid: 'child-user',
+    name: 'Jogador TEST',
+    room: 'bairro-central',
+    nowClient: 200000,
+    nowServer: 200000,
+    serverTimestamp: 200000,
+  }).uid, 'child-user', 'uma vaga individual expirada deve ser recuperável');
 }
 
 function createWorkerRuntime(fetchImpl, cacheImpl, deletedCaches = [], workerConsole = console) {
@@ -177,7 +207,7 @@ async function testFailedInstallKeepsPreviousRevision() {
   assert.ok(revision, 'a revisão imutável deve ser gerada antes do teste');
   const manifest = {
     version: 646,
-    build: '646.0-safe-rooms-atomic-pwa',
+    build: '646.5-multiplayer-missions-recovery',
     revision,
     algorithm: 'SHA-256',
     files: {},

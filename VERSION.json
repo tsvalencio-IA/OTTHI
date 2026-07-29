@@ -1,6 +1,6 @@
 {
   "version": 646,
-  "build": "646.0-safe-rooms-atomic-pwa",
+  "build": "646.5-multiplayer-missions-recovery",
   "name": "OTTHI World Edu",
   "sourceArchitecture": "modular-source-with-generated-runtime-bundle",
   "runtimeBundle": "app.js",
@@ -21,7 +21,13 @@
     "missões cooperativas infantis para emergência, pesca, escola e corridas",
     "funções sincronizadas para equipes de dois ou três jogadores com alternativa solo",
     "ginásio oval com atletas bots e progresso de voltas compartilhado",
-    "uniforme esportivo e integração dos veículos de serviço com objetivos cooperativos"
+    "uniforme esportivo e integração dos veículos de serviço com objetivos cooperativos",
+    "fallback de reserva Firebase por transação individual sem remover a transação atômica existente",
+    "retomada de participante após desconexão e continuação solo local sem apagar o progresso remoto",
+    "bombeiros, resgate e patrulha com todas as etapas operacionais exigidas",
+    "contadores individuais, classificação, tempo e modo competitivo nas corridas",
+    "alunos reservados atomicamente para impedir convite ou entrega duplicada",
+    "marcadores individuais de participantes online integrados ao mapa e GPS"
   ],
   "preserves": [
     "roupas",
@@ -45,7 +51,7 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "646.4",
+  "hotfix": "646.5",
   "notes": [
     "Multiplayer, chat seguro, convites, desafios e interações ficam liberados por padrão e não dependem de autorização parental.",
     "A Área dos Responsáveis controla o limite de tempo e exibe histórico privado das conversas e ações online.",

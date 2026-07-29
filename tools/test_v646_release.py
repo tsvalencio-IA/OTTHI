@@ -38,10 +38,10 @@ class ReleaseV646Tests(unittest.TestCase):
         version = json.loads(text('VERSION.json'))
         module_order = json.loads(text('src/module-order.json'))
         self.assertEqual(version['version'], 646)
-        self.assertEqual(version['build'], '646.0-safe-rooms-atomic-pwa')
+        self.assertEqual(version['build'], '646.5-multiplayer-missions-recovery')
         self.assertEqual(module_order['version'], 646)
         self.assertEqual(module_order['build'], version['build'])
-        self.assertIn('data-otthi-build="646.0-safe-rooms-atomic-pwa"', text('index.html'))
+        self.assertIn('data-otthi-build="646.5-multiplayer-missions-recovery"', text('index.html'))
         self.assertRegex(text('index.html'), r'data-otthi-revision="[a-f0-9]{16}"')
         self.assertGreaterEqual(text('index.html').count('?v=646'), 10)
 

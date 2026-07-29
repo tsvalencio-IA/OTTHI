@@ -72,7 +72,7 @@ add('Módulo 31 no manifesto',any(x.get('file')=='src/modules/31-neighborhood-wo
 add('CSS 13 no manifesto',any(x.get('file')=='src/styles/13-neighborhood-world-map-v644.css' for x in manifest['styles']))
 add('Versão consolidada no index',index.count('?v=646')>=10,index.count('?v=646'))
 add('Runtime consolidado',"window.OTTHI_GAME_VERSION = 646;" in app and "const APP_VERSION = 646;" in app)
-add('Service Worker consolidado',"const CACHE = `otthi-v646-${REVISION}`" in sw and "646.0-safe-rooms-atomic-pwa" in sw)
+add('Service Worker consolidado',"const CACHE = `otthi-v646-${REVISION}`" in sw and "646.5-multiplayer-missions-recovery" in sw)
 report={'version':646,'passed':all(x['passed'] for x in checks),'counts':{'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'total':len(checks)},'checks':checks}
 (ROOT/'docs/RELATORIO-TESTE-BAIRROS-V646.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n','utf-8')
 md=['# Relatório de teste — bairros consolidados V646','',f"- Resultado: **{'APROVADO' if report['passed'] else 'REPROVADO'}**",f"- Aprovados: **{report['counts']['passed']}**",f"- Falhas: **{report['counts']['failed']}**",'', '## Verificações','']+[f"- [{'x' if c['passed'] else ' '}] {c['name']}{' — '+c['detail'] if c['detail'] else ''}" for c in checks]

@@ -1,7 +1,7 @@
-const REVISION = 'a248812a89b4d29d';
+const REVISION = 'bdc719d3897953e0';
 const CACHE = `otthi-v646-${REVISION}`;
 const CACHE_PREFIXES = ['otthi-','otthi-game-web-','otthos-life-world-main-'];
-const BUILD = '646.0-safe-rooms-atomic-pwa';
+const BUILD = '646.5-multiplayer-missions-recovery';
 const VERSION = '646';
 const RELEASE_MANIFEST = './release-manifest.json?v=646';
 
