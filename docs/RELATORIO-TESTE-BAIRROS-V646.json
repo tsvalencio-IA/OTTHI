@@ -168,7 +168,7 @@
       "detail": ""
     },
     {
-      "name": "RTDB onDisconnect(slotRef).remove",
+      "name": "RTDB onDisconnect(reservation.slotRef).remove",
       "passed": true,
       "detail": ""
     },
@@ -328,52 +328,52 @@
       "detail": ""
     },
     {
-      "name": "Regra permite slot-01",
+      "name": "Cliente gera slot-01",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-02",
+      "name": "Cliente gera slot-02",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-03",
+      "name": "Cliente gera slot-03",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-04",
+      "name": "Cliente gera slot-04",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-05",
+      "name": "Cliente gera slot-05",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-06",
+      "name": "Cliente gera slot-06",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-07",
+      "name": "Cliente gera slot-07",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-08",
+      "name": "Cliente gera slot-08",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-09",
+      "name": "Cliente gera slot-09",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regra permite slot-10",
+      "name": "Cliente gera slot-10",
       "passed": true,
       "detail": ""
     },
@@ -383,22 +383,22 @@
       "detail": ""
     },
     {
-      "name": "Usuário só ocupa a própria vaga",
+      "name": "Vaga aceita qualquer jogador autenticado",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Usuário só remove a própria vaga",
+      "name": "Reserva ocorre por vaga individual",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Vaga valida bairro",
+      "name": "Reserva não grava o conjunto inteiro",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Vaga valida nome do slot",
+      "name": "Vaga sem validação bloqueadora",
       "passed": true,
       "detail": ""
     },

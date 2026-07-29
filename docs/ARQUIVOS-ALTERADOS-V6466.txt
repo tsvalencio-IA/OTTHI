@@ -1,0 +1,43 @@
+OTTHI World Edu V646.6
+Base imediata: pacote V646.5 verificado
+
+ARQUIVOS DE EXECUÇÃO E PWA
+404.html
+VERSION.json
+app.js
+assets/js/core/runtime-config.js
+assets/js/multiplayer-rtdb.js
+firebase-database.rules.json
+index.html
+manifest.webmanifest
+release-manifest.json
+src/module-order.json
+src/modules/00-runtime-foundation.js
+src/modules/28-multiplayer-social-online.js
+src/modules/32-cooperative-missions.js
+sw.js
+
+FERRAMENTAS E TESTES
+tools/build_project.py
+tools/simplify_firebase_gameplay_rules.js
+tools/test_v644_neighborhoods.py
+tools/test_v646_release.py
+tools/test_v6463_coop_responsive.py
+tools/test_v6466_permissions_buttons.js
+tools/test_v646_runtime.js
+tools/test_v647_multiplayer_missions.py
+tools/validate_project.py
+
+RELATÓRIOS GERADOS OU ATUALIZADOS
+docs/ARQUIVOS-ALTERADOS-V6466.txt
+docs/RELATORIO-ENTREGA-V6466.md
+docs/RELATORIO-PRESERVACAO-V642-V644.json
+docs/RELATORIO-PRESERVACAO-V642-V644.md
+docs/RELATORIO-TESTE-BAIRROS-V646.json
+docs/RELATORIO-TESTE-BAIRROS-V646.md
+docs/VALIDACAO-ESTRUTURAL-V646.json
+docs/VALIDACAO-ESTRUTURAL-V646.md
+
+OBSERVAÇÃO
+O pacote é completo. Os arquivos V646.5 mantidos em docs são histórico da
+entrega anterior e não substituem este relatório V646.6.

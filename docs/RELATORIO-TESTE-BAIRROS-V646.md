@@ -38,7 +38,7 @@
 - [x] RTDB roomCapacity
 - [x] RTDB otthi:room-changing
 - [x] RTDB otthi:room-changed
-- [x] RTDB onDisconnect(slotRef).remove
+- [x] RTDB onDisconnect(reservation.slotRef).remove
 - [x] RTDB runTransaction
 - [x] Reserva antes de desconectar
 - [x] Rollback para bairro anterior
@@ -70,21 +70,21 @@
 - [x] Mapa paisagem responsivo
 - [x] Canvas minimapa acompanha caixa
 - [x] Regras possuem slots fixos
-- [x] Regra permite slot-01
-- [x] Regra permite slot-02
-- [x] Regra permite slot-03
-- [x] Regra permite slot-04
-- [x] Regra permite slot-05
-- [x] Regra permite slot-06
-- [x] Regra permite slot-07
-- [x] Regra permite slot-08
-- [x] Regra permite slot-09
-- [x] Regra permite slot-10
+- [x] Cliente gera slot-01
+- [x] Cliente gera slot-02
+- [x] Cliente gera slot-03
+- [x] Cliente gera slot-04
+- [x] Cliente gera slot-05
+- [x] Cliente gera slot-06
+- [x] Cliente gera slot-07
+- [x] Cliente gera slot-08
+- [x] Cliente gera slot-09
+- [x] Cliente gera slot-10
 - [x] Regra não aceita numChildren
-- [x] Usuário só ocupa a própria vaga
-- [x] Usuário só remove a própria vaga
-- [x] Vaga valida bairro
-- [x] Vaga valida nome do slot
+- [x] Vaga aceita qualquer jogador autenticado
+- [x] Reserva ocorre por vaga individual
+- [x] Reserva não grava o conjunto inteiro
+- [x] Vaga sem validação bloqueadora
 - [x] UI mostra ocupação
 - [x] UI bloqueia lotado
 - [x] UI só seleciona após sucesso

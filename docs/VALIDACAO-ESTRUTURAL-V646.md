@@ -1,7 +1,7 @@
 # Validação estrutural automática — V646
 
 - Resultado: **APROVADO**
-- Verificações: **198 aprovadas / 0 falhas**
+- Verificações: **203 aprovadas / 0 falhas**
 
 ## Verificações
 
@@ -23,6 +23,8 @@
 - [x] Arquivo obrigatório tools/test_v643_world_systems.py
 - [x] Arquivo obrigatório tools/test_v644_neighborhoods.py
 - [x] Arquivo obrigatório tools/test_v646_release.py
+- [x] Arquivo obrigatório tools/test_v6466_permissions_buttons.js
+- [x] Arquivo obrigatório tools/test_v647_multiplayer_missions.py
 - [x] Arquivo obrigatório .github/workflows/build-modular-app.yml
 - [x] Arquivo obrigatório .github/workflows/gerar-apk.yml
 - [x] Arquivo obrigatório android-app/app/build.gradle
@@ -354,13 +356,148 @@
       "passed": true,
       "detail": "{'id': 'bairro-montanha', 'name': 'Bairro da Mont
 - [x] Harness real de slots e Service Worker V646 — V646 runtime: slots reais, fallback 503, instalação incompleta e revisão coerente aprovados.
+- [x] Permissões autenticadas e botões V646.6 — V646.6 permissões e botões: 60/60 aprovados.
+- [x] Multiplayer, PWA e missões V646.6 — {
+  "passed": true,
+  "counts": {
+    "passed": 31,
+    "failed": 0,
+    "total": 31
+  },
+  "checks": [
+    {
+      "name": "Navega��o aguarda worldGroup",
+      "passed": true
+    },
+    {
+      "name": "Reserva at�mica de sala preservada",
+      "passed": true
+    },
+    {
+      "name": "Fallback por transa��o individual",
+      "passed": true
+    },
+    {
+      "name": "Reserva individual test�vel",
+      "passed": true
+    },
+    {
+      "name": "Participante fica registrado ao desconectar",
+      "passed": true
+    },
+    {
+      "name": "Evento cooperativo idempotente",
+      "passed": true
+    },
+    {
+      "name": "Cancelamento pelo remetente",
+      "passed": true
+    },
+    {
+      "name": "Modo competitivo sincronizado",
+      "passed": true
+    },
+    {
+      "name": "Regras aceitam transa��o individual",
+      "passed": true
+    },
+    {
+      "name": "Convites autenticados sem bloqueio adicional",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem Controlar o fogo progressivamente",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem safety-release",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem patient-loaded",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem patient-delivered",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem suspect-escorted",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem student-delivered",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem coopReserveEvent",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem coopIndividualCount",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem coopRaceStandings",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem continueCoopMissionOffline",
+      "passed": true
+    },
+    {
+      "name": "Miss�es incluem createCoopOvalTrackWorld",
+      "passed": true
+    },
+    {
+      "name": "Maca exige dois participantes",
+      "passed": true
+    },
+    {
+      "name": "Pap�is n�o podem exceder a capacidade",
+      "passed": true
+    },
+    {
+      "name": "Todos precisam estar prontos",
+      "passed": true
+    },
+    {
+      "name": "Bots usam posi��es e velocidade determin�sticas",
+      "passed": true
+    },
+    {
+      "name": "Bots desaceleram perto do jogador",
+      "passed": true
+    },
+    {
+      "name": "Mapa inclui participantes online",
+      "passed": true
+    },
+    {
+      "name": "Miss�o ativa tem prioridade no agrupamento",
+      "passed": true
+    },
+    {
+      "name": "Mapa recalcula em resize e orienta��o",
+      "passed": true
+    },
+    {
+      "name": "Tela baixa tem regra dedicada",
+      "passed": true
+    },
+    {
+      "name": "Modal usa dimens�es reais do aparelho",
+      "passed": true
+    }
+  ]
+}
 - [x] Testes de segurança e release V646 — test_build_and_ci_do_not_publish_partial_outputs (__main__.ReleaseV646Tests.test_build_and_ci_do_not_publish_partial_outputs) ... ok
-test_child_safety_is_backend_enforced (__main__.ReleaseV646Tests.test_child_safety_is_backend_enforced) ... ok
+test_child_safety_and_authenticated_gameplay_contract (__main__.ReleaseV646Tests.test_child_safety_and_authenticated_gameplay_contract) ... ok
 test_legacy_house_lock_migrates_to_canonical_schema (__main__.ReleaseV646Tests.test_legacy_house_lock_migrates_to_canonical_schema) ... ok
 test_loading_failure_preserves_save (__main__.ReleaseV646Tests.test_loading_failure_preserves_save) ... ok
 test_online_interactions_are_open_and_parent_audit_exists (__main__.ReleaseV646Tests.test_online_interactions_are_open_and_parent_audit_exists) ... ok
 test_parent_and_moderation_ui_are_present (__main__.ReleaseV646Tests.test_parent_and_moderation_ui_are_present) ... ok
-test_presence_sessions_and_rotation_are_fail_closed (__main__.ReleaseV646Tests.test_presence_sessions_and_rotation_are_fail_closed) ... ok
+test_presence_sessions_and_rotation_are_authenticated (__main__.ReleaseV646Tests.test_presence_sessions_and_rotation_are_authenticated) ... ok
 test_production_runtime_harness (__main__.ReleaseV646Tests.test_production_runtime_harness) ... ok
 test_release_manifest_hashes_match (__main__.ReleaseV646Tests.test_release_manifest_hashes_match) ... ok
 test_room_contract_has_no_legacy_public_room (__main__.ReleaseV646Tests.test_room_contract_has_no_legacy_public_room) ... ok
@@ -371,7 +508,7 @@ test_version_surfaces_are_unified (__main__.ReleaseV646Tests.test_version_surfac
 test_world_retry_and_privacy_fail_closed (__main__.ReleaseV646Tests.test_world_retry_and_privacy_fail_closed) ... ok
 
 ----------------------------------------------------------------------
-Ran 15 tests in 0.248s
+Ran 15 tests in 0.394s
 
 OK
 - [x] Serviços profissionais preservados — test_accidents_stop_and_require_all_services (__main__.ProfessionalEmergencyServicesTests.test_accidents_stop_and_require_all_services) ... ok
@@ -382,7 +519,7 @@ test_service_vehicle_visuals_are_local_and_multiplayer_safe (__main__.Profession
 test_service_vehicles_are_distinct_enterable_and_reserved (__main__.ProfessionalEmergencyServicesTests.test_service_vehicles_are_distinct_enterable_and_reserved) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.015s
+Ran 6 tests in 0.014s
 
 OK
 - [x] Mapa, missões, móveis e roupas preservados — test_assigned_service_vehicle_is_real_map_target (__main__.CommercialPolishTests.test_assigned_service_vehicle_is_real_map_target) ... ok
@@ -393,7 +530,7 @@ test_room_furniture_is_persistent_and_editable (__main__.CommercialPolishTests.t
 test_uniforms_follow_animated_limbs (__main__.CommercialPolishTests.test_uniforms_follow_animated_limbs) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.021s
+Ran 6 tests in 0.030s
 
 OK
 - [x] Missões cooperativas e responsividade V646.3 — test_all_requested_cooperative_missions_exist (__main__.CoopResponsiveTests.test_all_requested_cooperative_missions_exist) ... ok
@@ -404,16 +541,16 @@ test_state_persists_and_existing_systems_integrate (__main__.CoopResponsiveTests
 test_uniform_and_build_order_are_complete (__main__.CoopResponsiveTests.test_uniform_and_build_order_are_complete) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.022s
+Ran 6 tests in 0.040s
 
 OK
 - [x] IDs HTML únicos — []
 - [x] Referências locais existem — []
-- [x] Versão 646 no index — 16
-- [x] Build V646 no HTML
-- [x] Revisão imutável no HTML — bdc719d3897953e0
+- [x] Versão 646.6 no index — 16
+- [x] Build V646.6 no HTML
+- [x] Revisão imutável no HTML — 148a3291a83a753a
 - [x] Three.js local e versionado
-- [x] Funções preservadas e ampliadas — 686
+- [x] Funções preservadas e ampliadas — 688
 - [x] Runtime V646
 - [x] Save V646 migra V645
 - [x] Token preservado mobilityThrottleIntent
@@ -439,26 +576,27 @@ OK
 - [x] Cinco bairros com 10 vagas — 5
 - [x] Segurança infantil padrão
 - [x] Sala padrão correta
-- [x] Manifesto PWA V646
+- [x] Manifesto PWA V646.6
 - [x] Regras Firebase contêm bairro-central
 - [x] Regras Firebase contêm bairro-floresta
 - [x] Regras Firebase contêm bairro-lago
 - [x] Regras Firebase contêm bairro-montanha
 - [x] Regras Firebase contêm bairro-escola
-- [x] Regras Firebase contêm slot-01
-- [x] Regras Firebase contêm slot-10
+- [x] Regras Firebase contêm slots
+- [x] Regras Firebase contêm coopMissions
 - [x] Regras Firebase contêm guardianSettings
 - [x] Regras Firebase contêm reports
 - [x] Regras Firebase contêm blocks
-- [x] Regras contêm frases aprovadas
+- [x] Frases infantis permanecem no cliente
+- [x] Ações do jogo aceitam jogador autenticado
 - [x] Perfis não são públicos
-- [x] Service Worker V646
+- [x] Service Worker V646.6
 - [x] Cache PWA validado por SHA-256
 - [x] Fallback HTTP usa cache válido
 - [x] Manifesto de release V646
 - [x] Revisão coerente HTML/SW/manifesto
 - [x] Hashes da release conferem — []
-- [x] Hash-fonte src/modules/00-runtime-foundation.js — fbc4c4dcad628ba44fa3ca05668a0ffbecce1d9c20a6afc2405be4307425f89b
+- [x] Hash-fonte src/modules/00-runtime-foundation.js — 1048be12b243465f20ca91263af9e336c112f9e17fd1fc1d5a471e4ed55fe795
 - [x] Hash-fonte src/modules/01-build-persistence.js — 4bfd48a6d3e2ae22d2e3226e588733eb1f09cea77bb9cdef5c5516e68510cfe7
 - [x] Hash-fonte src/modules/02-state-save-cloud-account.js — da0a3856d23136e962e623d43c04cf3ef4e166f04b00b672eed69c4e1f8ee27d
 - [x] Hash-fonte src/modules/03-ui-modal-install-pwa.js — d49232561be91aabe54e17ae6d1e18c9699c67ee5cf1848e731cbd811b8950ff
@@ -486,11 +624,11 @@ OK
 - [x] Hash-fonte src/modules/25-render-init-resize-position-collision.js — 530244db62e871e89f980499a3898a09034eac47ab606ad03877f1ee28542c12
 - [x] Hash-fonte src/modules/26-input-player-physics.js — 9ac178393a9f2f438bc629e0b980681ee21e4c98adbd6ba476ffc3e9649bc5f7
 - [x] Hash-fonte src/modules/27-npc-enemies-combat-camera-action.js — e93543bd683176e6db4f61bb1e30723964b945757c79df0d22b2099f51547f58
-- [x] Hash-fonte src/modules/28-multiplayer-social-online.js — 7ff00c575b422c06475c61714b203b37c73bcc14bb53113929861eb7b13f8296
+- [x] Hash-fonte src/modules/28-multiplayer-social-online.js — 56bb70539108bf68f94fd4f028da641d104dcea0c71c794edc6e7c5f0a7a6866
 - [x] Hash-fonte src/modules/29-game-loop-controls-gamepad.js — 9a0d36e129acbaa2afa4e9ff78d6d5601b76beefd6290cc199f385b81ea6d035
 - [x] Hash-fonte src/modules/30-pause-tests-public-api-bootstrap.js — 8539dc76be417801be7672f65d3fe20108b13c402059ad777197920e5c604802
 - [x] Hash-fonte src/modules/31-neighborhood-world-controller.js — c077d7777f196bc9dc03bc62dd3f73c9c15e8f8b5222cff0b94c926d78058ba7
-- [x] Hash-fonte src/modules/32-cooperative-missions.js — fa20a73a5bd43545d754bcaddd039a10e4f5bb8eb8d8af8c84079379b0f9c95e
+- [x] Hash-fonte src/modules/32-cooperative-missions.js — 71dfedd7b855a95d8047d514c54f013fcb65de6de5e45cdb82f2a78fccf22a0f
 - [x] Hash-fonte src/styles/00-foundation-lobby-game-modal.css — ff7d8c3bf3169c75f4299c794fa9e874665a16a220ee1c4e6dbba19ee41759b8
 - [x] Hash-fonte src/styles/01-legacy-v607-v613.css — 4bcd18c1b61afa8822aca9c4ba3e7a5d77165544d4bd49faa06ba3650d35815e
 - [x] Hash-fonte src/styles/02-art-direction-v614-v617.css — c0f3710d71a87fb0d9f4b9e9cb0c9bac130a7522eb76bfa3a65634616236d666

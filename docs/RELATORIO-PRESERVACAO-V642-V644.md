@@ -2,7 +2,7 @@
 
 - Resultado: **APROVADO**
 - Funções-base preservadas: **544 / 544**
-- Funções atuais: **725**
+- Funções atuais: **727**
 - Ordem das funções-base preservada: **sim**
 - Funções V643/V644 esperadas: **20 / 20**
 - Assets imutáveis preservados sem alteração: **77 / 83**
@@ -180,7 +180,9 @@
 - `coopCurrentInstruction()`
 - `coopMissionProgressLabel()`
 - `coopMissionBriefingMarkup()`
+- `coopPermissionDenied()`
 - `coopBackendCall()`
+- `bindCoopActionButton()`
 - `coopLocalRecord()`
 - `coopActiveState()`
 - `createCooperativeMission()`

@@ -1,6 +1,6 @@
 {
   "version": 646,
-  "build": "646.5-multiplayer-missions-recovery",
+  "build": "646.6-authenticated-gameplay-open",
   "passed": true,
   "checks": [
     {
@@ -90,6 +90,16 @@
     },
     {
       "name": "Arquivo obrigatório tools/test_v646_release.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v6466_permissions_buttons.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Arquivo obrigatório tools/test_v647_multiplayer_missions.py",
       "passed": true,
       "detail": ""
     },
@@ -459,24 +469,34 @@
       "detail": "V646 runtime: slots reais, fallback 503, instalação incompleta e revisão coerente aprovados."
     },
     {
+      "name": "Permissões autenticadas e botões V646.6",
+      "passed": true,
+      "detail": "V646.6 permissões e botões: 60/60 aprovados."
+    },
+    {
+      "name": "Multiplayer, PWA e missões V646.6",
+      "passed": true,
+      "detail": "{\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 31,\n    \"failed\": 0,\n    \"total\": 31\n  },\n  \"checks\": [\n    {\n      \"name\": \"Navega��o aguarda worldGroup\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Reserva at�mica de sala preservada\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Fallback por transa��o individual\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Reserva individual test�vel\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Participante fica registrado ao desconectar\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Evento cooperativo idempotente\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Cancelamento pelo remetente\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Modo competitivo sincronizado\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Regras aceitam transa��o individual\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Convites autenticados sem bloqueio adicional\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem Controlar o fogo progressivamente\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem safety-release\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem patient-loaded\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem patient-delivered\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem suspect-escorted\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem student-delivered\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem coopReserveEvent\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem coopIndividualCount\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem coopRaceStandings\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem continueCoopMissionOffline\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�es incluem createCoopOvalTrackWorld\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Maca exige dois participantes\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Pap�is n�o podem exceder a capacidade\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Todos precisam estar prontos\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Bots usam posi��es e velocidade determin�sticas\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Bots desaceleram perto do jogador\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Mapa inclui participantes online\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Miss�o ativa tem prioridade no agrupamento\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Mapa recalcula em resize e orienta��o\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Tela baixa tem regra dedicada\",\n      \"passed\": true\n    },\n    {\n      \"name\": \"Modal usa dimens�es reais do aparelho\",\n      \"passed\": true\n    }\n  ]\n}"
+    },
+    {
       "name": "Testes de segurança e release V646",
       "passed": true,
-      "detail": "test_build_and_ci_do_not_publish_partial_outputs (__main__.ReleaseV646Tests.test_build_and_ci_do_not_publish_partial_outputs) ... ok\ntest_child_safety_is_backend_enforced (__main__.ReleaseV646Tests.test_child_safety_is_backend_enforced) ... ok\ntest_legacy_house_lock_migrates_to_canonical_schema (__main__.ReleaseV646Tests.test_legacy_house_lock_migrates_to_canonical_schema) ... ok\ntest_loading_failure_preserves_save (__main__.ReleaseV646Tests.test_loading_failure_preserves_save) ... ok\ntest_online_interactions_are_open_and_parent_audit_exists (__main__.ReleaseV646Tests.test_online_interactions_are_open_and_parent_audit_exists) ... ok\ntest_parent_and_moderation_ui_are_present (__main__.ReleaseV646Tests.test_parent_and_moderation_ui_are_present) ... ok\ntest_presence_sessions_and_rotation_are_fail_closed (__main__.ReleaseV646Tests.test_presence_sessions_and_rotation_are_fail_closed) ... ok\ntest_production_runtime_harness (__main__.ReleaseV646Tests.test_production_runtime_harness) ... ok\ntest_release_manifest_hashes_match (__main__.ReleaseV646Tests.test_release_manifest_hashes_match) ... ok\ntest_room_contract_has_no_legacy_public_room (__main__.ReleaseV646Tests.test_room_contract_has_no_legacy_public_room) ... ok\ntest_save_migration_is_explicit (__main__.ReleaseV646Tests.test_save_migration_is_explicit) ... ok\ntest_service_worker_rejects_mixed_shell (__main__.ReleaseV646Tests.test_service_worker_rejects_mixed_shell) ... ok\ntest_slot_reservation_contract_is_atomic_and_recoverable (__main__.ReleaseV646Tests.test_slot_reservation_contract_is_atomic_and_recoverable) ... ok\ntest_version_surfaces_are_unified (__main__.ReleaseV646Tests.test_version_surfaces_are_unified) ... ok\ntest_world_retry_and_privacy_fail_closed (__main__.ReleaseV646Tests.test_world_retry_and_privacy_fail_closed) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.248s\n\nOK"
+      "detail": "test_build_and_ci_do_not_publish_partial_outputs (__main__.ReleaseV646Tests.test_build_and_ci_do_not_publish_partial_outputs) ... ok\ntest_child_safety_and_authenticated_gameplay_contract (__main__.ReleaseV646Tests.test_child_safety_and_authenticated_gameplay_contract) ... ok\ntest_legacy_house_lock_migrates_to_canonical_schema (__main__.ReleaseV646Tests.test_legacy_house_lock_migrates_to_canonical_schema) ... ok\ntest_loading_failure_preserves_save (__main__.ReleaseV646Tests.test_loading_failure_preserves_save) ... ok\ntest_online_interactions_are_open_and_parent_audit_exists (__main__.ReleaseV646Tests.test_online_interactions_are_open_and_parent_audit_exists) ... ok\ntest_parent_and_moderation_ui_are_present (__main__.ReleaseV646Tests.test_parent_and_moderation_ui_are_present) ... ok\ntest_presence_sessions_and_rotation_are_authenticated (__main__.ReleaseV646Tests.test_presence_sessions_and_rotation_are_authenticated) ... ok\ntest_production_runtime_harness (__main__.ReleaseV646Tests.test_production_runtime_harness) ... ok\ntest_release_manifest_hashes_match (__main__.ReleaseV646Tests.test_release_manifest_hashes_match) ... ok\ntest_room_contract_has_no_legacy_public_room (__main__.ReleaseV646Tests.test_room_contract_has_no_legacy_public_room) ... ok\ntest_save_migration_is_explicit (__main__.ReleaseV646Tests.test_save_migration_is_explicit) ... ok\ntest_service_worker_rejects_mixed_shell (__main__.ReleaseV646Tests.test_service_worker_rejects_mixed_shell) ... ok\ntest_slot_reservation_contract_is_atomic_and_recoverable (__main__.ReleaseV646Tests.test_slot_reservation_contract_is_atomic_and_recoverable) ... ok\ntest_version_surfaces_are_unified (__main__.ReleaseV646Tests.test_version_surfaces_are_unified) ... ok\ntest_world_retry_and_privacy_fail_closed (__main__.ReleaseV646Tests.test_world_retry_and_privacy_fail_closed) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.394s\n\nOK"
     },
     {
       "name": "Serviços profissionais preservados",
       "passed": true,
-      "detail": "test_accidents_stop_and_require_all_services (__main__.ProfessionalEmergencyServicesTests.test_accidents_stop_and_require_all_services) ... ok\ntest_buses_and_traffic_have_collision_protection (__main__.ProfessionalEmergencyServicesTests.test_buses_and_traffic_have_collision_protection) ... ok\ntest_missions_require_correct_vehicle (__main__.ProfessionalEmergencyServicesTests.test_missions_require_correct_vehicle) ... ok\ntest_service_jobs_and_visual_uniforms_exist (__main__.ProfessionalEmergencyServicesTests.test_service_jobs_and_visual_uniforms_exist) ... ok\ntest_service_vehicle_visuals_are_local_and_multiplayer_safe (__main__.ProfessionalEmergencyServicesTests.test_service_vehicle_visuals_are_local_and_multiplayer_safe) ... ok\ntest_service_vehicles_are_distinct_enterable_and_reserved (__main__.ProfessionalEmergencyServicesTests.test_service_vehicles_are_distinct_enterable_and_reserved) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.015s\n\nOK"
+      "detail": "test_accidents_stop_and_require_all_services (__main__.ProfessionalEmergencyServicesTests.test_accidents_stop_and_require_all_services) ... ok\ntest_buses_and_traffic_have_collision_protection (__main__.ProfessionalEmergencyServicesTests.test_buses_and_traffic_have_collision_protection) ... ok\ntest_missions_require_correct_vehicle (__main__.ProfessionalEmergencyServicesTests.test_missions_require_correct_vehicle) ... ok\ntest_service_jobs_and_visual_uniforms_exist (__main__.ProfessionalEmergencyServicesTests.test_service_jobs_and_visual_uniforms_exist) ... ok\ntest_service_vehicle_visuals_are_local_and_multiplayer_safe (__main__.ProfessionalEmergencyServicesTests.test_service_vehicle_visuals_are_local_and_multiplayer_safe) ... ok\ntest_service_vehicles_are_distinct_enterable_and_reserved (__main__.ProfessionalEmergencyServicesTests.test_service_vehicles_are_distinct_enterable_and_reserved) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.014s\n\nOK"
     },
     {
       "name": "Mapa, missões, móveis e roupas preservados",
       "passed": true,
-      "detail": "test_assigned_service_vehicle_is_real_map_target (__main__.CommercialPolishTests.test_assigned_service_vehicle_is_real_map_target) ... ok\ntest_map_is_dynamic_square_and_viewport_fitted (__main__.CommercialPolishTests.test_map_is_dynamic_square_and_viewport_fitted) ... ok\ntest_mission_card_opens_one_clear_briefing (__main__.CommercialPolishTests.test_mission_card_opens_one_clear_briefing) ... ok\ntest_new_style_is_last_and_build_outputs_match (__main__.CommercialPolishTests.test_new_style_is_last_and_build_outputs_match) ... ok\ntest_room_furniture_is_persistent_and_editable (__main__.CommercialPolishTests.test_room_furniture_is_persistent_and_editable) ... ok\ntest_uniforms_follow_animated_limbs (__main__.CommercialPolishTests.test_uniforms_follow_animated_limbs) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.021s\n\nOK"
+      "detail": "test_assigned_service_vehicle_is_real_map_target (__main__.CommercialPolishTests.test_assigned_service_vehicle_is_real_map_target) ... ok\ntest_map_is_dynamic_square_and_viewport_fitted (__main__.CommercialPolishTests.test_map_is_dynamic_square_and_viewport_fitted) ... ok\ntest_mission_card_opens_one_clear_briefing (__main__.CommercialPolishTests.test_mission_card_opens_one_clear_briefing) ... ok\ntest_new_style_is_last_and_build_outputs_match (__main__.CommercialPolishTests.test_new_style_is_last_and_build_outputs_match) ... ok\ntest_room_furniture_is_persistent_and_editable (__main__.CommercialPolishTests.test_room_furniture_is_persistent_and_editable) ... ok\ntest_uniforms_follow_animated_limbs (__main__.CommercialPolishTests.test_uniforms_follow_animated_limbs) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.030s\n\nOK"
     },
     {
       "name": "Missões cooperativas e responsividade V646.3",
       "passed": true,
-      "detail": "test_all_requested_cooperative_missions_exist (__main__.CoopResponsiveTests.test_all_requested_cooperative_missions_exist) ... ok\ntest_map_is_clustered_and_responsive_in_both_orientations (__main__.CoopResponsiveTests.test_map_is_clustered_and_responsive_in_both_orientations) ... ok\ntest_roles_and_shared_progress_are_online (__main__.CoopResponsiveTests.test_roles_and_shared_progress_are_online) ... ok\ntest_school_fishing_and_race_runtime_contracts (__main__.CoopResponsiveTests.test_school_fishing_and_race_runtime_contracts) ... ok\ntest_state_persists_and_existing_systems_integrate (__main__.CoopResponsiveTests.test_state_persists_and_existing_systems_integrate) ... ok\ntest_uniform_and_build_order_are_complete (__main__.CoopResponsiveTests.test_uniform_and_build_order_are_complete) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.022s\n\nOK"
+      "detail": "test_all_requested_cooperative_missions_exist (__main__.CoopResponsiveTests.test_all_requested_cooperative_missions_exist) ... ok\ntest_map_is_clustered_and_responsive_in_both_orientations (__main__.CoopResponsiveTests.test_map_is_clustered_and_responsive_in_both_orientations) ... ok\ntest_roles_and_shared_progress_are_online (__main__.CoopResponsiveTests.test_roles_and_shared_progress_are_online) ... ok\ntest_school_fishing_and_race_runtime_contracts (__main__.CoopResponsiveTests.test_school_fishing_and_race_runtime_contracts) ... ok\ntest_state_persists_and_existing_systems_integrate (__main__.CoopResponsiveTests.test_state_persists_and_existing_systems_integrate) ... ok\ntest_uniform_and_build_order_are_complete (__main__.CoopResponsiveTests.test_uniform_and_build_order_are_complete) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.040s\n\nOK"
     },
     {
       "name": "IDs HTML únicos",
@@ -489,19 +509,19 @@
       "detail": "[]"
     },
     {
-      "name": "Versão 646 no index",
+      "name": "Versão 646.6 no index",
       "passed": true,
       "detail": "16"
     },
     {
-      "name": "Build V646 no HTML",
+      "name": "Build V646.6 no HTML",
       "passed": true,
       "detail": ""
     },
     {
       "name": "Revisão imutável no HTML",
       "passed": true,
-      "detail": "bdc719d3897953e0"
+      "detail": "148a3291a83a753a"
     },
     {
       "name": "Three.js local e versionado",
@@ -511,7 +531,7 @@
     {
       "name": "Funções preservadas e ampliadas",
       "passed": true,
-      "detail": "686"
+      "detail": "688"
     },
     {
       "name": "Runtime V646",
@@ -639,7 +659,7 @@
       "detail": ""
     },
     {
-      "name": "Manifesto PWA V646",
+      "name": "Manifesto PWA V646.6",
       "passed": true,
       "detail": ""
     },
@@ -669,12 +689,12 @@
       "detail": ""
     },
     {
-      "name": "Regras Firebase contêm slot-01",
+      "name": "Regras Firebase contêm slots",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Regras Firebase contêm slot-10",
+      "name": "Regras Firebase contêm coopMissions",
       "passed": true,
       "detail": ""
     },
@@ -694,7 +714,12 @@
       "detail": ""
     },
     {
-      "name": "Regras contêm frases aprovadas",
+      "name": "Frases infantis permanecem no cliente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ações do jogo aceitam jogador autenticado",
       "passed": true,
       "detail": ""
     },
@@ -704,7 +729,7 @@
       "detail": ""
     },
     {
-      "name": "Service Worker V646",
+      "name": "Service Worker V646.6",
       "passed": true,
       "detail": ""
     },
@@ -736,7 +761,7 @@
     {
       "name": "Hash-fonte src/modules/00-runtime-foundation.js",
       "passed": true,
-      "detail": "fbc4c4dcad628ba44fa3ca05668a0ffbecce1d9c20a6afc2405be4307425f89b"
+      "detail": "1048be12b243465f20ca91263af9e336c112f9e17fd1fc1d5a471e4ed55fe795"
     },
     {
       "name": "Hash-fonte src/modules/01-build-persistence.js",
@@ -876,7 +901,7 @@
     {
       "name": "Hash-fonte src/modules/28-multiplayer-social-online.js",
       "passed": true,
-      "detail": "7ff00c575b422c06475c61714b203b37c73bcc14bb53113929861eb7b13f8296"
+      "detail": "56bb70539108bf68f94fd4f028da641d104dcea0c71c794edc6e7c5f0a7a6866"
     },
     {
       "name": "Hash-fonte src/modules/29-game-loop-controls-gamepad.js",
@@ -896,7 +921,7 @@
     {
       "name": "Hash-fonte src/modules/32-cooperative-missions.js",
       "passed": true,
-      "detail": "fa20a73a5bd43545d754bcaddd039a10e4f5bb8eb8d8af8c84079379b0f9c95e"
+      "detail": "71dfedd7b855a95d8047d514c54f013fcb65de6de5e45cdb82f2a78fccf22a0f"
     },
     {
       "name": "Hash-fonte src/styles/00-foundation-lobby-game-modal.css",
@@ -996,18 +1021,18 @@
   ],
   "errors": [],
   "counts": {
-    "checks": 198,
-    "passed": 198,
+    "checks": 203,
+    "passed": 203,
     "failed": 0,
-    "functions": 686,
+    "functions": 688,
     "javascriptModules": 33,
     "styleModules": 16,
     "htmlIds": 104
   },
   "hashes": {
-    "app.js": "9a40ca9e78e28d6a04052ba47d6f974de8e499b16bd0f333c88ddfbec8f526d0",
+    "app.js": "2e5d47325ad2f47934cddfcf97a78c7627b9b2a5285e0e12814146c09953dda4",
     "style.css": "a4fdba497367197ebb1ee24e8da9f25863dbf94b46852bcfd686bcb8e12d73f6",
-    "src/module-order.json": "605f61b04d0a9917053ff471d082606bb8e4102a78025ca23fe2c202a6dcc4e4",
-    "release-manifest.json": "2802ac11ec7e250075dfbbe70cc1ac7b289f52e9c7f7523dce91ffa42e538d57"
+    "src/module-order.json": "0c3c4bfa29f5b1b4a6d7a26373a3594418d4abbd9c5e5d2c4ec06dca53b87858",
+    "release-manifest.json": "d6c7549ce4e6df96f098946736bca595a6845b2f2583884ebb3cf1ea49e84a28"
   }
 }
