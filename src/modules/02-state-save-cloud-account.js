@@ -30,7 +30,7 @@
       friendship,
       flags,
       settings: { ...fresh.settings, ...(saved.settings || {}), quality: Number(saved.version||0)<615 && (saved.settings?.quality||'high')==='high' ? 'auto' : ((saved.settings?.quality)||fresh.settings.quality) },
-      guardian: { ...fresh.guardian, ...(saved.guardian || {}), communicationEnabled:Number(saved.version||0)>=646&&saved.guardian?.communicationEnabled===true },
+      guardian: { ...fresh.guardian, ...(saved.guardian || {}), multiplayerEnabled:true, communicationEnabled:true, chatEnabled:true },
       usage: { ...fresh.usage, ...(saved.usage || {}) },
       stats: { ...fresh.stats, ...(saved.stats || {}) },
       daily: { ...fresh.daily, ...(saved.daily || {}), quests:Array.isArray(saved.daily?.quests)?saved.daily.quests:[] },

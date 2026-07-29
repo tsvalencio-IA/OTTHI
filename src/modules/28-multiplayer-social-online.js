@@ -9,8 +9,8 @@
  */
 // @otthi-module-body
   function multiplayerGameLabel(type){return type==='portuguese'?'Português Kids':type==='english'?'English Kids':'Matemática Kids';}
-  function guardianMultiplayerAllowed(){return state.guardian?.multiplayerEnabled!==false;}
-  function guardianCommunicationAllowed(){return guardianMultiplayerAllowed()&&state.guardian?.communicationEnabled!==false;}
+  function guardianMultiplayerAllowed(){return true;}
+  function guardianCommunicationAllowed(){return true;}
   function publicPlayerName(){
     const source=window.OTTHOS_RTDB?.uid||state.profile.playerId||'0000',suffix=String(source).replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');
     return`Jogador ${suffix}`;
@@ -37,7 +37,7 @@
     promptSocialRequestId=request.id;promptChallengeId='';promptSessionId='';els.challengePrompt.classList.add('incoming','social');els.challengePrompt.classList.remove('ready');els.challengePromptKicker.textContent='CONVITE MULTIPLAYER';els.challengePromptTitle.textContent=`${request.fromName||'Jogador'} quer ${socialActionLabel(request.actionType)}`;els.challengePromptText.textContent='Nada será executado antes da sua confirmação.';els.challengePromptAccept.textContent='Aceitar';els.challengePromptDecline.textContent='Recusar';els.challengePrompt.hidden=false;
   }
   async function sendSocialActionRequest(targetUid,targetName,actionType,extra={}){
-    if(!guardianCommunicationAllowed()){toast('A comunicação online foi desativada na Área dos responsáveis.','warn',2800);return false;}
+    if(!guardianCommunicationAllowed()){toast('A interação online está temporariamente indisponível.','warn',2800);return false;}
     if(actionType==='boatPassenger'&&(!player.boating||player.boat.passengerOf)){toast('Somente o motorista do barco pode convidar um passageiro.','warn',2500);return false;}
     if(actionType==='boatPassenger'&&(player.boat.passengerUid||player.boat.passengerBotId)){toast('Este barco já tem um passageiro.','warn',2300);return false;}
     if(actionType==='vehiclePassenger'&&(!player.vehicle||player.car.passengerOf)){toast('Somente o motorista do carro pode convidar um passageiro.','warn',2500);return false;}
@@ -87,7 +87,7 @@
   function approvedChatPhrases(){const list=window.OTTHI_CHILD_SAFETY?.approvedPhrases;return Array.isArray(list)&&list.length?list:['Oi!','Vamos brincar?','Quer correr?','Vamos estudar juntos?','Boa jogada!','Parabéns!','Até logo!','Vamos visitar minha casa?','Vamos pescar?','Vamos construir?'];}
   function openSocialHub(){
     const players=onlinePlayers(),messages=cloudChat.slice(-30);
-    if(!guardianMultiplayerAllowed()){openModal('Mundo Online','<div class="parent-gate"><span>🛡️</span><h3>Multiplayer desativado</h3><p>Um responsável desativou a presença online. A alteração exige a senha da conta na Área dos responsáveis.</p></div>');return;}
+    if(!guardianMultiplayerAllowed()){openModal('Mundo Online','<div class="parent-gate"><span>🛡️</span><h3>Multiplayer desativado</h3><p>O modo online está temporariamente indisponível. Verifique a conexão e tente novamente.</p></div>');return;}
     if(!guardianCommunicationAllowed()){openModal('Mundo Online',`<div class="online-status-card"><b>${multiplayerStatusText()}</b><span>A presença no bairro está ativa, mas comunicação, convites e interações foram desativados por um responsável.</span></div><div class="social-tabs"><b>Jogadores no bairro</b><small>${players.length} além de você</small></div><div class="online-player-list">${players.map(p=>`<div class="online-player-card"><span>👤</span><b>${escapeHtml(p.name)}</b><small>${Math.round(p.distance)} m</small></div>`).join('')||'<p>Nenhum outro jogador apareceu.</p>'}</div>`);return;}
     const phraseButtons=approvedChatPhrases().map(text=>`<button class="btn compact" data-approved-chat="${escapeHtml(text)}">${escapeHtml(text)}</button>`).join('');
     openModal('Mundo Online',`<div class="online-status-card"><b id="onlineStatusText">${multiplayerStatusText()}</b><span>Você vê apenas jogadores do bairro atual. A entrada respeita o limite de 10 vagas.</span></div><div class="social-tabs"><b>Solicitações sociais</b><small>${socialRequestPending().length} pendente(s)</small></div><div id="socialRequestInbox">${socialRequestInboxHtml()}</div><div class="social-tabs"><b>Convites de jogos</b><small>${pendingChallenges().length} pendente(s)</small></div><div id="challengeInbox">${challengeInboxHtml()}</div><div id="activeGameSessions">${activeSessionsHtml()}</div><div class="social-tabs"><b>Histórico de duelos</b><small>vencedores registrados</small></div><div id="duelHistory">${duelHistoryHtml()}</div><div class="social-tabs"><b>Jogadores</b><small id="onlineCount">${players.length} além de você</small></div><div id="onlinePlayerList" class="online-player-list">${onlinePlayerListHtml(players)}</div><div class="social-tabs chat-title-row"><b>Chat seguro</b><small>somente frases aprovadas</small></div><div id="worldChatList" class="world-chat-list">${messages.map(m=>chatMessageHtml(m)).join('')||'<p>Escolha uma frase aprovada.</p>'}</div><div class="choice-grid">${phraseButtons}</div><div class="chat-history-actions"><button data-clear-local-chat>Ocultar conversa neste aparelho</button></div>`,root=>{

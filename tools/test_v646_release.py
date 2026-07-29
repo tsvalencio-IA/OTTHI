@@ -110,14 +110,21 @@ class ReleaseV646Tests(unittest.TestCase):
         self.assertIn('Gesto simbólico, sem transferir saldo', text('src/modules/28-multiplayer-social-online.js'))
         self.assertIn('safeHouseName', text('assets/js/multiplayer/room-manager.js'))
 
-    def test_guardian_communication_toggle_persists(self):
+    def test_online_interactions_are_open_and_parent_audit_exists(self):
         backend = text('assets/js/multiplayer-rtdb.js')
         parent = text('src/modules/08-map-parent-settings.js')
-        self.assertIn("requestedCommunication=settings?.communicationEnabled===true", backend)
-        self.assertIn("chatEnabled:requestedCommunication", backend)
-        self.assertIn("saved.communicationEnabled!==clean.communicationEnabled", backend)
-        self.assertIn("draft.chatEnabled=draft.communicationEnabled===true", parent)
-        self.assertIn("draft.chatEnabled=draft.communicationEnabled", parent)
+        rules = text('firebase-database.rules.json')
+        self.assertIn("function multiplayerAllowed(){return true}", backend)
+        self.assertIn("function chatAllowed(){return true}", backend)
+        self.assertIn("multiplayerEnabled:true,communicationEnabled:true,chatEnabled:true", backend)
+        self.assertIn("getActivityAudit", backend)
+        self.assertIn("recordActivity", backend)
+        self.assertIn("Histórico online", parent)
+        self.assertIn("Salvar limite de tempo", parent)
+        self.assertNotIn("data-guardian-toggle", parent)
+        self.assertNotIn("root.child('otthosWorld').child('users').child(auth.uid).child('guardianSettings')", rules)
+        self.assertIn('"activityAudit"', rules)
+        self.assertIn("newData.child('multiplayerEnabled').val() === true", rules)
         self.assertIn("const saved=result?.settings||result", parent)
 
     def test_parent_and_moderation_ui_are_present(self):

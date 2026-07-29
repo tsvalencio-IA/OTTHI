@@ -14,14 +14,14 @@
       "startLine": 27,
       "endLine": 142,
       "description": "Normalização, merge, tombstones e persistência das construções",
-      "sha256Body": "938e057a239cd5997ac8e3f4fb672d27f47e6a3c6c104bcd070eb6c8c3e0e8ff"
+      "sha256Body": "4bfd48a6d3e2ae22d2e3226e588733eb1f09cea77bb9cdef5c5516e68510cfe7"
     },
     {
       "file": "src/modules/02-state-save-cloud-account.js",
       "startLine": 143,
       "endLine": 396,
       "description": "Estado, save local, IndexedDB, nuvem e conta",
-      "sha256Body": "56bc858a68199f7c5c65d3f653cea3fb346f5dc8ac891370cd4092149904b6b7"
+      "sha256Body": "da0a3856d23136e962e623d43c04cf3ef4e166f04b00b672eed69c4e1f8ee27d"
     },
     {
       "file": "src/modules/03-ui-modal-install-pwa.js",
@@ -63,7 +63,7 @@
       "startLine": 1201,
       "endLine": 1359,
       "description": "Mapa, marcadores, waypoint, reset, ferramentas parentais e configurações",
-      "sha256Body": "024378cce0ebe94b822d6d678a865f1dda4062db4c8841075ca09109916b61a7"
+      "sha256Body": "281101c9270cb60157c4bbb6562007d315202dfd00d561e23442a0b2c26ed2c1"
     },
     {
       "file": "src/modules/09-responsive-ar-quality-diagnostics.js",
@@ -203,7 +203,7 @@
       "startLine": 4158,
       "endLine": 4304,
       "description": "Desafios online, social, chat, presença, fantasmas e sincronização",
-      "sha256Body": "7c9e5875497011838b55b59c81bb9a146c235622412e292955eb0e6de233a393"
+      "sha256Body": "7ff00c575b422c06475c61714b203b37c73bcc14bb53113929861eb7b13f8296"
     },
     {
       "file": "src/modules/29-game-loop-controls-gamepad.js",

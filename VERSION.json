@@ -45,12 +45,11 @@
   "validation": {
     "physicalDeviceApproved": false
   },
-  "hotfix": "646.3",
+  "hotfix": "646.4",
   "notes": [
-    "Pacote completo e independente; migra automaticamente o save V645.",
-    "As regras Firebase incluem missões cooperativas e precisam ser publicadas manualmente para o modo online funcionar.",
-    "O service worker só ativa depois de validar o shell completo.",
-    "O workflow apenas valida bundles já sincronizados e não publica commit corretivo parcial.",
-    "Teste físico de dois celulares, AR e APK continua exigindo aparelho real."
+    "Multiplayer, chat seguro, convites, desafios e interações ficam liberados por padrão e não dependem de autorização parental.",
+    "A Área dos Responsáveis controla o limite de tempo e exibe histórico privado das conversas e ações online.",
+    "A reconexão de vaga e presença do hotfix anterior foi preservada.",
+    "As regras Firebase deste pacote precisam ser publicadas manualmente para que o cliente e o servidor usem a mesma política."
   ]
 }
