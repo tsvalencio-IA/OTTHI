@@ -1,0 +1,36 @@
+OTTHI World V646.5
+Base: OTTHI-main (8).zip
+Arquivos removidos: 0
+
+Arquivos alterados ou adicionados:
+
+VERSION.json
+app.js
+assets/js/core/runtime-config.js
+assets/js/multiplayer-rtdb.js
+docs/ARQUIVOS-ALTERADOS-V6465.txt
+docs/RELATORIO-ENTREGA-V6465.md
+docs/RELATORIO-PRESERVACAO-V642-V644.json
+docs/RELATORIO-PRESERVACAO-V642-V644.md
+docs/RELATORIO-TESTE-BAIRROS-V646.json
+docs/RELATORIO-TESTE-BAIRROS-V646.md
+docs/RELATORIO-TESTE-MUNDO-V643.json
+docs/VALIDACAO-ESTRUTURAL-V646.json
+docs/VALIDACAO-ESTRUTURAL-V646.md
+firebase-database.rules.json
+index.html
+release-manifest.json
+src/module-order.json
+src/modules/00-runtime-foundation.js
+src/modules/07-navigation-traffic-routes.js
+src/modules/08-map-parent-settings.js
+src/modules/16-emergency-services.js
+src/modules/32-cooperative-missions.js
+src/styles/15-coop-map-responsive-v6463.css
+style.css
+sw.js
+tools/test_v644_neighborhoods.py
+tools/test_v646_release.py
+tools/test_v646_runtime.js
+tools/test_v647_multiplayer_missions.py
+tools/validate_project.py

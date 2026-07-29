@@ -1,6 +1,6 @@
 {
   "version": 646,
-  "build": "646.0-safe-rooms-atomic-pwa",
+  "build": "646.5-multiplayer-missions-recovery",
   "passed": true,
   "checks": [
     {
@@ -219,222 +219,222 @@
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/00-runtime-foundation.js",
+      "name": "Sintaxe src\\modules\\00-runtime-foundation.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/01-build-persistence.js",
+      "name": "Sintaxe src\\modules\\01-build-persistence.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/02-state-save-cloud-account.js",
+      "name": "Sintaxe src\\modules\\02-state-save-cloud-account.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/03-ui-modal-install-pwa.js",
+      "name": "Sintaxe src\\modules\\03-ui-modal-install-pwa.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/04-education-daily-quiz.js",
+      "name": "Sintaxe src\\modules\\04-education-daily-quiz.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/05-avatar-life-customization.js",
+      "name": "Sintaxe src\\modules\\05-avatar-life-customization.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/06-missions-profile-hud-inventory-tools.js",
+      "name": "Sintaxe src\\modules\\06-missions-profile-hud-inventory-tools.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/07-navigation-traffic-routes.js",
+      "name": "Sintaxe src\\modules\\07-navigation-traffic-routes.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/08-map-parent-settings.js",
+      "name": "Sintaxe src\\modules\\08-map-parent-settings.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/09-responsive-ar-quality-diagnostics.js",
+      "name": "Sintaxe src\\modules\\09-responsive-ar-quality-diagnostics.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/10-player-skills.js",
+      "name": "Sintaxe src\\modules\\10-player-skills.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/11-render-materials-player-model.js",
+      "name": "Sintaxe src\\modules\\11-render-materials-player-model.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/12-world-resources-nature.js",
+      "name": "Sintaxe src\\modules\\12-world-resources-nature.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/13-houses-npcs-vehicles-base.js",
+      "name": "Sintaxe src\\modules\\13-houses-npcs-vehicles-base.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/14-world-district-decoration.js",
+      "name": "Sintaxe src\\modules\\14-world-district-decoration.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/15-transit-bus-metro.js",
+      "name": "Sintaxe src\\modules\\15-transit-bus-metro.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/16-emergency-services.js",
+      "name": "Sintaxe src\\modules\\16-emergency-services.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/17-adventures-learning-world.js",
+      "name": "Sintaxe src\\modules\\17-adventures-learning-world.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/18-water-fishing-boats.js",
+      "name": "Sintaxe src\\modules\\18-water-fishing-boats.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/19-campfire-hunting-house-extensions.js",
+      "name": "Sintaxe src\\modules\\19-campfire-hunting-house-extensions.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/20-world-build-cloud-houses.js",
+      "name": "Sintaxe src\\modules\\20-world-build-cloud-houses.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/21-interactions-shop-social-races.js",
+      "name": "Sintaxe src\\modules\\21-interactions-shop-social-races.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/22-careers-jobs-uniforms.js",
+      "name": "Sintaxe src\\modules\\22-careers-jobs-uniforms.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/23-vehicle-effects-driving.js",
+      "name": "Sintaxe src\\modules\\23-vehicle-effects-driving.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/24-construction-system.js",
+      "name": "Sintaxe src\\modules\\24-construction-system.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/25-render-init-resize-position-collision.js",
+      "name": "Sintaxe src\\modules\\25-render-init-resize-position-collision.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/26-input-player-physics.js",
+      "name": "Sintaxe src\\modules\\26-input-player-physics.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/27-npc-enemies-combat-camera-action.js",
+      "name": "Sintaxe src\\modules\\27-npc-enemies-combat-camera-action.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/28-multiplayer-social-online.js",
+      "name": "Sintaxe src\\modules\\28-multiplayer-social-online.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/29-game-loop-controls-gamepad.js",
+      "name": "Sintaxe src\\modules\\29-game-loop-controls-gamepad.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/30-pause-tests-public-api-bootstrap.js",
+      "name": "Sintaxe src\\modules\\30-pause-tests-public-api-bootstrap.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/31-neighborhood-world-controller.js",
+      "name": "Sintaxe src\\modules\\31-neighborhood-world-controller.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe src/modules/32-cooperative-missions.js",
+      "name": "Sintaxe src\\modules\\32-cooperative-missions.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/core/performance-guardian.js",
+      "name": "Sintaxe assets\\js\\core\\performance-guardian.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/core/runtime-config.js",
+      "name": "Sintaxe assets\\js\\core\\runtime-config.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/core/safe-pointer.js",
+      "name": "Sintaxe assets\\js\\core\\safe-pointer.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/core/viewport-manager.js",
+      "name": "Sintaxe assets\\js\\core\\viewport-manager.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/education/adaptive-learning.js",
+      "name": "Sintaxe assets\\js\\education\\adaptive-learning.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/game-account.js",
+      "name": "Sintaxe assets\\js\\game-account.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/multiplayer/room-manager.js",
+      "name": "Sintaxe assets\\js\\multiplayer\\room-manager.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/multiplayer-rtdb.js",
+      "name": "Sintaxe assets\\js\\multiplayer-rtdb.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/safety/child-safety.js",
+      "name": "Sintaxe assets\\js\\safety\\child-safety.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/save-db.js",
+      "name": "Sintaxe assets\\js\\save-db.js",
       "passed": true,
       "detail": ""
     },
     {
-      "name": "Sintaxe assets/js/ui/shared-modal.js",
+      "name": "Sintaxe assets\\js\\ui\\shared-modal.js",
       "passed": true,
       "detail": ""
     },
@@ -446,12 +446,12 @@
     {
       "name": "34 testes de mundo V643",
       "passed": true,
-      "detail": "{\n  \"version\": 643,\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 34,\n    \"failed\": 0,\n    \"total\": 34\n  },\n  \"checks\": [\n    {\n      \"name\": \"Cinco pescadores de margem\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Pesca viva: createShoreFisher\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: createShoreFishingLife\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: updateShoreFishers\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: fishingActivity\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: bobber\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: line.geometry.attributes.position.needsUpdate\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva criada na expansão do lago\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Textura de água PNG válida\",\n      \"passed\": true,\n      \"detail\": \"(512, 512)\"\n    },\n    {\n      \"name\": \"Textura de água usada no material\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Frota inicial limitada\",\n      \"passed\": true,\n      \"detail\": \"{'solar': 2, 'verde': 2, 'escolar': 1, 'circular': 1, 'turismo': 1}\"\n    },\n    {\n      \"name\": \"Circular da Cidade com uma unidade\",\n      \"passed\": true,\n      \"detail\": \"1\"\n    },\n    {\n      \"name\": \"Trânsito: trafficPriority\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: trafficSpeedFactor\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: captureTrafficPositions\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: resolveTrafficOverlaps\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Trânsito: trafficHoldUntil\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: busSpawnIndex\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: buildBusRoadPath\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: recoverBusRoute\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: validateBusCoverage\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Ônibus: laneOffset\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Serviços de emergência respeitam retenção\",\n      \"passed\": true,\n      \"detail\": \"3\"\n    },\n    {\n      \"name\": \"NPCs/veículos respeitam retenção\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: mode-mobility-driver #runBtn\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: mode-mobility-driver #jumpBtn\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: orientation:portrait\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS m"
+      "detail": "{\n  \"version\": 643,\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 34,\n    \"failed\": 0,\n    \"total\": 34\n  },\n  \"checks\": [\n    {\n      \"name\": \"Cinco pescadores de margem\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Pesca viva: createShoreFisher\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: createShoreFishingLife\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: updateShoreFishers\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: fishingActivity\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: bobber\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva: line.geometry.attributes.position.needsUpdate\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Pesca viva criada na expans�o do lago\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Textura de �gua PNG v�lida\",\n      \"passed\": true,\n      \"detail\": \"(512, 512)\"\n    },\n    {\n      \"name\": \"Textura de �gua usada no material\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Frota inicial limitada\",\n      \"passed\": true,\n      \"detail\": \"{'solar': 2, 'verde': 2, 'escolar': 1, 'circular': 1, 'turismo': 1}\"\n    },\n    {\n      \"name\": \"Circular da Cidade com uma unidade\",\n      \"passed\": true,\n      \"detail\": \"1\"\n    },\n    {\n      \"name\": \"Tr�nsito: trafficPriority\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Tr�nsito: trafficSpeedFactor\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Tr�nsito: captureTrafficPositions\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Tr�nsito: resolveTrafficOverlaps\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Tr�nsito: trafficHoldUntil\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"�nibus: busSpawnIndex\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"�nibus: buildBusRoadPath\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"�nibus: recoverBusRoute\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"�nibus: validateBusCoverage\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"�nibus: laneOffset\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Servi�os de emerg�ncia respeitam reten��o\",\n      \"passed\": true,\n      \"detail\": \"3\"\n    },\n    {\n      \"name\": \"NPCs/ve�culos respeitam reten��o\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: mode-mobility-driver #runBtn\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: mode-mobility-driver #jumpBtn\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS mobilidade: orientation:portrait\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"CSS m"
     },
     {
       "name": "Testes de bairros e mapa",
       "passed": true,
-      "detail": "{\n  \"version\": 646,\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 87,\n    \"failed\": 0,\n    \"total\": 87\n  },\n  \"checks\": [\n    {\n      \"name\": \"Bairro configurado bairro-central\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-montanha\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-escola\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Cinco bairros únicos\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Capacidade 10 em todos\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Limite multiplayer 10\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Entradas físicas dos bairros\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Limites cartográficos dos bairros\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Cinco geometrias interpretadas\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-central\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-central\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-montanha\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-montanha', 'name': 'Bairro da Mont"
+      "detail": "{\n  \"version\": 646,\n  \"passed\": true,\n  \"counts\": {\n    \"passed\": 87,\n    \"failed\": 0,\n    \"total\": 87\n  },\n  \"checks\": [\n    {\n      \"name\": \"Bairro configurado bairro-central\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-montanha\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Bairro configurado bairro-escola\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Cinco bairros �nicos\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Capacidade 10 em todos\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Limite multiplayer 10\",\n      \"passed\": true,\n      \"detail\": \"\"\n    },\n    {\n      \"name\": \"Entradas f�sicas dos bairros\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Limites cartogr�ficos dos bairros\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Cinco geometrias interpretadas\",\n      \"passed\": true,\n      \"detail\": \"5\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-central\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-central\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-central', 'name': 'Bairro Central', 'capacity': 10, 'entryX': 0.0, 'entryZ': 8.0, 'xMin': -48.0, 'xMax': 48.0, 'zMin': -22.0, 'zMax': 38.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-floresta\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-floresta', 'name': 'Bairro da Floresta', 'capacity': 10, 'entryX': -82.0, 'entryZ': -35.0, 'xMin': -116.0, 'xMax': -48.0, 'zMin': -108.0, 'zMax': 24.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}\"\n    },\n    {\n      \"name\": \"Limites dentro do mundo bairro-lago\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-lago', 'name': 'Bairro do Lago', 'capacity': 10, 'entryX': -25.0, 'entryZ': 45.0, 'xMin': -62.0, 'xMax': -8.0, 'zMin': 28.0, 'zMax': 82.0}\"\n    },\n    {\n      \"name\": \"Entrada dentro dos limites bairro-montanha\",\n      \"passed\": true,\n      \"detail\": \"{'id': 'bairro-montanha', 'name': 'Bairro da Mont"
     },
     {
       "name": "Harness real de slots e Service Worker V646",
@@ -461,22 +461,22 @@
     {
       "name": "Testes de segurança e release V646",
       "passed": true,
-      "detail": "test_build_and_ci_do_not_publish_partial_outputs (__main__.ReleaseV646Tests.test_build_and_ci_do_not_publish_partial_outputs) ... ok\ntest_child_safety_is_backend_enforced (__main__.ReleaseV646Tests.test_child_safety_is_backend_enforced) ... ok\ntest_legacy_house_lock_migrates_to_canonical_schema (__main__.ReleaseV646Tests.test_legacy_house_lock_migrates_to_canonical_schema) ... ok\ntest_loading_failure_preserves_save (__main__.ReleaseV646Tests.test_loading_failure_preserves_save) ... ok\ntest_online_interactions_are_open_and_parent_audit_exists (__main__.ReleaseV646Tests.test_online_interactions_are_open_and_parent_audit_exists) ... ok\ntest_parent_and_moderation_ui_are_present (__main__.ReleaseV646Tests.test_parent_and_moderation_ui_are_present) ... ok\ntest_presence_sessions_and_rotation_are_fail_closed (__main__.ReleaseV646Tests.test_presence_sessions_and_rotation_are_fail_closed) ... ok\ntest_production_runtime_harness (__main__.ReleaseV646Tests.test_production_runtime_harness) ... ok\ntest_release_manifest_hashes_match (__main__.ReleaseV646Tests.test_release_manifest_hashes_match) ... ok\ntest_room_contract_has_no_legacy_public_room (__main__.ReleaseV646Tests.test_room_contract_has_no_legacy_public_room) ... ok\ntest_save_migration_is_explicit (__main__.ReleaseV646Tests.test_save_migration_is_explicit) ... ok\ntest_service_worker_rejects_mixed_shell (__main__.ReleaseV646Tests.test_service_worker_rejects_mixed_shell) ... ok\ntest_slot_reservation_contract_is_atomic_and_recoverable (__main__.ReleaseV646Tests.test_slot_reservation_contract_is_atomic_and_recoverable) ... ok\ntest_version_surfaces_are_unified (__main__.ReleaseV646Tests.test_version_surfaces_are_unified) ... ok\ntest_world_retry_and_privacy_fail_closed (__main__.ReleaseV646Tests.test_world_retry_and_privacy_fail_closed) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.064s\n\nOK"
+      "detail": "test_build_and_ci_do_not_publish_partial_outputs (__main__.ReleaseV646Tests.test_build_and_ci_do_not_publish_partial_outputs) ... ok\ntest_child_safety_is_backend_enforced (__main__.ReleaseV646Tests.test_child_safety_is_backend_enforced) ... ok\ntest_legacy_house_lock_migrates_to_canonical_schema (__main__.ReleaseV646Tests.test_legacy_house_lock_migrates_to_canonical_schema) ... ok\ntest_loading_failure_preserves_save (__main__.ReleaseV646Tests.test_loading_failure_preserves_save) ... ok\ntest_online_interactions_are_open_and_parent_audit_exists (__main__.ReleaseV646Tests.test_online_interactions_are_open_and_parent_audit_exists) ... ok\ntest_parent_and_moderation_ui_are_present (__main__.ReleaseV646Tests.test_parent_and_moderation_ui_are_present) ... ok\ntest_presence_sessions_and_rotation_are_fail_closed (__main__.ReleaseV646Tests.test_presence_sessions_and_rotation_are_fail_closed) ... ok\ntest_production_runtime_harness (__main__.ReleaseV646Tests.test_production_runtime_harness) ... ok\ntest_release_manifest_hashes_match (__main__.ReleaseV646Tests.test_release_manifest_hashes_match) ... ok\ntest_room_contract_has_no_legacy_public_room (__main__.ReleaseV646Tests.test_room_contract_has_no_legacy_public_room) ... ok\ntest_save_migration_is_explicit (__main__.ReleaseV646Tests.test_save_migration_is_explicit) ... ok\ntest_service_worker_rejects_mixed_shell (__main__.ReleaseV646Tests.test_service_worker_rejects_mixed_shell) ... ok\ntest_slot_reservation_contract_is_atomic_and_recoverable (__main__.ReleaseV646Tests.test_slot_reservation_contract_is_atomic_and_recoverable) ... ok\ntest_version_surfaces_are_unified (__main__.ReleaseV646Tests.test_version_surfaces_are_unified) ... ok\ntest_world_retry_and_privacy_fail_closed (__main__.ReleaseV646Tests.test_world_retry_and_privacy_fail_closed) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.248s\n\nOK"
     },
     {
       "name": "Serviços profissionais preservados",
       "passed": true,
-      "detail": "test_accidents_stop_and_require_all_services (__main__.ProfessionalEmergencyServicesTests.test_accidents_stop_and_require_all_services) ... ok\ntest_buses_and_traffic_have_collision_protection (__main__.ProfessionalEmergencyServicesTests.test_buses_and_traffic_have_collision_protection) ... ok\ntest_missions_require_correct_vehicle (__main__.ProfessionalEmergencyServicesTests.test_missions_require_correct_vehicle) ... ok\ntest_service_jobs_and_visual_uniforms_exist (__main__.ProfessionalEmergencyServicesTests.test_service_jobs_and_visual_uniforms_exist) ... ok\ntest_service_vehicle_visuals_are_local_and_multiplayer_safe (__main__.ProfessionalEmergencyServicesTests.test_service_vehicle_visuals_are_local_and_multiplayer_safe) ... ok\ntest_service_vehicles_are_distinct_enterable_and_reserved (__main__.ProfessionalEmergencyServicesTests.test_service_vehicles_are_distinct_enterable_and_reserved) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.002s\n\nOK"
+      "detail": "test_accidents_stop_and_require_all_services (__main__.ProfessionalEmergencyServicesTests.test_accidents_stop_and_require_all_services) ... ok\ntest_buses_and_traffic_have_collision_protection (__main__.ProfessionalEmergencyServicesTests.test_buses_and_traffic_have_collision_protection) ... ok\ntest_missions_require_correct_vehicle (__main__.ProfessionalEmergencyServicesTests.test_missions_require_correct_vehicle) ... ok\ntest_service_jobs_and_visual_uniforms_exist (__main__.ProfessionalEmergencyServicesTests.test_service_jobs_and_visual_uniforms_exist) ... ok\ntest_service_vehicle_visuals_are_local_and_multiplayer_safe (__main__.ProfessionalEmergencyServicesTests.test_service_vehicle_visuals_are_local_and_multiplayer_safe) ... ok\ntest_service_vehicles_are_distinct_enterable_and_reserved (__main__.ProfessionalEmergencyServicesTests.test_service_vehicles_are_distinct_enterable_and_reserved) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.015s\n\nOK"
     },
     {
       "name": "Mapa, missões, móveis e roupas preservados",
       "passed": true,
-      "detail": "test_assigned_service_vehicle_is_real_map_target (__main__.CommercialPolishTests.test_assigned_service_vehicle_is_real_map_target) ... ok\ntest_map_is_dynamic_square_and_viewport_fitted (__main__.CommercialPolishTests.test_map_is_dynamic_square_and_viewport_fitted) ... ok\ntest_mission_card_opens_one_clear_briefing (__main__.CommercialPolishTests.test_mission_card_opens_one_clear_briefing) ... ok\ntest_new_style_is_last_and_build_outputs_match (__main__.CommercialPolishTests.test_new_style_is_last_and_build_outputs_match) ... ok\ntest_room_furniture_is_persistent_and_editable (__main__.CommercialPolishTests.test_room_furniture_is_persistent_and_editable) ... ok\ntest_uniforms_follow_animated_limbs (__main__.CommercialPolishTests.test_uniforms_follow_animated_limbs) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.020s\n\nOK"
+      "detail": "test_assigned_service_vehicle_is_real_map_target (__main__.CommercialPolishTests.test_assigned_service_vehicle_is_real_map_target) ... ok\ntest_map_is_dynamic_square_and_viewport_fitted (__main__.CommercialPolishTests.test_map_is_dynamic_square_and_viewport_fitted) ... ok\ntest_mission_card_opens_one_clear_briefing (__main__.CommercialPolishTests.test_mission_card_opens_one_clear_briefing) ... ok\ntest_new_style_is_last_and_build_outputs_match (__main__.CommercialPolishTests.test_new_style_is_last_and_build_outputs_match) ... ok\ntest_room_furniture_is_persistent_and_editable (__main__.CommercialPolishTests.test_room_furniture_is_persistent_and_editable) ... ok\ntest_uniforms_follow_animated_limbs (__main__.CommercialPolishTests.test_uniforms_follow_animated_limbs) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.021s\n\nOK"
     },
     {
       "name": "Missões cooperativas e responsividade V646.3",
       "passed": true,
-      "detail": "test_all_requested_cooperative_missions_exist (__main__.CoopResponsiveTests.test_all_requested_cooperative_missions_exist) ... ok\ntest_map_is_clustered_and_responsive_in_both_orientations (__main__.CoopResponsiveTests.test_map_is_clustered_and_responsive_in_both_orientations) ... ok\ntest_roles_and_shared_progress_are_online (__main__.CoopResponsiveTests.test_roles_and_shared_progress_are_online) ... ok\ntest_school_fishing_and_race_runtime_contracts (__main__.CoopResponsiveTests.test_school_fishing_and_race_runtime_contracts) ... ok\ntest_state_persists_and_existing_systems_integrate (__main__.CoopResponsiveTests.test_state_persists_and_existing_systems_integrate) ... ok\ntest_uniform_and_build_order_are_complete (__main__.CoopResponsiveTests.test_uniform_and_build_order_are_complete) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.005s\n\nOK"
+      "detail": "test_all_requested_cooperative_missions_exist (__main__.CoopResponsiveTests.test_all_requested_cooperative_missions_exist) ... ok\ntest_map_is_clustered_and_responsive_in_both_orientations (__main__.CoopResponsiveTests.test_map_is_clustered_and_responsive_in_both_orientations) ... ok\ntest_roles_and_shared_progress_are_online (__main__.CoopResponsiveTests.test_roles_and_shared_progress_are_online) ... ok\ntest_school_fishing_and_race_runtime_contracts (__main__.CoopResponsiveTests.test_school_fishing_and_race_runtime_contracts) ... ok\ntest_state_persists_and_existing_systems_integrate (__main__.CoopResponsiveTests.test_state_persists_and_existing_systems_integrate) ... ok\ntest_uniform_and_build_order_are_complete (__main__.CoopResponsiveTests.test_uniform_and_build_order_are_complete) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.022s\n\nOK"
     },
     {
       "name": "IDs HTML únicos",
@@ -501,7 +501,7 @@
     {
       "name": "Revisão imutável no HTML",
       "passed": true,
-      "detail": "a248812a89b4d29d"
+      "detail": "bdc719d3897953e0"
     },
     {
       "name": "Three.js local e versionado",
@@ -511,7 +511,7 @@
     {
       "name": "Funções preservadas e ampliadas",
       "passed": true,
-      "detail": "675"
+      "detail": "686"
     },
     {
       "name": "Runtime V646",
@@ -611,7 +611,7 @@
     {
       "name": "Chaves CSS balanceadas",
       "passed": true,
-      "detail": "2063/2063"
+      "detail": "2085/2085"
     },
     {
       "name": "Canvas ocupa 100%",
@@ -736,7 +736,7 @@
     {
       "name": "Hash-fonte src/modules/00-runtime-foundation.js",
       "passed": true,
-      "detail": "4962b13947cc5276304d121242c641003d8f3dd190b590464bd3c8b04ccd16e1"
+      "detail": "fbc4c4dcad628ba44fa3ca05668a0ffbecce1d9c20a6afc2405be4307425f89b"
     },
     {
       "name": "Hash-fonte src/modules/01-build-persistence.js",
@@ -771,12 +771,12 @@
     {
       "name": "Hash-fonte src/modules/07-navigation-traffic-routes.js",
       "passed": true,
-      "detail": "5f7fb72abc5427798bf92ba67078845c75c5419e47581e89ca413e168a662735"
+      "detail": "2d042aa04eb6877c0ae464e09a866b3566a0814283cb0d4d481ce31c2a320ecc"
     },
     {
       "name": "Hash-fonte src/modules/08-map-parent-settings.js",
       "passed": true,
-      "detail": "281101c9270cb60157c4bbb6562007d315202dfd00d561e23442a0b2c26ed2c1"
+      "detail": "f0c69a7ef66cebbb77b19f1d1d8e09a6f362776f70036aab0f15442d0c906a3b"
     },
     {
       "name": "Hash-fonte src/modules/09-responsive-ar-quality-diagnostics.js",
@@ -816,7 +816,7 @@
     {
       "name": "Hash-fonte src/modules/16-emergency-services.js",
       "passed": true,
-      "detail": "53f96b993a7b752474829098e787c9833846e23364256c45adf48992bb57252d"
+      "detail": "e9a85a985db197fb3847f000ac7e0fa9fb9de0e15036f30a0504e84cdfb9213b"
     },
     {
       "name": "Hash-fonte src/modules/17-adventures-learning-world.js",
@@ -896,7 +896,7 @@
     {
       "name": "Hash-fonte src/modules/32-cooperative-missions.js",
       "passed": true,
-      "detail": "6beb1e9de1f2c14cd69ba56f241980430c9bb8593b5327926889db129ff3a011"
+      "detail": "fa20a73a5bd43545d754bcaddd039a10e4f5bb8eb8d8af8c84079379b0f9c95e"
     },
     {
       "name": "Hash-fonte src/styles/00-foundation-lobby-game-modal.css",
@@ -976,7 +976,7 @@
     {
       "name": "Hash-fonte src/styles/15-coop-map-responsive-v6463.css",
       "passed": true,
-      "detail": "062b650e78cf7dc31bb371059fb892e65dab447ba115bcae950813176cb8062c"
+      "detail": "4e81741e689020453cb0cdd6d0740184a9a7804d6e5d8b7f0226a9cf9b0a722b"
     },
     {
       "name": "app.js sincronizado com fontes",
@@ -999,15 +999,15 @@
     "checks": 198,
     "passed": 198,
     "failed": 0,
-    "functions": 675,
+    "functions": 686,
     "javascriptModules": 33,
     "styleModules": 16,
     "htmlIds": 104
   },
   "hashes": {
-    "app.js": "30ffe0d8dd53206b8658af65047f576d2b69321e3a5545548aded4552987dac4",
-    "style.css": "8014349467cc69306aa437c857eb7e90dc98e657a6ea506e42b6ebb23091bc01",
-    "src/module-order.json": "04586b43ab5fd32e664287d14fd392a18870e3688cd43d02b2c38ee4fb70a3d3",
-    "release-manifest.json": "c2931c6076a225479ac54b09c77d6e8cec7f415a678437ab152a5e0be7fc6789"
+    "app.js": "9a40ca9e78e28d6a04052ba47d6f974de8e499b16bd0f333c88ddfbec8f526d0",
+    "style.css": "a4fdba497367197ebb1ee24e8da9f25863dbf94b46852bcfd686bcb8e12d73f6",
+    "src/module-order.json": "605f61b04d0a9917053ff471d082606bb8e4102a78025ca23fe2c202a6dcc4e4",
+    "release-manifest.json": "2802ac11ec7e250075dfbbe70cc1ac7b289f52e9c7f7523dce91ffa42e538d57"
   }
 }
