@@ -119,25 +119,11 @@ async function reserveRoomSlot(roomId,name=ownName()){
   await refreshParentalControls();if(!multiplayerAllowed())return{ok:false,disabled:true,room:sanitizeRoom(roomId),count:0,capacity:roomCapacity(roomId),error:'O modo online foi desativado pelos responsáveis.'};
   try{const offset=await f.get(f.ref(db,'.info/serverTimeOffset'));serverTimeOffset=Number(offset.val()||0)}catch{}
   const next=sanitizeRoom(roomId),capacity=roomCapacity(next),slotsRef=f.ref(db,`${ROOT}/rooms/${next}/slots`),playerName=sanitizePublicName(name),nowClient=Date.now(),nowServer=serverNow();
-  let parentError=null;
-  try{
-    const tx=await f.runTransaction(slotsRef,current=>{
-      const reservation=reserveSlotSnapshot(current,{uid:user.uid,name:playerName,room:next,capacity,nowClient,nowServer,serverTimestamp:f.serverTimestamp()});
-      return reservation?.slots;
-    },{applyLocally:false});
-    const slots=tx.snapshot.val()||{},entry=validRoomSlots(slots,capacity,true).find(([,item])=>item.uid===user.uid);
-    if(tx.committed&&entry){
-      const [slotKey]=entry,slotRef=f.ref(db,`${ROOT}/rooms/${next}/slots/${slotKey}`),reservation={ok:true,room:next,count:roomSlotCount(slots,capacity),capacity,slotRef,slotKey,uid:user.uid};
-      try{await f.onDisconnect(slotRef).remove()}catch(error){await rollbackRoomSlot(reservation);throw error}
-      roomCountsCache[next]=reservation.count;dispatchRoomCounts();return reservation;
-    }
-  }catch(error){parentError=error}
-  const fallback=await reserveRoomSlotIndividually(f,{room:next,capacity,name:playerName,nowClient,nowServer}).catch(()=>null);
-  if(fallback){
-    try{await f.onDisconnect(fallback.slotRef).remove()}catch(error){await rollbackRoomSlot(fallback);throw error}
-    roomCountsCache[next]=fallback.count;dispatchRoomCounts();return fallback;
+  const reservation=await reserveRoomSlotIndividually(f,{room:next,capacity,name:playerName,nowClient,nowServer}).catch(()=>null);
+  if(reservation){
+    try{await f.onDisconnect(reservation.slotRef).remove()}catch(error){await rollbackRoomSlot(reservation);throw error}
+    roomCountsCache[next]=reservation.count;dispatchRoomCounts();return reservation;
   }
-  if(parentError&&String(parentError?.code||parentError?.message||'').match(/permission|denied/i))throw parentError;
   const latest=await f.get(slotsRef).catch(()=>null),count=latest?roomSlotCount(latest.val()||{},capacity):capacity;roomCountsCache[next]=count;dispatchRoomCounts();return{ok:false,full:count>=capacity,room:next,count,capacity,error:count>=capacity?'Bairro lotado. Escolha outro bairro.':'Não foi possível reservar uma vaga. Tente novamente.'};
 }
 function configure(c){const clean={...c,enabled:true,room:sanitizeRoom(c?.room||currentRoom())};ROOM_ID=clean.room;WORLD=`rooms/${ROOM_ID}`;localStorage.setItem(CONFIG_KEY,JSON.stringify(clean));window.OTTHOS_FIREBASE_CONFIG=clean;window.OTTHOS_RTDB.configured=true;return clean}
@@ -189,7 +175,7 @@ async function signOutPlayerAccount(password=''){
   }catch(error){return{ok:false,error:friendlyAuthError(error)}}
 }
 function ownName(){return neutralPublicName(user?.uid)}
-function listenerError(scope){return error=>{console.warn(`Firebase ${scope}:`,error);dispatch('otthos:mp-status',status({mode:'offline',error:error?.message||String(error)}))}}
+function listenerError(scope){return error=>{const message=error?.message||String(error);console.warn(`Firebase ${scope}:`,error);dispatch('otthos:firebase-warning',{scope,message,permissionDenied:/permission|denied/i.test(message)});return false}}
 async function connect(options={}){
   const requestedRoom=sanitizeRoom(options.room||currentRoom());
   if(requestedRoom!==ROOM_ID){ROOM_ID=requestedRoom;WORLD=`rooms/${ROOM_ID}`;}
@@ -289,13 +275,13 @@ const SOCIAL_RESULT_STATUSES=['accepted','declined','expired','cancelled','compl
 const INTERACTION_TYPES=['wave','socialRequestResult','challengeAccepted','challengeDeclined','boatPassengerLeft','boatEnded','vehiclePassengerLeft','vehicleEnded'];
 async function sendGift(targetUid,gift){
   if(!connected||!targetUid||targetUid===user.uid||isBlocked(targetUid))return false;const type=gift?.type,amount=type==='coins'?10:type==='crystal'?1:0;if(!amount)return false;
-  const r=api.push(api.ref(db,`${ROOT}/users/${targetUid}/inbox`));await api.set(r,{senderUid:user.uid,senderName:ownName(),type,amount,createdAt:api.serverTimestamp()});recordActivity('gift',type,{direction:'sent',peerUid:targetUid,eventId:`gift-out-${r.key}`});return true;
+  try{const r=api.push(api.ref(db,`${ROOT}/users/${targetUid}/inbox`));await api.set(r,{senderUid:user.uid,senderName:ownName(),type,amount,createdAt:api.serverTimestamp()});recordActivity('gift',type,{direction:'sent',peerUid:targetUid,eventId:`gift-out-${r.key}`});return true}catch(error){listenerError('presente')(error);return false}
 }
 async function sendInteraction(targetUid,event={}){
   if(!connected||!targetUid||targetUid===user.uid||isBlocked(targetUid))return false;const type=String(event.type||'');if(!INTERACTION_TYPES.includes(type))return false;
   const record={senderUid:user.uid,senderName:ownName(),type,createdAt:api.serverTimestamp()};
   if(type==='socialRequestResult'){const requestId=String(event.requestId||'').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,80),actionType=String(event.actionType||''),status=String(event.status||'');if(!requestId||!SOCIAL_ACTIONS.includes(actionType)||!SOCIAL_RESULT_STATUSES.includes(status))return false;Object.assign(record,{requestId,actionType,status});}
-  const r=api.push(api.ref(db,`${ROOT}/users/${targetUid}/interactions`));await api.set(r,record);recordActivity('social',type,{direction:'sent',peerUid:targetUid,eventId:`interaction-out-${r.key}`});return true;
+  try{const r=api.push(api.ref(db,`${ROOT}/users/${targetUid}/interactions`));await api.set(r,record);recordActivity('social',type,{direction:'sent',peerUid:targetUid,eventId:`interaction-out-${r.key}`});return true}catch(error){listenerError('interação')(error);return false}
 }
 function socialDistanceRequired(type){return['dance','play','highfive','hug','selfie','vehiclePassenger','boatPassenger','fishTogether','campfireJoin','huntTogether'].includes(type)}
 async function sendSocialRequest(targetUid,actionType,targetName='Jogador',extra={}){
@@ -332,7 +318,7 @@ async function respondSocialRequest(requestId,decision){
     else if(status==='accepted'&&request.actionType==='vehiclePassenger'&&(!sender.vehicle||sender.vehicleRole!=='driver'||sender.vehicleId!==request.extra?.vehicleId)){status='cancelled';reason='O carro não está mais disponível.'}
     else if(status==='accepted'&&request.actionType==='vehiclePassenger'&&(sender.vehiclePassengerUid||sender.vehiclePassengerBotId)){status='cancelled';reason='O carro já tem um passageiro.'}
     else if(status==='accepted'&&request.actionType==='vehiclePassenger'&&(lastPresence?.vehicle||lastPresence?.boating||lastPresence?.transitMode)){status='cancelled';reason='Você já está em outro transporte.'}
-    await api.update(ref,{status,respondedAt:api.serverTimestamp(),respondedAtClient:now});requestCache[requestId]={...request,status,respondedAtClient:now};recordActivity('social',`${request.actionType}-${status}`,{direction:'performed',peerUid:request.fromUid,eventId:`social-response-${requestId}-${status}`});await sendInteraction(request.fromUid,{type:'socialRequestResult',requestId,actionType:request.actionType,status});
+    await api.update(ref,{status,respondedAt:api.serverTimestamp(),respondedAtClient:now});requestCache[requestId]={...request,status,respondedAtClient:now};recordActivity('social',`${request.actionType}-${status}`,{direction:'performed',peerUid:request.fromUid,eventId:`social-response-${requestId}-${status}`});sendInteraction(request.fromUid,{type:'socialRequestResult',requestId,actionType:request.actionType,status}).catch(()=>false);
     return{ok:status==='accepted',status,reason,id:requestId,...request};
   }catch(error){listenerError('resposta social')(error);return{ok:false,error:error?.message||String(error)}}
 }
