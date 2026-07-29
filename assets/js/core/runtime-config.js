@@ -11,7 +11,7 @@
   })();
   window.OTTHI_CONFIG = {
     version: 646,
-    build: '646.0-safe-rooms-atomic-pwa',
+    build: '646.5-multiplayer-missions-recovery',
     repository: repo,
     baseUrl,
     firebaseRoot: 'otthosWorld',
